@@ -10,9 +10,8 @@
 
     <insert id="insertMember2" parameterType="com.sp.member.Member">
        INSERT INTO member2
-            (userId, birth, email, tel, zip, addr1, addr2)  VALUES 
-            (#{userId}, #{birth}, #{email}, #{tel}, 
-                    #{zip, jdbcType=VARCHAR}, #{addr1, jdbcType=VARCHAR}, #{addr2, jdbcType=VARCHAR})
+            (userId, birth, email, tel)  VALUES 
+            (#{userId}, #{birth}, #{email}, #{tel})
     </insert>
 
     <!-- 회원 정보 가져오기 -->
