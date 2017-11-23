@@ -3,6 +3,7 @@
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <%
 	String cp = request.getContextPath();
 %>
@@ -14,13 +15,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
 
 <script type="text/javascript">
 	$('#myTab a').click(function(e) {
@@ -78,36 +73,25 @@
 					aria-label="...">
 					<div class="btn-group" role="group">
 						<button type="button" class="btn btn-default"
-							style="background: white;">모꼬지</button>
+							style="background: white;">모꼬지 소개</button>
 					</div>
 					<div class="btn-group" role="group">
 						<button type="button" class="btn btn-default"
-							style="background: white;">모꼬지</button>
+							style="background: white;">모꼬지 게시판</button>
 					</div>
 					<div class="btn-group" role="group">
 						<button type="button" class="btn btn-default"
-							style="background: white;">모꼬지</button>
+							style="background: white;">진행중인 번개</button>
 					</div>
 					<div class="btn-group" role="group">
 						<button type="button" class="btn btn-default"
-							style="background: white;">모꼬지</button>
+							style="background: white;">종료된 번개</button>
 					</div>
 
 				</div>
 			</div>
 			<div role="tabpanel" class="tab-pane" id="shopingmall">
-				<div class="btn-group btn-group-justified" role="group"
-					aria-label="...">
-					<div class="btn-group" role="group">
-						<button type="button" class="btn btn-default"
-							style="background: white;">온라인클래스</button>
-					</div>
-					<div class="btn-group" role="group">
-						<button type="button" class="btn btn-default"
-							style="background: white;">오프라인 클래스</button>
-					</div>
 
-				</div>
 			</div>
 			<div role="tabpanel" class="tab-pane" id="review">
 				<div class="btn-group btn-group-justified" role="group"
@@ -124,18 +108,7 @@
 				</div>
 			</div>
 			<div role="tabpanel" class="tab-pane" id="event">
-				<div class="btn-group btn-group-justified" role="group"
-					aria-label="...">
-					<div class="btn-group" role="group">
-						<button type="button" class="btn btn-default"
-							style="background: white;">이벤트리스트</button>
-					</div>
-					<div class="btn-group" role="group">
-						<button type="button" class="btn btn-default"
-							style="background: white;">오프라인 클래스</button>
-					</div>
 
-				</div>
 			</div>
 
 			<div role="tabpanel" class="tab-pane" id="servicecenter">
@@ -143,11 +116,11 @@
 					aria-label="...">
 					<div class="btn-group" role="group">
 						<button type="button" class="btn btn-default"
-							style="background: white;">오프라인 클래스</button>
+							style="background: white;">공지사항</button>
 					</div>
 					<div class="btn-group" role="group">
 						<button type="button" class="btn btn-default"
-							style="background: white;">오프라인 클래스</button>
+							style="background: white;">Q&A</button>
 					</div>
 
 				</div>
