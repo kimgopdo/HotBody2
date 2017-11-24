@@ -34,6 +34,42 @@ $(function(){
 	<div id="tabs-1">테스트 1</div>
 	<div id="tabs-2">테스트 2</div>
 	<div id="tabs-3">테스트 3</div>
+	
+<!-- 	<!-- 로그인 버튼
+	<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" >
+	  Login
+	</button>
+	
+	로그인 모달 팝업
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+	  <div class="modal-dialog modal-sm">
+	    <div class="modal-content">
+	      <div class="modal-header" style="height: 50px;">
+		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+		<h4 class="modal-title" id="myModalLabel">Login</h4>
+	      </div>
+	      <div class="modal-body" style="height: 130px;">
+		<table style="margin-top: 10px;">
+			<tr height="30">
+				<td style="padding-left: 17px;">아 이 디 <input type="text" style="margin-left: px;"></td>
+			</tr>
+			<tr height="30">
+				<td style="padding-left: 17px; padding-top: 20px;">비밀번호 <input type="text"></td>
+			</tr>
+			<tr height="30">
+				<td style="padding-left: 17px; font-size: 11px; padding-bottom: 3px; padding-top: 10px;"><a href="#" style="margin-left: 120px;">아이디 / 비밀번호 찾기</a></td>
+			</tr>
+		</table>
+	      </div>
+	      <div class="modal-footer" style="height: 70px;">
+	      	<a href="#"><button type="button" class="btn btn-default" data-dismiss="modal" style="height: 35px; float: left"><span style="font-size: 11px;">회원가입</span></button></a>
+			<a href="#"><button type="button" class="btn btn-default" data-dismiss="modal" style="height: 35px;"><span style="font-size: 11px;">login</span></button></a>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	 -->
+	
 </div>
 
 </body>
