@@ -9,7 +9,6 @@
 %>
 
 
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,118 +17,24 @@
 
 
 <script type="text/javascript">
-	$('#myTab a').click(function(e) {
-		e.preventDefault()
-		$(this).tab('show')
-	})
-
-	$('#myTab a[href="#profile"]').tab('show') // Select tab by name
-	$('#myTab a:first').tab('show') // Select first tab
-	$('#myTab a:last').tab('show') // Select last tab
-	$('#myTab li:eq(2) a').tab('show') // Select third tab (0-indexed)
+$(function(){
+	$("#tab-container").tabs();
+});
 </script>
+
 </head>
 <body>
 
-	<div role="tabpanel">
-
-		<!-- Nav tabs -->
-		<ul class="nav nav-tabs" role="tablist">
-			<li role="presentation" class="active"><a href="#class"
-				aria-controls="class" role="tab" data-toggle="tab">클래스</a></li>
-			<li role="presentation"><a href="#mocojee"
-				aria-controls="mocojee" role="tab" data-toggle="tab">모꼬지</a></li>
-			<li role="presentation"><a href="#shopingmall"
-				aria-controls="shopingmall" role="tab" data-toggle="tab">쇼핑몰</a></li>
-			<li role="presentation"><a href="#review" aria-controls="review"
-				role="tab" data-toggle="tab">운동후기</a></li>
-			<li role="presentation"><a href="#event" aria-controls="event"
-				role="tab" data-toggle="tab">이벤트</a></li>
-			<li role="presentation"><a href="#servicecenter"
-				aria-controls="servicecenter" role="tab" data-toggle="tab">고객센터</a></li>
-
-			<li  style="margin-left: 100px; "><a href="#" type="button" class="btn btn-info btn-xs">로그인</a></li>
-			<li ><a href="#" type="button" class="btn btn-info btn-xs">회원가입</a></li>
-		</ul>
-
-		<!-- Tab panes -->
-		<div class="tab-content" style="padding: 10px;">
-			<div role="tabpanel" class="tab-pane active" id="class">
-				<div class="btn-group btn-group-justified" role="group"
-					aria-label="...">
-					<div class="btn-group" role="group">
-						<button type="button" class="btn btn-default"
-							style="background: white;">온라인클래스</button>
-					</div>
-					<div class="btn-group" role="group">
-						<button type="button" class="btn btn-default"
-							style="background: white;">오프라인 클래스</button>
-					</div>
-
-				</div>
-			</div>
-			<div role="tabpanel" class="tab-pane" id="mocojee">
-				<div class="btn-group btn-group-justified" role="group"
-					aria-label="...">
-					<div class="btn-group" role="group">
-						<button type="button" class="btn btn-default"
-							style="background: white;">모꼬지 소개</button>
-					</div>
-					<div class="btn-group" role="group">
-						<button type="button" class="btn btn-default"
-							style="background: white;">모꼬지 게시판</button>
-					</div>
-					<div class="btn-group" role="group">
-						<button type="button" class="btn btn-default"
-							style="background: white;">진행중인 번개</button>
-					</div>
-					<div class="btn-group" role="group">
-						<button type="button" class="btn btn-default"
-							style="background: white;">종료된 번개</button>
-					</div>
-
-				</div>
-			</div>
-			<div role="tabpanel" class="tab-pane" id="shopingmall">
-
-			</div>
-			<div role="tabpanel" class="tab-pane" id="review">
-				<div class="btn-group btn-group-justified" role="group"
-					aria-label="...">
-					<div class="btn-group" role="group">
-						<button type="button" class="btn btn-default"
-							style="background: white;">온라인클래스</button>
-					</div>
-					<div class="btn-group" role="group">
-						<button type="button" class="btn btn-default"
-							style="background: white;">오프라인 클래스</button>
-					</div>
-
-				</div>
-			</div>
-			<div role="tabpanel" class="tab-pane" id="event">
-
-			</div>
-
-			<div role="tabpanel" class="tab-pane" id="servicecenter">
-				<div class="btn-group btn-group-justified" role="group"
-					aria-label="...">
-					<div class="btn-group" role="group">
-						<button type="button" class="btn btn-default"
-							style="background: white;">공지사항</button>
-					</div>
-					<div class="btn-group" role="group">
-						<button type="button" class="btn btn-default"
-							style="background: white;">Q&A</button>
-					</div>
-
-				</div>
-			</div>
-		</div>
-
-	</div>
-
-
+<div id="tab-container">
+	<ul>
+		<li><a href="#tabs-1"><span>첫번째</span></a></li>
+		<li><a href="#tabs-2"><span>두번째</span></a></li>
+		<li><a href="#tabs-3"><span>세번째</span></a></li>
+	</ul>
+	<div id="tabs-1">테스트 1</div>
+	<div id="tabs-2">테스트 2</div>
+	<div id="tabs-3">테스트 3</div>
+</div>
 
 </body>
 </html>
