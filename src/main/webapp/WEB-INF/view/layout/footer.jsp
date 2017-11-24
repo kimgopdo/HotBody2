@@ -22,15 +22,15 @@
     <footer id="myFooter">
         <div class="container">
             <div class="row">
-                <div class="col-sm-3">
-                    <h2 class="logo"><a href="#"> LOGO </a></h2>
+                <div class="col-sm-3" >
+                    <img style="position: relative; top: -20px; left: -60px" src="<%=cp%>/resource/images/KakaoTalk_20171124_144344346.png">
                 </div>
                 <div class="col-sm-2">
-                    <h5>Get started</h5>
+                    <h5>시작하기</h5>
                     <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Sign up</a></li>
-                        <li><a href="#">Downloads</a></li>
+                        <li><a href="#">홈</a></li>
+                        <li><a href="#">로그인</a></li>
+                        <li><a href="#">다운로드</a></li>
                     </ul>
                 </div>
                 <div class="col-sm-2">
