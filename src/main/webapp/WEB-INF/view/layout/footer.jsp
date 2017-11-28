@@ -17,40 +17,40 @@
 </head>
 
 <body>
-<div class="content">
+<div class="content" >
 </div>
     <footer id="myFooter">
         <div class="container">
             <div class="row">
                 <div class="col-sm-3" >
-                    <img style="position: relative; top: -20px; left: -60px" src="<%=cp%>/resource/images/KakaoTalk_20171124_144344346.png">
+                    
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-2" >
                     <h5>시작하기</h5>
-                    <ul>
-                        <li><a href="#">홈</a></li>
-                        <li><a href="#">로그인</a></li>
+                    <ul style="list-style: none;">
+                        <li ><a href="#"><b>홈</b></a></li>
+                        <li><a href="#"><b>로그인</a></li>
                         <li><a href="#">다운로드</a></li>
                     </ul>
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-2" >
                     <h5>About us</h5>
-                    <ul>
+                    <ul style="list-style: none;">
                         <li><a href="#">Company Information</a></li>
                         <li><a href="#">Contact us</a></li>
                         <li><a href="#">Reviews</a></li>
                     </ul>
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-2" >
                     <h5>Support</h5>
-                    <ul>
-                        <li><a href="#">FAQ</a></li>
+                    <ul style="list-style: none; " >
+                        <li style="color: white;"><a href="#">FAQ</a></li>
                         <li><a href="#">Help desk</a></li>
                         <li><a href="#">Forums</a></li>
                     </ul>
                 </div>
-                <div class="col-sm-3">
-                    <div class="social-networks">
+                <div class="col-sm-3" ">
+                    <div class="social-networks" >
                         <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
                         <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
                         <a href="#" class="google"><i class="fa fa-google-plus"></i></a>
@@ -59,7 +59,7 @@
                 </div>
             </div>
         </div>
-        <div class="footer-copyright">
+        <div class="footer-copyright" >
             <p>© 2016 Copyright Text </p>
         </div>
     </footer>
