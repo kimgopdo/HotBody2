@@ -17,52 +17,18 @@
 </head>
 
 <body>
-<div class="content" >
+<div style="height:200px;  text-align: left; padding-top:25px;padding-left:40px; font-size: 12px; line-height: 25px; color: white; background-color: #2E2E2E;">
+<span>
+Copyright © DANO, Inc. All Rights Reserved.<br>
+사업장소재지 서울특별시 마포구 숭문4길 15 5층 (주)HOTBODY<br>
+ 사업자번호 106-87-00202 | 통신판매업신고 제2014-서울강남-01513<br>
+대표전화 070-7777-1886 | 이메일 HOTBODY@gmail.com<br>
+대표이사 권예리 | 개인정보책임자 이봉용 | 이용약관 | 개인정보취급방침<br>
+ 계좌번호 : 우리은행 1005-802-643352 (주)HOTBODY <br>
+</span>
+
 </div>
-    <footer id="myFooter">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-3" >
-                    
-                </div>
-                <div class="col-sm-2" >
-                    <h5>시작하기</h5>
-                    <ul style="list-style: none;">
-                        <li ><a href="#"><b>홈</b></a></li>
-                        <li><a href="#"><b>로그인</a></li>
-                        <li><a href="#">다운로드</a></li>
-                    </ul>
-                </div>
-                <div class="col-sm-2" >
-                    <h5>About us</h5>
-                    <ul style="list-style: none;">
-                        <li><a href="#">Company Information</a></li>
-                        <li><a href="#">Contact us</a></li>
-                        <li><a href="#">Reviews</a></li>
-                    </ul>
-                </div>
-                <div class="col-sm-2" >
-                    <h5>Support</h5>
-                    <ul style="list-style: none; " >
-                        <li style="color: white;"><a href="#">FAQ</a></li>
-                        <li><a href="#">Help desk</a></li>
-                        <li><a href="#">Forums</a></li>
-                    </ul>
-                </div>
-                <div class="col-sm-3" ">
-                    <div class="social-networks" >
-                        <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
-                        <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
-                        <a href="#" class="google"><i class="fa fa-google-plus"></i></a>
-                    </div>
-                    <button type="button" class="btn btn-default">Contact us</button>
-                </div>
-            </div>
-        </div>
-        <div class="footer-copyright" >
-            <p>© 2016 Copyright Text </p>
-        </div>
-    </footer>
+
 </body>
 
 </html>

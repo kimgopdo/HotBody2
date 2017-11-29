@@ -87,74 +87,67 @@ A:hover { color:#컬러코드 ; text-decoration:none; }
 </head>
 <body>
 
-	
-	<table style="width: 100%;">
-	<tr height="40px;">
-	<td >
-					<!-- 로그인 / 로그아웃 버튼-->
-			<c:if test="${empty sessionScope.member}" >
-				<button style="float: right; color:white; background:black; margin-right: 50px" type="button" class="btn btn-primary btn-lg"
-					data-toggle="modal" data-target="#myLoginModal">Login</button>
-			</c:if>
-			<c:if test="${not empty sessionScope.member}">
-				<button style="float: right; color:white; background:black; margin-right: 50px" type="button" class="btn btn-primary btn-lg"
-					onclick="javascript:location.href='<%=cp%>/member/logout';">
-					Logout</button>
-			</c:if>
-		</td>
-	
-	</tr>
-		<tr height="100px" style="border-bottom: 2px solid ;  ">
-		<td align="center" style="padding-bottom: 30px;">
-			<img style="max-height: 100px" src="<%=cp%>/resource/images/hotbodylogo.png">
-		</td>
+			
 
-		</tr>
-
-	</table>
 
 
 	<!-- 상위 메뉴 탭기능 구현 -->
 	<div id="tab-container" 
-		style="height: 300px; background:white; background-image: url('<%=cp%>/resource/images/20160330115141134_0.jpg'); ">
-		<ul style="background: no-repeat; border: 0px;">
-			<li style="background: no-repeat; border: none;"><a href="#tabs-1"><span style="color: white;">클래스</span></a></li>
-			<li style="background: no-repeat; border: none;"><a href="#tabs-2"><span style="color: white;">쇼핑몰</span></a></li>
-			<li style="background: no-repeat; border: none;"><a href="#tabs-3"><span style="color: white;">모꼬지</span></a></li>
-			<li style="background: no-repeat; border: none;"><a href="#tabs-4"><span style="color: white;">공지사항</span></a></li>
-			<li style="background: no-repeat; border: none;"><a href="#tabs-5"><span style="color: white;">Q&A</span></a></li>
+		style="background:white; position: fixed; width: 100%" >
+		<span style="background: no-repeat; border: none; float: left;  margin-left: 150px; margin-top: 15px"><img style="max-height: 70px" src="<%=cp%>/resource/images/hotbodylogo.png"></span>
+		<ul style="background: no-repeat; border: 0px; height: 50px;padding-top: 10px; ">
+			
+			<li style="background: no-repeat; border: none; margin-left: 50px;"><a href="#tabs-1"><span >클래스</span></a></li>
+			<li style="background: no-repeat; border: none; margin-left: 20px;"><a href="#tabs-2"><span >쇼핑몰</span></a></li>
+			<li style="background: no-repeat; border: none; margin-left: 20px;"><a href="#tabs-3"><span >모꼬지</span></a></li>
+			<li style="background: no-repeat; border: none; margin-left: 20px;"><a href="#tabs-4"><span >공지사항</span></a></li>
+			<li style="background: no-repeat; border: none; margin-left: 20px;"><a href="#tabs-5"><span >자주묻는 질문</span></a></li>
 
-
-
+				<!-- 로그인 / 로그아웃 버튼-->
+			<c:if test="${ empty sessionScope.member}" >
+				<button style=" background:white; margin-left: 80px;" type="button" class="btn btn-primary btn-lg"
+					data-toggle="modal" data-target="#myLoginModal">Login</button>
+			</c:if>
+			<c:if test="${not empty sessionScope.member}">
+				<button style=" background:white; margin-left: 40px" type="button" class="btn btn-primary btn-lg"
+					onclick="javascript:location.href='<%=cp%>/member/logout';">
+					Logout</button>
+				<button style=" background:white;margin-left: 2px"  type="button" class="btn btn-primary btn-lg"
+					onclick="javascript:location.href='<%=cp%>/member/mypage';">
+					Mypage</button>
+				<button style=" background:white;margin-left: 2px"  type="button" class="btn btn-primary btn-lg"
+					onclick="javascript:location.href='<%=cp%>/member/myclass';">
+					Myclass</button>
+			</c:if>
 
 		</ul>
-		<div id="tabs-1" >
-			<ul style="list-style: none; text-decoration: none; ">
-				<li><a href="#"><span style="color: white;">온라인 클래스</span></a></li>
-				<li><a href="#"><span style="color: white;">오프라인 클래스</span></a></li>
+		
+			<ul id="tabs-1"  style="list-style: none; text-decoration: none; margin-left: 335px; height: 25px;">
+				<li style="display:inline"><a href="#"><span >온라인 클래스</span></a></li>
+				<li style="display:inline; margin-left: 30px;"><a href="#"><span >오프라인 클래스</span></a></li>
 
 			</ul>
 
-		</div>
-		<div id="tabs-2" style="margin-left: 80px; ">
-			<ul style="list-style: none;">
-			</ul>
-		</div>
-		<div id="tabs-3" style="margin-left: 160px;">
-			<ul style="list-style: none;">
-			</ul>
-		</div>
-		<div id="tabs-4" style="margin-left: 240px;">
-			<ul style="list-style: none;">
 
-				<li><a href="#"><span style="color: white;">공지사항</span></a></li>
-				<li><a href="#"><span style="color: white;">이벤트</span></a></li>
+			<ul id="tabs-2" style="list-style: none;">
 			</ul>
-		</div>
-		<div id="tabs-5" style="margin-left: 320px;">
-		</div>
 
 
+			<ul  id="tabs-3" style="list-style: none;">
+			</ul>
+
+
+			<ul id="tabs-4" style="list-style: none; margin-left: 640px;">
+				<li style="float: left;"><a href="#"><span >공지사항</span></a></li>
+				<li style="float: left; margin-left: 40px;"><a href="#"><span >이벤트</span></a></li>
+			</ul>
+
+
+			<ul id="tabs-5" style="list-style: none; ">
+
+			</ul>
+
+		
 
 		<!-- 로그인 모달-->
 		<div class="modal fade" id="myLoginModal" tabindex="-1" role="dialog"
