@@ -93,9 +93,9 @@ A:hover { color:#컬러코드 ; text-decoration:none; }
 
 	<!-- 상위 메뉴 탭기능 구현 -->
 	<div id="tab-container" 
-		style="background:white; position: fixed; width: 100%" >
+		style="width: 100% " >
 		<span style="background: no-repeat; border: none; float: left;  margin-left: 150px; margin-top: 15px"><img style="max-height: 70px" src="<%=cp%>/resource/images/hotbodylogo.png"></span>
-		<ul style="background: no-repeat; border: 0px; height: 50px;padding-top: 10px; ">
+		<ul style="background:no-repeat; border: 0px; height: 50px;padding-top: 10px; ">
 			
 			<li style="background: no-repeat; border: none; margin-left: 50px;"><a href="#tabs-1"><span >클래스</span></a></li>
 			<li style="background: no-repeat; border: none; margin-left: 20px;"><a href="#tabs-2"><span >쇼핑몰</span></a></li>
@@ -104,11 +104,11 @@ A:hover { color:#컬러코드 ; text-decoration:none; }
 			<li style="background: no-repeat; border: none; margin-left: 20px;"><a href="#tabs-5"><span >자주묻는 질문</span></a></li>
 
 				<!-- 로그인 / 로그아웃 버튼-->
-			<c:if test="${ empty sessionScope.member}" >
+			<c:if test="${not empty sessionScope.member}" >
 				<button style=" background:white; margin-left: 80px;" type="button" class="btn btn-primary btn-lg"
 					data-toggle="modal" data-target="#myLoginModal">Login</button>
 			</c:if>
-			<c:if test="${not empty sessionScope.member}">
+			<c:if test="${ empty sessionScope.member}">
 				<button style=" background:white; margin-left: 40px" type="button" class="btn btn-primary btn-lg"
 					onclick="javascript:location.href='<%=cp%>/member/logout';">
 					Logout</button>

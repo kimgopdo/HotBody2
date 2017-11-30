@@ -5,7 +5,7 @@
    String cp = request.getContextPath();
 %>
 
-<div class="body-container" style="width: 700px;">
+<div class="body-container" style="width: 700px; clear: both;">
     <div>
         메인 화면 입니다.
     </div>

@@ -2,7 +2,13 @@
 
 .header {
     width:100%;
-    text-align:left;
+    position: fixed;
+    
+}
+
+.header-off {
+    background-color: transparent;
+    color: white;
 }
 
 .container {
@@ -143,3 +149,4 @@ ul.nav li:hover > ul li a:hover {
   color: #333;
   text-decoration: none;
 }
+
