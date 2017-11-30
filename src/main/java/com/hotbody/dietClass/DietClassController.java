@@ -14,4 +14,9 @@ public class DietClassController {
 	public String classArticle() {
 		return ".dietClass.article";
 	}
+	
+	@RequestMapping(value="/dietClass/payment")
+	public String classPayment() {
+		return ".dietClass.payment";
+	}
 }
