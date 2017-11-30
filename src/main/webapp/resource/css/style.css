@@ -8,7 +8,6 @@ body {
     font-family:"Malgun Gothic", "맑은 고딕", NanumGothic, 나눔고딕, 돋움, sans-serif;
     font-size: 14px;
     /*line-height: 1.42857143;*/
-	/*box-sizing: border-box;*/  /* padding과 border는 크기에 포함되지 않음 */
 }
 
 a {

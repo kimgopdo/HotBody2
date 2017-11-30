@@ -1,0 +1,82 @@
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    padding: 0;
+    margin: 0;
+}
+body {
+    height: 100vh;
+    overflow: hidden;
+    background: -webkit-radial-gradient(#ddd, rgba(0,0,0,0) 6%), 
+        -webkit-radial-gradient(rgb(255,255,255) 5%, rgba(0,0,0,0) 6%), #de6de0;
+  background: -moz-radial-gradient(rgb(255,255,255) 5%, rgba(0,0,0,0) 6%), 
+      -moz-radial-gradient(rgb(255,255,255) 5%, rgba(0,0,0,0) 16%), #de6de0;
+  background: radial-gradient(rgb(255,255,255) 5%, rgba(0,0,0,0) 6%),
+      radial-gradient(rgb(255,255,255) 5%, rgba(0,0,0,0) 13%), #de6de0;
+  background-position: 0 0, 30px 30px;
+  -webkit-background-size: 60px 60px;
+  background-size: 60px 60px;
+}
+ul, ol {list-style: none}
+.container {
+    width: 100%;
+    height: 400px;
+    max-width: 800px;
+    padding: 0 15px;
+    margin: 50px auto 0;
+    position: relative;
+}
+.slider {
+    width: 100%;
+    height: 400px;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    -webkit-transform: translate(0, -50%);
+    -moz-transform: translate(0, -50%);
+    -o-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+    overflow: hidden;
+    position: relative;
+    border-radius: 15px;
+}
+.slider ul, .slider ul li {width: 100%; height: 100%}
+.slider ul {
+    position: absolute;
+    top: 0;
+    left: 0
+}
+.slider ul li {
+    text-align: center;
+    line-height: 400px;
+    font-size: 50px;
+    color: #aaa
+}
+.slider ul li:first-of-type {background: #222}
+.slider ul li:nth-of-type(2) {background: #252525}
+.slider ul li:nth-of-type(3) {background: #222}
+.slider ul li:nth-of-type(4) {background: #252525}
+.slider ul li:last-of-type {background: #222}
+.slider ol {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    padding-right: 15px;
+    -webkit-transform: translate(0, -50%);
+    -moz-transform: translate(0, -50%);
+    -o-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+}
+.slider ol li {
+    width: 7px;
+    height: 30px;
+    margin-bottom: 5px;
+    background: rgba(255, 255, 255,.3);
+    cursor: pointer
+}
+.slider ol li:hover, .slider ol li.active {
+    background: #eee
+}
