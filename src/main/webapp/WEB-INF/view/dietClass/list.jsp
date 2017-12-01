@@ -19,6 +19,13 @@ $(function() {
 
 <div class="body-container" style="width: 1000px;">
 
+
+<div class="body-title">
+        <h3><span style="font-family: Webdings">2</span> 제목 </h3>
+</div>
+
+
+
     <table class="ct" style="width: 1000px; border-spacing: 0; border-collapse: collapse; border-bottom: 1px solid #cccccc; border-top: 1px solid #cccccc;">
     <tr>
     	<td style="width: 280px; height:490px; overflow: hidden;">

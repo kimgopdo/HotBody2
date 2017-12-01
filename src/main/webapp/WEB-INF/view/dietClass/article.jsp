@@ -26,7 +26,12 @@ $(function() {
 </script>
 
 <div class="body-container" style="width: 1000px;">
-	<a href="<%=cp%>/dietClass/list" style="color: #333333;">&lt;&lt;목록으로</a>
+
+<div class="body-title">
+        <h3><span style="font-family: Webdings">2</span> 제목 </h3>
+</div>
+
+	<a href="<%=cp%>/dietClass/list" style="color: #333333;"><img style="width: 30px;" src="<%=cp%>/resource/images/dano_arrow.png"></a>
     <p style="font-size: 35px; font-weight: bold; margin-top: 20px;">클래스 이름</p>
 	<div style="width: 650px; height: 370px; float: left;">
 		<img style="vertical-align: middle;" src="https://dietnote.net/static/mydano/class/detail/new/program_leg.jpg">
@@ -61,16 +66,14 @@ $(function() {
 			<img style="width: 100px; height: auto;" src="<%=cp%>/resource/images/level1.PNG">
 		</div>
 	</div>
-	
-	
-	<div style="float: none;">
+
+
+	<div style="width: 1000px; float: left;">
 		<hr>
 	</div>
-	
-	
-	
 
 </div>
+
 	<div id="loadingLayout" style="display: none; position: absolute; left: 0; top: 0; width: 100%; height: 100%; z-index: 90000; background: #eeeeee;"> 
 	<!-- style="display: none;" : 초기상태는 눈에보이지 않도록해놓는다. -->
 	<!-- 화면전체를 덮을 꺼다. -->
