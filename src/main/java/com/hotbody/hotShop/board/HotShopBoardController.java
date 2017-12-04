@@ -11,6 +11,7 @@ public class HotShopBoardController {
 		
 		
 		
+		
 		return ".hotShop.shopList";
 	}
 	@RequestMapping("/hotShop/productList")
