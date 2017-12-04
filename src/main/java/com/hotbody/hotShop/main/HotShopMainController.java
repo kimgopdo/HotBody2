@@ -2,10 +2,10 @@ package com.hotbody.hotShop.main;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-@Controller("orderMainController")
+@Controller("hotShop.Controller")
 public class HotShopMainController {
 	@RequestMapping(value="/hotShop")
-	public String orderMain() throws Exception{
+	public String hotShopMain() throws Exception{
 		return ".shopLayout";
 	}
 }
