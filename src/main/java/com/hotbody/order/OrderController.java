@@ -7,8 +7,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller("orderController")
 public class OrderController {
 	
-	public String oderMain() throws Exception{
+	@RequestMapping(value="/hotShop")
+	public String orderMain() throws Exception{
 		return ".shopLayout";
+	}
+	@RequestMapping(value="/hotShop/article")
+	public String orderArticle() throws Exception{
+		return ".order.shop_article";
 	}
 	
 	@RequestMapping(value="/order/orderList",method=RequestMethod.GET)

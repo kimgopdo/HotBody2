@@ -8,16 +8,6 @@
 	String cp = request.getContextPath();
 %>
 
-
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-
-</head>
-<body>
-
    <!-- 내비 -->
    <div class="content" align="center" style="z-index: 9;">
       <nav class="navbar" style="background: white; height: 60px; margin: 0px auto; border: none;">
@@ -76,6 +66,3 @@
         </div>
       </nav>
    </div>
-
-</body>
-</html>

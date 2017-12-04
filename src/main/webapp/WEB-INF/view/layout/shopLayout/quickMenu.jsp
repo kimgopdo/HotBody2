@@ -8,114 +8,10 @@
 	String cp = request.getContextPath();
 %>
 
-
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<style type="text/css">
-
-.nav li > a{
-   color: black; 
-   height: 60px; 
-   padding-top: 19px; 
-   width: 150px; 
-   text-align: center; 
-   font-weight: bold; 
-   font-size: 16px;
-   width: 293px;
-}
-
-.container{
-  width: 100%;
-  position: relative;
-  text-align: center;
-}
-.content{
-	margin: 0 10% 0 10%;
-}
-.menuEx{
-	width:120px;
-	
-	text-align: center; 
-	font-weight: bold;
-	font-size: 14px;
-}
-.menuEx ul li:hover{
-	background: #eeeeee;
-	cursor: pointer;                                 
-}
-.menuEx ul{
-	margin: 0;
-	padding: 0;
-	list-style: none;
-}
-.menuEx ul li{
-	padding: 8px;                        
-	text-align: center;
-}
-
-</style>
-<!-- 서브메뉴 버튼 -->
-<script type="text/javascript">
-function quickMenu(){
-		if($("#quickMenu").attr("class")!="is-active"){
-			$("#quickMenu").css("z-index", "9");
-			$("#quickMenu").fadeIn(1000);		
-			$("#quickMenu").addClass("is-active");
-		}else{
-			$("#quickMenu").fadeOut(1000);
-			$("#quickMenu").removeClass("is-active");
-			$("#quickMenu").css("z-index", "0");
-		}
-	};                        
-</script>
-<!-- 메뉴 펼치기 -->
-<script type="text/javascript">
-$(function(){
-	$(".menu").hover(function(){                                         
-		 $(".menuEx").stop().animate({
-			  height:'toggle'
-			 ,opacity: "1"
-		 },"100");
-	});
-});
-</script>
-
-<!-- 이미지 테두리 없애기 -->
-<style type="text/css">
-<!--
-IMG {border: none;}
--->
-</style>
- 
-<!-- 텍스트 밑줄없애기-->
-<style type="text/css">
-<!--
-A:link { text-decoration:none ; }
-A:visited { text-decoration:none ; }
-A:active { text-decoration:none ; }
-A:hover { text-decoration:none; }
--->
-</style>  
-<!-- 텍스트 링크속성 변경하기 -->
-<style type="text/css">
-<!--
-A:link { color:#컬러코드 ;text-decoration:none ; }
-A:visited { color:#컬러코드 ;text-decoration:none ; }
-A:active { color:#컬러코드 ; text-decoration:none ; }
-A:hover { color:#컬러코드 ; text-decoration:none; }
--->
-</style> 
-
-</head>
-<body>
-
 <!-- 퀵메뉴 -->
 <div align="center" id="quickMenu" style="width:100%; height:1500px; background-color: #FEF9F6; position: fixed;display: none;">
-	<div align="center" style="width: 80%; height: 60px; margin-top: 453px;">
-	<ul class="nav navbar-nav menu">
+	<div align="center" style="width: 80%; height: 60px;">
+	<ul id="quickMenu_P" class="nav navbar-nav menu">
             <li>
             	<a href="#">베스트</a>
             	<div align="center" class="menuEx" style="display: none;">
@@ -168,6 +64,3 @@ A:hover { color:#컬러코드 ; text-decoration:none; }
           </ul>
       </div>
 </div>
-
-</body>
-</html>

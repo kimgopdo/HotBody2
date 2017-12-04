@@ -18,7 +18,7 @@
 	    <put-attribute name="leftSide" value="/WEB-INF/view/layout/shopLayout/leftSide.jsp" />
 	  	<put-attribute name="header" value="/WEB-INF/view/layout/shopLayout/header.jsp" />
 		<put-attribute name="body" value="/WEB-INF/view/order/main.jsp" />
-		<put-attribute name="rightSide" value="/WEB-INF/view/shopLayout/rightSide.jsp" />
+		<put-attribute name="rightSide" value="/WEB-INF/view/layout/shopLayout/rightSide.jsp" />
 	</definition>
 	
    <!-- 3단 관리자 -->
