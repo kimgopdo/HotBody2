@@ -5,6 +5,7 @@
 <%
    String cp = request.getContextPath();
 %>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
 $(function() {
       $('.ct').mouseover(function (e){
@@ -14,6 +15,15 @@ $(function() {
           $('.ctd').hide();
       });
 });
+
+function classNotice() {
+	swal("Write something here:", {
+		  content: "input",
+		})
+		.then((value) => {
+		  swal(${value});
+		});
+}
 </script>
 
 
@@ -23,6 +33,7 @@ $(function() {
 <div class="body-title">
         <h3><span style="font-family: Webdings">2</span> 제목 </h3>
 </div>
+
 
 
 
@@ -94,6 +105,7 @@ $(function() {
 	    		</table>
 	    	</div>
 	   		<div style="vertical-align: bottom;">
+	   		<button type="button" style="width: 100%; height: 50px; background: #1abc9c; border: 0px; color: #ffffff; font-weight: bold;" onclick="classNotice();">클래스 알림받기</button>
 	    	<button type="button" style="width: 100%; height: 50px; background: #1abc9c; border: 0px; color: #ffffff; font-weight: bold;" onclick="#">수강 신청하기</button>
 	   		</div>
     	</td>
