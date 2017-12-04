@@ -5,30 +5,33 @@
 <%
    String cp = request.getContextPath();
 %>
-<script type="text/javascript">
-jQuery.fn.center = function() {
-	this.css("position","absolute");
-	this.css("top",Math.max(0,(($(window).height()- $(this).outerHeight())/2)-$(window).scrollTop())+"px");
-	this.css("left",Math.max(0,(($(window).width()- $(this).outerWidth())/2)-$(window).scrollLeft())+"px");
-	
-	return this;
+<style type="text/css">
+#map {
+  height: 400px;
+  width: 500px;
 }
+</style>
 
-/////////////////////////////////미완성
-$(function() {
-	$("#paymentBtn").click(function() {
-		$("#loading").center();
-		$("#loadingLayout").fadeTo("slow",1);	//배경화면이 보이게끔 불투명으로 천천히 처리
-		$("#loadingLayout").hide();	//숨김
-		location.href='<%=cp%>/dietClass/payment';
-	});
-});
+
+<script>
+      function initMap() {
+        var uluru = {lat: 37.548255,  lng: 126.94594};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 15,
+          center: uluru
+        });
+        var marker = new google.maps.Marker({
+          position: uluru,
+          map: map
+        });
+      }
 </script>
-
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9P3TaLYvX65owbUopBkE0LN4ntFOwiRs&callback=initMap">
+</script>
 <div class="body-container" style="width: 1000px;">
 
 <div class="body-title">
-        <h3><span style="font-family: Webdings">2</span> 제목 </h3>
+	<h3><span style="font-family: Webdings">2</span> 제목 </h3>
 </div>
 
 	<a href="<%=cp%>/dietClass/list" style="color: #333333;"><img style="width: 30px;" src="<%=cp%>/resource/images/dano_arrow.png"></a>
@@ -49,7 +52,7 @@ $(function() {
 		<span style="font-weight: bold; font-size: 30px; vertical-align: bottom;"><br>￦99,000원</span>
    	</div>
 	<div style="vertical-align: bottom; float: left; width: 350px;">
-    	<button id="paymentBtn" type="button" style="width: 100%; height: 50px; background: #1abc9c; border: 0px; color: #ffffff; font-weight: bold;" onclick="#">수강 신청하기</button>
+    	<button id="paymentBtn" type="button" style="width: 100%; height: 50px; background: #1abc9c; border: 0px; color: #ffffff; font-weight: bold;" onclick="javascript:location.href='<%=cp%>/dietClass/payment';">수강 신청하기</button>
 	</div>
 	
 	<div style="font-size: 17px; font-weight: bold;">
@@ -67,15 +70,11 @@ $(function() {
 		</div>
 	</div>
 
-
 	<div style="width: 1000px; float: left;">
 		<hr>
 	</div>
+	
+	<div id="map"></div>
+	
 
 </div>
-
-	<div id="loadingLayout" style="display: none; position: absolute; left: 0; top: 0; width: 100%; height: 100%; z-index: 90000; background: #eeeeee;"> 
-	<!-- style="display: none;" : 초기상태는 눈에보이지 않도록해놓는다. -->
-	<!-- 화면전체를 덮을 꺼다. -->
-		<img id="loading" src="<%=cp%>/resource/images/loading.gif" border="0">
-	</div>

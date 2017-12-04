@@ -19,4 +19,9 @@ public class DietClassController {
 	public String classPayment() {
 		return ".dietClass.payment";
 	}
+	
+	@RequestMapping(value="dietClass/survey")
+	public String classSurvey() {
+		return "dietClass/surveyForm";
+	}
 }
