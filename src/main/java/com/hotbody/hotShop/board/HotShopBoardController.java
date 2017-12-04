@@ -8,6 +8,9 @@ public class HotShopBoardController {
 	@RequestMapping("/hotShop/reviewList")
 	public String productList() {
 		
+		
+		
+		
 		return ".hotShop.shopList";
 	}
 	@RequestMapping("/hotShop/productList")
