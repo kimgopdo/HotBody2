@@ -20,6 +20,105 @@ $(function() {
     });
 });
 
+function formatDate(date) {
+
+	  var day = date.getDate();
+	  var monthIndex = date.getMonth();
+	  var year = date.getFullYear();
+
+	  return  year+ '-' + monthIndex + '-' +day ;
+	}
+
+$(function() {
+
+	
+	$("#today").click(function() {
+		var date =new Date();
+		var day = date.getDate();
+		var month = date.getMonth()+1;
+		var year = date.getFullYear();
+		var today =year+ '-' + month + '-' +day;
+
+		
+		var lastday = year+ '-' + month + '-' +day;
+
+		$("#datepicker1").val(lastday);
+		$("#datepicker2").val(today);
+	
+	});
+	
+	$("#week").click(function() {
+		var date =new Date();
+		var day = date.getDate();
+		var month = date.getMonth()+1;
+		var year = date.getFullYear();
+		var today =year+ '-' + month + '-' +day;
+
+		date.setDate(date.getDate()-7);
+		
+		var lastday = date.getFullYear()+ '-' + (date.getMonth()+1) + '-' +date.getDate();
+		
+
+		$("#datepicker1").val(lastday);
+		$("#datepicker2").val(today);
+	
+	});
+	
+	
+	
+	$("#month").click(function() {
+		var date =new Date();
+		var day = date.getDate();
+		var month = date.getMonth()+1;
+		var year = date.getFullYear();
+		var today =year+ '-' + month + '-' +day;
+
+		date.setMonth(date.getMonth()-1);
+		
+		var lastday = date.getFullYear()+ '-' + (date.getMonth()+1) + '-' +date.getDate();
+		
+		$("#datepicker1").val(lastday);
+		$("#datepicker2").val(today);
+	
+	});
+	
+	$("#tmonth").click(function() {
+		var date =new Date();
+		var day = date.getDate();
+		var month = date.getMonth()+1;
+		var year = date.getFullYear();
+		var today =year+ '-' + month + '-' +day;
+		
+		date.setMonth(date.getMonth()-3);
+		
+		var lastday = date.getFullYear()+ '-' + (date.getMonth()+1) + '-' +date.getDate();
+		
+		
+		$("#datepicker1").val(lastday);
+		$("#datepicker2").val(today);
+		
+	
+	});
+	
+	$("#smonth").click(function() {
+		var date =new Date();
+		var day = date.getDate();
+		var month = date.getMonth()+1;
+		var year = date.getFullYear();
+		var today =year+ '-' + month + '-' +day;
+		
+		date.setMonth(date.getMonth()-6);
+		
+		var lastday = date.getFullYear()+ '-' + (date.getMonth()+1) + '-' +date.getDate();
+		
+		$("#datepicker1").val(lastday);
+		$("#datepicker2").val(today);
+	
+	});
+
+
+});
+
 </script>
 
 
@@ -41,26 +140,27 @@ $(function() {
 	</tr>
 </table>
 
+<form name="searchDate" method="post" >
 <table style="border:3px solid silver; width: 1000px; margin: 40px auto 0px; height: 100px;">
-	<tr style="text-align: center;  font-size: 12px;">
-		<td  style="width: 30%; ">
-			<button  type="button" style="padding: 2px">오늘</button>
-			<button style="margin: 0; position: relative; left: -6px; padding: 2px" type="button">1주일</button>
-			<button style="margin: 0; position: relative; left: -12px; padding: 2px" type="button">1개월</button>
-			<button style="margin: 0; position: relative; left: -18px; padding: 2px" type="button">3개월</button>
-			<button style="margin: 0; position: relative; left: -24px; padding: 2px" type="button">6개월</button>
+	<tr style="text-align: center;">
+		<td  style="width: 30%; font-size: 12px">
+			<button value="today" id="today" type="button" style="padding: 2px" >오늘</button>
+			<button value="week" id="week" style="margin: 0; position: relative; left: -6px; padding: 2px" type="button" >1주일</button>
+			<button value="month" id="month" style="margin: 0; position: relative; left: -12px; padding: 2px" type="button" >1개월</button>
+			<button value="tmonth" id="tmonth" style="margin: 0; position: relative; left: -18px; padding: 2px" type="button" >3개월</button>
+			<button value="smonth" id="smonth" style="margin: 0; position: relative; left: -24px; padding: 2px" type="button">6개월</button>
 		</td>
 		<td align="left" style="width: 40%">
-			<input style="width: 100px ; text-align: center;" type="text" id="datepicker1">~
-			<input style="width: 100px; text-align: center; " type="text" id="datepicker2">		
-			<img style="position: relative; top:-2px; " src="<%=cp%>/resource/images/btn_search.gif">
+			<input style="width: 100px ; text-align: center;" type="text" id="datepicker1" >~
+			<input style="width: 100px; text-align: center; " type="text" id="datepicker2" >		
+			<img style="position: relative; top:-2px; " src="<%=cp%>/resource/images/btn_search.gif" onclick="">
 		</td>
 				<td style="width: 30%">
 
 		</td>
 	</tr>
-
 </table>
+</form>
 <table style=" width: 1000px; margin: 0px auto;">
 	<tr>
 		<td><h6>＊기본적으로 최근 3개월간의 자료가 조회되며, 기간 검색시 지난 주문내역을 조회하실 수 있습니다.<br>
