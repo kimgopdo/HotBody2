@@ -11,6 +11,15 @@
 		<put-attribute name="body" value="/WEB-INF/view/main/main.jsp" />
 		<put-attribute name="footer" value="/WEB-INF/view/layout/footer.jsp" />
 	</definition>
+	<!-- shop -->
+	<definition name=".shopLayout" template="/WEB-INF/view/layout/shopLayout/layout.jsp">
+	    <put-attribute name="title" value="hotShop" />
+	    <put-attribute name="quickMenu" value="/WEB-INF/view/layout/shopLayout/quickMenu.jsp" />
+	    <put-attribute name="leftSide" value="/WEB-INF/view/layout/shopLayout/leftSide.jsp" />
+	  	<put-attribute name="header" value="/WEB-INF/view/layout/shopLayout/header.jsp" />
+		<put-attribute name="body" value="/WEB-INF/view/hotShop/main.jsp" />
+		<put-attribute name="rightSide" value="/WEB-INF/view/layout/shopLayout/rightSide.jsp" />
+	</definition>
 	
    <!-- 3단 관리자 -->
 	<definition name=".adminLayout" template="/WEB-INF/view/admin/layout/layout3.jsp">
@@ -37,6 +46,16 @@
 		<put-attribute name="body" value="/WEB-INF/view/{1}/{2}.jsp"/>
 	</definition>
 	<definition name=".*" extends=".mainLayout">
+    	  <put-attribute name="body" value="/WEB-INF/view/{1}.jsp" />
+	</definition>
+	
+	<definition name=".*.*.*" extends=".shopLayout">
+		<put-attribute name="body" value="/WEB-INF/view/{1}/{2}/{3}.jsp"/>
+	</definition>
+	<definition name=".*.*" extends=".shopLayout">
+		<put-attribute name="body" value="/WEB-INF/view/{1}/{2}.jsp"/>
+	</definition>
+	<definition name=".*" extends=".shopLayout">
     	  <put-attribute name="body" value="/WEB-INF/view/{1}.jsp" />
 	</definition>
 
