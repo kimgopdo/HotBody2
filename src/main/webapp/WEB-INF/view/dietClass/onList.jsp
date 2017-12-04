@@ -24,7 +24,7 @@
 		    			<td>
 		    			<%-- 
 		    				<c:if test="#">
-		    				<span style="background: #333333; color: #ffffff; font-size: 20px;">마감</span>
+		    					<span style="background: #333333; color: #ffffff; font-size: 20px;">마감</span>
 		    				</c:if>
 		    			 --%>
 		    				<span style="background: #ff6600; color: #ffffff; font-size: 20px;">진행중</span>
