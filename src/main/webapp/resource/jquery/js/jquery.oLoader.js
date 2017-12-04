@@ -4,6 +4,7 @@
  *	@website: http://js.ownage.sk/
  *	@project website: http://projects.ownage.sk/jquery/oLoader 
  **/
+
 (function($) {
 
     if (!$.ownage) {

@@ -10,6 +10,7 @@ public class DietClassController {
 		return ".dietClass.list";
 	}
 	
+	
 	@RequestMapping(value="/dietClass/article")
 	public String classArticle() {
 		return ".dietClass.article";

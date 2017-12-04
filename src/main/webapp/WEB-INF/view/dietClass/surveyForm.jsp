@@ -66,6 +66,7 @@ $(function() {
 			
 		</div>
 		
+		
 		<div style="width: 500px; margin-left: 45px;" align="right">
 			<button id="paymentBtn" type="button" style="width: 100px; height: 45px; background: #999999; border: 0px; color: #ffffff; border-radius:4px; font-weight: bold;" onclick="">이전</button>
 			<button id="paymentBtn" type="button" style="width: 100px; height: 45px; background: #1abc9c; border: 0px; color: #ffffff; border-radius:4px; font-weight: bold;" onclick="">다음</button>

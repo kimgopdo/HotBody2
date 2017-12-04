@@ -35,6 +35,7 @@ function selectConfirm(num){
 	}
 }
 
+
 function selectAgree() {
 	//두 약관에 모두 동의하면
 	if($('input:checkbox[name=agree1]').is(':checked') && $('input:checkbox[name=agree2]').is(':checked'))

@@ -76,5 +76,4 @@
 	
 	<div id="map"></div>
 	
-
 </div>
