@@ -5,11 +5,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller("user2.userController")
 public class DietClassController {
+	
 	@RequestMapping(value="/dietClass/list")
 	public String classList() {
 		return ".dietClass.list";
 	}
-	
 	
 	@RequestMapping(value="/dietClass/article")
 	public String classArticle() {
@@ -25,4 +25,10 @@ public class DietClassController {
 	public String classSurvey() {
 		return "dietClass/surveyForm";
 	}
+	
+	@RequestMapping(value="dietClass/created")
+	public String classCreated() {
+		return ".dietClass.created";
+	}
+	
 }
