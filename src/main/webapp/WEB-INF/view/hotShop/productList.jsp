@@ -5,9 +5,13 @@
 <%
 	String cp=request.getContextPath();
 %>
-<table>
+<table style="margin-top: 100px;">
 <tr>
-	<td><input type="radio">조회순 &nbsp;&nbsp;<input type="radio">별점순 &nbsp;&nbsp;<input type="radio">등록순 &nbsp;&nbsp;</td>
+	<td style="text-align: left;">
+		<input type="radio" name="formal" value="hitCount">조회순 &nbsp;&nbsp;
+		<input type="radio" name="formal" value="star">별점순 &nbsp;&nbsp;
+		<input type="radio" name="formal" value="created">등록순 &nbsp;&nbsp;
+	</td>
 </tr>
 <tr>
 	<td>

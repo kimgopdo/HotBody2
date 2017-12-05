@@ -6,22 +6,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller("hotShop.board")
 public class HotShopBoardController {
 	
-	@RequestMapping("/hotShop/reviewList")
+	@RequestMapping("/hotShop/productList")
 	public String productList() {
 		
 		
 		
 		
 		
-		return ".hotShop.shopList";
+		return ".hotShop.productList";
 	}
-	@RequestMapping("/hotShop/shopArticle")
-	public String shopArticleForm() {
-		return ".hotShop.shopArticle";
-	}
-	@RequestMapping("/hotShop/productList")
-	public String productArticleForm() {
-		return "";
+	@RequestMapping("/hotShop/shopReviews")
+	public String shopReviewList() {
+		return ".hotShop.shopReviewList";
 	}
 	@RequestMapping(value="/hotShop/payment")
 	public String paymentForm() {
