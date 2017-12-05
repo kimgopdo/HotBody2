@@ -2,7 +2,13 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="member">
-
-
+	<select id="readMember" resultType="com.hotbody.member.Member" parameterType="String">
+		SELECT m1.userId, userName, userPwd,
+		   NVL(memberLevel, 0) memberLevel, email, tel, 
+		   TO_CHAR(birth, 'YYYY-MM-DD') birth, zip, addr1, addr2, gender
+		FROM member1 m1 
+		LEFT OUTER JOIN member2 m2 ON m1.userId = m2.userId
+		WHERE m1.userId = #{userId} AND memberLevel !=0
+	</select>
 
 </mapper>

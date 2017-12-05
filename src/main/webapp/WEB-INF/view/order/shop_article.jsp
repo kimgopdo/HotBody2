@@ -9,12 +9,6 @@
 
 
 <script type="text/javascript">
-// 탭 클릭 시 스크롤 이동
-function fnMove(seq){
-    var offset = $("#div" + seq).offset();
-    $('html, body').animate({scrollTop : offset.top}, 10);
-}
-
 // 상품 수량 변경
 var sum = 5000; // 상품 가격
 var no = 1;
@@ -45,61 +39,9 @@ function numberWithCommas(x) {
 }
 </script>
 
-<script type="text/javascript">
-$(".search_bar").hover(function(){
-	$(this).animate({ width: "150px"}, 1000);
-}, function(){
-	$(this).animate({ width: "80px"}, 1000);
-});
-</script>
 
 
-<script type="text/javascript">
-// 검색 버튼
-$(document).ready(function(){
-	  $("#search").on("click", function() {
-	    $(this).val("");
-	  });
-	})
-</script>
-
-<script type="text/javascript">
-// 로그인 모달
-function modalSendLogin() {
-	var f=document.loginForm;
-	
-	if(!f.userId.value) {
-    	f.userId.focus();
-    	return false;
-    }	
-
-    if(!f.userPwd.value) {
-    	f.userPwd.focus();
-    	return false;
-    }
-    
-    var query=$('form[name=loginForm]').serialize();
-    var url="<%=cp%>/member/login";
-    $.ajax({
-		type:"post"
-		,url:url
-		,data:query
-		,dataType:"json"
-		,success:function(data) {
-			var state=data.state;
-			if(state=="true") {
-				location.href="<%=cp%>/";
-			} else {
-				alert("로그인 실패");
-			}
-		}
-	  	,error : function(jqXHR) {
-        	 console.log(jqXHR.responseText);
-	    }
-	});
-
-}
-</script>
+<div class="container_article">
 		<!-- 아티클 -->
 		<div align="center" style="width: 100%; height: 1500px; padding: 20px; margin-top: 50px;">
 		<div style="width: 100%; height: 620px; padding: 10px;">
@@ -114,16 +56,16 @@ function modalSendLogin() {
 			<div style="width: 35%; height:600px; float: right; display: inline;">
 				<div style="width: 100%; max-height: 30%; margin-bottom: 80px;">
 					<div style="margin-bottom: 10px;">
-						<!-- 공백 포함 25글자(46 byte) -->
-						<span style="font-weight: bold; font-size: 22px;">맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있드</span>
+						<!-- 공백 포함 20글자(36 byte) -->
+						<span style="font-weight: bold; font-size: 22px;">맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐</span>
 					</div>
 					<div style="margin-bottom: 10px;">
-						<!-- 공백 포함 339글자(619 byte) -->
-						<span style="font-size: 12px;">ㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹ맛있는 닭찌찌  닭찌찌샐러드맛있는 닭찌찌 샐러드맛있는닭찌찌 샐러 맛있는닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드</span>
+						<!-- 공백 포함 282글자(514 byte) -->
+						<span style="font-size: 12px;">라닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌라라러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드</span>
 					</div>
 					<div style="margin-bottom: 10px;">
-						<!-- 공백 포함 33글자(66 byte) -->
-						<span style="font-weight: bold; font-size: 15px;">오호라라라라라라라오호라라라라라라라오호라라라라라라라라라라라라라</span>
+						<!-- 공백 포함 25글자(50 byte) -->
+						<span style="font-weight: bold; font-size: 15px;">오호라라라라라라라오호라라라라라라라오호라라라라하</span>
 					</div>
 				</div>
 				
@@ -166,17 +108,17 @@ function modalSendLogin() {
 				<!-- 버튼 -->
 				<div style="width: 100%; height: 8.5%;">
 					<div style="display: inline; float: left; margin-right: 10px;">
-						<button type="button" class="" style="width: 100px; height: 54px; background: white; outline: none; border: 1px solid black;">
+						<button type="button" class="" style="width: 60px; height: 50px; background: white; outline: none; border: 1px solid black;">
 							<img src="<%=cp%>/resource/shop_images/heart.PNG" style="width: 70%; height: 70%;">
 						</button>
 					</div>
 					<div style="display: inline; float: left; margin-right: 10px;">
-						<button type="button" class="" style="width: 190px; height: 54px; background: white; outline: none; border: 1px solid black;">
+						<button type="button" class="" style="width: 149px; height: 50px; background: white; outline: none; border: 1px solid black;">
 							<span style="font-weight: bold; font-size: 18px;">Cart</span>
 						</button>
 					</div>
 					<div style="display: inline; float: left;">
-						<button type="button" class="" style="width: 190px; height: 54px; background: white; outline: none; border: 1px solid black;">
+						<button type="button" class="" style="width: 149px; height: 50px; background: white; outline: none; border: 1px solid black;">
 							<span style="font-weight: bold; font-size: 18px;">Buy</span>
 						</button>
 					</div>
@@ -187,19 +129,19 @@ function modalSendLogin() {
 <hr style="border: solid 0.5px #BDBDBD; width: 100%; margin-bottom: 50px;">
 
 	<!-- 상품설명 -->
-	<div style="width: 1200px">
+	<div style="width: 100%">
 		<!-- 상품설명 탭, 사진(설명) -->
-		<div style="width: 1200px; margin-bottom: 200px; min-height: 3000px;" id="div1">
+		<div style="width: 100%; margin-bottom: 200px; min-height: 3000px;" id="div1">
 			<!-- 탭 -->
-			<ul style="width: 1200px; height:50px; border: 0.5px solid #BDBDBD; padding: 0px; margin-bottom: 30px;">
-				<li style="list-style:none; float: left; width: 399.5px; height:49.5px; padding-top:13px; border-right: 0.5px solid #BDBDBD; 
+			<ul style="width: 100%; height:50px; border: 0.5px solid #BDBDBD; padding: 0px; margin-bottom: 30px;">
+				<li style="list-style:none; float: left; width: 366px; height:49.5px; padding-top:13px; border-right: 0.5px solid #BDBDBD; 
 					border-left: 0.5px solid #BDBDBD; border-bottom: 0.5px solid #BDBDBD; background-color: #EAEAEA;" onclick="fnMove('1')">
 					<span style="font-size: 13px; font-weight: bold;">상품설명</span>
 				</li>
-				<li style="list-style:none; float: left; width: 399.5px; height:49.5px; padding-top:13px; border-right: 0.5px solid #BDBDBD;" onclick="fnMove('2')">
+				<li style="list-style:none; float: left; width: 366px; height:49.5px; padding-top:13px; border-right: 0.5px solid #BDBDBD;" onclick="fnMove('2')">
 					<span style="font-size: 13px;">상품상세</span>
 				</li>
-				<li style="list-style:none; float: left; width: 399.5px; height:49.5px; padding-top:13px;" onclick="fnMove('3')">
+				<li style="list-style:none; float: left; width: 366px; height:49.5px; padding-top:13px;" onclick="fnMove('3')">
 					<span style="font-size: 13px;">상품후기</span>
 				</li>
 			</ul>
@@ -212,17 +154,17 @@ function modalSendLogin() {
 		</div>
 		
 		<!-- 상품상세 탭 -->
-		<div style="width: 1200px; margin-bottom: 200px; min-height: 900px;" id="div2">
+		<div style="width: 100%; margin-bottom: 200px; min-height: 900px;" id="div2">
 			<!-- 탭 -->
-			<ul style="width: 1200px; height:50px; border: 0.5px solid #BDBDBD; padding: 0px; margin-bottom: 30px;">
-				<li style="list-style:none; float: left; width: 399.5px; height:49.5px; padding-top:13px;" onclick="fnMove('1')">
+			<ul style="width: 100%; height:50px; border: 0.5px solid #BDBDBD; padding: 0px; margin-bottom: 30px;">
+				<li style="list-style:none; float: left; width: 366px; height:49.5px; padding-top:13px;" onclick="fnMove('1')">
 					<span style="font-size: 13px;">상품설명</span>
 				</li>
-				<li style="list-style:none; float: left; width: 399.5px; height:49.5px; padding-top:13px; border-right: 0.5px solid #BDBDBD; 
+				<li style="list-style:none; float: left; width: 366px; height:49.5px; padding-top:13px; border-right: 0.5px solid #BDBDBD; 
 					border-left: 0.5px solid #BDBDBD; border-bottom: 0.5px solid #BDBDBD; background-color: #EAEAEA;" onclick="fnMove('2')">
 					<span style="font-size: 13px; font-weight: bold;">상품상세</span>
 				</li>
-				<li style="list-style:none; float: left; width: 399.5px; height:49.5px; padding-top:13px;" onclick="fnMove('3')">
+				<li style="list-style:none; float: left; width: 366px; height:49.5px; padding-top:13px;" onclick="fnMove('3')">
 					<span style="font-size: 13px;">상품후기</span>
 				</li>
 			</ul>
@@ -234,16 +176,16 @@ function modalSendLogin() {
 		</div>
 		
 		<!-- 상품후기 탭 -->
-		<div style="width: 1200px; margin-bottom: 200px; min-height: 900px;" id="div3">
+		<div style="width: 100%; margin-bottom: 200px; min-height: 900px;" id="div3">
 			<!-- 탭 -->
-			<ul style="width: 1200px; height:50px; border: 0.5px solid #BDBDBD; padding: 0px; margin-bottom: 30px;">
-				<li style="list-style:none; float: left; width: 399.5px; height:49.5px; padding-top:13px; border-right: 0.5px solid #BDBDBD;" onclick="fnMove('1')">
+			<ul style="width: 100%; height:50px; border: 0.5px solid #BDBDBD; padding: 0px; margin-bottom: 30px;">
+				<li style="list-style:none; float: left; width: 366px; height:49.5px; padding-top:13px; border-right: 0.5px solid #BDBDBD;" onclick="fnMove('1')">
 					<span style="font-size: 13px;">상품설명</span>
 				</li>
-				<li style="list-style:none; float: left; width: 399.5px; height:49.5px; padding-top:13px; border-right: 0.5px solid #BDBDBD;" onclick="fnMove('2')">
+				<li style="list-style:none; float: left; width: 366px; height:49.5px; padding-top:13px; border-right: 0.5px solid #BDBDBD;" onclick="fnMove('2')">
 					<span style="font-size: 13px;">상품상세</span>
 				</li>
-				<li style="list-style:none; float: left; width: 399.5px; height:49.5px; padding-top:13px; border-bottom: 0.5px solid #BDBDBD; 
+				<li style="list-style:none; float: left; width: 366px; height:49.5px; padding-top:13px; border-bottom: 0.5px solid #BDBDBD; 
 					background-color: #EAEAEA;" onclick="fnMove('3')">
 					<span style="font-size: 13px; font-weight: bold;">상품후기</span>
 				</li>
@@ -257,4 +199,5 @@ function modalSendLogin() {
 
 	</div>
 	
+     </div>
      </div>
