@@ -11,23 +11,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
-body{
-	font-family: "맑은 고딕";
-	font-size: 14px;
-}
-* {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box
-}
-
-:after,
-:before {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box
-}
-
 .form-group {
     display: inline-block;
     margin-bottom: 0;
@@ -127,30 +110,50 @@ fieldset[disabled] .form-control {
     border-radius: 2px;
     color: #ffffff;
 }
+/* 바탕 배경 이미지 */
+.pop-address-search .pop-address-search-inner { background-image: url(http://www.0000.com/img/backImg.png);}
+/* 회사 로고 이미지 */
+.pop-address-search .pop-address-search-inner .logo { background: url(http://www.0000.com/img/logo.png) no-repeat; background-position:center; }
+
+/* 바탕 배경색상 */
+.pop-address-search .pop-address-search-inner { background-color:#ECECEC; }
+/* 검색창 색상 */
+.pop-address-search .pop-address-search-inner .wrap input { background-color:#FFFFFF; }
+/* 검색버튼 색상 */
+.pop-address-search .pop-address-search-inner .wrap { background-color:#FFFFFF; }
+/* 본문 배경색(홀수) */
+.pop-address-search .pop-address-search-inner .result table.data-col tbody tr:nth-child(odd) td {background:#FFFFFF}
+/* 본문 배경색(짝수) */
+.pop-address-search .pop-address-search-inner .result table.data-col tbody tr:nth-child(even) td {background:#FFFFFF}
 </style>
+<script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
 <script type="text/javascript">
 function sendOk() {
-	var f = document.boardForm;
 	
-	if(!f.subject.value){
-		alert("제목을 입력하세요.");
-		f.subject.focus();
-		return;
-	}
+	var q=$("form[name=dietClassForm]").serialize();
+	//var formData = $("dietClassForm")[0];
+	//var formData=new FormData($(q)[7]);
+	var url="<%=cp%>/dietClass/insert";
+	alert(q);
+	$.ajax({
+		type:"post"
+		,url:url
+		//,processData: false
+        //,contentType: false
+		,data: q
+		,dataType:"json"
+		,success:function() {
+			location.href="<%=cp%>/dietClass/list";
+		}
+	    ,error:function(e) {
+	    	console.log(e.responseText);
+	    }
+	});
 	
-	if(!f.name.value){
-		alert("이름을 입력하세요.");
-		f.name.focus();
-		return;
-	}
-	
-	if(!f.content.value){
-		alert("내용을 입력하세요.");
-		f.content.focus();
-		return;
-	}
-	
-	f.submit();
 }
 function fileChange() {
 	var upload=document.getElementById("upload").value;
@@ -161,122 +164,293 @@ function deleteFile() {
 		location.href="<%=cp%>/notice/deleteFile?page=${page}&num=${dto.num}"
 	}
 }
+function oneCheckbox(p){
+	//클래스유형 체크박스 하나만 체크하기
+    var obj = document.getElementsByName("classType");
+    for(var i=0; i<obj.length; i++){
+        if(obj[i] != p){
+            obj[i].checked = false;
+        }
+    }
+}
+
+function selectClassType(typeNum) {
+	if(typeNum==0){
+		$("#offInfo").slideUp("slow");		
+		$("#onInfo").slideDown("slow");
+	}
+	else{
+		$("#onInfo").slideUp("slow");
+		$("#offInfo").slideDown("slow");
+	}
+}
+
+function sample6_execDaumPostcode() {
+    new daum.Postcode({
+        oncomplete: function(data) {
+            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+            // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+            var fullAddr = ''; // 최종 주소 변수
+            var extraAddr = ''; // 조합형 주소 변수
+
+            // 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+            if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                fullAddr = data.roadAddress;
+
+            } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                fullAddr = data.jibunAddress;
+            }
+
+            // 사용자가 선택한 주소가 도로명 타입일때 조합한다.
+            if(data.userSelectedType === 'R'){
+                //법정동명이 있을 경우 추가한다.
+                if(data.bname !== ''){
+                    extraAddr += data.bname;
+                }
+                // 건물명이 있을 경우 추가한다.
+                if(data.buildingName !== ''){
+                    extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
+                fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
+            }
+
+            // 우편번호와 주소 정보를 해당 필드에 넣는다.
+            document.getElementById('sample6_postcode').value = data.zonecode; //5자리 새우편번호 사용
+            document.getElementById('sample6_address').value = fullAddr;
+
+            // 커서를 상세주소 필드로 이동한다.
+            document.getElementById('sample6_address2').focus();
+        }
+    }).open();
+}
+
+$(function(){
+	var d = new Date();
+	// $("#date1").datepicker();
+	$(".classDate").datepicker({
+		showMonthAfterYear:true
+	});
+	$(".classDate").datepicker("option", "defaultDate", d);
+});
 </script>
 </head>
 <body>
+<div class="body-container" style="width: 1000px;">
 <div style="height: 50px;"></div>
 <div style="font-size: 40px; width: 1000px; margin: 20px auto 0; font-weight: bold; color: #666666;">클래스 등록</div>
 <div style="width:1000px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
 
-<form action="<%=cp%>/notice/${mode}" method="post" name="boardForm" enctype="multipart/form-data">
-<table style="width: 1000px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0">
-<tr height="40">
-	<td width="100">클래스명</td>
-	<td>
-		<input type="text" name="subject" style="width: 98%; height: 35px;" value="${dto.subject}">
+<form id="dietClassForm" action="" method="post" name="dietClassForm" enctype="multipart/form-data">
+	<table style="width: 1000px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0">
+	<tr height="40">
+		<td width="100">클래스명</td>
+		<td>
+			<input type="text" name="className" style="width: 98%; height: 35px;" value="${dto.subject}">
+		</td>
+	</tr>
+	<tr height="10px;"></tr>
+	
+	<tr>
+		<td width="100">클래스 난이도</td>
+		<td>
+			<input type="radio" name="cllevel" value="1" ${dto.cllevel=="1"?"checked='checked'":""}>
+			<label for="notice"> 상 </label>
+			
+			<input type="radio" name="cllevel" value="2" ${dto.cllevel=="2"?"checked='checked'":""}>
+			<label for="notice"> 중 </label>
+			
+			<input type="radio" name="cllevel" value="3" ${dto.cllevel=="3"?"checked='checked'":""}>
+			<label for="notice"> 하 </label>
+		</td>
+	</tr>
+	<tr height="10px;"></tr>
+	
+	<tr height="40">
+		<td width="100">수강료</td>
+		<td>
+			<input type="text" name="tuition" style="width: 20%; height: 35px;" value="${dto.name}"> 원
+		</td>
+	</tr>
+	<tr height="10px;"></tr>
+	
+	<tr height="40">
+		<td width="100" valign="top">목적</td>
+		<td>
+			<textarea style="width: 98%;" rows=6; name="classGoal">${dto.content}</textarea>
+		</td>
+	</tr>
+	<tr height="10px;"></tr>
+	
+	<tr height="40">
+		<td width="100" valign="top">목적상세</td>
+		<td>
+			<textarea style="width: 98%;" rows=10; name="classGoalD">${dto.content}</textarea>
+		</td>
+	</tr>
+	<!-- 
+		프로그램 등록하는 부분 수정 필요함 
+	 -->
+	<tr height="40">
+		<td width="100" valign="top">프로그램 등록</td>
+		<td>
+		<button type="button" class="btn" data-toggle="modal" data-target="#myModal">등록</button>
+	
+	  <!-- Modal -->
+	  <div class="modal fade" id="myModal" role="dialog">
+	    <div class="modal-dialog modal-lg">
+	      <div class="modal-content">
+	        <div class="modal-header">
+	          <button type="button" class="close" data-dismiss="modal">&times;</button>
+	          <h4 class="modal-title">프로그램 등록하기</h4>
+	        </div>
+	        <div class="modal-body" style="height: 500px;">
+	        
+	          <p>내용</p>
+	          
+	        </div>
+	        <div class="modal-footer">
+	          <button type="button" class="btn" data-dismiss="modal">등록완료</button>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
 	</td>
-</tr>
-<tr height="10px;"></tr>
-
-<tr>
-	<td width="100">클래스 난이도</td>
-	<td>
-		<input type="checkbox" name="notice" id="notice" value="1" ${dto.notice=="1"?"checked='checked'":""}>
-		<label for="notice"> 상 </label>
-		
-		<input type="checkbox" name="notice" id="notice" value="2" ${dto.notice=="2"?"checked='checked'":""}>
-		<label for="notice"> 중 </label>
-		
-		<input type="checkbox" name="notice" id="notice" value="3" ${dto.notice=="3"?"checked='checked'":""}>
-		<label for="notice"> 하 </label>
-	</td>
-</tr>
-<tr height="10px;"></tr>
-
-<tr height="40">
-	<td width="100">수강료</td>
-	<td>
-		<input type="text" name="name" style="width: 98%; height: 35px;" value="${dto.name}">
-	</td>
-</tr>
-<tr height="10px;"></tr>
-
-<tr height="40">
-	<td width="100" valign="top">목적</td>
-	<td>
-		<textarea style="width: 98%;" rows=6; name="content">${dto.content}</textarea>
-	</td>
-</tr>
-<tr height="10px;"></tr>
-
-<tr height="40">
-	<td width="100" valign="top">목적상세</td>
-	<td>
-		<textarea style="width: 98%;" rows=10; name="content">${dto.content}</textarea>
-	</td>
-</tr>
-
-
-<tr height="10px;"></tr>
-
-<tr height="40">
-	<td width="100">파일등록</td>
-	<td>
-	<div class="form-group form_file">
-	  <input id="fileName" class="form-control form_point_color01" type="text" title="첨부된 파일명" readonly style="width:430px">
-	  <span class="file_load">
-	        <input type="file" id="upload" name="upload" onchange="fileChange();">
-	        <label class="btn-default" for="upload">파일첨부</label>
-	    </span>
+	</tr>
+	<tr height="10px;"></tr>
+	<tr height="40">
+		<td width="100">파일등록</td>
+		<td>
+		<div class="form-group form_file">
+		  <input id="fileName" class="form-control form_point_color01" type="text" title="첨부된 파일명" readonly style="width:430px">
+		  <span class="file_load">
+		        <input type="file" id="upload" name="upload" onchange="fileChange();">
+		        <label class="btn" for="upload">파일첨부</label>
+		    </span>
+		</div>
+		</td>
+	</tr>
+	
+	<tr>
+		<td></td>
+		<td style="color: #666666; font-size: 13px;">
+			(최대 10MB이하의 파일이 등록 가능합니다.)
+		</td>
+	</tr>
+	<tr height="10px;"></tr>
+	
+	<c:if test="${mode=='update'}">
+	<tr height="40">
+		<td width="100">첨부된파일</td>
+		<td>
+			${dto.originalFilename}
+			<c:if test="${not empty dto.saveFilename}">
+				&nbsp;<a href="javascript:deleteFile();">
+				<img src="<%=cp%>/resource/images/close_icon.png">
+				</a>
+			</c:if>
+		</td>
+	</tr>
+	</c:if>
+	<tr height="10px;"></tr>
+	
+	<tr>
+		<td width="100">클래스 유형</td>
+		<td>
+			<input type="radio" name="classType" onclick="selectClassType(0)" value="0" ${dto.notice=="0"?"checked='checked'":""}>
+			<label for="notice"> 온라인 </label>
+			
+			<input type="radio" name="classType" onclick="selectClassType(1)" value="1" ${dto.notice=="1"?"checked='checked'":""}>
+			<label for="notice"> 오프라인 </label>
+		</td>
+	</tr>
+	
+	</table>
+	
+	<div id="onInfo" style="width:1000px; display: none;">
+		<table style="width: 1000px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0;">
+			<tr>
+				<td width="100">멘토</td>
+				<td>
+					<input type="text" name="mento" style="width: 20%; height: 35px;" value="${dto.subject}">
+				</td>
+			</tr>
+			<tr height="10px;"></tr>
+			<tr>
+				<td width="100">수강기간</td>
+				<td>
+					<input type="text" name="period" style="width: 20%; height: 35px;" value="${dto.subject}"> 일
+				</td>
+			</tr>
+		</table>
 	</div>
-	</td>
-</tr>
+	
+	<div id="offInfo" style="width:1000px; display: none;">
+		<table style="width: 1000px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0">
+			<tr>
+				<td width="100">코치</td>
+				<td>
+					<input type="text" name="mento" style="width: 20%; height: 35px;" value="${dto.subject}">
+				</td>
+			</tr>
+			<tr height="10px;"></tr>
+			<tr>
+				<td width="100">수강정원</td>
+				<td>
+					<input type="text" name="period" style="width: 20%; height: 35px;" value="${dto.subject}"> 명
+				</td>
+			</tr>
+			
+			<tr height="10px;"></tr>
+			<tr>
+		  		<td width="100" valign="top">클래스 장소</td>
+		  		<td>
+		  			<p>
+					<input style="width: 200px; height: 35px;" type="text" readonly="readonly" name="zip" id="sample6_postcode" placeholder="우편번호">
+					<button class="btn" type="button" onclick="sample6_execDaumPostcode()">우편번호 찾기</button>
+		  			</p>
+		  			<p style="margin-top: 10px;">
+						<input style="width: 300px; height: 35px;" type="text" readonly="readonly" name="addr_1" id="sample6_address" placeholder="주소">
+						<input style="width: 250px; height: 35px;" type="text" name="addr_2" id="sample6_address2" placeholder="상세주소">		  		
+		  			</p>
+		  		</td>
+			</tr>
+			
+			<tr height="10px;"></tr>
+			<tr>
+		  		<td width="100" valign="top">클래스 날짜</td>
+		  		<td>
+				   <input type="text" readonly="readonly" class="classDate" id="startDate"> ~ <input type="text" readonly="readonly" class="classDate" id="endDate">
+		  		</td>
+			</tr>
+			
+			<tr height="10px;"></tr>
+			<tr>
+		  		<td width="100" valign="top">클래스 시간</td>
+		  		<td>
+				   <input type="text" class="classTime" id="startTime"> ~ <input type="text" class="classTime" id="endTime">
+		  		</td>
+			</tr>
+			
+		</table>
+	</div>
+	<div style="width:1000px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
+	<div style="width: 1000px; margin: 20px auto 0;" align="center">
+	<button type="button" class="btn-default02" onclick="sendOk();">등록</button>
+	<button type="button" class="btn-default02" onclick="#">등록취소</button>
+	<c:if test="${mode=='update'}">
+		<input type="hidden" name="page" value="${page}">
+		<input type="hidden" name="num" value="${dto.num}">
+		<input type="hidden" name="query" value="${query}">
+		<input type="hidden" name="saveFilename" value="${dto.saveFilename}">
+		<input type="hidden" name="fileSize" value="${dto.fileSize}">
+		<input type="hidden" name="originalFilename" value="${dto.originalFilename}">
+	</c:if>
+	</div>
 
-<tr>
-	<td></td>
-	<td style="color: #666666; font-size: 13px;">
-		(최대 10MB이하의 파일이 등록 가능합니다.)
-	</td>
-</tr>
-<tr height="10px;"></tr>
-
-<c:if test="${mode=='update'}">
-<tr height="40">
-	<td width="100">첨부된파일</td>
-	<td>
-		${dto.originalFilename}
-		<c:if test="${not empty dto.saveFilename}">
-			&nbsp;<a href="javascript:deleteFile();">
-			<img src="<%=cp%>/resource/images/close_icon.png">
-			</a>
-		</c:if>
-	</td>
-</tr>
-</c:if>
-<tr>
-	<td width="100"></td>
-	<td>
-		<input type="checkbox" name="notice" id="notice" value="0" ${dto.notice=="0"?"checked='checked'":""}>
-		<label for="notice"> 온라인 </label>
-		
-		<input type="checkbox" name="notice" id="notice" value="1" ${dto.notice=="1"?"checked='checked'":""}>
-		<label for="notice"> 오프라인 </label>
-	</td>
-</tr>
-</table>
-<div style="width:1000px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
-<div style="width: 1000px; margin: 20px auto 0;" align="center">
-<button type="button" class="btn-default02" onclick="sendOk();">등록</button>
-<button type="button" class="btn-default02" onclick="javascript:location.href='<%=cp%>/notice/list?page=${page}';">등록취소</button>
-<c:if test="${mode=='update'}">
-	<input type="hidden" name="page" value="${page}">
-	<input type="hidden" name="num" value="${dto.num}">
-	<input type="hidden" name="query" value="${query}">
-	<input type="hidden" name="saveFilename" value="${dto.saveFilename}">
-	<input type="hidden" name="fileSize" value="${dto.fileSize}">
-	<input type="hidden" name="originalFilename" value="${dto.originalFilename}">
-</c:if>
-</div>
 </form>
+</div>
 </body>
 </html>
