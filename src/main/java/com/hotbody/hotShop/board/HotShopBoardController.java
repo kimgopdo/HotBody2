@@ -23,6 +23,11 @@ public class HotShopBoardController {
 	public String paymentForm() {
 		return ".hotShop.payPage";
 	}
+	@RequestMapping(value="/hotShop/shopArticle")
+	public String shopArticle() {
+		return ".hotShop.shopArticle";
+	}
+	
 	@RequestMapping(value="/hotShop/created",  method=RequestMethod.GET)
 	public String createdForm() {
 		return ".hotShop.created";
