@@ -73,7 +73,7 @@ function modalSendLogin() {
 	    </div>
 	  </div>
 	</div>
-	
+
 
 	
 <!-- 오른쪽 사이드 바 -->
@@ -90,28 +90,28 @@ function modalSendLogin() {
             	</button>
         	</li>
         	<li>
-        		<form id='searchBar' class="aaa">
-					<input type='search' id='search' style="color: black; cursor: black;">
-				</form>
+	        	<button type="button" class="btn btn-default btn-lg" style="background: white; border: none; outline: none;">
+	               <span class="glyphicon glyphicon-search"></span>
+	            </button>
         	</li>
 			<c:if test="${empty sessionScope.member}">
-			    <div>
-			         <button type="button"  data-toggle="modal" data-target="#myLoginModal" class="btn btn-default btn-lg" style="background: white; border: none; outline: none;" onclick="modalSendLogin();">
-			         	<span class="glyphicon glyphicon-log-in"></span>
-			         </button>
-			    </div>
+			<li>
+			     <button type="button" name="searchBtn"  data-toggle="modal" data-target="#myLoginModal" class="btn btn-default btn-lg" style="background: white; border: none; outline: none;" onclick="modalSendLogin();">
+			        <span class="glyphicon glyphicon-log-in"></span>
+			     </button>
+			</li>
 			</c:if>
 			<c:if test="${not empty sessionScope.member}">
-			    <div>
-			         <button type="button" class="btn btn-default btn-lg" style="background: white; border: none; outline: none;"onclick="javascript:location.href='<%=cp%>/member/logout';">
-			         	<span class="glyphicon glyphicon-log-out"></span>
-			         </button>
-			    </div>
+			<li>
+			     <button type="button" class="btn btn-default btn-lg" style="background: white; border: none; outline: none;"onclick="javascript:location.href='<%=cp%>/member/logout';">
+			         <span class="glyphicon glyphicon-log-out"></span>
+			     </button>
+			</li>
 			</c:if>
         	<li>
         		<button type="button" class="btn btn-default btn-lg" style="background: white; border: none; outline: none;">
-            	<span class="glyphicon glyphicon-user"></span>
-         	</button>
+            		<span class="glyphicon glyphicon-user"></span>
+         		</button>
         	</li>
         	<li>
         		<button type="button" class="btn btn-default btn-lg" style="background: white; border: none; outline: none;" onclick="fnMove('4')">

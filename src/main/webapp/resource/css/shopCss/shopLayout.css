@@ -80,56 +80,6 @@ li.aspect{
     height: 350px;
     display: block;
 }
-#searchBar input{
-	outline: none;
-}
-input[type=search] {
-	-webkit-box-sizing: content-box;
-  -moz-box-sizing: content-box;
-	font-size: 100%;
-	background: transparent url(https://static.tumblr.com/ftv85bp/MIXmud4tx/search-icon.png) no-repeat 9px center;
-	border: none;
-	padding: 5px 10px 5px 2px;
-	width: 55px;
-	-webkit-transition: all .5s;
-	-moz-transition: all .5s;
-	transition: all 0.5s;
-}
-#searchBar input[type=search] {
-	width: 15px;
-	padding-left: 10px;
-	color: transparent;
-	cursor: pointer;
-  background-color: transparent;
-  border-bottom: .2em solid black;
-}
-#searchBar input[type=search]:hover {
-	background-color: transparent;
-}
-#searchBar input[type=search]:focus {
-	width: 120px;
-	padding-left: 32px;
-	color: #000;
-	background-color: transparent;
-	cursor: auto;
-  border-bottom: .2em solid black;
-  color: white;
-}
-#searchBar {
-  text-align: center;
-}
-.results {
-  margin-top: 1em;
-  margin-bottom: 1em;
-  padding: .5em .5em .5em .5em;
-  background-color: white;
-  text-align: center;
-  margin-left: 3em;
-  margin-right: 3em;
-  color: black;
-  background-color: white;
-  text-decoration: none;
-}
 a:hover {
   text-decoration: none;
 }
