@@ -41,7 +41,7 @@ function numberWithCommas(x) {
 
 
 
-<div class="container_article">
+<div class="container">
 		<!-- 아티클 -->
 		<div align="center" style="width: 100%; height: 1500px; padding: 20px; margin-top: 50px;">
 		<div style="width: 100%; height: 620px; padding: 10px;">
