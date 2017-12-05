@@ -60,13 +60,7 @@ function move(menu){
             	</div>
             </li>
             <li>
-            	<a href="#">클래스 식단</a>
-            	<div align="center" class="menuEx" style="display: none;">
-            	<ul>
-            		<li onclick="">온라인클래스</li>
-            		<li onclick="">오프라인클래스</li>
-            	</ul>
-            	</div>
+            	<a href="javascript:location.href='<%=cp%>/hotShop/shopReviews';">상품 전체 후기</a>
             </li>
           </ul>
         </div>
