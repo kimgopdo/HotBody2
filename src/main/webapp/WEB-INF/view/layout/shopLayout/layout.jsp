@@ -39,7 +39,7 @@
 <script type="text/javascript" src="<%=cp%>/resource/js/shopJS/loginModal.js"></script>
 <!-- tab 이동 -->
 <script type="text/javascript" src="<%=cp%>/resource/js/shopJS/tabMove.js"></script>
-<!-- 이미지 테두리 없애기 -->
+<!-- 이미지 테두리 없애기                  fsgdfgf -->
 <style type="text/css">
 <!--
 IMG {border: none;}

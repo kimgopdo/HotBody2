@@ -14,6 +14,10 @@ public class HotShopBoardController {
 		
 		return ".hotShop.shopList";
 	}
+	@RequestMapping("/hotShop/shopArticle")
+	public String shopArticleForm() {
+		return ".hotShop.shopArticle";
+	}
 	@RequestMapping("/hotShop/productList")
 	public String productArticleForm() {
 		return "";

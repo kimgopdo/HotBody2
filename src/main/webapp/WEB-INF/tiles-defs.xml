@@ -30,13 +30,13 @@
     	<put-attribute name="body" value="/WEB-INF/view/admin/{1}.jsp" />
 	</definition>
 	<!-- shop -->
-	<definition name=".shopLayout" template="/WEB-INF/view/shopLayout/layout.jsp">
+	<definition name=".shopLayout" template="/WEB-INF/view/layout/shopLayout/layout.jsp">
 	    <put-attribute name="title" value="hotShop" />
-	    <put-attribute name="quickMenu" value="/WEB-INF/view/shopLayout/quickMenu.jsp" />
-	    <put-attribute name="leftSide" value="/WEB-INF/view/shopLayout/leftSide.jsp" />
-	  	<put-attribute name="header" value="/WEB-INF/view/shopLayout/header.jsp" />
+	    <put-attribute name="quickMenu" value="/WEB-INF/view/layout/shopLayout/quickMenu.jsp" />
+	    <put-attribute name="leftSide" value="/WEB-INF/view/layout/shopLayout/leftSide.jsp" />
+	  	<put-attribute name="header" value="/WEB-INF/view/layout/shopLayout/header.jsp" />
 		<put-attribute name="body" value="/WEB-INF/view/hotShop/main.jsp" />
-		<put-attribute name="rightSide" value="/WEB-INF/view/shopLayout/rightSide.jsp" />
+		<put-attribute name="rightSide" value="/WEB-INF/view/layout/shopLayout/rightSide.jsp" />
 	</definition>
 	<definition name=".hotShop.*.*.*" extends=".shopLayout">
 		<put-attribute name="body" value="/WEB-INF/view/hotShop/{1}/{2}/{3}.jsp"/>

@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class MemberController {
@@ -22,13 +23,14 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="/member/login", method=RequestMethod.POST)
+	@ResponseBody
 	public String loginSubmit(
 			@RequestParam String userId,
 			@RequestParam String userPwd,
 			Model model,
 			HttpSession session
 			) throws Exception {
-		
+		System.out.println("ddddddd");
 		Member dto = service.readMember(userId);
 		
 		if(dto == null || (! dto.getUserPwd().equals(userPwd))) {

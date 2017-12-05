@@ -12,7 +12,7 @@ function modalSendLogin() {
     }
     
     var query=$('form[name=loginForm]').serialize();
-    var url="member/login";
+    var url="<%=cp%>/member/login";
     $.ajax({
 		type:"post"
 		,url:url
