@@ -22,17 +22,17 @@
 </div>
 
 
-<table  style="border: 1px solid; margin: 40px auto; width: 900px;">
+<table  style="border: 1px solid; margin: 40px auto; width: 1000px;">
 	<tr>
-		<td style="width: 30%; padding: 5px;padding-top: 20px ">▷ 가용포인트 </td>
+		<td style="width: 30%; padding: 5px;padding-top: 20px ">▷ 가용적립금 </td>
 		<td style=" width: 10%; text-align: right;padding-top: 20px" ><b>0원</b></td>
 		<td align="center" style="border-right: 1px solid; width: 10%;padding-top: 20px"><img src="<%=cp%>/resource/images/btn_result.gif"></td>
-		<td style="width: 30%; padding: 5px;padding-top: 20px">▷ 총포인트</td>
+		<td style="width: 30%; padding: 5px;padding-top: 20px">▷ 총적립금</td>
 		<td style=" width: 10%; text-align: right;padding-top: 20px"><b>0원</b></td>
 		<td style="width: 10%"></td>
 	</tr>
 	<tr>
-		<td style="width: 30%; padding: 5px;padding-bottom: 20px">▷ 사용포인트 </td>
+		<td style="width: 30%; padding: 5px;padding-bottom: 20px">▷ 사용적립금 </td>
 		<td style="width: 10%;  text-align: right;padding-bottom: 20px "><b>0원</b></td>
 		<td  align="center" style="border-right: 1px solid; width: 10%;padding-bottom: 20px"></td>
 		<td style="width: 30%;  padding: 5px; padding-bottom: 20px">▷ 총주문</td>
@@ -47,22 +47,23 @@
 <table  style=" width: 600px; margin: 10px auto" >
 
 	<tr align="center">
-		<td ><img src="<%=cp%>/resource/images/myshop_icon03.gif" ><br><b>장바구니<b></td>
+		<td ><img src="<%=cp%>/resource/images/myshop_icon03.gif" onclick="location.href='<%=cp%>/#';"><br><b>장바구니<b></td>
 		<td><img style="display: none;" src="<%=cp%>/resource/images/myshop_icon01.gif"></td>
-		<td><img src="<%=cp%>/resource/images/myshop_icon07.gif"><br><b>포인트<b></td>
+		<td><img src="<%=cp%>/resource/images/myshop_icon07.gif" onclick="location.href='<%=cp%>/mileage/mileageList';"><br><b>마일리지<b></td>
 	</tr>
 		<tr align="center">
-		<td><img src="<%=cp%>/resource/images/main_menu_icon04.png"><br><b>회원탈퇴<b></td>
-		<td><img src="<%=cp%>/resource/images/main_menu_icon05.png"><br><b>회원정보수정<b></td>
-		<td><img src="<%=cp%>/resource/images/main_menu_icon07.png"><br><b>상담내역<b></td>
+		<td><img src="<%=cp%>/resource/images/main_menu_icon04.png" onclick="location.href='<%=cp%>/#';"><br><b>회원탈퇴<b></td>
+		<td><img src="<%=cp%>/resource/images/main_menu_icon05.png" onclick="location.href='<%=cp%>/#';"> <br><b>회원정보수정<b></td>
+		<td><img src="<%=cp%>/resource/images/main_menu_icon07.png" onclick="location.href='<%=cp%>/#';"><br><b>상담내역<b></td>
 	</tr>
 		<tr align="center">
-		<td ><img  src="<%=cp%>/resource/images/record-27195_1280.png"><br><b>다이어리<b></td>
+		<td ><img  src="<%=cp%>/resource/images/record-27195_1280.png" onclick="location.href='<%=cp%>/#';"><br><b>다이어리<b></td>
 		<td><img style="display: none;" src="<%=cp%>/resource/images/myshop_icon07.gif"></td>
-		<td><img src="<%=cp%>/resource/images/main_menu_icon03.png"><br><b>주문내역<b></td>
+		<td><img src="<%=cp%>/resource/images/main_menu_icon03.png" onclick="location.href='<%=cp%>/order/orderList';"><br><b>주문내역<b></td>
 	</tr>
 
 </table>
+
 
 <div style="height: 100px">
 </div>

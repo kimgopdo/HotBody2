@@ -12,6 +12,7 @@
 		<put-attribute name="footer" value="/WEB-INF/view/layout/footer.jsp" />
 	</definition>
 	
+	
    <!-- 3단 관리자 -->
 	<definition name=".adminLayout" template="/WEB-INF/view/admin/layout/layout3.jsp">
 	    <put-attribute name="title" value="spring" />
@@ -28,6 +29,24 @@
 	<definition name=".admin.*" extends=".adminLayout">
     	<put-attribute name="body" value="/WEB-INF/view/admin/{1}.jsp" />
 	</definition>
+	<!-- shop -->
+	<definition name=".shopLayout" template="/WEB-INF/view/layout/shopLayout/layout.jsp">
+	    <put-attribute name="title" value="hotShop" />
+	    <put-attribute name="quickMenu" value="/WEB-INF/view/layout/shopLayout/quickMenu.jsp" />
+	    <put-attribute name="leftSide" value="/WEB-INF/view/layout/shopLayout/leftSide.jsp" />
+	  	<put-attribute name="header" value="/WEB-INF/view/layout/shopLayout/header.jsp" />
+		<put-attribute name="body" value="/WEB-INF/view/hotShop/main.jsp" />
+		<put-attribute name="rightSide" value="/WEB-INF/view/layout/shopLayout/rightSide.jsp" />
+	</definition>
+	<definition name=".hotShop.*.*.*" extends=".shopLayout">
+		<put-attribute name="body" value="/WEB-INF/view/hotShop/{1}/{2}/{3}.jsp"/>
+	</definition>
+	<definition name=".hotShop.*.*" extends=".shopLayout">
+		<put-attribute name="body" value="/WEB-INF/view/hotShop/{1}/{2}.jsp"/>
+	</definition>
+	<definition name=".hotShop.*" extends=".shopLayout">
+    	  <put-attribute name="body" value="/WEB-INF/view/hotShop/{1}.jsp" />
+	</definition>
 	
 	<!-- 순서가 바뀌면 안됨(* 많은것이 위에) -->
 	<definition name=".*.*.*" extends=".mainLayout">
@@ -39,5 +58,9 @@
 	<definition name=".*" extends=".mainLayout">
     	  <put-attribute name="body" value="/WEB-INF/view/{1}.jsp" />
 	</definition>
+	
+	
+	
+	
 
 </tiles-definitions>

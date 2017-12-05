@@ -160,6 +160,7 @@ A:hover { color:#컬러코드 ; text-decoration:none; }
 						</button>
 						<h4 class="modal-title" id="myLoginModalLabel">Login</h4>
 					</div>
+					
 					<form name="loginForm" method="post">
 						<div class="modal-body" style="height: 130px;">
 							<table style="margin-top: 1px;">
