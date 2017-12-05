@@ -1,6 +1,8 @@
 package com.hotbody.common;
 
 
+import java.awt.image.BufferedImage;
+import java.awt.image.renderable.ParameterBlock;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,6 +14,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.Calendar;
 
+import javax.media.jai.JAI;
+import javax.media.jai.RenderedOp;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Service;
@@ -237,7 +241,7 @@ public class FileManager {
 	    return type;
 	}
 	
-/*	// 이미지 폭
+	// 이미지 폭
 	public int getImageWidth(String pathname) {
 		int width=-1;
 		
@@ -273,6 +277,6 @@ public class FileManager {
         height = bi.getHeight();		
 		
 		return height;
-	}*/
+	}
 
 }
