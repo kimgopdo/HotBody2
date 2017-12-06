@@ -1,5 +1,6 @@
 package com.hotbody.order;
 
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -22,7 +23,7 @@ import com.hotbody.common.MyUtil;
 
 @Controller("orderController")
 public class OrderController {
-	/*
+
 	@Autowired
 	private OrderService service;
 	@Autowired
@@ -30,7 +31,7 @@ public class OrderController {
 	@Autowired
 	private FileManager fileManager;
 	
-	*/
+
 	
 	@RequestMapping(value="/order/orderList",method=RequestMethod.GET)
 	public String orderForm() throws Exception{
@@ -40,19 +41,24 @@ public class OrderController {
 	}
 	
 	
-	@RequestMapping(value="/order/orderList",method=RequestMethod.POST)
+	@RequestMapping(value="/order/orderList")
 	public String orderDateList(
 			@RequestParam(value = "page", defaultValue = "1") int current_page,
 			@RequestParam(value="datepicker1") String lastday,
 			@RequestParam(value="datepicker2") String today,HttpServletRequest req,
 			Model model) throws Exception{
-		/*
+	
 		String cp = req.getContextPath();
 
 		int rows = 10; // 한 화면에 보여주는 게시물 수
 		int total_page = 0;
 		int dataCount = 0;
 
+		if (req.getMethod().equalsIgnoreCase("GET")) { // GET 방식인 경우
+			lastday = URLDecoder.decode(lastday, "utf-8");
+			today = URLDecoder.decode(today, "utf-8");
+		}
+		
 		// 전체 페이지 수
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("lastday", lastday);
@@ -73,24 +79,24 @@ public class OrderController {
 		map.put("end", end);
 
 		// 글 리스트
-		List<Board> list = service.listBoard(map);
+		List<Order> list = service.listOrder(map);
 
 		// 리스트의 번호
 		int listNum, n = 0;
-		Iterator<Board> it = list.iterator();
+		Iterator<Order> it = list.iterator();
 		while (it.hasNext()) {
-			Board data = it.next();
+			Order data = it.next();
 			listNum = dataCount - (start + n - 1);
-			data.setListNum(listNum);
+	//		data.setListNum(listNum);
 			n++;
 		}
 
 		String query = "";
-		String listUrl = cp + "/bbs/list";
+		String listUrl = cp + "/order/orderList";
 		String articleUrl = cp + "/bbs/article?page=" + current_page;
-		if (searchValue.length() != 0) {
-			query = "searchKey=" + searchKey + "&searchValue=" + URLEncoder.encode(searchValue, "utf-8");
-		}
+	//	if (searchValue.length() != 0) {
+	//		query = "searchKey=" + searchKey + "&searchValue=" + URLEncoder.encode(searchValue, "utf-8");
+	//	}
 
 		if (query.length() != 0) {
 			listUrl = cp + "/bbs/list?" + query;
@@ -107,7 +113,7 @@ public class OrderController {
 		model.addAttribute("paging", paging);
 		
 		
-		*/
+
 		return ".order.orderList";
 		
 	}

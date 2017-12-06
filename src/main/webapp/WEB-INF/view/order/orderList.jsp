@@ -218,6 +218,13 @@ $(function() {
 	</tr>
 
 </table>
+<div style="height: 100px;" align="center" >
+	<img style="margin-top: 20px" src="<%=cp%>/resource/images/btn_page_first.gif">
+	<img style="margin-top: 20px" src="<%=cp%>/resource/images/btn_page_prev.gif">
+	<a style="margin-top:20px; position: relative; top: 10px;">1</a>
+	<img style="margin-top: 20px" src="<%=cp%>/resource/images/btn_page_next.gif">
+	<img style="margin-top: 20px" src="<%=cp%>/resource/images/btn_page_last.gif">
+</div>
 <div style="height: 100px">
 </div>
 </body>
