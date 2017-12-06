@@ -19,79 +19,11 @@ progress { width: 300px; margin: 0px auto; }
 </style>
 <script type="text/javascript">
     function check() {
-        var f = document.boardForm;
-        var regNumber = /^[0-9]*$/
-    	var str = f.content.value;
-        str=f.bci.value;
-        if(!str || str=="::대분류") {
-            alert("대분류를 선택하세요. ");
-            f.bci.focus();
-            return false;
-        }
-        str=f.sci.value;
-        if(!str || str=="::소분류") {
-            alert("소분류를 선택하세요. ");
-            f.sci.focus();
-            return false;
-        }
-        str=f.pdName.value;
-        if(!str || str=="") {
-            alert("상품명을 입력하세요. ");
-            f.pdName.focus();
-            return false;
-        }
-        str=f.pdSumContent.value;//메인 추가내용
-        if(!str || str=="") {
-            alert("메인내용을 입력하세요. ");
-            f.pdSumContent.focus();
-            return false;
-        }
-        str=f.pdPrice.value;//상품소비자가격
-        if(! regNumber.test(str)) {
-            alert("가격을 입력하세요. ");
-            f.pdPrice.focus();
-            return false;
-        }
-        str=f.content.value;
-        if(!str || str=="<p>&nbsp;</p>") {
-            alert("내용을 입력하세요. ");
-            f.content.focus();
-            return false;
-        }
         
-        str=f.pdNutrient.value;//영양성분표시
-        if(!str || str=="") {
-            alert("영양성분표시를 입력하세요. ");
-            f.pdNutrient.focus();
-            return false;
-        }
-        str=f.pdArea.value;//생산지
-        if(!str || str=="") {
-            alert("생산지를 입력하세요. ");
-            f.pdArea.focus();
-            return false;
-        }
-        str=f.pdStMethod.value;//보관방법
-        if(!str || str=="") {
-            alert("보관방법을 입력하세요. ");
-            f.pdStMethod.focus();
-            return false;
-        }
-        str=f.pdType.value;//식품유형
-        if(!str || str=="") {
-            alert("식품유형을 입력하세요. ");
-            f.pdType.focus();
-            return false;
-        }
-        str=f.pdRawName.value;//상품원재료명
-        if(!str || str=="") {
-            alert("상품원재료명을 입력하세요. ");
-            f.pdRawName.focus();
-            return false;
-        }
-
+		
+		
    		f.action="<%=cp%>/hotShop/created.ok";
-        return true;
+        f.submit();
     }
 </script>
 
@@ -128,8 +60,8 @@ progress { width: 300px; margin: 0px auto; }
 		<span style="font-weight: bold;">식&nbsp;&nbsp;품&nbsp;&nbsp;&nbsp;유&nbsp;&nbsp;형&nbsp;</span><input type="text" name="pdType" style="width: 20%; border: 1px solid #BDBDBD; outline: none;"><br>
 		<span style="font-weight: bold;">상품원재료명&nbsp;</span><input type="text" name="pdRawName" style="width: 20%; border: 1px solid #BDBDBD; outline: none;"><br>
 		
-	    <button type="submit" style="border: 1px solid #BDBDBD; background: white; border-radius: 3px; height: 30px; outline: none;">등록취소</button>
-	    <button type="submit" style="border: 1px solid #BDBDBD; background: white; border-radius: 3px; height: 30px; outline: none;">등록하기</button>
+	    <button type="reset" style="border: 1px solid #BDBDBD; background: white; border-radius: 3px; height: 30px; outline: none;">등록취소</button>
+	    <button type="button" style="border: 1px solid #BDBDBD; background: white; border-radius: 3px; height: 30px; outline: none;" onclick="submitContents(this);">등록하기</button>
     </div>
 </form>
 
@@ -166,6 +98,84 @@ function submitContents(elClickedObj) {
 	
 	// 에디터의 내용에 대한 값 검증은 이곳에서 document.getElementById("content").value를 이용해서 처리하면 됩니다.
 	
+	var f = document.boardForm;
+    var regNumber = /^[0-9]*$/
+	var str=f.formData;
+    alert(str);
+    if(! str=="[object HTMLImageElement]"){
+		alert("파일 없다");
+		return;
+	}
+    str=f.bci.value;
+    if(!str || str=="::대분류") {
+        alert("대분류를 선택하세요. ");
+        f.bci.focus();
+        return;
+    }
+    str=f.sci.value;
+    if(!str || str=="::소분류") {
+        alert("소분류를 선택하세요. ");
+        f.sci.focus();
+        return;
+    }
+    str=f.pdName.value;
+    if(!str || str=="") {
+        alert("상품명을 입력하세요. ");
+        f.pdName.focus();
+        return;
+    }
+    str=f.pdSumContent.value;//메인 추가내용
+    if(!str || str=="") {
+        alert("메인내용을 입력하세요. ");
+        f.pdSumContent.focus();
+        return;
+    }
+    str=f.pdPrice.value;//상품소비자가격
+    if(! regNumber.test(str)) {
+        alert("가격을 입력하세요. ");
+        f.pdPrice.focus();
+        return;
+    }
+    if(document.getElementById("content").value=="<p>&nbsp;</p>"){
+		alert("내용입력해주세요");
+		document.getElementById("content").focus;
+		return;
+	}
+    
+    str=f.pdNutrient.value;//영양성분표시
+    if(!str || str=="") {
+        alert("영양성분표시를 입력하세요. ");
+        f.pdNutrient.focus();
+        return;
+    }
+    str=f.pdArea.value;//생산지
+    if(!str || str=="") {
+        alert("생산지를 입력하세요. ");
+        f.pdArea.focus();
+        return;
+    }
+    str=f.pdStMethod.value;//보관방법
+    if(!str || str=="") {
+        alert("보관방법을 입력하세요. ");
+        f.pdStMethod.focus();
+        return;
+    }
+    str=f.pdType.value;//식품유형
+    if(!str || str=="") {
+        alert("식품유형을 입력하세요. ");
+        f.pdType.focus();
+        return;
+    }
+    str=f.pdRawName.value;//상품원재료명
+    if(!str || str=="") {
+        alert("상품원재료명을 입력하세요. ");
+        f.pdRawName.focus();
+        return;
+    }
+  	
+    
+	
+	
 	try {
 		// elClickedObj.form.submit();
 		return check();
@@ -179,6 +189,7 @@ function setDefaultFont() {
 }
 </script>
 <script>
+	var imgData;
     var holder = document.getElementById('holder');
     var progress = document.getElementById('uploadprogress');
     //holder위에 파일을 끌어다 위에 대 면 감지후 실행 
@@ -192,29 +203,23 @@ function setDefaultFont() {
     	//필수라는데 먼지는 모름
         e.preventDefault();
     	// 밑에 파일미리보기 함수 실행
-        readfiles(e.dataTransfer.files);
+    	imgData = e.dataTransfer.files;
+        var formData=readfiles(imgData);
+        holder.append("<input name='formData' value="+formData+">");
     }
+    
+    
  
      
     function readfiles(files) {
         // 파일 읽어들이는 함수
         previewfile(files[0]);
-		//파일 업로드시 포맷??
+        
+      	//파일 업로드시 포맷??
         var formData = new FormData();
         formData.append('upload', files[0]);
-		//XML httpRequest 객체 생성
-        var xhr = new XMLHttpRequest();
-		//해당경로의 devnull.php를 연다?
-        xhr.open('POST', './devnull.php');
-		//onprogress 브라우저가 미디어 테이터를 가져올때 발생하는 이벤트
-        xhr.upload.onprogress = function (event) {
-            if (event.lengthComputable) {
-                var complete = (event.loaded / event.total * 100 | 0);
-                progress.value = progress.innerHTML = complete;
-            }
-        }
-		//사진을 보여준다????
-        xhr.send(formData);
+        
+        return formData;
     }
      
     function previewfile(file) {
@@ -224,6 +229,8 @@ function setDefaultFont() {
         reader.onload = function (event) {
     		//이미지 객체 생성
             var image = new Image();
+    		//이미지 태그에 아이디 입력
+    		image.name="DDimg";
     		//이미지 주소 입력
             image.src = event.target.result;
     		//이미지 가로 크기 설정
