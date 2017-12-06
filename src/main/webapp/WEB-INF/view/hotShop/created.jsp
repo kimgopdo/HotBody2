@@ -20,23 +20,84 @@ progress { width: 300px; margin: 0px auto; }
 <script type="text/javascript">
     function check() {
         var f = document.boardForm;
-
-    	str = f.content.value;
+        var regNumber = /^[0-9]*$/
+    	var str = f.content.value;
+        str=f.bci.value;
+        if(!str || str=="::대분류") {
+            alert("대분류를 선택하세요. ");
+            f.bci.focus();
+            return false;
+        }
+        str=f.sci.value;
+        if(!str || str=="::소분류") {
+            alert("소분류를 선택하세요. ");
+            f.sci.focus();
+            return false;
+        }
+        str=f.pdName.value;
+        if(!str || str=="") {
+            alert("상품명을 입력하세요. ");
+            f.pdName.focus();
+            return false;
+        }
+        str=f.pdSumContent.value;//메인 추가내용
+        if(!str || str=="") {
+            alert("메인내용을 입력하세요. ");
+            f.pdSumContent.focus();
+            return false;
+        }
+        str=f.pdPrice.value;//상품소비자가격
+        if(! regNumber.test(str)) {
+            alert("가격을 입력하세요. ");
+            f.pdPrice.focus();
+            return false;
+        }
+        str=f.content.value;
         if(!str || str=="<p>&nbsp;</p>") {
             alert("내용을 입력하세요. ");
             f.content.focus();
             return false;
         }
+        
+        str=f.pdNutrient.value;//영양성분표시
+        if(!str || str=="") {
+            alert("영양성분표시를 입력하세요. ");
+            f.pdNutrient.focus();
+            return false;
+        }
+        str=f.pdArea.value;//생산지
+        if(!str || str=="") {
+            alert("생산지를 입력하세요. ");
+            f.pdArea.focus();
+            return false;
+        }
+        str=f.pdStMethod.value;//보관방법
+        if(!str || str=="") {
+            alert("보관방법을 입력하세요. ");
+            f.pdStMethod.focus();
+            return false;
+        }
+        str=f.pdType.value;//식품유형
+        if(!str || str=="") {
+            alert("식품유형을 입력하세요. ");
+            f.pdType.focus();
+            return false;
+        }
+        str=f.pdRawName.value;//상품원재료명
+        if(!str || str=="") {
+            alert("상품원재료명을 입력하세요. ");
+            f.pdRawName.focus();
+            return false;
+        }
 
-   		f.action="<%=cp%>/주소";
-
+   		f.action="<%=cp%>/hotShop/created.ok";
         return true;
     }
 </script>
 
 <form name="boardForm" method="post" onsubmit="return submitContents(this);">
 	<div style="min-width:1140px; margin-top: 50px;">
-		<select style="padding: 10px;">
+		<select name="bci" style="padding: 10px;">
 			<option selected="selected">::대분류</option>
 			<option value="drink">음료</option>
 			<option value="snack">간식</option>
@@ -45,7 +106,7 @@ progress { width: 300px; margin: 0px auto; }
 			<option value="supplement">보충제</option>
 			<option value="healthFood">건강식</option>
 		</select>
-		<select style="padding: 10px;">
+		<select name="sci" style="padding: 10px;">
 			<option selected="selected">::소분류</option>
 			<option value="protein">단백질</option>
 			<option value="carbohydrate">탄수화물</option>
@@ -56,14 +117,9 @@ progress { width: 300px; margin: 0px auto; }
 		<div id="holder" style="float: left;">
 		</div>
 		<div style="width:40%; float: right;">
-		<span style="font-weight: bold;">제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목&nbsp;&nbsp;&nbsp;</span><br><input type="text" name="pdName" style="width: 100%; border: 1px solid #BDBDBD; outline: none;"><br>
+		<span style="font-weight: bold;">상&nbsp;&nbsp;&nbsp;품&nbsp;&nbsp;&nbsp;명&nbsp;&nbsp;&nbsp;</span><br><input type="text" name="pdName" style="width: 100%; border: 1px solid #BDBDBD; outline: none;"><br>
 		<span style="font-weight: bold;">상품내용&nbsp;&nbsp;</span><textarea name="pdSumContent" style="width: 100%; height:300px; border: 1px solid #BDBDBD; outline: none;"></textarea><br>
-		<span style="font-weight: bold;">배송정책&nbsp;&nbsp;</span><input type="text" name="pdDelRule" style="width: 80%; border: 1px solid #BDBDBD; outline: none;"><br>
-		<span style="font-weight: bold;">유통기한&nbsp;&nbsp;</span><input type="text" name="pdExDate" style="width: 80%; border: 1px solid #BDBDBD; outline: none;"><br>
 		<span style="font-weight: bold;">가&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;격&nbsp;&nbsp;</span><input type="text" name="pdPrice" style="width: 80%; border: 1px solid #BDBDBD; outline: none;"><br>
-		<span style="font-weight: bold;">총&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;액&nbsp;&nbsp;</span><input type="text" name="totalPay" style="width: 80%; border: 1px solid #BDBDBD; outline: none;"><br>
-		<span style="font-weight: bold;">수&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;량&nbsp;&nbsp;</span><input type="text" name="amount" style="width: 80%; border: 1px solid #BDBDBD; outline: none;"><br>
-		<span style="font-weight: bold;">재&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;고&nbsp;&nbsp;</span><input type="text" name="amount" style="width: 80%; border: 1px solid #BDBDBD; outline: none;"><br>
 		</div>
 		<textarea name="content" id="content" style="width: 95%; height: 400px;">${dto.content}</textarea> <br>
 		<span style="font-weight: bold;">영양성분표시&nbsp;</span><input type="text" name="pdNutrient" style="width: 20%; border: 1px solid #BDBDBD; outline: none;"><br>

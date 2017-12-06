@@ -44,7 +44,12 @@ public class HotShopBoardController {
 		return ".hotShop.created";
 	}
 	@RequestMapping(value="/hotShop/created.ok",  method=RequestMethod.POST)
-	public String createdSubmit() {
-		return "redirect:/hotShop/shopList";
+	public String createdSubmit(
+			
+			) {
+		
+		
+		
+		return "redirect:/hotShop";
 	}
 }
