@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dietClass">
+
+	<insert id="insertDietClass" parameterType="com.hotbody.dietClass.DietClass">
+		INSERT INTO dietClass(classNum, className, classType, classGoal, classGoalD, cllevel, tuition, saveFileName, originalFileName)
+		VALUES(
+			classes_seq.NEXTVAL, #{className}, #{classType}, #{classGoal}, #{classGoalD}, #{cllevel}, #{tuition},
+			#{saveFileName, jdbcType=VARCHAR}, 
+		    #{originalFileName, jdbcType=VARCHAR}
+	    )
+	</insert>
+</mapper>

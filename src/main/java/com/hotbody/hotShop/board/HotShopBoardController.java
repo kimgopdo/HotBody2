@@ -3,11 +3,14 @@ package com.hotbody.hotShop.board;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 @Controller("hotShop.board")
 public class HotShopBoardController {
 	
 	@RequestMapping("/hotShop/productList")
-	public String productList() {
+	public String productList(
+			@RequestParam String state
+			) {
 		
 		
 		
@@ -23,6 +26,11 @@ public class HotShopBoardController {
 	public String paymentForm() {
 		return ".hotShop.payPage";
 	}
+	@RequestMapping(value="/hotShop/shopArticle")
+	public String shopArticle() {
+		return ".hotShop.shopArticle";
+	}
+	
 	@RequestMapping(value="/hotShop/created",  method=RequestMethod.GET)
 	public String createdForm() {
 		return ".hotShop.created";

@@ -22,7 +22,7 @@
 		         <img src="<%=cp%>/resource/images/road.jpg">
 		         </div>
 		         <div align="left">
-		            <span style=" text-align: left;">상품명</span> <img src=""><br>
+		            <span style=" text-align: left;">상품명: <a href="javascript:location.href='<%=cp%>/hotShop/shopArticle';">아아아</a></span> <img src=""><br>
 		            <span style=" text-align: left;">상품명</span>
 		         </div>
 		    </li>
