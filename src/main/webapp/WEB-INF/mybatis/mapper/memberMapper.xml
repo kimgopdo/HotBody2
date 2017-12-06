@@ -3,12 +3,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="member">
 	<select id="readMember" resultType="com.hotbody.member.Member" parameterType="String">
-		SELECT m1.userId, userName, userPwd,
-		   NVL(memberLevel, 0) memberLevel, email, tel, 
-		   TO_CHAR(birth, 'YYYY-MM-DD') birth, zip, addr1, addr2, gender
+		SELECT m1.userId, userName, pwd,
+		   NVL(grade, 0) grade, email, tel, 
+		   TO_CHAR(birth, 'YYYY-MM-DD') birth, addr1, addr2, gender
 		FROM member1 m1 
 		LEFT OUTER JOIN member2 m2 ON m1.userId = m2.userId
-		WHERE m1.userId = #{userId} AND memberLevel !=0
+		WHERE m1.userId = #{userId} AND grade != 0
 	</select>
+	
+	<insert id="insertMember1" parameterType="com.hotbody.member.Member">
+		INSERT INTO member1 (userId, pwd, grade, userName) VALUES (#{userId}, #{pwd}, #{grade}, #{userName})
+	</insert>
+	
+	<insert id="inserMember2" parameterType="com.hotbody.member.Member">
+		INSERT INTO member2 (userId, tel, email, postNum, addr1, addr2, birth, gender) VALUES (#{userId}, #{tel}, #{email}, #{postNum}, #{addr1}, #{addr2}, #{birth}, #{gender})
+	</insert>
 
 </mapper>

@@ -26,14 +26,14 @@ public class MemberController {
 	@ResponseBody
 	public String loginSubmit(
 			@RequestParam String userId,
-			@RequestParam String userPwd,
+			@RequestParam String Pwd,
 			Model model,
 			HttpSession session
 			) throws Exception {
 		System.out.println("ddddddd");
 		Member dto = service.readMember(userId);
 		
-		if(dto == null || (! dto.getUserPwd().equals(userPwd))) {
+		if(dto == null || (! dto.getPwd().equals(Pwd))) {
 			model.addAttribute("message", "아이디 또는 패스워드가 일치하지 않습니다.");
 			return ".member.login";
 		}
@@ -65,4 +65,25 @@ public class MemberController {
 	public String myclassForm() throws Exception{
 		return ".member.myclass";
 	}
+	
+	@RequestMapping(value="/member/member", method=RequestMethod.GET)
+	public String memberForm(Model model){
+		model.addAttribute("mode", "created");
+		return ".member.member";
+	}
+	
+	@RequestMapping(value="/member/member", method=RequestMethod.POST)
+	public String memberSubmit(
+			Member dto,
+			Model model) throws Exception {
+		
+		int result = service.insertMember(dto);
+		
+		if(result != 0) {
+			return ".main.main";
+		} else
+			return ".main.main";
+	}
+	
+	
 }

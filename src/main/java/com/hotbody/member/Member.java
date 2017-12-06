@@ -4,18 +4,53 @@ public class Member {
 	// member1 Table
 	private String userId;
 	private String userName;
-	private String userPwd;
-	private int memberLevel;
+	private String pwd;
+	private int grade;
 	
 	// member2 Table
 	private String birth;
 	private String email;
+	private String email1;
+	private String email2;
 	private String tel;
+	private String tel1;
+	private String tel2;
+	private String tel3;
 	private String zip;
 	private String addr1;
 	private String addr2;
 	private String gender;
 	
+	public String getEmail1() {
+		return email1;
+	}
+	public void setEmail1(String email1) {
+		this.email1 = email1;
+	}
+	public String getEmail2() {
+		return email2;
+	}
+	public void setEmail2(String email2) {
+		this.email2 = email2;
+	}
+	public String getTel1() {
+		return tel1;
+	}
+	public void setTel1(String tel1) {
+		this.tel1 = tel1;
+	}
+	public String getTel2() {
+		return tel2;
+	}
+	public void setTel2(String tel2) {
+		this.tel2 = tel2;
+	}
+	public String getTel3() {
+		return tel3;
+	}
+	public void setTel3(String tel3) {
+		this.tel3 = tel3;
+	}
 	public String getUserId() {
 		return userId;
 	}
@@ -28,17 +63,17 @@ public class Member {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	public String getUserPwd() {
-		return userPwd;
+	public String getPwd() {
+		return pwd;
 	}
-	public void setUserPwd(String userPwd) {
-		this.userPwd = userPwd;
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
 	}
-	public int getMemberLevel() {
-		return memberLevel;
+	public int getGrade() {
+		return grade;
 	}
-	public void setMemberLevel(int memberLevel) {
-		this.memberLevel = memberLevel;
+	public void setGrade(int grade) {
+		this.grade = grade;
 	}
 	public String getBirth() {
 		return birth;
@@ -82,6 +117,4 @@ public class Member {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-
-	
 }
