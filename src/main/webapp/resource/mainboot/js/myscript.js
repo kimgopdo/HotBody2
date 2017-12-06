@@ -41,8 +41,10 @@ function calculateScroll() {
 	var rangeTop    =   200;
 	var rangeBottom =   500;
 	$('.navmenu').find('.scroll_btn a').each(function(){
-		contentTop.push( $( $(this).attr('href') ).offset().top );
-		contentBottom.push( $( $(this).attr('href') ).offset().top + $( $(this).attr('href') ).height() );
+		try{
+			contentTop.push( $( $(this).attr('href') ).offset().top );
+			contentBottom.push( $( $(this).attr('href') ).offset().top + $( $(this).attr('href') ).height() );
+		}catch(e){}
 	})
 	$.each( contentTop, function(i){
 		if ( winTop > contentTop[i] - rangeTop && winTop < contentBottom[i] - rangeBottom ){

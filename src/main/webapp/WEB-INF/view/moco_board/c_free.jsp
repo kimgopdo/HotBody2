@@ -136,20 +136,19 @@ fieldset[disabled] .form-control {
 function check() {
 	var f = document.boardForm;
 	
-	if(!f.subject.value){
+/* 	if(!f.subject.value){
 		alert("제목을 입력하세요.");
 		f.subject.focus();
-		return false;
+		return;
 	}
 	
 	
 	if(!str || str=="<p>&nbsp;</p>") {
 		alert("내용을 입력하세요");
 		f.content.focus();
-		return false;
-	}
-	
-	return true;
+		return;
+	} */
+
 }
 function fileChange() {
 	var upload=document.getElementById("upload").value;
@@ -167,14 +166,14 @@ function deleteFile() {
 <div style="font-size: 40px; width: 700px; margin: 20px auto 0; font-weight: bold; color: #666666;">자유게시판</div>
 <div style="width:700px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
 
-<form action="<%=cp%>/notice/${mode}" method="post" name="boardForm" enctype="multipart/form-data" onsubmit="return submitContents(this);">
+<form method="post" name="boardForm" enctype="multipart/form-data" onsubmit="return submitContents(this);">
 <table style="width: 700px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0">
 
 <tr height="40">
 
 	<td width="100">분류</td>
 	
-	<td width="150"><select name="category">
+	<td width="100"><select name="category">
 		<option value="분류">-------</option>
 		<option value="모꼬지">모꼬지</option>
 		<option value="클래스">클래스</option>
@@ -243,7 +242,7 @@ function deleteFile() {
 </table>
 <div style="width:700px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
 <div style="width: 700px; margin: 20px auto 0;" align="center">
-<button type="submit" class="btn-default02">등록</button>
+<button type="submit" class="btn-default02" onclick="check();">등록</button>
 <button type="button" class="btn-default02" onclick="javascript:location.href='<%=cp%>/notice/list?page=${page}';">등록취소</button>
 <c:if test="${mode=='update'}">
 	<input type="hidden" name="page" value="${page}">

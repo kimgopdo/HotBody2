@@ -23,6 +23,7 @@
 	<link href="<%=cp%>/resource/mainboot/css/animate.css" rel="stylesheet" type="text/css" media="all" />
     <link href="<%=cp%>/resource/mainboot/css/owl.carousel.css" rel="stylesheet">
 	<link href="<%=cp%>/resource/mainboot/css/style.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     
 	<!-- FONTS -->
 	<link href='http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500italic,700,500,700italic,900,900italic' rel='stylesheet' type='text/css'>
@@ -36,7 +37,7 @@
 	<script src="<%=cp%>/resource/mainboot/js/owl.carousel.js"></script>
 	<script src="<%=cp%>/resource/mainboot/js/animate.js" type="text/javascript"></script>
 	<script src="<%=cp%>/resource/mainboot/js/myscript.js" type="text/javascript"></script>
-
+	<script src="<%=cp%>/resource/jquery/js/jquery-ui.min.js" type="text/javascript"></script>
 
 <body>
 <div class="header">
