@@ -5,11 +5,11 @@
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
-	<definition name=".mainLayout" template="/WEB-INF/view/layout/layout.jsp">
+	<definition name=".mainLayout" template="/WEB-INF/view/layout/mainLayout/layout.jsp">
 	    <put-attribute name="title" value="spring" />
-	  	<put-attribute name="header" value="/WEB-INF/view/layout/header.jsp" />
-		<put-attribute name="body" value="/WEB-INF/view/main/main.jsp" />
-		<put-attribute name="footer" value="/WEB-INF/view/layout/footer.jsp" />
+	  	<put-attribute name="header" value="/WEB-INF/view/layout/mainLayout/header.jsp" />
+		<put-attribute name="body" value="/WEB-INF/view/layout/mainLayout/body.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/view/layout/mainLayout/footer.jsp" />
 	</definition>
 	
 	
