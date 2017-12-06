@@ -3,7 +3,7 @@ package com.hotbody.member;
 public class SessionInfo {
 	private String userId;
 	private String userName;
-	private int memberLevel;
+	private int grade;
 	
 	public String getUserId() {
 		return userId;
@@ -17,10 +17,10 @@ public class SessionInfo {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	public int getMemberLevel() {
-		return memberLevel;
+	public int getGrade() {
+		return grade;
 	}
-	public void setMemberLevel(int memberLevel) {
-		this.memberLevel = memberLevel;
+	public void setGrade(int grade) {
+		this.grade = grade;
 	}
 }

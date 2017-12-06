@@ -6,6 +6,9 @@
 	String cp=request.getContextPath();
 %>
 <table style="margin-top: 100px;">
+<tr>                                
+	<td style="border-bottom: 2px solid #e7e7e7;"><h5 style="font-size: 20px; font-weight:bold; margin-left: 30px; margin-bottom:30px; text-align: left;">${state}</h5></td>
+</tr>
 <tr>
 	<td style="text-align: left;">
 		<input type="radio" name="formal" value="hitCount">조회순 &nbsp;&nbsp;

@@ -7,6 +7,7 @@
 %>
       <!-- 왼쪽 사이드 바 -->
    <div id="leftSide" class="vertical-align" style="width: 10%; height: 100%; top:0px; left: 0px; position: fixed;z-index: 10;">
+         <a href="javascript:location.href='<%=cp%>/hotShop/created';">created페이지</a>
          <div id="basketBtn">
 	         <button type="button" class="btn btn-default btn-lg basketBtn" style="background: white; border: none; outline: none;">
 	            <span class="glyphicon glyphicon-shopping-cart"></span>
