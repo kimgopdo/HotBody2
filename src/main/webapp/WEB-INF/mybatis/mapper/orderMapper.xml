@@ -5,23 +5,44 @@
 
 <!-- 글개수 -->
 	<select id="dataCount" parameterType="map" resultType="Integer">
-		SELECT NVL(COUNT(*), 0) FROM orders
+		SELECT NVL(COUNT(*), 0) 
+		FROM orders o left outer join totalordlist tl
+        on o.delorder = tl.delorder 
+        where
+		<!--   userId =#{userId} and-->
+		<if test="lastday != null and lastday != ''">
+				 tl.PAYDATE >=#{lastday}
+		</if>
+		
 	</select>
 
 	<!-- 글리스트 -->
-	<select id="listBoard" parameterType="map" resultType="com.hotbody.order.Order">
-		SELECT * FROM (
+	<select id="listOrder" parameterType="map" resultType="com.hotbody.order.Order">
+	
+	
+	SELECT * FROM (
 		SELECT ROWNUM rnum, tb.* FROM (
-		SELECT num, b.userId, userName, subject
-		,TO_CHAR(b.created, 'YYYY-MM-DD') created
-		,hitCount, saveFilename
-		FROM bbs b JOIN member1 m ON b.userId=m.userId
-		<where>
-			<if test="searchValue != null and searchValue != ''">
-				<include refid="where-list" />
+      select o.delorder,o.TOTALPAY,ds.DELSTATE,tl.PAYDATE,ctl.AMOUNT,pl.PDBOARDNAME,pm.IMG
+        from orders o left outer join delstate ds
+        on o.delorder = ds.delorder
+        left outer join totalordlist tl
+        on o.delorder = tl.delorder
+        left outer join cartlist ctl
+        on o.delorder = ctl.delorder
+        left outer join productlist pl
+        on ctl.pdnum = pl.pdnum
+        left outer join pmainimg pm  
+        on pm.pdnum = pl.pdnum
+        where
+        <!-- o.userid=#{userid} and-->
+
+			<if test="lastday != null and lastday != ''">
+			<![CDATA[
+				 tl.PAYDATE >=#{lastday}
+				]]>
 			</if>
-		</where>
-		ORDER BY num DESC
+			
+		ORDER BY tl.PAYDATE DESC
 	<![CDATA[
 	        ) tb WHERE ROWNUM <= #{end}
 	    ) WHERE rnum >= #{start}

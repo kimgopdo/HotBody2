@@ -134,13 +134,13 @@ $(function() {
 
 <table style="border:1px solid silver; width: 1000px; margin: 40px auto 0px;">
 	<tr style="text-align: center; height: 40px">
-		<td style="width: 20%; border-right: 1px solid silver; background-color: #D8D8D8;">주문내역조회(0)</td>
-		<td style="width: 20%; border-right: 1px solid silver;"><a onclick="location.href='<%=cp%>/order/cancelList';">취소/반품/교환 내역(0)</a></td>
-		<td style="width: 60%"></td>
+		<td style="width: 25%; border-right: 1px solid silver; background-color: #D8D8D8;">주문내역조회(0)</td>
+		<td style="width: 20%; border-right: 1px solid silver;  "><a onclick="location.href='<%=cp%>/order/cancelList';">취소/반품/교환 내역(0)</a></td>
+		<td style="width: 75%"></td>
 	</tr>
 </table>
 
-<form name="searchDate" method="post" >
+<form name="searchDate" method="post" action="<%=cp%>/order/orderList">
 <table style="border:3px solid silver; width: 1000px; margin: 40px auto 0px; height: 100px;">
 	<tr style="text-align: center;">
 		<td  style="width: 30%; font-size: 12px">
@@ -153,7 +153,7 @@ $(function() {
 		<td align="left" style="width: 40%">
 			<input style="width: 100px ; text-align: center;" type="text" id="datepicker1" name="datepicker1">~
 			<input style="width: 100px; text-align: center; " type="text" id="datepicker2" name="datepicker2">		
-			<img style="position: relative; top:-2px; " src="<%=cp%>/resource/images/btn_search.gif" onclick="">
+			<input type="image" style="position: relative; top:6px; " src="<%=cp%>/resource/images/btn_search.gif" >
 		</td>
 				<td style="width: 30%">
 
@@ -173,57 +173,58 @@ $(function() {
 
 <table style="border:1px solid silver; width: 1000px; margin: 40px auto 0px; font-size: 12px">
 	<tr height="50px" style="text-align: center; background-color: #F2F2F2 ">
-		<td  style="width: 12%; border:1px solid silver; ">
+		<td  style="width: 14%; border:1px solid silver; ">
 		주문일자<br>[주문번호]
 		</td>
-		<td  style="width: 10%; border:1px solid silver; ">
+		<td  style="width: 12%; border:1px solid silver; ">
 		이미지
 		</td>
-		<td  style="width: 40%; border:1px solid silver; ">
+		<td  style="width: 42%; border:1px solid silver; ">
 		상품정보
 		</td>
-		<td  style="width: 5%; border:1px solid silver; ">
+		<td  style="width: 8%; border:1px solid silver; ">
 		수량
 		</td>
-		<td  style="width: 10%; border:1px solid silver; ">
+		<td  style="width: 12%; border:1px solid silver; ">
 		상품구매금액
 		</td>
-		<td  style="width: 10%; border:1px solid silver; ">
+		<td  style="width: 12%; border:1px solid silver; ">
 		주문처리상태
 		</td>
-		<td  style="width: 13%; border:1px solid silver; ">
-		취소/교환/반품
-		</td>
-		<!--  
-<c:forEach var="dto" items="${list}">
-</c:forEach>
--->
+
+
+
 	</tr>
-	
+	<c:forEach var="dto" items="${list}">
 		<tr height="100px" style="text-align: center; ">
-		<td  style="width: 15%;  ">
+		<td  style="width: 14%;  ">
+		${dto.payDate}<br>${dto.delOrder}
 		</td>
-		<td  style="width: 10%;  ">
+		<td  style="width: 12%;  ">
+		${dto.img}
 		</td>
-		<td  style="width: 40%;  ">
+		<td  style="width: 42%;  ">
+		${dto.pdBoardName}
 		</td>
-		<td  style="width: 5%;  ">
+		<td  style="width: 8%;  ">
+		${dto.amount}
 		</td>
-		<td  style="width: 10%;  ">
+		<td  style="width: 12%;  ">
+		${dto.totalPay}
 		</td>
-		<td  style="width: 10%;  ">
-		</td>
-		<td  style="width: 10%;  ">
+		<td  style="width: 12%;  ">
+		${dto.delState}
 		</td>
 	</tr>
+</c:forEach>
 
 </table>
 <div style="height: 100px;" align="center" >
-	<img style="margin-top: 20px" src="<%=cp%>/resource/images/btn_page_first.gif">
-	<img style="margin-top: 20px" src="<%=cp%>/resource/images/btn_page_prev.gif">
-	<a style="margin-top:20px; position: relative; top: 10px;">1</a>
-	<img style="margin-top: 20px" src="<%=cp%>/resource/images/btn_page_next.gif">
-	<img style="margin-top: 20px" src="<%=cp%>/resource/images/btn_page_last.gif">
+	<!--<img style="margin-top: 20px" src="<%=cp%>/resource/images/btn_page_first.gif">
+	<img style="margin-top: 20px" src="<%=cp%>/resource/images/btn_page_prev.gif">-->
+	<a style="margin-top:20px; position: relative; top: 10px;">${paging}</a>
+	<!--  <img style="margin-top: 20px" src="<%=cp%>/resource/images/btn_page_next.gif">
+	<img style="margin-top: 20px" src="<%=cp%>/resource/images/btn_page_last.gif">-->
 </div>
 <div style="height: 100px">
 </div>

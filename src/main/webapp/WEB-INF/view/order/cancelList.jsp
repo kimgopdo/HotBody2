@@ -173,25 +173,23 @@ $(function() {
 
 <table style="border:1px solid silver; width: 1000px; margin: 40px auto 0px; font-size: 12px">
 	<tr height="50px" style="text-align: center; background-color: #F2F2F2 ">
-		<td  style="width: 12%; border:1px solid silver; ">
+		<td  style="width: 14%; border:1px solid silver; ">
 		주문일자<br>[주문번호]
 		</td>
-		<td  style="width: 10%; border:1px solid silver; ">
+		<td  style="width: 12%; border:1px solid silver; ">
 		이미지
 		</td>
-		<td  style="width: 40%; border:1px solid silver; ">
+		<td  style="width: 42%; border:1px solid silver; ">
 		상품정보
 		</td>
-		<td  style="width: 5%; border:1px solid silver; ">
+		<td  style="width: 8%; border:1px solid silver; ">
 		수량
 		</td>
-		<td  style="width: 10%; border:1px solid silver; ">
+		<td  style="width: 12%; border:1px solid silver; ">
 		상품구매금액
 		</td>
-		<td  style="width: 10%; border:1px solid silver; ">
-		주문처리상태
-		</td>
-		<td  style="width: 13%; border:1px solid silver; ">
+
+		<td  style="width: 12%; border:1px solid silver; ">
 		취소/교환/반품
 		</td>
 		<!--  

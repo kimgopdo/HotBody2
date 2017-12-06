@@ -14,8 +14,6 @@ public class OderServiceImpl implements OrderService {
 	@Autowired
 	private CommonDAO dao;
 	
-	@Autowired
-	private FileManager fileManager;
 	
 	@Override
 	public List<Order> listOrder(Map<String, Object> map) {
