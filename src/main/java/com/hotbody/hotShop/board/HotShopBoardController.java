@@ -69,7 +69,7 @@ public class HotShopBoardController {
             */
              
             MultipartFile mpf = multipartRequest.getFile(itr.next());
-      
+         
             String originalFilename = mpf.getOriginalFilename(); //파일명
       
             String fileFullPath = filePath+"/"+originalFilename; //파일 전체 경로
