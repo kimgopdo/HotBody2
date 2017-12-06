@@ -9,7 +9,7 @@ public class HotShopBoardController {
 	
 	@RequestMapping("/hotShop/productList")
 	public String productList(
-			@RequestParam String state
+			@RequestParam String menu
 			) {
 		
 		
