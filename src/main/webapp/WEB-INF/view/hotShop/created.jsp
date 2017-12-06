@@ -35,7 +35,24 @@ progress { width: 300px; margin: 0px auto; }
 </script>
 
 <form name="boardForm" method="post" onsubmit="return submitContents(this);">
-	<div style="margin-top: 50px;">
+	<div style="min-width:1140px; margin-top: 50px;">
+		<select style="padding: 10px;">
+			<option selected="selected">::대분류</option>
+			<option value="drink">음료</option>
+			<option value="snack">간식</option>
+			<option value="food">식사</option>
+			<option value="dressing">드레싱</option>
+			<option value="supplement">보충제</option>
+			<option value="healthFood">건강식</option>
+		</select>
+		<select style="padding: 10px;">
+			<option selected="selected">::소분류</option>
+			<option value="protein">단백질</option>
+			<option value="carbohydrate">탄수화물</option>
+			<option value="fat">지방</option>
+			<option value="minerals">무기질</option>
+			<option value="dietary">식이섬유</option>
+		</select><br>
 		<div id="holder" style="float: left;">
 		</div>
 		<div style="width:40%; float: right;">

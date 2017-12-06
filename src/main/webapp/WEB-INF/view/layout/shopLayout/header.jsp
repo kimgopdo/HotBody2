@@ -15,7 +15,7 @@ function move(menu,name){
 }
 </script>
    <!-- 내비 -->
-   <div class="content" align="center" style="z-index: 9;" id="div4">
+   <div class="content" align="center" style="min-width:1140px;z-index: 9;" id="div4">
       <nav class="navbar" style="background: white; height: 60px; margin: 0px auto; border: none;">
         <div class="container-fluid" align="center">
           <ul class="nav navbar-nav menu">
