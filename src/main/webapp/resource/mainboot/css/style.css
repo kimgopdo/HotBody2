@@ -409,10 +409,13 @@ header {
 
 
 
+
+
+
 /*-----------------------------------------------------------------------------------*/
 /*	ABOUT
 /*-----------------------------------------------------------------------------------*/
-#about {padding-top:30px;}
+#about {padding-top:70px;}
 
 /* __________ Services __________ */
 .services_block {padding:7px 0 0;}
@@ -633,7 +636,7 @@ header {
 	transform: translateY(-100%);
 }
 
-
+.purpose_block .ipad_img1 {margin-top:-116px;}
 
 
 
@@ -666,7 +669,7 @@ header {
 	height:100%;
 	text-align:center;
 	opacity:0;
-	background-color:rgba(254, 78, 108, 0.85);
+	background-color:rgba(0,0,0,0.8);
 	transition: all 0.3s ease-in-out; 
 	-webkit-transition: all 0.3s ease-in-out;
 }
@@ -826,7 +829,7 @@ ul.project_info li span {color:#979797;}
 	height:100%;
 	text-align:center;
 	opacity:0;
-	background-color:rgba(254, 78, 108, 0.85);
+	background-color:rgba(0,0,0,0.8);
 	transition: all 0.5s ease-in-out; 
 	-webkit-transition: all 0.5s ease-in-out;
 }
@@ -873,6 +876,28 @@ ul.project_info li span {color:#979797;}
 	transition: bottom 0.5s ease-in-out, opacity 0.5s ease-in-out; 
 	-webkit-transition: bottom 0.5s ease-in-out, opacity 0.5s ease-in-out;
 }
+.crewman_item .crewman_social a {
+	display:inline-block;
+	width:60px;
+	height:60px;
+	margin:0 7px 0 10px;
+	border:2px solid #333;
+	border-radius:50%;
+	line-height:58px;
+	font-size:26px;
+	color:#333;
+}
+.crewman_item:hover .crewman_social {
+	bottom:56px;
+	opacity:1;
+}
+.crewman_item .crewman_social a:hover {
+	color:#fff;
+	border-color:#fff;
+}
+
+
+
 
 
 
@@ -920,8 +945,7 @@ ul.project_info li span {color:#979797;}
 	transition: all 0.3s ease-in-out; 
 	-webkit-transition: all 0.3s ease-in-out;
 }
-.post_item:hover .post_item_img:before {background-color:rgba(254, 78, 108, 0.85);}
-
+.post_item:hover .post_item_img:before {background-color:rgba(0,0,0,0.8);}
 .post_item_content {padding:23px 0 0;}
 .post_item_content a.title {
 	font-weight:300;
@@ -1059,7 +1083,7 @@ footer {
 	left:50%;
 	opacity:0;
 	width:100%;
-	padding:20px 0 10px;
+	padding:60px 0 10px;
 	color:#999;
 	background-color:#1c1c1c;
 	transform: translateX(-50%);
