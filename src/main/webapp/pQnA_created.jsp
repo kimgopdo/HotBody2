@@ -151,15 +151,7 @@ function check() {
 	
 	return true;
 }
-function fileChange() {
-	var upload=document.getElementById("upload").value;
-	document.getElementById("fileName").value=upload.substring(0,upload.lastIndexOf("."));
-}
-function deleteFile() {
-	if(confirm("첨부파일을 삭제하시겠습니까?")){
-		location.href="<%=cp%>/notice/deleteFile?page=${page}&num=${dto.num}"
-	}
-}
+
 </script>
 </head>
 <body>
@@ -167,13 +159,13 @@ function deleteFile() {
 <div style="font-size: 40px; width: 700px; margin: 20px auto 0; font-weight: bold; color: #666666;">질문 등록</div>
 <div style="width:700px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
 
-<form action="<%=cp%>/notice/${mode}" method="post" name="boardForm" enctype="multipart/form-data" onsubmit="return submitContents(this);">
+<form method="post" name="boardForm" enctype="multipart/form-data" onsubmit="return submitContents(this);">
 <table style="width: 700px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0">
 
 <tr height="30">
 	<td width="80">제목</td>
 	<td>
-		<input type="text" name="subject" style="width: 600px; height: 25px;" value="${dto.subject}">
+		<input type="text" name="subject" style="width: 600px; height: 25px;" value="${dto.pdQSubject}">
 	</td>
 </tr>
 
@@ -185,7 +177,7 @@ function deleteFile() {
 <tr height="40">
 	<td width="80" valign="top">내용</td>
 	<td>
-		<textarea style="width: 600px;" rows=10; name="content" id="content">${dto.content}</textarea>
+		<textarea style="width: 600px;" rows=10; name="content" id="content">${dto.pdQContent}</textarea>
 	</td>
 </tr>
 
@@ -193,10 +185,10 @@ function deleteFile() {
 <div style="width:700px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
 <div style="width: 700px; margin: 20px auto 0;" align="center">
 <button type="submit" class="btn-default02">등록</button>
-<button type="button" class="btn-default02" onclick="javascript:location.href='<%=cp%>/notice/list?page=${page}';">등록취소</button>
+<button type="button" class="btn-default02" onclick="javascript:location.href='<%=cp%>/';">등록취소</button>
 <c:if test="${mode=='update'}">
 	<input type="hidden" name="page" value="${page}">
-	<input type="hidden" name="num" value="${dto.num}">
+	<input type="hidden" name="num" value="${dto.pdQCode}">
 	<input type="hidden" name="query" value="${query}">
 </c:if>
 </div>

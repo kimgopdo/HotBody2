@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="temp">
+<mapper namespace="qna">
 
-	<insert id="">
-		INSERT INTO pQnA ()
+	<insert id="insertQnA" parameterType="com.hotbody.hotShop.qna.Qna">
+		INSERT INTO pQnA (pdQCode, pdQSubject, pdQDepth, pdQCreated, pdQContent, pdNum, userId) 
+			VALUES(pdQCode_seq.NAEXVAL, #{pdQSubject}, #{pdQDepth}, #{pdQCreated}, #{pdQContent}, #{pdNum}, #{userId})
 	</insert>
 
 </mapper>

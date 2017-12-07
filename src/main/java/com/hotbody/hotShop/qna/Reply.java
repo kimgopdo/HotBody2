@@ -1,4 +1,4 @@
-package com.hotbody.hotShop.QnA;
+package com.hotbody.hotShop.qna;
 
 public class Reply {
 	private int replyNum, pdQCode;
