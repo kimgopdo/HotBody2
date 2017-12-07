@@ -58,9 +58,8 @@ $(function() {
 
 <table style="border:1px solid silver; width: 1000px; margin: 40px auto 0px; font-size: 12px">
 	<tr style="text-align: center; height: 40px">
-		<td style="width: 20%; border-right: 1px solid silver; background-color: #D8D8D8;">적립내역보기</td>
-		<td style="width: 20%; border-right: 1px solid silver;"><a onclick="location.href='<%=cp%>/mypage/usedMileageList';">적립금사용내역보기</a></td>
-
+		<td style="width: 20%; border-right: 1px solid silver; "><a onclick="location.href='<%=cp%>/mypage/mileageList';">적립내역보기</a></td>
+		<td style="width: 20%; border-right: 1px solid silver; background-color: #D8D8D8;">적립금사용내역보기</td>
 		<td style="width: 60%"></td>
 	</tr>
 </table>

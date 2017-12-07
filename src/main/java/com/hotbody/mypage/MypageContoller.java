@@ -109,8 +109,23 @@ public class MypageContoller {
 		return ".mypage.mileageList";
 	}
 	
-	@RequestMapping(value="/member/mypage", method=RequestMethod.GET)
+	@RequestMapping(value="/mypage/usedMileageList",method=RequestMethod.GET)
+	public String usedmileageForm() throws Exception{
+		
+		return ".mypage.usedMileageList";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@RequestMapping(value="/mypage/mypage", method=RequestMethod.GET)
 	public String mypageForm() throws Exception{
-		return ".member.mypage";
+		return ".mypage.mypage";
 	}
 }
