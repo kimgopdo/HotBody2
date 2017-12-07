@@ -175,20 +175,6 @@ function paymentOk() {
 
 	<div style="width: 1000px; height:40px; margin-top: 20px;" align="right">
 		클래스 내용을 확인하셨습니까?&nbsp;&nbsp;&nbsp;
-		<div class="checkbox">
-          <label>
-            <input type="checkbox" value="">
-            <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
-            Option one is this and that — be sure to include why it's great
-          </label>
-        </div>
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" value="" checked>
-            <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
-            Option two is checked by default
-          </label>
-        </div>
 		<input type="checkbox" id="confirm1" onclick="selectConfirm(1)"><b> 예&nbsp;&nbsp;</b>
 		<input type="checkbox" id="confirm2" onclick="selectConfirm(0)"><b> 아니오</b>
 	</div>
@@ -229,7 +215,7 @@ function paymentOk() {
                             <br />
 			</div>
 			<div style="width: 1000px;" align="right">
-			<input type="checkbox" name="agree1" value="1" onclick="selectAgree();"><b> 위 서비스 이용약관에 동의합니다.</b>
+			<b> 위 서비스 이용약관에 동의합니다. &nbsp;</b><input type="checkbox" name="agree1" value="1" onclick="selectAgree();">
 			</div>
 			
 			<div style="width: 1000px; margin-top: 50px;">
@@ -261,7 +247,7 @@ function paymentOk() {
                             <br />
 			</div>
 			<div style="width: 1000px;" align="right">
-			<input type="checkbox" name="agree2" value="1" onclick="selectAgree();"><b> 위 개인정보취급방침에 동의합니다.</b>
+			<b>위 개인정보취급방침에 동의합니다. &nbsp;</b><input type="checkbox" name="agree2" value="1" onclick="selectAgree();">
 			</div>
 		</div>
 	</div>

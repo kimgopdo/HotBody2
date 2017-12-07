@@ -34,7 +34,6 @@ public class DietClassServiceImpl implements DietClassService {
 			
 			for(int a : dto.getProSelect()) {
 				dto.setProgramNum(a);
-				System.out.println(a+"=-=--=-=-===-==-=--=");
 				dao.insertData("dietClass.proToClass", dto);
 			}
 			
@@ -108,5 +107,60 @@ public class DietClassServiceImpl implements DietClassService {
 			e.printStackTrace();
 		}
 		return list;
+	}
+
+	@Override
+	public DietClass readOnClass(int classNum) {
+		DietClass dto = null;
+		try {
+			dto = dao.selectOne("dietClass.readOnClass", classNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
+	}
+
+	@Override
+	public DietClass readOffClass(int classNum) {
+		DietClass dto = null;
+		try {
+			dto = dao.selectOne("dietClass.readOffClass", classNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
+	}
+
+	@Override
+	public DietClass readClass(int classNum) {
+		DietClass dto = null;
+		try {
+			dto = dao.selectOne("dietClass.readClass", classNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
+	}
+
+	@Override
+	public int updateClass(DietClass dto, String pathname) {
+		int result=0;
+		try {
+			result = dao.updateData("dietClass.updateClass", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public int deleteClass(int classNum, String pathname) {
+		int result=0;
+		try {
+			result = dao.deleteData("dietClass.deleteClass", classNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 }
