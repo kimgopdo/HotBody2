@@ -25,20 +25,21 @@ public class MemberController {
 		return ".member.login";
 	}
 	
-	@RequestMapping(value="/member/login", method=RequestMethod.POST)
+	@RequestMapping(value="/member/login")
 	@ResponseBody
-	public String loginSubmit(
+	public Map<String, Object> loginSubmit(
 			@RequestParam String userId,
-			@RequestParam String Pwd,
+			@RequestParam String pwd,
 			Model model,
 			HttpSession session
 			) throws Exception {
-		System.out.println("ddddddd");
 		Member dto = service.readMember(userId);
 		
-		if(dto == null || (! dto.getPwd().equals(Pwd))) {
-			model.addAttribute("message", "아이디 또는 패스워드가 일치하지 않습니다.");
-			return ".member.login";
+		Map<String, Object> map = new HashMap<>();
+		
+		if(dto == null || (! dto.getPwd().equals(pwd))) {
+			map.put("message", "아이디 또는 패스워드가 일치하지 않습니다.");
+			return map;
 		}
 		
 		// 로그인 정보를 세션에 저장(로그인)
@@ -47,7 +48,9 @@ public class MemberController {
 		info.setUserName(dto.getUserName());
 		session.setAttribute("member", info);
 		
-		return "redirect:/";
+		map.put("state", "true");
+		
+		return map;
 	}
 	
 	// 로그인 정보 세션에서 삭제(로그아웃)
