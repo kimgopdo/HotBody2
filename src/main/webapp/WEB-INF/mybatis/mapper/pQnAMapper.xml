@@ -4,8 +4,50 @@
 <mapper namespace="qna">
 
 	<insert id="insertQnA" parameterType="com.hotbody.hotShop.qna.Qna">
-		INSERT INTO pQnA (pdQCode, pdQSubject, pdQDepth, pdQCreated, pdQContent, pdNum, userId) 
-			VALUES(pdQCode_seq.NAEXVAL, #{pdQSubject}, #{pdQDepth}, #{pdQCreated}, #{pdQContent}, #{pdNum}, #{userId})
+		INSERT INTO pQnA (pdQCode, pdQSubject, pdQContent, pdNum, userId, pdQDepth, userName) 
+			VALUES(pdQCode_SEQ.NEXTVAL, #{pdQSubject}, #{pdQContent}, '1', #{userId}, #{pdQDepth}, #{userName})
 	</insert>
+	
+	<sql id="where-list">
+		<if test="searchKey == 'name' ">
+			name = #{searchValue}
+		</if>
+		<if test="searchKey == 'subject' ">
+			INSTR(subject, #{searchValue}) &gt; 0
+		</if>
+		<if test="searchKey == 'content' ">
+			INSTR(content, #{searchValue}) &gt; 0
+		</if>
+		<if test="searchKey == 'created' ">
+			TO_CHAR(created, 'YYYY-MM-DD') = #{searchValue} OR TO_CHAR(created, 'YYYYMMDD') = #{searchValue}
+		</if>
+	</sql>
+	
+		<select id="dataCount" resultType="Integer" parameterType="map">
+		SELECT NVL(COUNT(*), 0) FROM pqna
+		<where>
+			<if test="searchValue != null and searchValue != ''">
+				<include refid="where-list"/>
+			</if>
+		</where>
+	</select>
+	
+		<!-- 리스트 start - end 내림차순 정렬 -->
+	<select id="listQna" resultType="com.hotbody.hotShop.qna.Qna" parameterType="map">
+		SELECT * FROM(
+    		SELECT ROWNUM rnum, tb.* FROM(
+        		SELECT pdQCode, userName, pdQSubject, pdQCreated
+        		FROM pQnA
+        		<where>
+					<if test="searchValue != null and searchValue != ''">
+						<include refid="where-list"/>
+					</if>
+				</where>
+        		ORDER BY pdQCode DESC
+     	<![CDATA[
+    		) tb WHERE ROWNUM <= #{end}      
+		) WHERE rnum >= #{start}
+		]]>
+	</select>
 
 </mapper>
