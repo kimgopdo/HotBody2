@@ -2,13 +2,61 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="dietClass">
-
+	<select id="seq" resultType="Integer">
+		SELECT classes_seq.NEXTVAL FROM dual
+	</select>
+	
 	<insert id="insertDietClass" parameterType="com.hotbody.dietClass.DietClass">
 		INSERT INTO dietClass(classNum, className, classType, classGoal, classGoalD, cllevel, tuition, saveFileName, originalFileName)
 		VALUES(
-			classes_seq.NEXTVAL, #{className}, #{classType}, #{classGoal}, #{classGoalD}, #{cllevel}, #{tuition},
+			#{classNum}, #{className}, #{classType}, #{classGoal}, #{classGoalD}, #{cllevel}, #{tuition},
 			#{saveFileName, jdbcType=VARCHAR}, 
 		    #{originalFileName, jdbcType=VARCHAR}
 	    )
 	</insert>
+	
+	<insert id="proToClass" parameterType="com.hotbody.dietClass.DietClass">
+		INSERT INTO pinClass(classNum, programNum) 
+		VALUES(#{classNum}, #{programNum})
+	</insert>
+	
+	<insert id="insertOn" parameterType="com.hotbody.dietClass.DietClass">
+		INSERT INTO onClass(classNum, mento, onperiod)
+		VALUES(#{classNum}, #{mento}, #{onperiod})
+	</insert>
+	
+	<insert id="insertOff" parameterType="com.hotbody.dietClass.DietClass">
+		INSERT INTO offClass(classNum, location1, location2, startTime, endTime, offLimit, coach, startDate, endDate)
+		VALUES(#{classNum}, #{location1}, #{location2}, #{startTime}, #{endTime}, #{offLimit}, #{coach}, #{startDate}, #{endDate})
+	</insert>
+	
+	<select id="listOnClass" resultType="com.hotbody.dietClass.DietClass">
+		SELECT d.classNum, className, classType, classGoal, classGoalD, cllevel, tuition, saveFileName, mento, onPeriod 
+		FROM dietClass d
+		JOIN onClass o ON d.classNum=o.classNum WHERE classType=0 ORDER BY classNum
+	</select>
+	
+	<select id="listOffClass" resultType="com.hotbody.dietClass.DietClass">
+		SELECT  d.classNum, className, classType, classGoal, classGoalD, cllevel, tuition, saveFileName,
+            location1, location2, startTime, endTime, offLimit, coach, startDate, endDate
+		FROM dietClass d
+		JOIN offClass o ON d.classNum=o.classNum WHERE classType=1 ORDER BY classNum
+	</select>
+	
+	<insert id="insertcProgram" parameterType="com.hotbody.dietClass.CProgram">
+		INSERT INTO cProgram(programNum, programName, programContent, saveFileName, originalFileName) 
+		VALUES(cprogram_seq.NEXTVAL, #{programName}, #{programContent}, #{saveFileName}, #{originalFileName})
+	</insert>
+	
+	<select id="listcProgram" resultType="com.hotbody.dietClass.CProgram">
+			SELECT programNum, programName, programContent, saveFileName 
+			FROM cProgram
+			ORDER BY programNum
+	</select>
+	
+	<select id="readcProgram" parameterType="Integer" resultType="com.hotbody.dietClass.CProgram">
+		SELECT classNum, c.programNum, programName, programContent, saveFileName 
+		FROM cprogram c JOIN pinClass p ON c.programNum = p.programNum
+		WHERE classNum = #{classNum}
+	</select>
 </mapper>

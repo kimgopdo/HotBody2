@@ -1,5 +1,7 @@
 package com.hotbody.dietClass;
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 
 public class DietClass {
@@ -7,6 +9,17 @@ public class DietClass {
 	private String className, classGoal, classGoalD, saveFileName, originalFileName;
 	
 	private MultipartFile upload;
+	
+	//온라인
+	private String mento;
+	private int onperiod;
+	
+	//오프라인
+	private String location1, location2, startTime, endTime, coach, startDate, endDate;
+	private int offLimit;
+	
+	private List<Integer> proSelect;
+	private int programNum;
 	
 	public int getClassNum() {
 		return classNum;
@@ -67,5 +80,77 @@ public class DietClass {
 	}
 	public void setOriginalFileName(String originalFileName) {
 		this.originalFileName = originalFileName;
+	}
+	public String getMento() {
+		return mento;
+	}
+	public void setMento(String mento) {
+		this.mento = mento;
+	}
+	public int getOnperiod() {
+		return onperiod;
+	}
+	public void setOnperiod(int onperiod) {
+		this.onperiod = onperiod;
+	}
+	public String getLocation1() {
+		return location1;
+	}
+	public void setLocation1(String location1) {
+		this.location1 = location1;
+	}
+	public String getLocation2() {
+		return location2;
+	}
+	public void setLocation2(String location2) {
+		this.location2 = location2;
+	}
+	public String getStartTime() {
+		return startTime;
+	}
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
+	public String getEndTime() {
+		return endTime;
+	}
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
+	}
+	public String getCoach() {
+		return coach;
+	}
+	public void setCoach(String coach) {
+		this.coach = coach;
+	}
+	public String getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+	public String getEndDate() {
+		return endDate;
+	}
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
+	public int getOffLimit() {
+		return offLimit;
+	}
+	public void setOffLimit(int offLimit) {
+		this.offLimit = offLimit;
+	}
+	public List<Integer> getProSelect() {
+		return proSelect;
+	}
+	public void setProSelect(List<Integer> proSelect) {
+		this.proSelect = proSelect;
+	}
+	public int getProgramNum() {
+		return programNum;
+	}
+	public void setProgramNum(int programNum) {
+		this.programNum = programNum;
 	}
 }

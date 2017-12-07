@@ -13,87 +13,106 @@ $(function() {
 });
 </script>
 
-            <form class="form-horizontal" name="schForm" method="post">
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">제목</label>
-                    <div class="col-sm-10" id="schTitle">
-                        <input class="form-control" name="title" type="text" placeholder="제목">
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">작성자</label>
-                    <div class="col-sm-10" id="schUserName">
-                        <p class="form-control-static">${sessionScope.member.userName}</p>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">일정분류</label>
-                    <div class="col-sm-10"  id="schClassify">
-                        <div class="btn-group" id="classifyGroup">
-                                <button type="button" class="btn btn-blue" id="btnTitle" style="background-image: none;">개인일정</button>
-                                <button type="button" class="btn dropdown-toggle btn-blue" id="btnDropdown" style="border-left-color: #ccc;" data-toggle="dropdown" aria-expanded="false">
-                                <span class="caret"></span>
-                                <span class="sr-only"></span>
-                            </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href='javascript:classifyChange("blue");'>개인일정</a></li>
-                                <li><a href='javascript:classifyChange("black");'>가족일정</a></li>
-                                <li><a href='javascript:classifyChange("green");'>회사일정</a></li>
-                                <li><a href='javascript:classifyChange("red");'>부서일정</a></li>
-                            </ul>
-                        </div>
-                        <input type="hidden" name="color" value="blue">
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">종일일정</label>
-                    <div class="col-sm-10" id="schAllDay">
-                            <p class="form-control-static">하루종일&nbsp;&nbsp;<input type="checkbox" id="allDayChk" name="allDay" value="true"></p>
-                            <input type="hidden" id="allDayHidden"  name="allDay" value="false">
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">시작일자</label>
-                    <div class="col-sm-10" id="schStartDay">
-                        <div class="row">
-                            <div class="col-sm-3" style="padding-right: 0px;">
-                                <input class="form-control" name="startDay" type="text" readonly="readonly" style="background: #fff;" placeholder="시작날짜">
-                            </div>
-                            <div class="col-sm-3" style="padding-left: 5px;">
-                                <input class="form-control" id="startTime" name="startTime" type="text" placeholder="시작시간">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">종료일자</label>
-                    <div class="col-sm-10" id="schEndDay">
-                        <div class="row">
-                            <div class="col-sm-3" style="padding-right: 0px;">
-                                <input class="form-control" name="endDay" type="text" readonly="readonly" style="background: #fff;" placeholder="종료날짜">
-                            </div>
-                            <div class="col-sm-3" style="padding-left: 5px;">
-                                <input class="form-control" id="endTime" name="endTime" type="text" placeholder="종료시간">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="form-group" id="schContent"  style="min-height: 75px;">
-                    <label class="col-sm-2 control-label">내용</label>
-                    <div class="col-sm-10">
-                        <textarea name="content" class="form-control" rows="3"></textarea>
-                        <input type="hidden" name="num" value="0">
-                    </div>
-                </div>
-            </form>
-      
-            <div style="text-align: right;" id="schFooter">
-                <button type="button" class="btn btn-primary" id="btnModalOk" onclick="insertOk();"> 확인 <span class="glyphicon glyphicon-ok"></span></button>
-                <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-left: 0px;"> 닫기 </button>
-            </div>
+<form name="schForm" method="post">
+<table style="margin: 10px auto 0px; width: 100%; border-spacing: 0px;">
+	  <tr height="40">
+	  	<td style="color: blue; font-weight: bold;"> 다이어트 일기 </td>
+	  </tr>
+	  
+	  <tr height="40"> 
+		      <td width="100" style="font-weight:600; padding-right:15px; text-align: right;">제&nbsp;&nbsp;목</td>
+		      <td> 
+                     <input name='title' type='text' class='boxTF' style="width:98%;" placeholder='제목'>
+              </td>
+	  </tr>
+
+	  <tr height="40"> 
+		      <td width="100" style="font-weight:600; padding-right:15px; text-align: right;">작성자</td>
+		      <td> 
+		             ${sessionScope.member.userName}
+		      </td>
+	  </tr>
+	  
+	  <tr height="40"> 
+		      <td width="100" style="font-weight:600; padding-right:15px; text-align: right;">금일체중</td>
+		      <td> 
+		            <input name='weight' type='text' class='boxTF' style="width:20%;" placeholder='금일체중'> Kg
+		      </td>
+	  </tr>
+
+	  <tr height="40"> 
+		      <td width="100" style="font-weight:600; padding-right:15px; text-align: right;">시작일자</td>
+		      <td> 
+		        	<input name="startDay" type="text" readonly="readonly" class="boxTF" style="background: #fff; width: 120px;" placeholder="시작날짜">
+		      </td>
+	  </tr>
+		 		
+	  <tr style="border-bottom:1px solid #ccc;"> 
+		      <td width="100" style="font-weight:600; padding-right:15px; padding-top:5px; text-align: right;" valign="top">내&nbsp;&nbsp;용</td>
+		      <td valign="top" style="padding:5px 0px 5px 0px;"> 
+		           <textarea name="content" cols="50" rows="3" class="boxTA" style="width:97%; height: 80px; resize: none;"></textarea>
+		           <input type="hidden" name="num" value="0">
+		      </td>
+	  </tr>
+	  
+	  
+	  <!-- 식단작성부분 -->	  
+	  <tr height="40">
+	  		<td style="margin-top: 15px; color: blue; font-weight: bold;"> 식단작성 </td>
+	  </tr>
+	  
+	  
+	  <tr height="40"> 
+		      <td width="100" style="font-weight:600; padding-right:15px; text-align: right;">식사분류</td>
+		      <td> 
+		        	<select name='color' class='selectField'>
+	                     <option value='blue'> 아침 </option>
+	                     <option value='black'> 점심 </option>
+	                     <option value='green'> 저녁 </option>
+                    </select>
+		      <a href="#"><img src="<%=cp%>/resource/images/search.png" height="26"></a></td>
+	  </tr>
+		
+	  <tr style="border-bottom:1px solid #ccc;"> 
+		      <td width="100" style="font-weight:600; padding-right:15px; padding-top:5px; text-align: right;" valign="top">내&nbsp;&nbsp;용</td>
+		      <td valign="top" style="padding:5px 0px 5px 0px;"> 
+		           <textarea name="content" cols="50" rows="3" class="boxTA" style="width:97%; height: 60px;"></textarea>
+		           <input type="hidden" name="num" value="0">
+		      </td>
+	  </tr>
+
+	  
+	  <!-- 운동과 미션 -->	  
+	  <tr height="40">
+	  		<td style="margin-top: 15px; color: blue; font-weight: bold;"> 운동과 미션 </td>
+	  </tr>
+	  
+	  <tr height="40">
+	  		<td style="font-weight:600; text-align: right; padding-right:15px;" align="center">미션리스트</td>
+	  		<td style="font-weight:600;">(오늘 완료한 미션을 체크하세요!!)</td>
+	  </tr>
+	  
+	  <tr height="40" >
+	  		  <td width="100" style="font-weight:600; padding-right:15px; text-align: right;">미&nbsp;&nbsp;션</td>
+		      <td> 
+                     <input name='title' type='text' class='boxTF' style="width:98%;">
+              </td>
+	  		  <td>&nbsp;&nbsp;<input type="checkbox" id="allDayChk"  name="allDay" value="true"></td>
+	  </tr>
+	  
+	  <tr height="40"> 
+		      <td width="100" style="font-weight:600; padding-right:15px; text-align: right;">운동</td>
+		      <td> 
+		        	<input id="" name="" type="text" class="boxTF" style="width: 120px;">
+		      </td>
+	  </tr>
+
+	  <tr height="40"> 
+		      <td width="100" style="font-weight:600; padding-right:15px; text-align: right;">운동시간</td>
+		      <td> 
+		        	<input id="" name="" type="text" class="boxTF" style="width: 120px;" placeholder="분으로 입력"> 분
+		      </td>
+	  </tr>
+	  
+</table>
+</form>

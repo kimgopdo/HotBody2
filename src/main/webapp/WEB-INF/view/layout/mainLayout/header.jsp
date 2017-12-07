@@ -7,8 +7,8 @@
 <%
 	String cp = request.getContextPath();
 %>
-<!-- PAGE -->
-	<div id="page">
+
+
 <!-- HEADER -->
 <header>
 	<!-- MENU BLOCK -->
@@ -32,24 +32,24 @@
 						<li class="first active scroll_btn"><a href="#home">Home</a></li>
 						<li class="sub-menu"><a href="">클래스</a>
 							<ul>
-								<li><a href="">온라인</a></li>
-								<li><a href="">오프라인</a></li>
+								<li><a href="<%=cp%>">온라인</a></li>
+								<li><a href="<%=cp%>">오프라인</a></li>
 							</ul></li>
-						<li class="scroll_btn last"><a href="">쇼핑몰</a></li>
+						<li class="scroll_btn last"><a href="<%=cp%>">쇼핑몰</a></li>
 						<li class="sub-menu"><a href="">모꼬지</a>
 							<ul>
 								<li><a href="<%=cp%>/moco_board/article">1</a></li>
-								<li><a href="">2</a></li>
-								<li><a href="">3</a></li>
+								<li><a href="<%=cp%>">2</a></li>
+								<li><a href="<%=cp%>">3</a></li>
 							</ul></li>
-						<li class="sub-menu"><a href="javascript:void(0);">공지사항</a>
+						<li class="sub-menu"><a href="<%=cp%>">공지사항</a>
 							<ul>
 								<li><a href="blog.html">공지사항</a></li>
 								<li><a href="blog-post.html">이벤트</a></li>
 							</ul></li>
 						<li class="scroll_btn last"><a href="#contacts">자주묻는질문</a></li>
-						<li class="scroll_btn last"><a href="#">로그인</a></li>
-						<li class="scroll_btn last"><a href="#">회원가입</a></li>
+						<li class="scroll_btn last"><a href="<%=cp%>">로그인</a></li>
+						<li class="scroll_btn last"><a href="<%=cp%>">회원가입</a></li>
 					</ul>
 				</nav>
 			</div>
@@ -60,4 +60,3 @@
 	<!-- //CONTAINER -->
 </header>
 <!-- //HEADER -->
-</div>
