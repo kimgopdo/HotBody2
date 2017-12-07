@@ -7,6 +7,68 @@
 %>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript" src="/hotbody/resource/jquery/js/jquery.oLoader.min.js"></script>
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+<style type="text/css">
+.checkbox label:after, 
+.radio label:after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+.checkbox .cr,
+.radio .cr {
+    position: relative;
+    display: inline-block;
+    border: 1px solid #a9a9a9;
+    border-radius: .25em;
+    width: 1.3em;
+    height: 1.3em;
+    float: left;
+    margin-right: .5em;
+}
+
+.radio .cr {
+    border-radius: 50%;
+}
+
+.checkbox .cr .cr-icon,
+.radio .cr .cr-icon {
+    position: absolute;
+    font-size: .8em;
+    line-height: 0;
+    top: 50%;
+    left: 20%;
+}
+
+.radio .cr .cr-icon {
+    margin-left: 0.04em;
+}
+
+.checkbox label input[type="checkbox"],
+.radio label input[type="radio"] {
+    display: none;
+}
+
+.checkbox label input[type="checkbox"] + .cr > .cr-icon,
+.radio label input[type="radio"] + .cr > .cr-icon {
+    transform: scale(3) rotateZ(-20deg);
+    opacity: 0;
+    transition: all .3s ease-in;
+}
+
+.checkbox label input[type="checkbox"]:checked + .cr > .cr-icon,
+.radio label input[type="radio"]:checked + .cr > .cr-icon {
+    transform: scale(1) rotateZ(0deg);
+    opacity: 1;
+}
+
+.checkbox label input[type="checkbox"]:disabled + .cr,
+.radio label input[type="radio"]:disabled + .cr {
+    opacity: .5;
+}
+</style>
 
 <script type="text/javascript">
 function oneCheckbox(p){
@@ -18,7 +80,6 @@ function oneCheckbox(p){
         }
     }
 }
-
 
 function selectConfirm(num){
 	//클래스 내용을 확인하였습니다-1
@@ -34,7 +95,6 @@ function selectConfirm(num){
 		$("#agreement").slideUp('slow');
 	}
 }
-
 
 function selectAgree() {
 	//두 약관에 모두 동의하면
@@ -76,11 +136,7 @@ function paymentOk() {
 }
 </script>
 
-
-<div class="body-container" style="width: 100%; padding-left: 0px;padding-right: 0px;" align="center">
-    <div class="body-title">
-        <h3><span style="font-family: Webdings">2</span> 결제 </h3>
-    </div>
+<div class="body-container" style="width: 100%; padding-left: 0px;padding-right: 0px; margin: 100px auto;" align="center">
     
     <div style="width: 1000px;">
 	<p style="font-size: 25px; font-weight: bold; margin-bottom: 20px;" align="left">수강하실 클래스</p>
@@ -117,8 +173,22 @@ function paymentOk() {
 	</tr>
 	</table>
 
-	<div style="width: 1000px; margin-top: 20px;" align="right">
+	<div style="width: 1000px; height:40px; margin-top: 20px;" align="right">
 		클래스 내용을 확인하셨습니까?&nbsp;&nbsp;&nbsp;
+		<div class="checkbox">
+          <label>
+            <input type="checkbox" value="">
+            <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+            Option one is this and that — be sure to include why it's great
+          </label>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="" checked>
+            <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+            Option two is checked by default
+          </label>
+        </div>
 		<input type="checkbox" id="confirm1" onclick="selectConfirm(1)"><b> 예&nbsp;&nbsp;</b>
 		<input type="checkbox" id="confirm2" onclick="selectConfirm(0)"><b> 아니오</b>
 	</div>

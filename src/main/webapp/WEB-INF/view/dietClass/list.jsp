@@ -28,11 +28,8 @@ function articleGo(num) {
 	location.href="<%=cp%>/dietClass/article?num="+num;
 }
 </script>
-<div class="body-container" style="width: 1000px;">
+<div class="body-container" style="width: 1000px; margin: 100px auto;">
 
-<div class="body-title">
-        <h3><span style="font-family: Webdings">2</span> 제목 </h3>
-</div>
 	<c:forEach var="dto" items="${onClass}">
     <table id="ct${dto.classNum}" onmouseover="on(${dto.classNum});" style="width: 1000px; height:350px; border-spacing: 0; border-collapse: collapse; border-bottom: 1px solid #cccccc; border-top: 1px solid #cccccc; margin: 20px 0;">
     <tr>
