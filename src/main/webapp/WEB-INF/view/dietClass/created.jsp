@@ -10,106 +10,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.form.js"></script>
+
 <style type="text/css">
-.form-group {
-    display: inline-block;
-    margin-bottom: 0;
-    vertical-align: middle;
-}
-
-.form-control {
-    display: inline-block;
-    width: 100%;
-    height: 30px;
-    font-size: 12px;
-    line-height: 1.42857;
-    color: rgb(85, 85, 85);
-    background-color: rgb(255, 255, 255);
-    background-image: none;
-    box-shadow: rgba(0, 0, 0, 0.0745098) 0 1px 1px inset;
-    padding: 6px 9px;
-    border-width: 1px;
-    border-style: solid;
-    border-color: rgb(204, 204, 204);
-    border-image: initial;
-    border-radius: 2px;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
-
-.form-control[readonly],
-fieldset[disabled] .form-control {
-    background-color: #ffffff;
-    opacity: 1;
-}
-
-.form_file .file_load {
-    display: inline-block;
-    position: relative;
-    width: 95px;
-    height: 31px;
-    cursor: pointer;
-}
-
-.form_file .file_load [type="file"] {
-    display: inline-block;
-    position: absolute;
-    width: inherit;
-    height: inherit;
-    z-index: 1;
-    opacity: 0;
-}
-
-.form_file .file_load label {
-    position: relative;
-    z-index: 5;
-    cursor: pointer;
-}
-
-.btn-default {
-    display: inline-block;
-    margin-bottom: 0;
-    font-weight: normal;
-    text-align: center;
-    width : 150px;
-    vertical-align: middle;
-    touch-action: manipulation;
-    cursor: pointer;
-    background-image: none;
-    white-space: nowrap;
-    font-size: 12px;
-    user-select: none;
-    border-width: 1px;
-    border-style: solid;
-    background-color: #666666;
-    border-color: #333333;
-    border-image: initial;
-    padding: 6px 9px;
-    border-radius: 2px;
-    color: #ffffff;
-}
-
-.btn-default02 {
-    display: inline-block;
-    margin-bottom: 0;
-    font-weight: normal;
-    text-align: center;
-    width : 100px;
-    vertical-align: middle;
-    touch-action: manipulation;
-    cursor: pointer;
-    background-image: none;
-    white-space: nowrap;
-    font-size: 12px;
-    user-select: none;
-    border-width: 1px;
-    border-style: solid;
-    background-color: #999999;
-    border-color: #cccccc;
-    border-image: initial;
-    padding: 6px 9px;
-    border-radius: 2px;
-    color: #ffffff;
-}
 /* 바탕 배경 이미지 */
 .pop-address-search .pop-address-search-inner { background-image: url(http://www.0000.com/img/backImg.png);}
 /* 회사 로고 이미지 */
@@ -126,30 +33,28 @@ fieldset[disabled] .form-control {
 /* 본문 배경색(짝수) */
 .pop-address-search .pop-address-search-inner .result table.data-col tbody tr:nth-child(even) td {background:#FFFFFF}
 </style>
-<script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 
 <script type="text/javascript">
 function sendOk() {
-	
-	var q=$("form[name=dietClassForm]").serialize();
-	//var formData = $("dietClassForm")[0];
-	//var formData=new FormData($(q)[7]);
+	alert("hello");
+	var f = document.dietClassForm;
+	var formData=new FormData(f);
 	var url="<%=cp%>/dietClass/insert";
-	alert(q);
 	$.ajax({
 		type:"post"
 		,url:url
-		//,processData: false
-        //,contentType: false
-		,data: q
+		,processData: false
+        ,contentType: false
+		,data: formData
 		,dataType:"json"
-		,success:function() {
-			location.href="<%=cp%>/dietClass/list";
+		,success:function(data) {
+			if(data.state=="true"){
+				alert("등록완료");
+				location.href="<%=cp%>/dietClass/list";
+			}
 		}
 	    ,error:function(e) {
+	    	alert("why");
 	    	console.log(e.responseText);
 	    }
 	});
@@ -226,6 +131,18 @@ function sample6_execDaumPostcode() {
         }
     }).open();
 }
+function programOk() {
+	//$("#showpro").slideDown("slow");
+	var data="";
+    $('input:checkbox[name=proSelect]').each(function() {
+       if($(this).is(':checked'))
+    	   data += $(this).attr("data-programName")+" | ";
+    });
+    
+    $("#showpro").show();
+    $("#showproInfo").html(data);
+    
+}
 
 $(function(){
 	var d = new Date();
@@ -248,7 +165,7 @@ $(function(){
 	<tr height="40">
 		<td width="100">클래스명</td>
 		<td>
-			<input type="text" name="className" style="width: 98%; height: 35px;" value="${dto.subject}">
+			<input type="text" name="className" style="width: 98%; height: 35px;">
 		</td>
 	</tr>
 	<tr height="10px;"></tr>
@@ -271,7 +188,7 @@ $(function(){
 	<tr height="40">
 		<td width="100">수강료</td>
 		<td>
-			<input type="text" name="tuition" style="width: 20%; height: 35px;" value="${dto.name}"> 원
+			<input type="text" name="tuition" style="width: 20%; height: 35px;"> 원
 		</td>
 	</tr>
 	<tr height="10px;"></tr>
@@ -279,7 +196,7 @@ $(function(){
 	<tr height="40">
 		<td width="100" valign="top">목적</td>
 		<td>
-			<textarea style="width: 98%;" rows=6; name="classGoal">${dto.content}</textarea>
+			<textarea style="width: 98%;" rows=6; name="classGoal"></textarea>
 		</td>
 	</tr>
 	<tr height="10px;"></tr>
@@ -287,7 +204,7 @@ $(function(){
 	<tr height="40">
 		<td width="100" valign="top">목적상세</td>
 		<td>
-			<textarea style="width: 98%;" rows=10; name="classGoalD">${dto.content}</textarea>
+			<textarea style="width: 98%;" rows=10; name="classGoalD"></textarea>
 		</td>
 	</tr>
 	<!-- 
@@ -306,20 +223,44 @@ $(function(){
 	          <button type="button" class="close" data-dismiss="modal">&times;</button>
 	          <h4 class="modal-title">프로그램 등록하기</h4>
 	        </div>
-	        <div class="modal-body" style="height: 500px;">
-	        
-	          <p>내용</p>
-	          
+	        <div class="modal-body" style="height: 500px; overflow-y: scroll;">
+	          	<table style="line-height: 2em;">
+	          	<c:forEach var="dto" items="${program}">
+	          		<tr style="border-bottom: 1px solid #dddddd; margin: 10px 0;">
+	          			<td width="40" align="center">
+	          			<input type="checkbox" name="proSelect" id="pro${dto.programNum}" value="${dto.programNum}" data-programName="${dto.programName}">
+	          			</td>
+	          			<td width="60" align="center">
+	          			<img style="width: 35px; height: 35px;" src="<%=cp%>/uploads/cProgram/${dto.saveFileName}">
+	          			</td>
+	          			<td>
+	          				<p style="font-weight: bold;">${dto.programName}</p>
+	          				<p>${dto.programContent}</p>
+	          			</td>
+	          		</tr>
+	          	</c:forEach>
+	          	</table>
 	        </div>
 	        <div class="modal-footer">
-	          <button type="button" class="btn" data-dismiss="modal">등록완료</button>
+	          <button type="button" class="btn" data-dismiss="modal" onclick="programOk()">등록완료</button>
 	        </div>
 	      </div>
 	    </div>
 	  </div>
 	</td>
 	</tr>
+	
 	<tr height="10px;"></tr>
+	
+	<tr id="showpro" style="display: none;">
+		<td width="100"></td>
+		<td>
+			<span id="showproInfo" style="color: tomato;"></span>
+		</td>
+	</tr>
+	
+	<tr height="10px;"></tr>
+	
 	<tr height="40">
 		<td width="100">파일등록</td>
 		<td>
@@ -354,15 +295,14 @@ $(function(){
 		</td>
 	</tr>
 	</c:if>
-	<tr height="10px;"></tr>
 	
 	<tr>
 		<td width="100">클래스 유형</td>
 		<td>
-			<input type="radio" name="classType" onclick="selectClassType(0)" value="0" ${dto.notice=="0"?"checked='checked'":""}>
+			<input type="radio" name="classType" onclick="selectClassType(0)" value="0" ${dto.classType=="0"?"checked='checked'":""}>
 			<label for="notice"> 온라인 </label>
 			
-			<input type="radio" name="classType" onclick="selectClassType(1)" value="1" ${dto.notice=="1"?"checked='checked'":""}>
+			<input type="radio" name="classType" onclick="selectClassType(1)" value="1" ${dto.classType=="1"?"checked='checked'":""}>
 			<label for="notice"> 오프라인 </label>
 		</td>
 	</tr>
@@ -374,14 +314,14 @@ $(function(){
 			<tr>
 				<td width="100">멘토</td>
 				<td>
-					<input type="text" name="mento" style="width: 20%; height: 35px;" value="${dto.subject}">
+					<input type="text" name="mento" style="width: 20%; height: 35px;">
 				</td>
 			</tr>
 			<tr height="10px;"></tr>
 			<tr>
 				<td width="100">수강기간</td>
 				<td>
-					<input type="text" name="period" style="width: 20%; height: 35px;" value="${dto.subject}"> 일
+					<input type="text" name="onperiod" style="width: 20%; height: 35px;" value="0"> 일
 				</td>
 			</tr>
 		</table>
@@ -392,14 +332,14 @@ $(function(){
 			<tr>
 				<td width="100">코치</td>
 				<td>
-					<input type="text" name="mento" style="width: 20%; height: 35px;" value="${dto.subject}">
+					<input type="text" name="coach" style="width: 20%; height: 35px;">
 				</td>
 			</tr>
 			<tr height="10px;"></tr>
 			<tr>
 				<td width="100">수강정원</td>
 				<td>
-					<input type="text" name="period" style="width: 20%; height: 35px;" value="${dto.subject}"> 명
+					<input type="text" name="offLimit" style="width: 20%; height: 35px;" value="0"> 명
 				</td>
 			</tr>
 			
@@ -412,8 +352,8 @@ $(function(){
 					<button class="btn" type="button" onclick="sample6_execDaumPostcode()">우편번호 찾기</button>
 		  			</p>
 		  			<p style="margin-top: 10px;">
-						<input style="width: 300px; height: 35px;" type="text" readonly="readonly" name="addr_1" id="sample6_address" placeholder="주소">
-						<input style="width: 250px; height: 35px;" type="text" name="addr_2" id="sample6_address2" placeholder="상세주소">		  		
+						<input style="width: 300px; height: 35px;" type="text" readonly="readonly" name="location1" id="sample6_address" placeholder="주소">
+						<input style="width: 250px; height: 35px;" type="text" name="location2" id="sample6_address2" placeholder="상세주소">		  		
 		  			</p>
 		  		</td>
 			</tr>
@@ -422,7 +362,7 @@ $(function(){
 			<tr>
 		  		<td width="100" valign="top">클래스 날짜</td>
 		  		<td>
-				   <input type="text" readonly="readonly" class="classDate" id="startDate"> ~ <input type="text" readonly="readonly" class="classDate" id="endDate">
+				   <input type="text" readonly="readonly" class="classDate" name="startDate"> ~ <input type="text" readonly="readonly" class="classDate" name="endDate">
 		  		</td>
 			</tr>
 			
@@ -430,7 +370,7 @@ $(function(){
 			<tr>
 		  		<td width="100" valign="top">클래스 시간</td>
 		  		<td>
-				   <input type="text" class="classTime" id="startTime"> ~ <input type="text" class="classTime" id="endTime">
+				   <input type="text" name="startTime"> ~ <input type="text" name="endTime">
 		  		</td>
 			</tr>
 			
