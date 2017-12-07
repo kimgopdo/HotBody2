@@ -99,7 +99,7 @@
 .ui-widget-header {
 	background: none;
 	border: none;
-	height:35px;
+	height:45px;
 	line-height:35px;
 	border-bottom: 1px solid #cccccc;
 	border-radius: 0px;
@@ -108,6 +108,7 @@
 .ui-widget-content {
    /* border: none; */
    border-color: #cccccc; 
+   margin: 0px auto 0px;
 }
 </style>
 
@@ -130,7 +131,7 @@ $(function() {
 			header: {
 				left: '',
 				center: 'title',
-				right: 'prev,next today'
+				 right: 'prev,next today'
 			},
 			locale: 'ko',
 			selectable: true,
@@ -303,9 +304,9 @@ function insertForm(start, end) {
 		    	   $(this).dialog("close");
 		        }
 		  },
-		  height: 1000,
-		  width: 700,
-		  title: "다이어트일기",
+		  height: 480,
+		  width: 550,
+		  title: "일정 추가",
 		  close: function(event, ui) {
 		  }
 	});
@@ -699,13 +700,13 @@ $(function(){
 });
 </script>
 
-<div class="body-container" style="width: 1100px;">
+<div class="body-container" style="width: 1100px; margin-top: 100px;">
     <div class="body-title">
-        <h3><span style="font-family: Webdings">2</span> 일정관리 </h3>
+        <h3><span style="font-family: Webdings">2</span>다이어트 일기</h3>
     </div>
     
     <div>
-            <div id="calendar" style="margin-top: 80px;"></div>
+            <div id="calendar"></div>
     </div>
 </div>
 
