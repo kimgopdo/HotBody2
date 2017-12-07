@@ -53,6 +53,31 @@ fieldset[disabled] .form-control {
     cursor: pointer;
 }
 
+.btn02 {
+    color:#333333;
+    font-weight:500;
+    font-family:"Malgun Gothic", "맑은 고딕", NanumGothic, 나눔고딕, 돋움, sans-serif;
+    border:1px solid #cccccc;
+    background-color:#ffffff;
+    text-align:center;
+    cursor:cursor;
+    padding:3px 10px 5px;
+    border-radius:4px;
+}
+.btn02:active, .btn02:focus, .btn02:hover {
+    background-color:#e6e6e6;
+    border-color: #adadad;
+    color: #333333;
+}
+.btn02[disabled], fieldset[disabled] .btn02 {
+    pointer-events: none;
+    cursor: not-allowed;
+    filter: alpha(opacity=65);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    opacity: .65;
+}
+
 .btn-default {
     display: inline-block;
     margin-bottom: 0;

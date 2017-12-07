@@ -17,6 +17,23 @@
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.form.js"></script>
 
 <style type="text/css">
+textarea,
+input[type="text"] {
+	width:100%;
+	text-transform:none;
+	font-family: 'Roboto', sans-serif;
+	font-weight:400;
+	line-height:20px;
+	font-size: 12px;
+	color: #333;
+	font-style:normal;
+	border-radius: 0;	
+	background: none;
+	border: 1px solid #242424;
+	box-shadow: none;
+	transition: border-color 0.3s ease-in-out; 
+	-webkit-transition: border-color 0.3s ease-in-out;
+}
 /* 바탕 배경 이미지 */
 .pop-address-search .pop-address-search-inner { background-image: url(http://www.0000.com/img/backImg.png);}
 /* 회사 로고 이미지 */
@@ -155,10 +172,11 @@ $(function(){
 </script>
 </head>
 <body>
-<div class="body-container" style="width: 1000px;">
+<div class="body-container" style="width: 1000px; margin: 100px auto;">
 <div style="height: 50px;"></div>
 <div style="font-size: 40px; width: 1000px; margin: 20px auto 0; font-weight: bold; color: #666666;">클래스 등록</div>
 <div style="width:1000px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
+
 
 <form id="dietClassForm" action="" method="post" name="dietClassForm" enctype="multipart/form-data">
 	<table style="width: 1000px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0">
@@ -173,8 +191,14 @@ $(function(){
 	<tr>
 		<td width="100">클래스 난이도</td>
 		<td>
-			<input type="radio" name="cllevel" value="1" ${dto.cllevel=="1"?"checked='checked'":""}>
-			<label for="notice"> 상 </label>
+		
+			<div class="radio"> 
+				<label class="radio-inline">
+	  			<input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"> 3
+				</label>
+
+			</div> 
+
 			
 			<input type="radio" name="cllevel" value="2" ${dto.cllevel=="2"?"checked='checked'":""}>
 			<label for="notice"> 중 </label>
@@ -213,7 +237,7 @@ $(function(){
 	<tr height="40">
 		<td width="100" valign="top">프로그램 등록</td>
 		<td>
-		<button type="button" class="btn" data-toggle="modal" data-target="#myModal">등록</button>
+		<button type="button" class="btn-sm" style="background: #ffffff;" data-toggle="modal" data-target="#myModal">등록</button>
 	
 	  <!-- Modal -->
 	  <div class="modal fade" id="myModal" role="dialog">
@@ -242,13 +266,14 @@ $(function(){
 	          	</table>
 	        </div>
 	        <div class="modal-footer">
-	          <button type="button" class="btn" data-dismiss="modal" onclick="programOk()">등록완료</button>
+	          <button type="button" class="btn-sm" style="background: #ffffff;" data-dismiss="modal" onclick="programOk()">등록완료</button>
 	        </div>
 	      </div>
 	    </div>
 	  </div>
 	</td>
 	</tr>
+	
 	
 	<tr height="10px;"></tr>
 	
@@ -268,11 +293,12 @@ $(function(){
 		  <input id="fileName" class="form-control form_point_color01" type="text" title="첨부된 파일명" readonly style="width:430px">
 		  <span class="file_load">
 		        <input type="file" id="upload" name="upload" onchange="fileChange();">
-		        <label class="btn" for="upload">파일첨부</label>
+		        <button type="button" class="btn-sm" style="background: #ffffff; padding: 5px; margin-left: 5px;">파일첨부</button>
 		    </span>
 		</div>
 		</td>
 	</tr>
+	
 	
 	<tr>
 		<td></td>
@@ -299,7 +325,7 @@ $(function(){
 	<tr>
 		<td width="100">클래스 유형</td>
 		<td>
-			<input type="radio" name="classType" onclick="selectClassType(0)" value="0" ${dto.classType=="0"?"checked='checked'":""}>
+			<input type="radio" name="classType" class="radio" onclick="selectClassType(0)" value="0" ${dto.classType=="0"?"checked='checked'":""}>
 			<label for="notice"> 온라인 </label>
 			
 			<input type="radio" name="classType" onclick="selectClassType(1)" value="1" ${dto.classType=="1"?"checked='checked'":""}>
@@ -349,7 +375,7 @@ $(function(){
 		  		<td>
 		  			<p>
 					<input style="width: 200px; height: 35px;" type="text" readonly="readonly" name="zip" id="sample6_postcode" placeholder="우편번호">
-					<button class="btn" type="button" onclick="sample6_execDaumPostcode()">우편번호 찾기</button>
+					<button class="btn02" type="button" onclick="sample6_execDaumPostcode()">우편번호 찾기</button>
 		  			</p>
 		  			<p style="margin-top: 10px;">
 						<input style="width: 300px; height: 35px;" type="text" readonly="readonly" name="location1" id="sample6_address" placeholder="주소">

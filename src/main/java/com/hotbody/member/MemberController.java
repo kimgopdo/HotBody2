@@ -59,10 +59,6 @@ public class MemberController {
 		return "redirect:/";
 	}
 
-	@RequestMapping(value="/member/mypage", method=RequestMethod.GET)
-	public String mypageForm() throws Exception{
-		return ".member.mypage";
-	}
 	
 	@RequestMapping(value="/member/myclass", method=RequestMethod.GET)
 	public String myclassForm() throws Exception{
