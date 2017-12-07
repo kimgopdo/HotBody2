@@ -28,13 +28,11 @@
 </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9P3TaLYvX65owbUopBkE0LN4ntFOwiRs&callback=initMap">
 </script>
-<div class="body-container" style="width: 1000px;">
+<div class="body-container" style="width: 1000px; margin: 100px auto;">
 
-<div class="body-title">
-	<h3><span style="font-family: Webdings">2</span> 제목 </h3>
-</div>
-
-	<a href="<%=cp%>/dietClass/list" style="color: #333333;"><img style="width: 30px;" src="<%=cp%>/resource/images/dano_arrow.png"></a>
+	<div style="margin: 50px 0px;">
+	<a href="<%=cp%>/dietClass/list" style="color: #333333; padding: 20px 20px;"><img style="width: 30px;" src="<%=cp%>/resource/images/dano_arrow.png"></a>
+	</div>
     <p style="font-size: 35px; font-weight: bold; margin-top: 20px;">클래스 이름</p>
 	<div style="width: 650px; height: 370px; float: left;">
 		<img style="vertical-align: middle;" src="https://dietnote.net/static/mydano/class/detail/new/program_leg.jpg">

@@ -23,6 +23,7 @@
 	<link href="<%=cp%>/resource/mainboot/css/animate.css" rel="stylesheet" type="text/css" media="all" />
     <link href="<%=cp%>/resource/mainboot/css/owl.carousel.css" rel="stylesheet">
 	<link href="<%=cp%>/resource/mainboot/css/style.css" rel="stylesheet" type="text/css" />
+	<link href="<%=cp%>/resource/mainboot/css/fileuploader.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     
 	<!-- FONTS -->
