@@ -1,5 +1,8 @@
 package com.hotbody.dietClass;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,22 +20,93 @@ public class DietClassServiceImpl implements DietClassService {
 	
 	@Override
 	public int insertDietClass(DietClass dto, String pathname) {
-		System.out.println("Hello");
 		int result = 0;
 		try{
+			int seq = dao.selectOne("dietClass.seq");
+			dto.setClassNum(seq);
+			
 			if(! dto.getUpload().isEmpty()) {
 				String saveFilename=fileManager.doFileUpload(dto.getUpload(), pathname);
-				System.out.println("hello");
 				dto.setSaveFileName(saveFilename);
 				dto.setOriginalFileName(dto.getUpload().getOriginalFilename());
 			}
-			System.out.println(dto.getSaveFileName());
-			System.out.println(dto.getOriginalFileName());
-			
 			result=dao.insertData("dietClass.insertDietClass", dto);
+			
+			for(int a : dto.getProSelect()) {
+				dto.setProgramNum(a);
+				System.out.println(a+"=-=--=-=-===-==-=--=");
+				dao.insertData("dietClass.proToClass", dto);
+			}
+			
+			if(dto.getClassType()==0)
+				dao.insertData("dietClass.insertOn", dto);
+			else
+				dao.insertData("dietClass.insertOff", dto);
+			
 		} catch(Exception e) {
 			System.out.println(e.toString());
 		}
 		return result;
+	}
+
+	@Override
+	public int insertcProgram(CProgram dto, String pathname) {
+		int result = 0;
+		try {
+			if(! dto.getUpload().isEmpty()) {
+				String saveFilename=fileManager.doFileUpload(dto.getUpload(), pathname);
+				dto.setSaveFileName(saveFilename);
+				dto.setOriginalFileName(dto.getUpload().getOriginalFilename());
+			}
+			result=dao.insertData("dietClass.insertcProgram", dto);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public List<CProgram> listcProgram() {
+		List<CProgram> list = new ArrayList<>();
+		try {
+			list = dao.selectList("dietClass.listcProgram");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public List<DietClass> listOnClass() {
+		List<DietClass> list = new ArrayList<>();
+		try {
+			list = dao.selectList("dietClass.listOnClass");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public List<DietClass> listOffClass() {
+		List<DietClass> list = new ArrayList<>();
+		try {
+			list = dao.selectList("dietClass.listOffClass");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public List<CProgram> readcProgram(int classNum) {
+		List<CProgram> list = new ArrayList<>();
+		try {
+			list = dao.selectList("dietClass.readcProgram", classNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 }

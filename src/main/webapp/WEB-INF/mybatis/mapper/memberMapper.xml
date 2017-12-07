@@ -15,7 +15,7 @@
 		INSERT INTO member1 (userId, pwd, grade, userName) VALUES (#{userId}, #{pwd}, #{grade}, #{userName})
 	</insert>
 	
-	<insert id="inserMember2" parameterType="com.hotbody.member.Member">
+	<insert id="insertMember2" parameterType="com.hotbody.member.Member">
 		INSERT INTO member2 (userId, tel, email, postNum, addr1, addr2, birth, gender) VALUES (#{userId}, #{tel}, #{email}, #{postNum}, #{addr1}, #{addr2}, #{birth}, #{gender})
 	</insert>
 
