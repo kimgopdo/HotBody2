@@ -1,5 +1,8 @@
 package com.hotbody.member;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,5 +88,21 @@ public class MemberController {
 			return ".main.main";
 	}
 	
+	@RequestMapping(value="/member/userIdCheck")
+	@ResponseBody
+	public Map<String, Object> userIdCheck(
+			@RequestParam String userId
+			) throws Exception {
+		String passed="false";
+		Member dto=service.readMember(userId);
+		if(dto==null)
+			passed="true";
+		
+   	    // 작업 결과를 json으로 전송
+		Map<String, Object> model = new HashMap<>(); 
+		model.put("passed", passed);
+		model.put("userId", userId);
+		return model;
+	}
 	
 }

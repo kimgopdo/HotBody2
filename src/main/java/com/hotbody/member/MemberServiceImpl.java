@@ -34,6 +34,8 @@ public class MemberServiceImpl implements MemberService {
 			if(dto.getTel1() != null && dto.getTel1().length() != 0 && dto.getTel2() != null && dto.getTel2().length() != 0 && dto.getTel3() != null && dto.getTel3().length() != 0)
 				dto.setTel(dto.getTel1() + "-" + dto.getTel2() + "-" + dto.getTel3());
 			
+			dto.setGrade(0);
+			
 			dao.insertData("member.insertMember1", dto);
 			dao.insertData("member.insertMember2", dto);
 			result=1;

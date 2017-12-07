@@ -200,19 +200,19 @@ function memberOk() {
 	}
 	f.userId.value = str;
 
-	str = f.userPwd.value;
+	str = f.pwd.value;
 	str = str.trim();
 	if(!str) {
 		alert("패스워드를 입력하세요. ");
-		f.userPwd.focus();
+		f.pwd.focus();
 		return;
 	}
 	if(!/^(?=.*[a-z])(?=.*[!@#$%^*+=-]|.*[0-9]).{5,10}$/i.test(str)) { 
 		alert("패스워드는 5~10자이며 하나 이상의 숫자나 특수문자가 포함되어야 합니다.");
-		f.userPwd.focus();
+		f.pwd.focus();
 		return;
 	}
-	f.userPwd.value = str;
+	f.pwd.value = str;
 
 	if(str!= f.userPwdCheck.value) {
         alert("패스워드가 일치하지 않습니다. ");
@@ -286,15 +286,15 @@ function memberOk() {
 	str = str.trim();
     if(!str) {
         alert("이메일을 입력하세요. ");
-        f.email2.focus();
+        f.email2.focus();	
         return;
     }
 
     var mode="${mode}";
     if(mode=="created") {
-    	f.action = "<%=cp%>/member/memberCreatedSubmit.do";
+    	f.action = "<%=cp%>/member/member";
     } else if(mode=="update") {
-    	f.action = "<%=cp%>/member/memberUpdateSubmit.do";
+    	f.action = "<%=cp%>/member/update";
     }
 
     f.submit();
@@ -324,13 +324,33 @@ function userIdCheck() {
 		f.userId.focus();
 		return;
 	}
-	f.action="<%=cp%>/member/userIdCheck.do";
-	f.submit();
+	
+	var url="<%=cp%>/member/userIdCheck";
+	var query="userId="+userId;
+	$.ajax({
+		type:"POST"
+		,url:url
+		,data:query
+		,dataType:"JSON"
+		,success:function(data) {
+			var passed=data.passed;
+
+			if(passed=="true") {
+				var str="<span style='color:blue;font-weight: bold;'>사용 가능한 아이디 입니다.</span>";
+				$("#userId").parent().next(".help-block").html(str);
+			} else {
+				var str="<span style='color:red;font-weight: bold;'>이미 사용중인 아이디 입니다.</span>";
+				$("#userId").parent().next(".help-block").html(str);
+				$("#userId").val("");
+				$("#userId").focus();
+			}
+		}
+	});
 }
 
 function idCheckFocus(){
 	if(${userIdCheck=="0"}){
-		$("#userPwd").focus();//사용가능 0 불가능 1
+		$("#pwd").focus();//사용가능 0 불가능 1
 	}else{
 		$("#userId").focus();//사용가능 0 불가능 1
 	}
@@ -349,7 +369,7 @@ function idCheckFocus(){
         
         <div style="width: 100%;">
 			<form name="memberForm" method="post">
-			  <table style="width: 90%; margin: 20px auto 0px; margin-left: 300px; border-spacing: 0px;">
+			  <table style="width: 90%; margin: 20px auto 0px; border-spacing: 0px;">
 			  <tr>
 			      <td width="100" valign="top" style="text-align: right; padding-top: 5px;">
 			            <label style="font-weight: 900;">아이디</label>
@@ -358,7 +378,7 @@ function idCheckFocus(){
 			      
 			        <p style="margin-top: 1px; margin-bottom: 5px;">
 			            <input type="text" name="userId" id="userId" value="${userId}"
-                         onchange="userIdCheck();" style="width: 10%;"
+                         onchange="userIdCheck()" style="width: 10%;"
                          maxlength="15" placeholder="아이디"> ${userId!=null ? (userIdCheck>=1 ? '<span style="color: red;">중복된 아이디 입니다.</span>' : '사용 가능 합니다.') : '아이디를 입력해 주세요.' }
 			        </p>
 			        <p class="help-block">아이디는 5~10자 이내이며, 첫글자는 영문자로 시작해야 합니다.</p>
@@ -371,7 +391,7 @@ function idCheckFocus(){
 			      </td>
 			      <td style="padding: 0 0 15px 15px;">
 			        <p style="margin-top: 1px; margin-bottom: 5px;">
-			            <input type="password" id="userPwd" name="userPwd" maxlength="15"
+			            <input type="password" id="pwd" name="pwd" maxlength="15"
 			                       style="width: 10%;" placeholder="패스워드">
 			        </p>
 			        <p class="help-block">패스워드는 5~10자 이내이며, 하나 이상의 숫자나 영문자가 포함되어야 합니다.</p>
@@ -396,11 +416,25 @@ function idCheckFocus(){
 			            <label style="font-weight: 900;">이름</label>
 			      </td>
 			      <td style="padding: 0 0 15px 15px;">
-			        <p style="margin-top: 1px; margin-bottom: 5px;">
+			        <p style="margin-top: 1px; margin-bottom: 1px;">
 			            <input type="text" name="userName" value="${dto.userName}" maxlength="30"
 		                      style="width: 15%;"
 		                      placeholder="이름">
 			        </p>
+			      </td>
+			  </tr>
+			  
+  			  <tr>
+			      <td width="100" valign="top" style="text-align: right; padding-top: 5px;">
+			            <label style="font-weight: 900;">성별</label>
+			      </td>
+			      <td style="padding: 0 0 15px 15px;">
+			        <p style="margin-top: 1px; margin-bottom: 5px;">
+			            <input type="text" name="gender" value="${dto.gender}" maxlength="30"
+		                      style="width: 15%;"
+		                      placeholder="성별">
+			        </p>
+			        <p class="help-block">'남자' 또는 '여자'로만 입력하세요.</p>
 			      </td>
 			  </tr>
 			
@@ -466,18 +500,18 @@ function idCheckFocus(){
 			  		<td width="100" style="padding: 0 0 15px 15px;">
 			  			<p style="height: 50px; margin-top: 1px; margin-bottom: 5px;">
 						<button style="height: 35px; float: left;" class="btn" type="button" onclick="sample6_execDaumPostcode()">우편번호 찾기</button>
-						<input style="width: 100px; margin-left: 2px;" type="text" name="zip" id="sample6_postcode" placeholder="우편번호">
+						<input style="width: 100px; margin-left: 2px;" type="text" name="postNum" id="sample6_postcode" placeholder="우편번호">
 			  			</p>
 			  			<p style="margin-top: 1px; margin-bottom: 5px;">
-							<input style="width: 250px; margin-bottom: 10px;" type="text" name="addr_1" id="sample6_address" placeholder="주소"><br>
-							<input style="width: 250px;" type="text" name="addr_2" id="sample6_address2" placeholder="상세주소">			  		
+							<input style="width: 250px; margin-bottom: 10px;" type="text" name="addr1" id="sample6_address" placeholder="주소"><br>
+							<input style="width: 250px;" type="text" name="addr2" id="sample6_address2" placeholder="상세주소">			  		
 			  			</p>
 			  		</td>
 			  </tr>
 			  </table>
-			  <table style="width: 25%; margin: 10px auto; border-spacing: 0px;">
+			  <table style="width: 50%; margin: 10px auto; border-spacing: 0px;">
 			     <tr height="45"> 
-			      <td align="center">
+			      <td align="left">
 			        <button type="reset" class="submit">다시입력</button>
 			        <button type="button" class="submit" onclick="javascript:location.href='<%=cp%>/';" style="margin-left: 10px; margin-right: 10px;">가입취소</button>
 			        <button type="button" name="sendButton" class="submit" onclick="memberOk();">회원가입</button>
@@ -520,7 +554,7 @@ function idCheckFocus(){
 			      </td>
 			      <td style="padding: 0 0 15px 15px;">
 			        <p style="margin-top: 1px; margin-bottom: 5px;">
-			            <input type="password" name="userPwd" maxlength="15"
+			            <input type="password" name="pwd" maxlength="15"
 			                       style="width: 30%;" placeholder="패스워드">
 			        </p>
 			        <p class="help-block">패스워드는 5~10자 이내이며, 하나 이상의 숫자나 특수문자가 포함되어야 합니다.</p>
@@ -615,11 +649,11 @@ function idCheckFocus(){
 			  		<td width="100" style="padding: 0 0 15px 15px;">
 			  			<p style="height: 50px; margin-top: 1px; margin-bottom: 5px;">
 						<button style="height: 35px; float: left;" class="btn"  type="button" onclick="sample6_execDaumPostcode()">우편번호 찾기</button>
-						<input style="width: 200px; margin-left: 2px;" type="text" readonly="readonly" name="zip" id="sample6_postcode" placeholder="우편번호">
+						<input style="width: 200px; margin-left: 2px;" type="text" readonly="readonly" name="postNum" id="sample6_postcode" placeholder="우편번호">
 			  			</p>
 			  			<p style="margin-top: 1px; margin-bottom: 5px;">
-							<input style="width: 300px;" type="text" readonly="readonly" name="addr_1" id="sample6_address" placeholder="주소">
-							<input style="width: 250px;" type="text" name="addr_2" id="sample6_address2" placeholder="상세주소">			  		
+							<input style="width: 300px;" type="text" readonly="readonly" name="addr1" id="sample6_address" placeholder="주소">
+							<input style="width: 250px;" type="text" name="addr2" id="sample6_address2" placeholder="상세주소">			  		
 			  			</p>
 			  		</td>
 			  </tr>

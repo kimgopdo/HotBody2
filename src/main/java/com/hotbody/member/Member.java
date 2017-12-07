@@ -16,7 +16,7 @@ public class Member {
 	private String tel1;
 	private String tel2;
 	private String tel3;
-	private String zip;
+	private String postNum;
 	private String addr1;
 	private String addr2;
 	private String gender;
@@ -93,11 +93,11 @@ public class Member {
 	public void setTel(String tel) {
 		this.tel = tel;
 	}
-	public String getZip() {
-		return zip;
+	public String getPostNum() {
+		return postNum;
 	}
-	public void setZip(String zip) {
-		this.zip = zip;
+	public void setPostNum(String postNum) {
+		this.postNum = postNum;
 	}
 	public String getAddr1() {
 		return addr1;
