@@ -4,8 +4,67 @@
 <mapper namespace="product">
 	<insert id="insertProductList" parameterType="com.hotbody.hotShop.board.HotShop">
 		INSERT INTO 
-		productList (pdNum,pdName,pdOrder,pdCreated,pdBoardName,pdContent,pdStCount) 
+		productList (pdNum,pdName,pdOrder,pdCreated,pdBoardName,pdContent,pdStCount,pdSumContent) 
 		values(product_seq.NEXTVAL,#{pdName},1,
-				sysdate,#{pdName},#{content},0)
+				sysdate,#{pdName},#{content},0,#{pdSumContent})
 	</insert>
+	<insert id="insertPmainImg" parameterType="com.hotbody.hotShop.board.HotShop">
+	INSERT INTO 
+		PmainImg (pmicode,pdNum,imgOriginalFilename,imgSaveFilename) 
+		values(PMICODE_SEQ.NEXTVAL,#{pdnum},#{imgOriginalFilename},#{imgSaveFilename})
+	</insert>
+	<insert id="insertTemporary" parameterType="com.hotbody.hotShop.board.HotShop">
+	INSERT INTO 
+		Temporary (pdnum,pdPrice,pdNutrient,pdArea,pdStMethod,pdType,pdRawName) 
+		values(#{pdnum},#{pdPrice},#{pdNutrient},#{pdArea},#{pdStMethod},#{pdType},#{pdRawName})
+	</insert>
+	<select id="readProductNum" parameterType="String" resultType="Integer">
+	SELECT pdnum FROM productList WHERE pdName=#{pdName}
+	</select>
+	<select id="productList" parameterType="map" resultType="com.hotbody.hotShop.board.HotShop">
+	SELECT p.pdnum, imgOriginalFilename, imgSaveFilename, pdName,
+			 pdSumContent, pdPrice, pdcontent content,
+			pdNutrient, pdStMethod, pdType, pdRawName, pdArea,
+			 pdDelRule, pdCreated, pdstCount, pdExDate
+				FROM productList p 
+				Left OUTER Join Temporary t ON p.pdnum=t.pdnum 
+				Left OUTER JOIN Temporary2 t2 ON p.pdnum=t2.pdnum 
+				Left OUTER JOIN pmainimg pi ON p.pdnum=pi.pdnum 
+				Left OUTER JOIN productin pin ON p.pdnum=pin.pdnum
+				<where>
+					<if test="listOrArticle!=0">
+						 p.pdnum=#{pdnum}
+					</if>
+				</where>
+				ORDER BY p.pdcreated DESC
+	</select>
+	<update id="productListUpdate" parameterType="com.hotbody.hotShop.board.HotShop">
+	UPDATE productList 
+	SET 
+	pdname=#{pdName},
+	pdContent=#{content},
+	pdSumContent=#{pdSumContent}
+	
+	 WHERE pdnum=#{pdnum}
+	</update>
+	<update id="PmainImgUpdate" parameterType="com.hotbody.hotShop.board.HotShop">
+	UPDATE PmainImg 
+	SET 
+	imgOriginalFilename=#{imgOriginalFilename},
+	imgSaveFilename=#{imgSaveFilename}
+	
+	 WHERE pdnum=#{pdnum}
+	</update>
+	<update id="TemporaryUpdate" parameterType="com.hotbody.hotShop.board.HotShop">
+	UPDATE Temporary 
+	SET 
+	pdPrice=#{pdPrice},
+	pdNutrient=#{pdNutrient},
+	pdArea=#{pdArea},
+	pdStMethod=#{pdStMethod},
+	pdType=#{pdType},
+	pdRawName=#{pdRawName}
+	
+	WHERE pdnum=#{pdnum}
+	</update>
 </mapper>

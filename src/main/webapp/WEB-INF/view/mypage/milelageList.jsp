@@ -129,8 +129,8 @@ $(function() {
 </div>
 
 <div align="center" >
-<h3>마일리지</h3><br>
-고객님의 사용가능 적립금 금액 입니다.
+<h3>MILELAGE LIST</h3><br>
+고객님이 사용하신 적립금 금액 입니다.
 </div>
 
 <table  style="border: 2px solid silver; margin: 40px auto; width: 1000px;">
@@ -158,13 +158,13 @@ $(function() {
 <table style="border:1px solid silver; width: 1000px; margin: 40px auto 0px; font-size: 12px">
 	<tr style="text-align: center; height: 40px">
 		<td style="width: 20%; border-right: 1px solid silver; background-color: #D8D8D8;">적립내역보기</td>
-		<td style="width: 20%; border-right: 1px solid silver;"><a onclick="location.href='<%=cp%>/mypage/usedMileageList';">적립금사용내역보기</a></td>
+		<td style="width: 20%; border-right: 1px solid silver;"><a onclick="location.href='<%=cp%>/mypage/usedMilelageList';">적립금사용내역보기</a></td>
 
 		<td style="width: 60%"></td>
 	</tr>
 </table>
 
-<form name="searchDate" method="post" action="<%=cp%>/mypage/mlielageList">
+<form name="searchDate" method="post" action="<%=cp%>/mypage/milelageList">
 <table style="border:3px solid silver; width: 1000px; margin: 40px auto 0px; height: 100px;">
 	<tr style="text-align: center;">
 		<td  style="width: 30%; font-size: 12px">
@@ -187,8 +187,7 @@ $(function() {
 </form>
 <table style=" width: 1000px; margin: 0px auto;">
 	<tr>
-		<td><h6>＊기본적으로 최근 3개월간의 자료가 조회되며, 기간 검색시 지난 주문내역을 조회하실 수 있습니다.<br>
-		＊주문번호를 클릭하시면 해당 주문에 대한 상세내역을 확인하실 수 있습니다.</h6>
+		<td><h6>＊기본적으로 최근 3개월간의 자료가 조회되며, 기간 검색시 지난 주문내역을 조회하실 수 있습니다.
 		</td>
 
 	</tr>
@@ -210,34 +209,36 @@ $(function() {
 		<td  style="width: 55%; border:1px solid silver; ">
 		상품정보
 		</td>
-		<!--  
-<c:forEach var="dto" items="${list}">
-</c:forEach>
--->
+ 
 	</tr>
 	
-	<tr height="100px" style="text-align: center; ">
+<c:forEach var="list" items="${list}">
+	<tr height="80px" style="text-align: center; ">
 		<td  style="width: 15%;  ">
-
+		${list.payDate}
 		</td>
 		<td  style="width: 15%;  ">
-		
+		${list.totalPay}
 		</td>
 		<td  style="width: 15%; ">
-		
+		${list.milelage}
 		</td>
 		<td  style="width: 55%;  ">
-		
+		${list.pdBoardName}
 		</td>
 	</tr>
+</c:forEach>
 
 </table>
 <div style="height: 100px;" align="center" >
 	<!--<img style="margin-top: 20px" src="<%=cp%>/resource/images/btn_page_first.gif">
 	<img style="margin-top: 20px" src="<%=cp%>/resource/images/btn_page_prev.gif">-->
-	<!--  <a style="margin-top:20px; position: relative; top: 10px;">${paging}</a>-->
+	 <a style="margin-top:20px; position: relative; top: 10px;">${paging}</a>
 	<!--  <img style="margin-top: 20px" src="<%=cp%>/resource/images/btn_page_next.gif">
 	<img style="margin-top: 20px" src="<%=cp%>/resource/images/btn_page_last.gif">-->
+</div>
+
+<div style="height: 100px">
 </div>
 </body>
 

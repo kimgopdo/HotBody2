@@ -117,11 +117,11 @@
 		<div id="holder" style="float: left;">
 			<c:if test="${mode=='update'}">
 				<img class="aspect" src="<%=cp%>/uploads/shopProduct/${dto.imgSaveFilename}">
-				<input name="pdnum" type="hidden" value="${dto.pdnum}">
-				<input name="imgSaveFilename" type="hidden" value="${dto.imgSaveFilename}">
-				<input name="mode" type="hidden" value="update">
 			</c:if>
 		</div>
+		<input name="pdnum" type="hidden" value="${dto.pdnum}">
+		<input name="imgSaveFilename" type="hidden" value="${dto.imgSaveFilename}">
+		<input name="mode" type="hidden" value="update">
 		<div style="width:40%; float: right;">
 		<span style="font-weight: bold;">상&nbsp;&nbsp;&nbsp;품&nbsp;&nbsp;&nbsp;명&nbsp;&nbsp;&nbsp;</span><br><input type="text" name="pdName" style="width: 100%; border: 1px solid #BDBDBD; outline: none;" value="${dto.pdName}"><br>
 		<span style="font-weight: bold;">상품내용&nbsp;&nbsp;</span><textarea name="pdSumContent" style="width: 100%; height:300px; border: 1px solid #BDBDBD; outline: none;">${mode=="update"?dto.pdSumContent:""}</textarea><br>

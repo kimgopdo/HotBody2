@@ -22,7 +22,8 @@
 	
 	SELECT * FROM (
 		SELECT ROWNUM rnum, tb.* FROM (
-      select o.delorder,o.TOTALPAY,ds.DELSTATE,to_char(tl.PAYDATE,'yyyy-dd-mm') PAYDATE,ctl.AMOUNT,pl.PDBOARDNAME,pm.imgsavefilename
+      select o.delorder,o.TOTALPAY,ds.DELSTATE,to_char(tl.PAYDATE,'yyyy-dd-mm') PAYDATE
+      ,ctl.AMOUNT,pl.PDBOARDNAME,pm.imgsavefilename
         from orders o left outer join delstate ds
         on o.delorder = ds.delorder
         left outer join totalordlist tl
