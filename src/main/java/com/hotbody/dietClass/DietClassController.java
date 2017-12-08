@@ -11,13 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hotbody.common.FileManager;
+import com.hotbody.common.MyUtil;
 
 @Controller("dietClass.dietClassController")
 public class DietClassController {
@@ -29,42 +30,46 @@ public class DietClassController {
 	@Autowired
 	private FileManager fileManager;
 	
-	@RequestMapping(value="/dietClass/onList")
-	public String classList(HttpServletRequest req) {
+	@Autowired
+	private MyUtil util;
+	
+	@RequestMapping(value="/dietClass/list")
+	public String classList(HttpServletRequest req,
+								@RequestParam int type) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("classType", type);
 		
-		List<DietClass> list = service.listOnClass();
+		List<DietClass> list = service.listClass(map);
 		
-		for(DietClass dto: list) {
-			dto.setShowTuition("￦ "+df.format(dto.getTuition())+"원");
+		//온라인클래스
+		if(type==0) {
+			for(DietClass dto: list) {
+				dto.setShowTuition("￦ "+df.format(dto.getTuition())+"원");
+			}
 		}
 		
-		req.setAttribute("onClass", list);
+		//오프라인클래스 
+		else if(type==1) {
+			String date=null;
+			
+			for(DietClass dto: list) {
+				date = dto.getStartDate().substring(0, 4)+"년 ";
+				date += dto.getStartDate().substring(4, 6)+"월 ";
+				date += dto.getStartDate().substring(6, 8)+"일 ";
+				dto.setStartDate(date);
+				
+				date = dto.getEndDate().substring(0, 4)+"년 ";
+				date += dto.getEndDate().substring(4, 6)+"월 ";
+				date += dto.getEndDate().substring(6, 8)+"일 ";
+				dto.setEndDate(date);
+				dto.setShowTuition("￦ "+df.format(dto.getTuition())+"원");
+			}
+		}
+		
+		req.setAttribute("diet", list);
+		//req.setAttribute("type", type);
 		
 		return ".dietClass.list";
-	}
-	
-	@RequestMapping(value="/dietClass/offList")
-	public String offclassList(HttpServletRequest req) {
-		DecimalFormat df = new DecimalFormat("###,###,###,###");
-		String date=null;
-		List<DietClass> list = service.listOffClass();
-		
-		for(DietClass dto: list) {
-			date = dto.getStartDate().substring(0, 4)+"년 ";
-			date += dto.getStartDate().substring(4, 6)+"월 ";
-			date += dto.getStartDate().substring(6, 8)+"일 ";
-			dto.setStartDate(date);
-			
-			date = dto.getEndDate().substring(0, 4)+"년 ";
-			date += dto.getEndDate().substring(4, 6)+"월 ";
-			date += dto.getEndDate().substring(6, 8)+"일 ";
-			dto.setEndDate(date);
-			dto.setShowTuition("￦ "+df.format(dto.getTuition())+"원");
-		}
-		
-		req.setAttribute("offClass", list);
-		
-		return ".dietClass.offList";
 	}
 	
 	@RequestMapping(value="dietClass/created")
@@ -88,14 +93,20 @@ public class DietClassController {
 		
 		Map<String, Object> model = new HashMap<>();
 		model.put("state", "true");
+		model.put("type", dto.getClassType());
 		
 		return model;
 	}
 	
-	@RequestMapping(value="/dietClass/articleOn")
+	@RequestMapping(value="/dietClass/article")
 	public String classArticle(@RequestParam int num,
-								HttpServletRequest req) {
-		DietClass dto = service.readOnClass(num);
+								HttpServletRequest req,
+								@RequestParam int type) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("classNum", num);
+		map.put("classType", type);
+		
+		DietClass dto = service.readClass(map);
 		List<CProgram> list = service.readcProgram(num);
 		
 		dto.setShowTuition("￦ "+df.format(dto.getTuition())+"원");
@@ -108,9 +119,14 @@ public class DietClassController {
 	
 	@RequestMapping(value="dietClass/update")
 	public String classUpdate(HttpServletRequest req,
-							@RequestParam int num) {
+							@RequestParam int num,
+							@RequestParam int type) {
 		
-		DietClass dto = service.readOnClass(num);
+		Map<String, Object> map = new HashMap<>();
+		map.put("classNum", num);
+		map.put("classType", type);
+		
+		DietClass dto = service.readClass(map);
 		//전체 프로그램 리스트
 		List<CProgram> list = service.listcProgram();
 		//내가 기존에 선택했던 프로그램 리스트
@@ -147,22 +163,28 @@ public class DietClassController {
 		Map<String, Object> model = new HashMap<>();
 		
 		String root = session.getServletContext().getRealPath("/");
-		String pathname = root+File.separator+"uploads"+File.separator+"notice";
+		String pathname = root+File.separator+"uploads"+File.separator+"dietClass";
 		
 		service.updateClass(dto,pathname);
 		model.put("state", "true");
-
+		model.put("type", dto.getClassType());
+		
 		return model;
 	}
 	
 	@RequestMapping(value="/dietClass/deleteFile")
 	public String deleteFile(@RequestParam int num,
+								@RequestParam int type,
 								HttpSession session) {
 		
 		String root = session.getServletContext().getRealPath("/");
 		String pathname = root+File.separator+"uploads"+File.separator+"dietClass";
 		
-		DietClass dto = service.readClass(num);
+		Map<String, Object> map = new HashMap<>();
+		map.put("classNum", num);
+		map.put("classType", type);
+		
+		DietClass dto = service.readClass(map);
 		try {
 			if(dto.getSaveFileName()!=null)
 				fileManager.doFileDelete(dto.getSaveFileName(), pathname);
@@ -178,15 +200,21 @@ public class DietClassController {
 	}
 	
 	@RequestMapping(value="/dietClass/deleteClass")
+	@ResponseBody
 	public Map<String, Object> deleteClass(HttpSession session,
-											@RequestParam int num) {
+											@RequestParam int num,
+											@RequestParam int type) {
 		
 		Map<String, Object> model = new HashMap<>();
 		
 		String root = session.getServletContext().getRealPath("/");
 		String pathname = root+File.separator+"uploads"+File.separator+"dietClass";
 		
-		service.deleteClass(num, pathname);
+		Map<String, Object> map = new HashMap<>();
+		map.put("classNum", num);
+		map.put("classType", type);
+		
+		service.deleteClass(map, pathname);
 		model.put("state", "true");
 		return model;
 	}
@@ -201,14 +229,67 @@ public class DietClassController {
 		return "dietClass/surveyForm";
 	}
 	
-	
 	/*
 	 * 클래스 프로그램 관련
 	 */
 	
 	@RequestMapping(value="/cprogram/created")
-	public String cprogramCreated() {
+	public String cprogramCreated(Model model) {
+		model.addAttribute("mode", "created");
 		return ".dietClass.classProgram.created";
+	}
+	
+	@RequestMapping(value="/cprogram/update")
+	@ResponseBody
+	public Map<String, Object> cprogramUpdate(@RequestParam int num){
+		Map<String, Object> model = new HashMap<>();
+		
+		CProgram dto = service.readProgramInfo(num);
+		model.put("updateDto", dto);
+		model.put("mode", "update");
+		return model;
+	}
+	
+	@RequestMapping(value="/cprogram/updateOk")
+	@ResponseBody
+	public Map<String, Object> cprogramUpdateOk(CProgram dto,
+												HttpSession session){
+		Map<String, Object> model = new HashMap<>();
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root+File.separator+"uploads"+File.separator+"dietClass";
+		
+		service.updatecProgram(dto,pathname);
+		model.put("state", "true");
+		return model;
+	}
+	
+	@RequestMapping(value="/cprogram/list")
+	public String cprogramList(
+			@RequestParam(value="page", defaultValue="1") int currentPage,
+			Model model) {
+		int dataCount;
+		int totalPage;
+		
+		dataCount = service.programCount();
+		totalPage = util.pageCount(10, dataCount);
+		
+		if(totalPage<currentPage)
+			currentPage=totalPage;
+		
+		int start = (currentPage-1)*10+1;
+		int end = (currentPage)*10;
+		Map<String, Object> map = new HashMap<>();
+		map.put("start", start);
+		map.put("end", end);
+		List<CProgram> list = service.listcProgram(map);
+
+		String paging = util.paging(currentPage, totalPage);
+		
+		model.addAttribute("list",list);
+		model.addAttribute("paging", paging);
+		model.addAttribute("dataCount", dataCount);
+		
+		return ".dietClass.classProgram.list";
 	}
 	
 	@RequestMapping(value="/cprogram/insert")
@@ -228,4 +309,18 @@ public class DietClassController {
 		return model;
 	}
 	
+	@RequestMapping(value="/cprogram/delete")
+	@ResponseBody
+	public Map<String, Object> deletecProgram(@RequestParam int num,
+												HttpSession session){
+		Map<String, Object> model = new HashMap<>();
+		
+		String root=session.getServletContext().getRealPath("/");
+		String pathname=root+File.separator+"uploads"+File.separator+"cProgram";
+		
+		service.deletecProgram(num,pathname);
+		
+		model.put("state", "true");
+		return model;
+	}
 }

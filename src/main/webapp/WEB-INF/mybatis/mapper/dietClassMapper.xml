@@ -31,28 +31,35 @@
 		TO_DATE(#{startDate},'mm/dd/yyyy'), TO_DATE(#{endDate},'mm/dd/yyyy'))
 	</insert>
 	
-	<select id="listOnClass" resultType="com.hotbody.dietClass.DietClass">
-		SELECT d.classNum, className, classType, classGoal, classGoalD, cllevel, tuition, saveFileName, mento, onPeriod 
-		FROM dietClass d
-		JOIN onClass o ON d.classNum=o.classNum WHERE classType=0 ORDER BY classNum
-	</select>
-	
-	<select id="listOffClass" resultType="com.hotbody.dietClass.DietClass">
-		SELECT  d.classNum, className, classType, classGoal, classGoalD, cllevel, tuition, saveFileName,
-            location1, location2, startTime, endTime, offLimit, coach, 
+	<select id="listClass" resultType="com.hotbody.dietClass.DietClass" parameterType="map">
+		SELECT d.classNum, className, classType, classGoal, classGoalD, cllevel, tuition, saveFileName 
+		<if test="classType == 0">
+     		,mento, onPeriod 
+     		FROM dietClass d
+			JOIN onClass o ON d.classNum=o.classNum WHERE classType=0 ORDER BY classNum DESC
+     	</if>
+     	<if test="classType == 1">
+     		,location1, location2, startTime, endTime, offLimit, coach, 
             TO_CHAR(startDate,'YYYYMMDD') startDate, TO_CHAR(endDate,'YYYYMMDD') endDate
-		FROM dietClass d
-		JOIN offClass o ON d.classNum=o.classNum WHERE classType=1 ORDER BY classNum
+			FROM dietClass d
+			JOIN offClass o ON d.classNum=o.classNum WHERE classType=1 ORDER BY classNum DESC
+     	</if>
+		
 	</select>
 	
-	<select id="readClass" parameterType="Integer" resultType="com.hotbody.dietClass.DietClass">
-		SELECT classNum, className, classGoal, classGoalD, cllevel, tuition, saveFileName, originalFileName
-		FROM dietClass
-	</select>
-	
-	<select id="readOnClass" parameterType="Integer" resultType="com.hotbody.dietClass.DietClass">
-		SELECT d.classNum, className, classGoal, classGoalD, cllevel, tuition, saveFileName, originalFileName, mento, onperiod
-		FROM dietClass d JOIN onClass o ON d.classNum = o.classNum WHERE d.classNum=#{classNum}
+	<select id="readClass" parameterType="map" resultType="com.hotbody.dietClass.DietClass">
+		SELECT d.classNum, className, classType, classGoal, classGoalD, cllevel, tuition, saveFileName, originalFileName
+     	<if test="classType == 0">
+     		, mento, onperiod
+			FROM dietClass d 
+			JOIN onClass o ON d.classNum = o.classNum WHERE d.classNum=#{classNum}
+     	</if>
+		<if test="classType == 1">
+     		,location1, location2, startTime, endTime, offLimit, coach, 
+            TO_CHAR(startDate,'YYYYMMDD') startDate, TO_CHAR(endDate,'YYYYMMDD') endDate
+			FROM dietClass d 
+			JOIN offClass o ON d.classNum=o.classNum WHERE d.classNum=#{classNum}
+     	</if>
 	</select>
 	
 	<update id="updateClass" parameterType="com.hotbody.dietClass.DietClass">
@@ -61,27 +68,73 @@
 		WHERE classNum=${classNum}
 	</update>
 	
+	<delete id="deleteOn" parameterType="Integer">
+		DELETE onClass WHERE classNum=#{classNum}
+	</delete>
+	
+	<delete id="deleteOff" parameterType="Integer">
+		DELETE offClass WHERE classNum=#{classNum}
+	</delete>
+	
 	<delete id="deleteClass" parameterType="Integer">
 		DELETE dietClass WHERE classNum=#{classNum}
 	</delete>
 	
+	<!-- 
+		프로그램관련 mapper
+	 -->
 	
-	
+	<delete id="deletepInClass" parameterType="Integer">
+		DELETE pinClass WHERE classNum=#{classNum}
+	</delete>
 	
 	<insert id="insertcProgram" parameterType="com.hotbody.dietClass.CProgram">
 		INSERT INTO cProgram(programNum, programName, programContent, saveFileName, originalFileName) 
 		VALUES(cprogram_seq.NEXTVAL, #{programName}, #{programContent}, #{saveFileName}, #{originalFileName})
 	</insert>
 	
-	<select id="listcProgram" resultType="com.hotbody.dietClass.CProgram">
-			SELECT programNum, programName, programContent, saveFileName 
+	<select id="listcAllProgram" resultType="com.hotbody.dietClass.CProgram">
+			SELECT programNum, programName, programContent, saveFileName, originalFileName 
 			FROM cProgram
 			ORDER BY programNum
 	</select>
 	
+	<select id="listcProgram" resultType="com.hotbody.dietClass.CProgram" parameterType="map">
+			SELECT * FROM(
+				SELECT ROWNUM rnum, tb.* FROM(
+					SELECT programNum, programName, programContent, saveFileName, originalFileName 
+					FROM cProgram
+					ORDER BY programNum DESC
+				) tb WHERE ROWNUM &lt; = #{end}
+			) WHERE rnum &gt; = #{start}
+	</select>
+	
 	<select id="readcProgram" parameterType="Integer" resultType="com.hotbody.dietClass.CProgram">
-		SELECT classNum, c.programNum, programName, programContent, saveFileName 
+		SELECT classNum, c.programNum, programName, programContent, saveFileName, originalFileName
 		FROM cprogram c JOIN pinClass p ON c.programNum = p.programNum
 		WHERE classNum = #{classNum}
 	</select>
+	
+	<select id="programCount" resultType="Integer">
+		SELECT NVL(COUNT(*),0) count FROM cprogram
+	</select>
+	
+	<delete id="deletecProgram" parameterType="Integer">
+		DELETE cProgram WHERE programNum=#{programNum}
+	</delete>
+	
+	<delete id="deletepInClassByP" parameterType="Integer">
+		DELETE pinClass WHERE programNum=#{programNum}
+	</delete>
+	
+	<select id="readProgramInfo" parameterType="Integer" resultType="com.hotbody.dietClass.CProgram">
+		SELECT programNum, programName, programContent, saveFileName, originalFileName
+		FROM cProgram WHERE programNum=#{programNum}
+	</select>
+	
+	<update id="updatecProgram" parameterType="com.hotbody.dietClass.CProgram">
+		UPDATE cProgram SET programName=#{programName}, programContent=#{programContent}, saveFileName=#{saveFileName}, originalFileName=#{originalfileName}
+		WHERE programNum=#{programNum}
+	</update>
+	
 </mapper>
