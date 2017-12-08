@@ -1,6 +1,6 @@
-package com.hotbody.hotShop.QnA;
+package com.hotbody.hotShop.qna;
 
-public class QnA {
+public class Qna {
 	private int pdQCode; // 시퀀스
 	private String pdQSubject;
 	private String userName;

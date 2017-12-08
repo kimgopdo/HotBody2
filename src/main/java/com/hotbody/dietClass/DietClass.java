@@ -21,6 +21,8 @@ public class DietClass {
 	private List<Integer> proSelect;
 	private int programNum;
 	
+	private String showTuition;
+	
 	public int getClassNum() {
 		return classNum;
 	}
@@ -152,5 +154,11 @@ public class DietClass {
 	}
 	public void setProgramNum(int programNum) {
 		this.programNum = programNum;
+	}
+	public String getShowTuition() {
+		return showTuition;
+	}
+	public void setShowTuition(String showTuition) {
+		this.showTuition = showTuition;
 	}
 }

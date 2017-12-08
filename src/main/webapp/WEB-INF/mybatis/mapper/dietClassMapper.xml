@@ -27,7 +27,8 @@
 	
 	<insert id="insertOff" parameterType="com.hotbody.dietClass.DietClass">
 		INSERT INTO offClass(classNum, location1, location2, startTime, endTime, offLimit, coach, startDate, endDate)
-		VALUES(#{classNum}, #{location1}, #{location2}, #{startTime}, #{endTime}, #{offLimit}, #{coach}, #{startDate}, #{endDate})
+		VALUES(#{classNum}, #{location1}, #{location2}, #{startTime}, #{endTime}, #{offLimit}, #{coach}, 
+		TO_DATE(#{startDate},'mm/dd/yyyy'), TO_DATE(#{endDate},'mm/dd/yyyy'))
 	</insert>
 	
 	<select id="listOnClass" resultType="com.hotbody.dietClass.DietClass">
@@ -38,10 +39,34 @@
 	
 	<select id="listOffClass" resultType="com.hotbody.dietClass.DietClass">
 		SELECT  d.classNum, className, classType, classGoal, classGoalD, cllevel, tuition, saveFileName,
-            location1, location2, startTime, endTime, offLimit, coach, startDate, endDate
+            location1, location2, startTime, endTime, offLimit, coach, 
+            TO_CHAR(startDate,'YYYYMMDD') startDate, TO_CHAR(endDate,'YYYYMMDD') endDate
 		FROM dietClass d
 		JOIN offClass o ON d.classNum=o.classNum WHERE classType=1 ORDER BY classNum
 	</select>
+	
+	<select id="readClass" parameterType="Integer" resultType="com.hotbody.dietClass.DietClass">
+		SELECT classNum, className, classGoal, classGoalD, cllevel, tuition, saveFileName, originalFileName
+		FROM dietClass
+	</select>
+	
+	<select id="readOnClass" parameterType="Integer" resultType="com.hotbody.dietClass.DietClass">
+		SELECT d.classNum, className, classGoal, classGoalD, cllevel, tuition, saveFileName, originalFileName, mento, onperiod
+		FROM dietClass d JOIN onClass o ON d.classNum = o.classNum WHERE d.classNum=#{classNum}
+	</select>
+	
+	<update id="updateClass" parameterType="com.hotbody.dietClass.DietClass">
+		UPDATE dietClass SET className=#{className}, classType=#{classType}, classGoal=#{classGoal}, classGoalD=#{classGoalD}, 
+		cllevel=#{cllevel}, tuition=#{tuition}, saveFileName=#{saveFileName}, originalFileName=#{originalFileName}
+		WHERE classNum=${classNum}
+	</update>
+	
+	<delete id="deleteClass" parameterType="Integer">
+		DELETE dietClass WHERE classNum=#{classNum}
+	</delete>
+	
+	
+	
 	
 	<insert id="insertcProgram" parameterType="com.hotbody.dietClass.CProgram">
 		INSERT INTO cProgram(programNum, programName, programContent, saveFileName, originalFileName) 

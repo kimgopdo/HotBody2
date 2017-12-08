@@ -6,6 +6,11 @@ public interface DietClassService {
 	public int insertDietClass(DietClass dto,String pathname);
 	public List<DietClass> listOnClass();
 	public List<DietClass> listOffClass();
+	public DietClass readClass(int classNum);
+	public DietClass readOnClass(int classNum);
+	public DietClass readOffClass(int classNum);
+	public int updateClass(DietClass dto, String pathname);
+	public int deleteClass(int classNum, String pathname);
 	
 	/*
 	 * 클래스 프로그램 관련
