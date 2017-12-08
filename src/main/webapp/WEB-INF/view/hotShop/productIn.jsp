@@ -529,7 +529,7 @@ function schedule(){
 		</td>
 	</tr>
 	<tr>
-		<td colspan="8">
+		<td colspan="8">  
 			<form name="scheduleForm">
 				일정등록 :
 	  			<input type="text" name="startdate" id="datepicker1"> ~ <input type="text" name="enddate" id="datepicker2">
