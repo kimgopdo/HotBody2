@@ -6,11 +6,13 @@
 <%
    String cp=request.getContextPath();
 %>
-
+<style>
+.aspect { width: 660px; height: 500px; }
+</style>
 
 <script type="text/javascript">
 // 상품 수량 변경
-var sum = 5000; // 상품 가격
+var sum = ${dto.pdPrice}; // 상품 가격
 var no = 1;
 
 function add(num){
@@ -19,10 +21,10 @@ function add(num){
          return;
       }
       no--;
-      sum = sum - 5000;
+      sum = sum - sum;
    }else if(num == 1){
       no++;
-      sum = sum + 5000;
+      sum = sum + sum;
    }
    var tno1 = document.getElementById("no1");
    var tno2 = document.getElementById("no2");
@@ -46,9 +48,9 @@ function numberWithCommas(x) {
 		<div align="center" style="width: 100%; height: 1500px; padding: 20px; margin-top: 50px;">
 		<div style="width: 100%; height: 620px; padding: 10px;">
 			<!-- article 메인이미지 -->
-			<div style="width: 63%; height:515px; float: left; display: inline;">
+			<div class="aspect" style="float: left; display: inline;">
 				<a href="#">
-					<img src="<%=cp%>/resource/shop_images/chicken.PNG" style=" width: 100%; height: 100%;">
+					<img src="<%=cp%>/uploads/shopProduct/${dto.imgSaveFilename}" style=" width: 100%; height: 100%;">
 				</a>
 			</div>
 			
@@ -57,26 +59,26 @@ function numberWithCommas(x) {
 				<div style="width: 100%; max-height: 30%; margin-bottom: 80px;">
 					<div style="margin-bottom: 10px;">
 						<!-- 공백 포함 20글자(36 byte) -->
-						<span style="font-weight: bold; font-size: 22px;">맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐</span>
+						<span style="font-weight: bold; font-size: 22px;">${dto.pdName}</span>
 					</div>
 					<div style="margin-bottom: 10px;">
 						<!-- 공백 포함 282글자(514 byte) -->
-						<span style="font-size: 12px;">라닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드맛있는 닭찌라라러드맛있는 닭찌찌 샐러드맛있는 닭찌찌 샐러드</span>
+						<span style="font-size: 12px;">${dto.pdSumContent}</span>
 					</div>
 				</div>
 				
 				<table style="width: 100%; height: 20%; font-size: 12px;">
 					<tr>
 						<th style="width: 90px;">배송정책</th>
-						<td>123123</td>
+						<td>${dto.pdDelRule}</td>
 					</tr>
 					<tr>
 						<th>유통기한</th>
-						<td>123123</td>
+						<td>${dto.pdExDate}</td>
 					</tr>
 					<tr>
 						<th>가격</th>
-						<td><span></span>원</td>
+						<td><span>${dto.pdPrice}</span>원</td>
 					</tr>
 					
 					<tr>
@@ -144,13 +146,12 @@ function numberWithCommas(x) {
 			
 			<!-- 사진(설명) -->
 			<div style="width: 95%;">
-				<img src="<%=cp%>/resource/shop_images/chicken.PNG" style=" width: 100%; height: 100%;">
-				<img src="<%=cp%>/resource/shop_images/chicken.PNG" style=" width: 100%; height: 100%;">
+			${dto.content}
 			</div>
 		</div>
 		
 		<!-- 상품상세 탭 -->
-		<div style="width: 100%; margin-bottom: 200px; min-height: 900px;" id="div2">
+		<div style="min-width: 100%; margin-bottom: 200px; min-height: 900px;" id="div2">
 			<!-- 탭 -->
 			<ul style="width: 100%; height:50px; border: 0.5px solid #BDBDBD; padding: 0px; margin-bottom: 30px;">
 				<li style="list-style:none; float: left; width: 366px; height:49.5px; padding-top:13px;" onclick="fnMove('1')">
@@ -166,9 +167,14 @@ function numberWithCommas(x) {
 			</ul>
 			
 			<!-- 상품상세 -->
-			<div style="width: 95%;">
-				<img src="<%=cp%>/resource/shop_images/chicken.PNG" style=" width: 100%; height: 100%;">
-			</div>
+			<div align="center" style="width: 70%; text-align: left;">
+				<span style="font-weight: bold; font-size: 14px;">영양성분표시: &nbsp;&nbsp;</span>${dto.pdNutrient}<br><br>
+				<span style="font-weight: bold; font-size: 14px;">보관방법: &nbsp;&nbsp;</span>${dto.pdStMethod}<br><br>
+				<span style="font-weight: bold; font-size: 14px;">유통기한: &nbsp;&nbsp;</span>${dto.pdExDate}<br><br>
+				<span style="font-weight: bold; font-size: 14px;">식품유형: &nbsp;&nbsp;</span>${dto.pdType}<br><br>
+				<span style="font-weight: bold; font-size: 14px;">생산지: &nbsp;&nbsp;</span>${dto.pdArea}<br><br>
+				<span style="font-weight: bold; font-size: 14px;">제품원재료명: &nbsp;&nbsp;</span>${dto.pdRawName}<br><br>
+			</div>                   
 		</div>
 		
 		<!-- 상품후기 탭 -->
