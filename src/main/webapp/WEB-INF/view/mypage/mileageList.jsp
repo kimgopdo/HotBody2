@@ -218,13 +218,13 @@ $(function() {
 	
 	<tr height="100px" style="text-align: center; ">
 		<td  style="width: 15%;  ">
-
+		${list.payDate}
 		</td>
 		<td  style="width: 15%;  ">
-		
+		${list.totalPay}
 		</td>
 		<td  style="width: 15%; ">
-		
+		${list.milelage}
 		</td>
 		<td  style="width: 55%;  ">
 		
