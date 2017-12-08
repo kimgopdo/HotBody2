@@ -134,7 +134,7 @@ $(function() {
 
 <table style="border:1px solid silver; width: 1000px; margin: 40px auto 0px;">
 	<tr style="text-align: center; height: 40px">
-		<td style="width: 25%; border-right: 1px solid silver; background-color: #D8D8D8;">주문내역조회(0)</td>
+		<td style="width: 25%; border-right: 1px solid silver; background-color: #D8D8D8;">주문내역조회(${rnum})</td>
 		<!--  <td style="width: 20%; border-right: 1px solid silver;  "><a onclick="location.href='<%=cp%>/mypage/cancelList';">취소/반품/교환 내역(0)</a></td>-->
 		<td style="width: 75%"></td>
 	</tr>
@@ -198,10 +198,10 @@ $(function() {
 	<c:forEach var="dto" items="${list}">
 		<tr height="100px" style="text-align: center; ">
 		<td  style="width: 14%;  border-bottom:1px solid silver;">
-		${dto.payDate}<br>${dto.delOrder}
+		${dto.payDate}<br>[${dto.delOrder}]
 		</td>
 		<td  style="width: 12%;  border-bottom:1px solid silver;">
-		${dto.img}
+		${dto.imgSaveFileName}
 		</td>
 		<td  style="width: 42%;  border-bottom:1px solid silver;">
 		${dto.pdBoardName}

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="milelage">
+
+	<select id="selectMilelage" resultType="com.hotbody.milelage.Milelage"
+		parameterType="String">
+
+		select nvl(count(rnum),0) orderCount,sum(milelage) totalMilelage,sum(milelagePay) usedMilelage
+		,(sum(milelage)-sum(milelagePay))useableMilelage
+		from(
+		select rownum rnum,ml.milelage,o.milelagePay
+		from milelage ml left outer join orders o
+		on ml.delorder = o.delorder
+		where o.userId=#{userId}
+		)
+	</select>
+
+
+
+</mapper>

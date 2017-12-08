@@ -25,18 +25,18 @@
 <table  style="border: 2px solid silver; margin: 40px auto; width: 1000px;">
 	<tr>
 		<td style="width: 30%; padding: 5px;padding-top: 15px ">▷ 총적립금 </td>
-		<td style=" width: 10%; text-align: right;padding-top: 15px" ><b>0원</b></td>
+		<td style=" width: 10%; text-align: right;padding-top: 15px" ><b>${dto.totalMilelage}원</b></td>
 		<td align="center" style="border-right: 2px solid silver; width: 10%;padding-top: 15px"></td>
 		<td style="width: 30%; padding: 5px;padding-top: 15px">▷ 사용가능적립금</td>
-		<td style=" width: 10%; text-align: right;padding-top: 15px"><b>0원</b></td>
+		<td style=" width: 10%; text-align: right;padding-top: 15px"><b>${dto.useableMilelage}원</b></td>
 		<td style="width: 10%"></td>
 	</tr>
 	<tr>
 		<td style="width: 30%; padding: 5px; padding-bottom: 15px">▷ 사용된적립금 </td>
-		<td style="width: 10%;  text-align: right; padding-bottom: 15px"><b>0원</b></td>
+		<td style="width: 10%;  text-align: right; padding-bottom: 15px"><b>${dto.usedMilelage}원</b></td>
 		<td  align="center" style="border-right: 2px solid silver; width: 10%; padding-bottom: 15px"></td>
 		<td style="width: 30%;  padding: 5px; padding-bottom: 15px">▷ 주문건수</td>
-		<td style=" width: 10%; text-align: right; padding-bottom: 15px"><b>0(0회)</b></td>
+		<td style=" width: 10%; text-align: right; padding-bottom: 15px"><b>${dto.orderCount}회</b></td>
 		<td style="width: 10%; padding-bottom: 15px"></td>
 	</tr>
 

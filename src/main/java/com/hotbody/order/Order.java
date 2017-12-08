@@ -2,22 +2,30 @@ package com.hotbody.order;
 
 public class Order {
 	
-	private String payDate,img,pdBoardName,delState;
-	private int delOrder,amount,totalPay;
+	private String payDate,imgSaveFileName,pdBoardName,delState;
+	private int delOrder,amount,totalPay,rnum;
 	
 	
+
+	public int getRnum() {
+		return rnum;
+	}
+	public void setRnum(int rnum) {
+		this.rnum = rnum;
+	}
+	public String getImgSaveFileName() {
+		return imgSaveFileName;
+	}
+	public void setImgSaveFileName(String imgSaveFileName) {
+		this.imgSaveFileName = imgSaveFileName;
+	}
 	public String getPayDate() {
 		return payDate;
 	}
 	public void setPayDate(String payDate) {
 		this.payDate = payDate;
 	}
-	public String getImg() {
-		return img;
-	}
-	public void setImg(String img) {
-		this.img = img;
-	}
+
 	public String getPdBoardName() {
 		return pdBoardName;
 	}

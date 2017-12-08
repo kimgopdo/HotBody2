@@ -20,6 +20,105 @@ $(function() {
     });
 });
 
+function formatDate(date) {
+
+	  var day = date.getDate();
+	  var monthIndex = date.getMonth();
+	  var year = date.getFullYear();
+
+	  return  year+ '-' + monthIndex + '-' +day ;
+	}
+
+$(function() {
+
+	
+	$("#today").click(function() {
+		var date =new Date();
+		var day = date.getDate();
+		var month = date.getMonth()+1;
+		var year = date.getFullYear();
+		var today =year+ '-' + month + '-' +day;
+
+		
+		var lastday = year+ '-' + month + '-' +day;
+
+		$("#datepicker1").val(lastday);
+		$("#datepicker2").val(today);
+	
+	});
+	
+	$("#week").click(function() {
+		var date =new Date();
+		var day = date.getDate();
+		var month = date.getMonth()+1;
+		var year = date.getFullYear();
+		var today =year+ '-' + month + '-' +day;
+
+		date.setDate(date.getDate()-7);
+		
+		var lastday = date.getFullYear()+ '-' + (date.getMonth()+1) + '-' +date.getDate();
+		
+
+		$("#datepicker1").val(lastday);
+		$("#datepicker2").val(today);
+	
+	});
+	
+	
+	
+	$("#month").click(function() {
+		var date =new Date();
+		var day = date.getDate();
+		var month = date.getMonth()+1;
+		var year = date.getFullYear();
+		var today =year+ '-' + month + '-' +day;
+
+		date.setMonth(date.getMonth()-1);
+		
+		var lastday = date.getFullYear()+ '-' + (date.getMonth()+1) + '-' +date.getDate();
+		
+		$("#datepicker1").val(lastday);
+		$("#datepicker2").val(today);
+	
+	});
+	
+	$("#tmonth").click(function() {
+		var date =new Date();
+		var day = date.getDate();
+		var month = date.getMonth()+1;
+		var year = date.getFullYear();
+		var today =year+ '-' + month + '-' +day;
+		
+		date.setMonth(date.getMonth()-3);
+		
+		var lastday = date.getFullYear()+ '-' + (date.getMonth()+1) + '-' +date.getDate();
+		
+		
+		$("#datepicker1").val(lastday);
+		$("#datepicker2").val(today);
+		
+	
+	});
+	
+	$("#smonth").click(function() {
+		var date =new Date();
+		var day = date.getDate();
+		var month = date.getMonth()+1;
+		var year = date.getFullYear();
+		var today =year+ '-' + month + '-' +day;
+		
+		date.setMonth(date.getMonth()-6);
+		
+		var lastday = date.getFullYear()+ '-' + (date.getMonth()+1) + '-' +date.getDate();
+		
+		$("#datepicker1").val(lastday);
+		$("#datepicker2").val(today);
+	
+	});
+
+
+});
+
 </script>
 
 
@@ -37,18 +136,18 @@ $(function() {
 <table  style="border: 2px solid silver; margin: 40px auto; width: 1000px;">
 	<tr>
 		<td style="width: 30%; padding: 5px;padding-top: 15px ">▷ 총적립금 </td>
-		<td style=" width: 10%; text-align: right;padding-top: 15px" ><b>0원</b></td>
+		<td style=" width: 10%; text-align: right;padding-top: 15px" ><b>${dto.totalMilelage}원</b></td>
 		<td align="center" style="border-right: 2px solid silver; width: 10%;padding-top: 15px"></td>
 		<td style="width: 30%; padding: 5px;padding-top: 15px">▷ 사용가능적립금</td>
-		<td style=" width: 10%; text-align: right;padding-top: 15px"><b>0원</b></td>
+		<td style=" width: 10%; text-align: right;padding-top: 15px"><b>${dto.useableMilelage}원</b></td>
 		<td style="width: 10%"></td>
 	</tr>
 	<tr>
 		<td style="width: 30%; padding: 5px; padding-bottom: 15px">▷ 사용된적립금 </td>
-		<td style="width: 10%;  text-align: right; padding-bottom: 15px"><b>0원</b></td>
+		<td style="width: 10%;  text-align: right; padding-bottom: 15px"><b>${dto.usedMilelage}원</b></td>
 		<td  align="center" style="border-right: 2px solid silver; width: 10%; padding-bottom: 15px"></td>
 		<td style="width: 30%;  padding: 5px; padding-bottom: 15px">▷ 주문건수</td>
-		<td style=" width: 10%; text-align: right; padding-bottom: 15px"><b>0(0회)</b></td>
+		<td style=" width: 10%; text-align: right; padding-bottom: 15px"><b>${dto.orderCount}회</b></td>
 		<td style="width: 10%; padding-bottom: 15px"></td>
 	</tr>
 
@@ -65,20 +164,51 @@ $(function() {
 	</tr>
 </table>
 
+<form name="searchDate" method="post" action="<%=cp%>/mypage/mlielageList">
+<table style="border:3px solid silver; width: 1000px; margin: 40px auto 0px; height: 100px;">
+	<tr style="text-align: center;">
+		<td  style="width: 30%; font-size: 12px">
+			<button value="today" id="today" type="button" style="padding: 2px" >오늘</button>
+			<button value="week" id="week" style="margin: 0; position: relative; left: -6px; padding: 2px" type="button" >1주일</button>
+			<button value="month" id="month" style="margin: 0; position: relative; left: -12px; padding: 2px" type="button" >1개월</button>
+			<button value="tmonth" id="tmonth" style="margin: 0; position: relative; left: -18px; padding: 2px" type="button" >3개월</button>
+			<button value="smonth" id="smonth" style="margin: 0; position: relative; left: -24px; padding: 2px" type="button">6개월</button>
+		</td>
+		<td align="left" style="width: 40%;">
+			<input style="width: 100px ; text-align: center; border-style: 1px solid; height: 5px; position: relative; top:6px" type="text" id="datepicker1" name="datepicker1"><span style="position: relative;top: 6px;" > ~ </span>
+			<input style="width: 100px; text-align: center; border-style: 1px solid; height: 5px; position: relative; top:6px " type="text" id="datepicker2" name="datepicker2">		
+			<input type="image" style="position: relative; top:6px; " src="<%=cp%>/resource/images/btn_search.gif" >
+		</td>
+				<td style="width: 30%">
+
+		</td>
+	</tr>
+</table>
+</form>
+<table style=" width: 1000px; margin: 0px auto;">
+	<tr>
+		<td><h6>＊기본적으로 최근 3개월간의 자료가 조회되며, 기간 검색시 지난 주문내역을 조회하실 수 있습니다.<br>
+		＊주문번호를 클릭하시면 해당 주문에 대한 상세내역을 확인하실 수 있습니다.</h6>
+		</td>
+
+	</tr>
+</table>
+
+
 
 <table style="border:1px solid silver; width: 1000px; margin: 40px auto 0px; font-size: 12px">
 	<tr height="40px" style="text-align: center; background-color: #F2F2F2 ">
 		<td  style="width: 15%; border:1px solid silver; ">
-		주문날짜
+		주문일자
 		</td>
 		<td  style="width: 15%; border:1px solid silver; ">
-		적립금
+		상품구매금액
 		</td>
 		<td  style="width: 15%; border:1px solid silver; ">
-		관련 주문
+		적립금액
 		</td>
 		<td  style="width: 55%; border:1px solid silver; ">
-		적립내용
+		상품정보
 		</td>
 		<!--  
 <c:forEach var="dto" items="${list}">
@@ -86,9 +216,9 @@ $(function() {
 -->
 	</tr>
 	
-	<tr height="30px" style="text-align: center; ">
+	<tr height="100px" style="text-align: center; ">
 		<td  style="width: 15%;  ">
-		
+
 		</td>
 		<td  style="width: 15%;  ">
 		
@@ -105,7 +235,7 @@ $(function() {
 <div style="height: 100px;" align="center" >
 	<!--<img style="margin-top: 20px" src="<%=cp%>/resource/images/btn_page_first.gif">
 	<img style="margin-top: 20px" src="<%=cp%>/resource/images/btn_page_prev.gif">-->
-	<a style="margin-top:20px; position: relative; top: 10px;">${paging}</a>
+	<!--  <a style="margin-top:20px; position: relative; top: 10px;">${paging}</a>-->
 	<!--  <img style="margin-top: 20px" src="<%=cp%>/resource/images/btn_page_next.gif">
 	<img style="margin-top: 20px" src="<%=cp%>/resource/images/btn_page_last.gif">-->
 </div>
