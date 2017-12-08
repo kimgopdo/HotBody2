@@ -10,7 +10,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-1.12.4.min.js"></script>
 
 <script type="text/javascript">
@@ -88,7 +87,7 @@ $(function(){
 			<td width="50">조회수</td>
 		</tr>
 		
-		<c:forEach var="dto" items="${list}">	
+		<c:forEach var="dto" items="${list}">
 		<tr style="border: 1px solid #F6F6F6; background: #F4F1F1; font-size: 12px;" align="center" height="30px">
 			<td><input type="checkbox" name="nums" value="${dto.num}"></td>
 			<td>${dto.listNum}</td>
