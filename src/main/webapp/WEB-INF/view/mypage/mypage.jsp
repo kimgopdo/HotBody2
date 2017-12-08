@@ -49,7 +49,7 @@
 	<tr align="center">
 		<td ><img src="<%=cp%>/resource/images/myshop_icon03.gif" onclick="location.href='<%=cp%>/#';"><br><b>장바구니<b></td>
 		<td><img style="display: none;" src="<%=cp%>/resource/images/myshop_icon01.gif"></td>
-		<td><img src="<%=cp%>/resource/images/myshop_icon07.gif" onclick="location.href='<%=cp%>/mypage/mileageList';"><br><b>마일리지<b></td>
+		<td><img src="<%=cp%>/resource/images/myshop_icon07.gif" onclick="location.href='<%=cp%>/mypage/milelageList';"><br><b>마일리지<b></td>
 	</tr>
 		<tr align="center">
 		<td><img src="<%=cp%>/resource/images/main_menu_icon04.png" onclick="location.href='<%=cp%>/#';"><br><b>회원탈퇴<b></td>

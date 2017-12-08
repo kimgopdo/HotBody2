@@ -4,9 +4,15 @@ public class Milelage {
 	
 	private int totalMilelage,usedMilelage,useableMilelage,orderCount;
 	private int totalPay,milelage,delOrder,milelagePay;
-	private String payDate;
+	private String payDate,pdBoardName;
 	
 	
+	public String getPdBoardName() {
+		return pdBoardName;
+	}
+	public void setPdBoardName(String pdBoardName) {
+		this.pdBoardName = pdBoardName;
+	}
 	public int getTotalMilelage() {
 		return totalMilelage;
 	}
