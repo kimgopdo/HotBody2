@@ -10,7 +10,7 @@
 <script type="text/javascript">
 function move(menu,name){
 	name=encodeURI(name);
-	location.href="<%=cp%>/hotShop/productList?state="+menu+"&name="+name;
+	location.href="<%=cp%>/hotShop/productList?cl="+menu+"&name="+name;
 	return;                        
 }
 </script>
@@ -38,12 +38,12 @@ function move(menu,name){
             	<a href="#">상품유형별</a>
             	<div align="center" class="menuEx" style="display: none;">
 	            	<ul>
-	            		<li onclick="move('drink','음료');">음료</li>
-	            		<li onclick="move('snack','간식');">간식</li>
-	            		<li onclick="move('food','식사');">식사</li>
-	            		<li onclick="move('dressing','드레싱');">드레싱</li>
-	            		<li onclick="move('supplement','보충제');">보충제</li>
-	            		<li onclick="move('healthFood','건강식');">건강식</li>
+	            		<li onclick="move('7','음료');">음료</li>
+	            		<li onclick="move('8','간식');">간식</li>
+	            		<li onclick="move('9','식사');">식사</li>
+	            		<li onclick="move('10','드레싱');">드레싱</li>
+	            		<li onclick="move('11','보충제');">보충제</li>
+	            		<li onclick="move('12','건강식');">건강식</li>
 	            	</ul>
             	</div>
             </li>
@@ -51,11 +51,11 @@ function move(menu,name){
             	<a href="#">영양소별</a>
             	<div class="menuEx" style="display: none">
             	<ul>
-            		<li onclick="move('protein','단백질');">단백질</li>
-            		<li onclick="move('carbohydrate','탄수화물');">탄수화물</li>
-            		<li onclick="move('fat','지방');">지방</li>
-            		<li onclick="move('minerals','무기질');">무기질</li>
-            		<li onclick="move('dietary','식이섬유');">식이섬유</li>
+            		<li onclick="move('1','단백질');">단백질</li>
+            		<li onclick="move('2','탄수화물');">탄수화물</li>
+            		<li onclick="move('3','지방');">지방</li>
+            		<li onclick="move('4','무기질');">무기질</li>
+            		<li onclick="move('5','식이섬유');">식이섬유</li>
             	</ul>
             	</div>
             </li>

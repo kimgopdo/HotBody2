@@ -15,16 +15,15 @@
 <title>spring</title>
 <link rel="stylesheet" href="<%=cp%>/resource/css/shopCss/shopLayout.css"/>
 <!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>	
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>	
 
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-
 <!-- 버튼 센터 계산 -->
 <script type="text/javascript" src="<%=cp%>/resource/js/shopJS/btnCenterCal.js"></script>
 <!-- 퀵메뉴 버튼 -->
@@ -33,8 +32,6 @@
 <script type="text/javascript" src="<%=cp%>/resource/js/shopJS/extMenu.js"></script>
 <!-- img 자르기 -->
 <script type="text/javascript" src="<%=cp%>/resource/js/shopJS/imgCut.js"></script>
-<!-- flowSlider -->
-<script type="text/javascript" src="<%=cp%>/resource/js/shopJS/mainFlowSlider.js"></script>
 <!-- login 모달 -->
 <script type="text/javascript" src="<%=cp%>/resource/js/shopJS/loginModal.js"></script>
 <!-- tab 이동 -->

@@ -1,36 +1,61 @@
 package com.hotbody.hotShop.board;
 
-
+import org.springframework.web.multipart.MultipartFile;
 
 public class HotShop {
-	private int pdInCode;//상품코드
 	private String bci;//대분류
 	private String sci;//소분류
+	private int pdnum;//상품코드
 	private String pdName;//상품명
+	private String pdOrder;//게시물순서
+	private String pdCreated;//상품등록날짜
+	private String content;//상품하단 내용
+	private String pdStCount;//재고
 	private String pdSumContent;//상품메인내용
 	private int pdPrice;//상품가격
-	private String content;//상품하단 내용
 	private String pdNutrient;//영양성분표시
 	private String pdArea;//생산지
 	private String pdStMethod;//보관방법
 	private String pdType;//상품유형
 	private String pdRawName;//상품원재료명
-	private String pdCreated;//상품등록날짜
 	private String pdDelRule;//배송정책(이미지로대체)
 	private String pdRawPrice;//상품원가
 	private String pdExDate;//유통기한
-
+	private String imgSaveFilename;
+	private String imgOriginalFilename;
+	private MultipartFile upload;
+	private String imgPath;
+	private String mode;
+	
+	public String getMode() {
+		return mode;
+	}
+	public void setMode(String mode) {
+		this.mode = mode;
+	}
+	public String getImgSaveFilename() {
+		return imgSaveFilename;
+	}
+	public void setImgSaveFilename(String imgSaveFilename) {
+		this.imgSaveFilename = imgSaveFilename;
+	}
+	public String getImgOriginalFilename() {
+		return imgOriginalFilename;
+	}
+	public void setImgOriginalFilename(String imgOriginalFilename) {
+		this.imgOriginalFilename = imgOriginalFilename;
+	}
+	public String getImgPath() {
+		return imgPath;
+	}
+	public void setImgPath(String imgPath) {
+		this.imgPath = imgPath;
+	}
 	public String getContent() {
 		return content;
 	}
 	public void setContent(String content) {
 		this.content = content;
-	}
-	public int getPdInCode() {
-		return pdInCode;
-	}
-	public void setPdInCode(int pdInCode) {
-		this.pdInCode = pdInCode;
 	}
 	public String getBci() {
 		return bci;
@@ -44,11 +69,35 @@ public class HotShop {
 	public void setSci(String sci) {
 		this.sci = sci;
 	}
+	public int getPdnum() {
+		return pdnum;
+	}
+	public void setPdnum(int pdnum) {
+		this.pdnum = pdnum;
+	}
 	public String getPdName() {
 		return pdName;
 	}
 	public void setPdName(String pdName) {
 		this.pdName = pdName;
+	}
+	public String getPdOrder() {
+		return pdOrder;
+	}
+	public void setPdOrder(String pdOrder) {
+		this.pdOrder = pdOrder;
+	}
+	public String getPdCreated() {
+		return pdCreated;
+	}
+	public void setPdCreated(String pdCreated) {
+		this.pdCreated = pdCreated;
+	}
+	public String getPdStCount() {
+		return pdStCount;
+	}
+	public void setPdStCount(String pdStCount) {
+		this.pdStCount = pdStCount;
 	}
 	public String getPdSumContent() {
 		return pdSumContent;
@@ -92,12 +141,6 @@ public class HotShop {
 	public void setPdRawName(String pdRawName) {
 		this.pdRawName = pdRawName;
 	}
-	public String getPdCreated() {
-		return pdCreated;
-	}
-	public void setPdCreated(String pdCreated) {
-		this.pdCreated = pdCreated;
-	}
 	public String getPdDelRule() {
 		return pdDelRule;
 	}
@@ -116,5 +159,15 @@ public class HotShop {
 	public void setPdExDate(String pdExDate) {
 		this.pdExDate = pdExDate;
 	}
+	public MultipartFile getUpload() {
+		return upload;
+	}
+	public void setUpload(MultipartFile upload) {
+		this.upload = upload;
+	}
+	
+	
+	
+	
 	
 }
