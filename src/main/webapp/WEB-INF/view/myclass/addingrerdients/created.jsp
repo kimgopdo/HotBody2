@@ -119,6 +119,29 @@ fieldset[disabled] .form-control {
     color: #ffffff;
 }
 </style>
+<script>
+
+// 직접입력
+$(function(){
+  	$("#unit").hide();
+
+	$("#unitSelect").change(function() {
+        //직접입력을 누를 때 나타남
+		if($("#unitSelect").val() == "direct") {
+			$("#unit").val("");
+			$("#unit").show();
+		}  else {
+			$("#unit").val($("#unitSelect").val());
+			$("#unit").hide();
+		}	
+	}); 
+	
+	if($("#unitSelect").val()!="direct") {
+		$("#unit").val($("#unitSelect").val());
+	}
+});
+
+</script>
 <script type="text/javascript">
 function sendOk() {
 	var f = document.boardForm;
@@ -152,46 +175,64 @@ function fileChange() {
 }
 function deleteFile() {
 	if(confirm("첨부파일을 삭제하시겠습니까?")){
-		location.href="<%=cp%>/notice/deleteFile?page=${page}&num=${dto.num}"
+		location.href="<%=cp%>/myclass/addingrerdients/deleteFile?page=${page}&num=${dto.ingrerdientsNum}";
 	}
 }
 </script>
 
-<div class="body-container" style="width: 1100px; margin-top: 100px;">
+<div class="body-container" style="width: 1100px; margin: 100px auto;">
 
 <div class="body-title">
-        <h3><span style="font-family: Webdings">2</span>재료입력</h3>
+        <h3><span style="font-family: Webdings; border-bottom: 2px solid #666666; font-weight: bold; color: #666666;">2</span>${mode=='update'?'재료수정':'재료등록'}</h3>
 </div>
 
 <form action="<%=cp%>/myclass/addingrerdients/${mode}" method="post" name="boardForm" enctype="multipart/form-data">
-<table style="width: 1100px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0">
-<tr height="40">
+<table style="width: 1100px; border-collapse: collapse; border-spacing: 0">
+<tr height="40" style="margin: 30px auto;">
 	<td width="100">재 료 명</td>
 	<td>
-		<input type="text" name="ingredientsName" style="width: 15%; height: 35px;" value="${dto.subject}">
+		<input type="text" name="ingredientsName" style="width: 15%; height: 35px;" value="${dto.ingredientsName}">
 	</td>
 </tr>
 
 <tr height="10px;"></tr>
-
-<tr height="40">
-	<td width="100">영양소정보</td>
-	<td> 
-		<select name='nutrient ' style="height: 35px;">
-	           <option value='탄수화물' selected="selected"> 탄수화물 </option>
-	           <option value='단백질' ${dto.nutrient =="단백질" ? "selected='selected'" : ""}> 단백질 </option>
-	           <option value='지방'> 지방 </option>
-       </select>
-	</td>
-</tr>
-<tr height="10px;"></tr>
-
 
 <tr height="40">
 	<td width="100">재료단위</td>
 	<td>
-		<input type="text" name="ingredientsUnit" style="width: 8%; height: 35px;" value="${dto.subject}">
-		<span style="font-weight: bold;">(최소단위를 입력하세요. 예) 고구마1개, 우유100ML, 밥1공기 등...)</span>
+		<input type="text" name="ingredientsUnit" style="width: 8%; height: 35px;" value="${dto.ingredientsUnit}">
+		<span style="font-weight: bold;">(최소단위를 입력하세요. 예) 고구마1개= 1, 우유100ML= 100, 쌀밥1인분= 1 등...)</span>
+	</td>
+</tr>
+<tr height="10px;"></tr>
+
+<tr height="40">
+	<td width="100">단위</td>
+	<td> 
+		<select id="unitSelect" name="unitSelect" style="height: 35px; width: 100px;">
+	           <option value='g' selected="selected" ${dto.nutrient =="g" ? "selected='selected'" : ""}> g </option>
+	           <option value='ml' ${dto.unit =="ml" ? "selected='selected'" : ""}> ml </option>
+	           <option value='인분' ${dto.unit =="인분" ? "selected='selected'" : ""}> 인분 </option>
+	           <option value='개' ${dto.unit =="개" ? "selected='selected'" : ""}> 개 </option>
+	           <option value='mg' ${dto.unit =="mg" ? "selected='selected'" : ""}> mg </option>
+	           <option value="direct">직접입력</option>
+       </select>
+       <input type="text" id="unit" name="unit" style="width: 8%; height: 35px;" value="${dto.nutrient}">
+       <span style="font-weight: bold;">(선택하세요)</span>
+	</td>
+</tr>
+<tr height="10px;"></tr>
+
+
+<tr height="40">
+	<td width="100">영양소정보</td>
+	<td>
+		<select name='nutrient ' style="height: 35px; width: 100px;">
+	           <option value='탄수화물' selected="selected" ${dto.nutrient =="탄수화물" ? "selected='selected'" : ""}> 탄수화물 </option>
+	           <option value='단백질' ${dto.nutrient =="단백질" ? "selected='selected'" : ""}> 단백질 </option>
+	           <option value='지방' ${dto.nutrient =="지방" ? "selected='selected'" : ""}> 지방 </option>
+       </select>
+       <span style="font-weight: bold;">(선택하세요)</span>
 	</td>
 </tr>
 <tr height="10px;"></tr>
@@ -199,7 +240,7 @@ function deleteFile() {
 <tr height="40">
 	<td width="100">재료칼로리</td>
 	<td>
-		<input type="text" name="calory" style="width: 8%; height: 35px;" value="${dto.subject}">
+		<input type="text" name="calory" style="width: 8%; height: 35px;" value="${dto.calory}">
 		<span style="font-weight: bold;">kcal (재료단위당 칼로리를 입력하세요.)</span>
 	</td>
 </tr>
@@ -219,8 +260,8 @@ function deleteFile() {
 	<div class="form-group form_file">
 	  <input id="fileName" class="form-control form_point_color01" type="text" title="첨부된 파일명" readonly style="width:350px">
 	  <span class="file_load">
-	        <input type="file" id="image" name="image" onchange="fileChange();">
-	        <label class="btn-default" for="image">이미지첨부</label>
+	        <input type="file" id="upload" name="upload" onchange="fileChange();">
+	        <label class="btn-default" for="upload">이미지첨부</label>
 	    </span>
 	</div>
 	</td>
@@ -238,8 +279,8 @@ function deleteFile() {
 <tr height="40">
 	<td width="100">첨부된파일</td>
 	<td>
-		${dto.originalFilename}
-		<c:if test="${not empty dto.saveFilename}">
+		${dto.image}
+		<c:if test="${not empty dto.image}">
 			&nbsp;<a href="javascript:deleteFile();">
 			<img src="<%=cp%>/resource/images/close_icon.png">
 			</a>
@@ -250,15 +291,13 @@ function deleteFile() {
 </table>
 <div style="width:1100px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
 <div style="width: 1100px; margin: 20px auto 0;" align="center">
-<button type="button" class="btn-default02" onclick="sendOk();">등록</button>
-<button type="button" class="btn-default02" onclick="javascript:location.href='<%=cp%>/myclass/addingrerdients/list?page=${page}';">등록취소</button>
+<button type="button" class="btn-default02" onclick="sendOk();">${mode=='update'?'수정완료':'등록하기'}</button>
+<button type="button" class="btn-default02" onclick="javascript:location.href='<%=cp%>/myclass/addingrerdients/list?page=${page}';">${mode=='update'?'수정취소':'등록취소'}</button>
 <c:if test="${mode=='update'}">
 	<input type="hidden" name="page" value="${page}">
-	<input type="hidden" name="num" value="${dto.num}">
+	<input type="hidden" name="ingrerdientsNum" value="${dto.ingrerdientsNum}">
 	<input type="hidden" name="query" value="${query}">
-	<input type="hidden" name="saveFilename" value="${dto.saveFilename}">
-	<input type="hidden" name="fileSize" value="${dto.fileSize}">
-	<input type="hidden" name="originalFilename" value="${dto.originalFilename}">
+	<input type="hidden" name="image" value="${dto.image}">
 </c:if>
 </div>
 </form>

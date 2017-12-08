@@ -700,7 +700,7 @@ $(function(){
 });
 </script>
 
-<div class="body-container" style="width: 1100px; margin-top: 100px;">
+<div class="body-container" style="width: 1100px; margin: 100px auto;">
     <div class="body-title">
         <h3><span style="font-family: Webdings">2</span>다이어트 일기</h3>
     </div>
