@@ -78,6 +78,26 @@ public class HotShopServiceImpl implements HotShopService{
 		
 		return result;
 	}
+	@Override
+	public int insertSchedule(Schedule dto) {
+		int result=0;
+		try {
+			result=dao.insertData("product.insertSchedule", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	@Override
+	public List<Schedule> readSchedules() {
+		List<Schedule> list=null;
+		try {
+			list=dao.selectList("");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
 	
 	
 }

@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hotbody.common.FileManager;
 @Controller("hotShop.board")
@@ -130,8 +131,25 @@ public class HotShopBoardController {
 		return "redirect:/hotShop/productList";
 	}
 	
+	@RequestMapping(value="/hotShop/schedule", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> schedule(
+			Schedule dto
+			,Model model
+			) {
+		List<Schedule> scheduleList=null;
+		service.insertSchedule(dto);
+		scheduleList=service.readSchedules();
+		Map<String, Object> map=new HashMap<>();
+		map.put("scheduleList", scheduleList);
+		return map;
+	}
+	
 	@RequestMapping(value="/hotShop/productInlist")
 	public String productInListForm() {
+		List<Schedule> scheduleList=null;
+		scheduleList=service.readSchedules();
+		
 		return ".hotShop.productIn";
 	}
 }

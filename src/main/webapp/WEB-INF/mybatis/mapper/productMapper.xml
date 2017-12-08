@@ -18,6 +18,11 @@
 		Temporary (pdnum,pdPrice,pdNutrient,pdArea,pdStMethod,pdType,pdRawName) 
 		values(#{pdnum},#{pdPrice},#{pdNutrient},#{pdArea},#{pdStMethod},#{pdType},#{pdRawName})
 	</insert>
+	<insert id="insertSchedule" parameterType="com.hotbody.hotShop.board.HotShop">
+	INSERT INTO 
+		schedule (sdCode,sdName,StartDate,EndDate,startTime,endTime,color)
+		 values (schedule_seq.NEXTVAL,#{sdname},#{startdate},#{enddate},#{starttime},#{endtime},#{color})
+	</insert>
 	<select id="readProductNum" parameterType="String" resultType="Integer">
 	SELECT pdnum FROM productList WHERE pdName=#{pdName}
 	</select>
@@ -37,6 +42,10 @@
 					</if>
 				</where>
 				ORDER BY p.pdcreated DESC
+	</select>
+	<select id="scheduleList">
+		SELECT sdcode,sdname,startdate,enddate,starttime,endtime,color 
+		FROM schedule
 	</select>
 	<update id="productListUpdate" parameterType="com.hotbody.hotShop.board.HotShop">
 	UPDATE productList 
