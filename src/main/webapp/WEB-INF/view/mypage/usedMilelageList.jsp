@@ -128,19 +128,43 @@ $(function() {
 <div style="height: 100px">
 </div>
 
-<div align="center">
-<h3>ORDER LIST</h3>
+<div align="center" >
+<h3>USED MILELAGE LIST</h3><br>
+고객님의 사용가능 적립금 금액 입니다.
 </div>
 
-<table style="border:1px solid silver; width: 1000px; margin: 40px auto 0px;">
+<table  style="border: 2px solid silver; margin: 40px auto; width: 1000px;">
+	<tr>
+		<td style="width: 30%; padding: 5px;padding-top: 15px ">▷ 총적립금 </td>
+		<td style=" width: 10%; text-align: right;padding-top: 15px" ><b>${dto.totalMilelage}원</b></td>
+		<td align="center" style="border-right: 2px solid silver; width: 10%;padding-top: 15px"></td>
+		<td style="width: 30%; padding: 5px;padding-top: 15px">▷ 사용가능적립금</td>
+		<td style=" width: 10%; text-align: right;padding-top: 15px"><b>${dto.useableMilelage}원</b></td>
+		<td style="width: 10%"></td>
+	</tr>
+	<tr>
+		<td style="width: 30%; padding: 5px; padding-bottom: 15px">▷ 사용된적립금 </td>
+		<td style="width: 10%;  text-align: right; padding-bottom: 15px"><b>${dto.usedMilelage}원</b></td>
+		<td  align="center" style="border-right: 2px solid silver; width: 10%; padding-bottom: 15px"></td>
+		<td style="width: 30%;  padding: 5px; padding-bottom: 15px">▷ 주문건수</td>
+		<td style=" width: 10%; text-align: right; padding-bottom: 15px"><b>${dto.orderCount}회</b></td>
+		<td style="width: 10%; padding-bottom: 15px"></td>
+	</tr>
+
+
+</table>
+
+
+<table style="border:1px solid silver; width: 1000px; margin: 40px auto 0px; font-size: 12px">
 	<tr style="text-align: center; height: 40px">
-		<td style="width: 25%; border-right: 1px solid silver; background-color: #D8D8D8;">주문내역조회(${rnum})</td>
-		<!--  <td style="width: 20%; border-right: 1px solid silver;  "><a onclick="location.href='<%=cp%>/mypage/cancelList';">취소/반품/교환 내역(0)</a></td>-->
-		<td style="width: 75%"></td>
+		<td style="width: 20%; border-right: 1px solid silver; "><a onclick="location.href='<%=cp%>/mypage/milelageList';">적립내역보기</a></td>
+		<td style="width: 20%; border-right: 1px solid silver; background-color: #D8D8D8;">적립금사용내역보기</td>
+
+		<td style="width: 60%"></td>
 	</tr>
 </table>
 
-<form name="searchDate" method="post" action="<%=cp%>/mypage/orderList">
+<form name="searchDate" method="post" action="<%=cp%>/mypage/usedMilelageList">
 <table style="border:3px solid silver; width: 1000px; margin: 40px auto 0px; height: 100px;">
 	<tr style="text-align: center;">
 		<td  style="width: 30%; font-size: 12px">
@@ -170,49 +194,37 @@ $(function() {
 </table>
 
 
+
 <table style="border:1px solid silver; width: 1000px; margin: 40px auto 0px; font-size: 12px">
-	<tr height="50px" style="text-align: center; background-color: #F2F2F2 ">
-		<td  style="width: 14%; border:1px solid silver; ">
-		주문일자<br>[주문번호]
+	<tr height="40px" style="text-align: center; background-color: #F2F2F2 ">
+		<td  style="width: 15%; border:1px solid silver; ">
+		주문일자
 		</td>
-		<td  style="width: 12%; border:1px solid silver; ">
-		이미지
-		</td>
-		<td  style="width: 42%; border:1px solid silver; ">
-		상품정보
-		</td>
-		<td  style="width: 8%; border:1px solid silver; ">
-		수량
-		</td>
-		<td  style="width: 12%; border:1px solid silver; ">
+		<td  style="width: 15%; border:1px solid silver; ">
 		상품구매금액
 		</td>
-		<td  style="width: 12%; border:1px solid silver; ">
-		주문처리상태
+		<td  style="width: 15%; border:1px solid silver; ">
+		사용포인트금액
 		</td>
-
-
-
+		<td  style="width: 55%; border:1px solid silver; ">
+		상품정보
+		</td>
+ 
 	</tr>
-	<c:forEach var="dto" items="${list}">
-		<tr height="80px" style="text-align: center; ">
-		<td  style="width: 14%;  border-bottom:1px solid silver;">
-		${dto.payDate}<br>[${dto.delOrder}]
+	
+<c:forEach var="list" items="${list}">
+	<tr height="80px" style="text-align: center; ">
+		<td  style="width: 15%;  ">
+		${list.payDate}
 		</td>
-		<td  style="width: 12%;  border-bottom:1px solid silver;">
-		${dto.imgSaveFileName}
+		<td  style="width: 15%;  ">
+		${list.totalPay}
 		</td>
-		<td  style="width: 42%;  border-bottom:1px solid silver;">
-		${dto.pdBoardName}
+		<td  style="width: 15%; ">
+		${list.milelagePay}
 		</td>
-		<td  style="width: 8%;  border-bottom:1px solid silver;">
-		${dto.amount}
-		</td>
-		<td  style="width: 12%;  border-bottom:1px solid silver;">
-		${dto.totalPay}
-		</td>
-		<td  style="width: 12%; border-bottom:1px solid silver;   ">
-		${dto.delState}
+		<td  style="width: 55%;  ">
+		${list.pdBoardName}
 		</td>
 	</tr>
 </c:forEach>
@@ -221,10 +233,11 @@ $(function() {
 <div style="height: 100px;" align="center" >
 	<!--<img style="margin-top: 20px" src="<%=cp%>/resource/images/btn_page_first.gif">
 	<img style="margin-top: 20px" src="<%=cp%>/resource/images/btn_page_prev.gif">-->
-	<a style="margin-top:20px; position: relative; top: 10px;">${paging}</a>
+	 <a style="margin-top:20px; position: relative; top: 10px;">${paging}</a>
 	<!--  <img style="margin-top: 20px" src="<%=cp%>/resource/images/btn_page_next.gif">
 	<img style="margin-top: 20px" src="<%=cp%>/resource/images/btn_page_last.gif">-->
 </div>
+
 <div style="height: 100px">
 </div>
 </body>

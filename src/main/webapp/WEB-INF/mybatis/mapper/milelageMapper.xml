@@ -15,7 +15,32 @@
 		where o.userId=#{userId}
 		)
 	</select>
+	
+	
+<select id="listMilelage" parameterType="map" resultType="com.hotbody.milelage.Milelage">
+	
+	 SELECT * FROM (
+		SELECT ROWNUM rnum, tb.* FROM (
+      select ml.milelage,o.TOTALPAY, TO_CHAR(tl.PAYDATE, 'YYYY-MM-DD') PAYDATE,pl.PDBOARDNAME
+        from orders o
+        left outer join totalordlist tl on o.delorder = tl.delorder
+        left outer join cartlist ctl   on o.delorder = ctl.delorder
+        left outer join productlist pl on ctl.pdnum = pl.pdnum
+        left outer join pmainimg pm  on pm.pdnum = pl.pdnum
+        left outer join milelage ml   on o.delorder = ml.delorder
+        where
+         o.userid=#{userid} and
+        <![CDATA[
+        TO_CHAR(tl.PAYDATE, 'YYYY-MM-DD') <= #{today} and  TO_CHAR(PAYDATE, 'YYYY-MM-DD')>= #{lastday}
 
+		ORDER BY tl.PAYDATE DESC
 
+	        ) tb WHERE ROWNUM <= #{end}
+	    ) WHERE rnum >= #{start}
+	]]>
+	
+	
+	</select>
+	
 
 </mapper>
