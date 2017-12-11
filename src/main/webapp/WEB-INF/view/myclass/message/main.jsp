@@ -6,7 +6,7 @@
    String cp = request.getContextPath();
 %>
 
-<link rel="stylesheet" href="<%=cp%>/resource/css/tabs.css" type="text/css">
+
 <style>
 .alert-info {
     border: 1px solid #9acfea;
@@ -19,7 +19,7 @@
 }
 </style>
 
-<script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.form.js"></script>
+
 <script type="text/javascript">
 $(function(){
 	$("#tab-notice").addClass("active");

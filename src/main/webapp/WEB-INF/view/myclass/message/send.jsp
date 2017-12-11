@@ -6,7 +6,7 @@
    String cp = request.getContextPath();
 %>
 
-<link rel="stylesheet" href="<%=cp%>/resource/css/tabs.css" type="text/css">
+
 <style type="text/css">
 .titleDate {
 	display: inline-block;

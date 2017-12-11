@@ -18,6 +18,7 @@
 	<meta name="description" content="">
 	<meta name="author" content="">
 <!-- CSS -->
+	<link rel="stylesheet" href="<%=cp%>/resource/css/tabs.css" type="text/css">
 	<link href="<%=cp%>/resource/mainboot/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 	<link href="<%=cp%>/resource/mainboot/css/flexslider.css" rel="stylesheet" type="text/css" />
 	<link href="<%=cp%>/resource/mainboot/css/animate.css" rel="stylesheet" type="text/css" media="all" />
@@ -39,7 +40,7 @@
 	<script src="<%=cp%>/resource/mainboot/js/animate.js" type="text/javascript"></script>
 	<script src="<%=cp%>/resource/mainboot/js/myscript.js" type="text/javascript"></script>
 	<script src="<%=cp%>/resource/jquery/js/jquery-ui.min.js" type="text/javascript"></script>
-
+	<script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.form.js"></script>
 <body>
 <div class="header">
     <tiles:insertAttribute name="header"/>
