@@ -8,7 +8,6 @@
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.form.js"></script>
 <script type="text/javascript">
 function sendOk() {
-	
 	var f = document.pForm;
 	var formData=new FormData(f);
 	var url="<%=cp%>/cprogram/insert";
@@ -22,7 +21,7 @@ function sendOk() {
 		,success:function(data) {
 			if(data.state=="true"){
 				alert("등록완료");
-				location.href="<%=cp%>/dietClass/list";
+				location.href="<%=cp%>/cprogram/list";
 			}
 		}
 	    ,error:function(e) {
@@ -43,7 +42,7 @@ function deleteFile() {
 </script>
  
 
-<div class="body-container" style="width: 1000px;">
+<div class="body-container" style="width: 1000px; margin: 100px auto;">
 <div style="height: 50px;"></div>
 <div style="font-size: 40px; width: 1000px; margin: 20px auto 0; font-weight: bold; color: #666666;">프로그램 등록</div>
 <div style="width:1000px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
@@ -53,7 +52,7 @@ function deleteFile() {
 	<tr height="40">
 		<td width="100">프로그램명</td>
 		<td>
-			<input type="text" name="programName" style="width: 98%; height: 35px;" value="${dto.subject}">
+			<input type="text" name="programName" style="width: 98%; height: 35px;" value="${dto.programName}">
 		</td>
 	</tr>
 	<tr height="10px;"></tr>
@@ -61,7 +60,7 @@ function deleteFile() {
 	<tr height="40">
 		<td width="100" valign="top">프로그램 내용</td>
 		<td>
-			<textarea style="width: 98%;" rows=6; name="programContent">${dto.content}</textarea>
+			<textarea style="width: 98%;" rows=6; name="programContent">${dto.programContent}</textarea>
 		</td>
 	</tr>
 	<tr height="10px;"></tr>
@@ -73,7 +72,7 @@ function deleteFile() {
 		  <input id="fileName" class="form-control form_point_color01" type="text" title="첨부된 파일명" readonly style="width:430px">
 		  <span class="file_load">
 		        <input type="file" id="upload" name="upload" onchange="fileChange();">
-		        <label class="btn" for="upload">파일첨부</label>
+		        <label class="btn02" for="upload">파일첨부</label>
 		    </span>
 		</div>
 		</td>
@@ -91,8 +90,8 @@ function deleteFile() {
 	<tr height="40">
 		<td width="100">첨부된파일</td>
 		<td>
-			${dto.originalFilename}
-			<c:if test="${not empty dto.saveFilename}">
+			${dto.originalFileName}
+			<c:if test="${not empty dto.saveFileName}">
 				&nbsp;<a href="javascript:deleteFile();">
 				<img src="<%=cp%>/resource/images/close_icon.png">
 				</a>
@@ -108,12 +107,9 @@ function deleteFile() {
 	<button type="button" class="btn-default02" onclick="sendOk();">등록</button>
 	<button type="button" class="btn-default02" onclick="#">등록취소</button>
 	<c:if test="${mode=='update'}">
-		<input type="hidden" name="page" value="${page}">
-		<input type="hidden" name="num" value="${dto.num}">
-		<input type="hidden" name="query" value="${query}">
-		<input type="hidden" name="saveFilename" value="${dto.saveFilename}">
-		<input type="hidden" name="fileSize" value="${dto.fileSize}">
-		<input type="hidden" name="originalFilename" value="${dto.originalFilename}">
+		<input type="hidden" name="programNum" value="${dto.programNum}">
+		<input type="hidden" name="saveFilename" value="${dto.saveFileName}">
+		<input type="hidden" name="originalFilename" value="${dto.originalFileName}">
 	</c:if>
 	</div>
 

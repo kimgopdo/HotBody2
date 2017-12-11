@@ -14,16 +14,14 @@
 <meta charset="UTF-8">
 <title>spring</title>
 <link rel="stylesheet" href="<%=cp%>/resource/css/shopCss/shopLayout.css"/>
-<!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>	
+<link rel="stylesheet" href="//code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
-
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
-<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+<script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+<script type="text/javascript" src="<%=cp%>/resource/js/shopJS/monthly.js"></script>
 <!-- 버튼 센터 계산 -->
 <script type="text/javascript" src="<%=cp%>/resource/js/shopJS/btnCenterCal.js"></script>
 <!-- 퀵메뉴 버튼 -->
@@ -38,6 +36,7 @@
 <script type="text/javascript" src="<%=cp%>/resource/js/shopJS/tabMove.js"></script>
 <!-- searchBtn -->
 <script type="text/javascript" src="<%=cp%>/resource/js/shopJS/searchAnimate.js"></script>
+
 <!-- 이미지 테두리 없애기                  fsgdfgf -->
 <style type="text/css">
 <!--

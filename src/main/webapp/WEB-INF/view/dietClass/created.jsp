@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
 	String cp=request.getContextPath();
 %>
@@ -35,7 +35,6 @@
 
 <script type="text/javascript">
 function sendOk() {
-	
 	var mode = "${mode}";
 	
 	var f = document.dietClassForm;
@@ -54,36 +53,27 @@ function sendOk() {
 		,data: formData
 		,dataType:"json"
 		,success:function(data) {
+			var type=data.type;
 			if(data.state=="true"){
 				alert("등록완료");
-				location.href="<%=cp%>/dietClass/onList";
+				location.href="<%=cp%>/dietClass/list?type="+type;
 			}
 		}
 	    ,error:function(e) {
-	    	alert("Error입니다");
+	    	alert("등록실패");
 	    	console.log(e.responseText);
 	    }
 	});
-	
 }
 function fileChange() {
 	var upload=document.getElementById("upload").value;
 	document.getElementById("fileName").value=upload.substring(0,upload.lastIndexOf("."));
 }
+
 function deleteFile() {
 	if(confirm("첨부파일을 삭제하시겠습니까?")){
 		location.href="<%=cp%>/notice/deleteFile?page=${page}&num=${dto.classNum}"
 	}
-}
-
-function oneCheckbox(p){
-	//클래스유형 체크박스 하나만 체크하기
-    var obj = document.getElementsByName("classType");
-    for(var i=0; i<obj.length; i++){
-        if(obj[i] != p){
-            obj[i].checked = false;
-        }
-    }
 }
 
 function selectClassType(typeNum) {
@@ -138,7 +128,7 @@ function sample6_execDaumPostcode() {
         }
     }).open();
 }
-
+/* 
 function programOk() {
 	var data="";
     $('input:checkbox[name=proSelect]').each(function() {
@@ -149,7 +139,7 @@ function programOk() {
     $("#showpro").show();
     $("#showproInfo").html(data);
 }
-
+ */
 $(function(){
 	var t = "${dto.classType}";
 	if(t==0)
@@ -169,12 +159,12 @@ $(function(){
 </head>
 <body>
 <div class="body-container" style="width: 1000px; margin: 100px auto;">
-<div style="height: 50px;"></div>
-<div style="font-size: 40px; width: 1000px; margin: 20px auto 0; font-weight: bold; color: #666666;">클래스 등록</div>
-<div style="width:1000px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
+	<div style="height: 50px;"></div>
+	<div style="font-size: 40px; width: 1000px; margin: 20px auto 0; font-weight: bold; color: #666666;">클래스 등록</div>
+	<div style="width:1000px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
 
 
-<form id="dietClassForm" action="" method="post" name="dietClassForm" enctype="multipart/form-data">
+	<form id="dietClassForm" action="" method="post" name="dietClassForm" enctype="multipart/form-data">
 	<table style="width: 1000px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0">
 	<tr height="40">
 		<td width="100">클래스명</td>
@@ -227,101 +217,101 @@ $(function(){
 	<tr height="40">
 		<td width="100" valign="top">프로그램 등록</td>
 		<td>
-		<button type="button" class="btn-sm" style="background: #ffffff;" data-toggle="modal" data-target="#myModal">등록</button>
-	
-	  <!-- Modal -->
-	  <div class="modal fade" id="myModal" role="dialog">
-	    <div class="modal-dialog modal-lg">
-	      <div class="modal-content" style="top: 100px;">
-	        <div class="modal-header">
-	          <button type="button" class="close" data-dismiss="modal">&times;</button>
-	          <h4 class="modal-title">프로그램 등록하기</h4>
-	        </div>
-	        <div class="modal-body" style="height: 500px; overflow-y: scroll;">
-	          	<table style="line-height: 2em;">
-	          	<c:if test="${mode=='created'}">
-	          		<c:forEach var="dto" items="${cProgram}">
-		          		<tr style="border-bottom: 1px solid #dddddd; margin: 10px 0;">
-		          			<td width="40" align="center">
-		          				<input type="checkbox" name="proSelect" id="pro${dto.programNum}" value="${dto.programNum}">
-		          			</td>
-		          			<td width="60" align="center">
-		          			<img style="width: 35px; height: 35px;" src="<%=cp%>/uploads/cProgram/${dto.saveFileName}" data-programName="${dto.programName}">
-		          			</td>
-		          			<td>
-		          				<p style="font-weight: bold;">${dto.programName}</p>
-		          				<p>${dto.programContent}</p>
-		          			</td>
-		          		</tr>
-		          	</c:forEach>
-	          	</c:if>
-	          	<c:if test="${mode=='update'}">
-		          	<c:forEach var="dto" items="${select}">
-		          		<tr style="border-bottom: 1px solid #dddddd; margin: 10px 0;">
-		          			<td width="40" align="center">
-		          				<input type="checkbox" name="proSelect" id="pro${dto.programNum}" value="${dto.programNum}" checked="checked">
-		          			</td>
-		          			<td width="60" align="center">
-		          			<img style="width: 35px; height: 35px;" src="<%=cp%>/uploads/cProgram/${dto.saveFileName}" data-programName="${dto.programName}">
-		          			</td>
-		          			<td>
-		          				<p style="font-weight: bold;">${dto.programName}</p>
-		          				<p>${dto.programContent}</p>
-		          			</td>
-		          		</tr>
-		          	</c:forEach>
-		          	
-		          	<c:forEach var="dto" items="${nonselect}">
-		          		<tr style="border-bottom: 1px solid #dddddd; margin: 10px 0;">
-		          			<td width="40" align="center">
-		          				<input type="checkbox" name="proSelect" id="pro${dto.programNum}" value="${dto.programNum}" data-programName="${dto.programName}">
-		          			</td>
-		          			<td width="60" align="center">
-		          			<img style="width: 35px; height: 35px;" src="<%=cp%>/uploads/cProgram/${dto.saveFileName}">
-		          			</td>
-		          			<td>
-		          				<p style="font-weight: bold;">${dto.programName}</p>
-		          				<p>${dto.programContent}</p>
-		          			</td>
-		          		</tr>
-		          	</c:forEach>
-		          </c:if>
-	          	</table>
-	        </div>
-	        <div class="modal-footer">
-	          <button type="button" class="btn-sm" style="background: #ffffff;" data-dismiss="modal" onclick="programOk()">등록완료</button>
-	        </div>
-	      </div>
-	    </div>
-	  </div>
-	</td>
+			<button type="button" class="btn-sm" style="background: #ffffff;" data-toggle="modal" data-target="#myModal">등록</button>
+		
+		  	<!-- Modal -->
+		 	<div class="modal fade" id="myModal" role="dialog">
+		  	<div class="modal-dialog modal-lg">
+		    <div class="modal-content" style="top: 100px;">
+		    <div class="modal-header">
+			    <button type="button" class="close" data-dismiss="modal">&times;</button>
+			    <h4 class="modal-title">프로그램 등록하기</h4>
+		    </div>
+		   
+		    <div class="modal-body" style="height: 500px; overflow-y: scroll;">
+		    	<table style="line-height: 2em;">
+		   			<c:if test="${mode=='created'}">
+		    			<c:forEach var="dto" items="${cProgram}">
+			          		<tr style="border-bottom: 1px solid #dddddd; margin: 10px 0;">
+			          			<td width="40" align="center">
+			          				<input type="checkbox" name="proSelect" id="pro${dto.programNum}" value="${dto.programNum}">
+			          			</td>
+			          			<td width="60" align="center">
+			          				<img style="width: 35px; height: 35px;" src="<%=cp%>/uploads/cProgram/${dto.saveFileName}" data-programName="${dto.programName}">
+			          			</td>
+			          			<td>
+			          				<p style="font-weight: bold;">${dto.programName}</p>
+			          				<p>${dto.programContent}</p>
+			          			</td>
+			          		</tr>
+			          	</c:forEach>
+		          	</c:if>
+		          	<c:if test="${mode=='update'}">
+			          	<c:forEach var="dto" items="${select}">
+			          		<tr style="border-bottom: 1px solid #dddddd; margin: 10px 0;">
+			          			<td width="40" align="center">
+			          				<input type="checkbox" name="proSelect" id="pro${dto.programNum}" value="${dto.programNum}" checked="checked">
+			          			</td>
+			          			<td width="60" align="center">
+			          			<img style="width: 35px; height: 35px;" src="<%=cp%>/uploads/cProgram/${dto.saveFileName}" data-programName="${dto.programName}">
+			          			</td>
+			          			<td>
+			          				<p style="font-weight: bold;">${dto.programName}</p>
+			          				<p>${dto.programContent}</p>
+			          			</td>
+			          		</tr>
+			          	</c:forEach>
+			          	<c:forEach var="dto" items="${nonselect}">
+			          		<tr style="border-bottom: 1px solid #dddddd; margin: 10px 0;">
+			          			<td width="40" align="center">
+			          				<input type="checkbox" name="proSelect" id="pro${dto.programNum}" value="${dto.programNum}" data-programName="${dto.programName}">
+			          			</td>
+			          			<td width="60" align="center">
+			          			<img style="width: 35px; height: 35px;" src="<%=cp%>/uploads/cProgram/${dto.saveFileName}">
+			          			</td>
+			          			<td>
+			          				<p style="font-weight: bold;">${dto.programName}</p>
+			          				<p>${dto.programContent}</p>
+			          			</td>
+			          		</tr>
+			          	</c:forEach>
+			          </c:if>
+		          	</table>
+		        </div>
+		        
+		        <div class="modal-footer">
+		          <button type="button" class="btn-sm" style="background: #ffffff;" data-dismiss="modal">등록완료</button>
+		        </div>
+		        
+		      </div>
+		    </div>
+		  </div>
+		</td>
 	</tr>
-	
-	
 	<tr height="10px;"></tr>
 	
+	<!-- 
 	<tr id="showpro" style="display: none;">
 		<td width="100"></td>
 		<td>
 			<span id="showproInfo" style="color: tomato;"></span>
 		</td>
 	</tr>
-	
 	<tr height="10px;"></tr>
-	
+	 -->
+	 
 	<tr height="40">
 		<td width="100">파일등록</td>
 		<td>
-		<div class="form-group form_file">
-		  <input id="fileName" class="form-control form_point_color01" type="text" title="첨부된 파일명" readonly style="width:430px">
-		  <span class="file_load">
-		        <input type="file" id="upload" name="upload" onchange="fileChange();">
-		        <button type="button" class="btn-sm" style="background: #ffffff; padding: 5px; margin-left: 5px;">파일첨부</button>
-		    </span>
-		</div>
+			<div class="form-group form_file">
+			  <input id="fileName" class="form-control form_point_color01" type="text" title="첨부된 파일명" readonly style="width:430px">
+			  <span class="file_load">
+			        <input type="file" id="upload" name="upload" onchange="fileChange();">
+			        <button type="button" class="btn-sm" style="background: #ffffff; padding: 5px; margin-left: 5px;">파일첨부</button>
+			    </span>
+			</div>
 		</td>
 	</tr>
-	
 	
 	<tr>
 		<td></td>
@@ -332,28 +322,37 @@ $(function(){
 	<tr height="10px;"></tr>
 	
 	<c:if test="${mode=='update'}">
-	<tr height="40">
-		<td width="100">첨부된파일</td>
-		<td>
-			${dto.originalFileName}
-			<c:if test="${not empty dto.saveFileName}">
-				&nbsp;<a href="javascript:deleteFile();">
-				<img src="<%=cp%>/resource/images/close_icon.png">
-				</a>
-			</c:if>
-		</td>
-	</tr>
-	<tr height="10px;"></tr>
+		<tr height="40">
+			<td width="100">첨부된파일</td>
+			<td>
+				${dto.originalFileName}
+				<c:if test="${not empty dto.saveFileName}">
+					&nbsp;<a href="javascript:deleteFile();">
+					<img src="<%=cp%>/resource/images/close_icon.png">
+					</a>
+				</c:if>
+			</td>
+		</tr>
+		<tr height="10px;"></tr>
 	</c:if>
 	
 	<tr>
 		<td width="100">클래스 유형</td>
 		<td>
-			<input type="radio" name="classType" onclick="selectClassType(0)" value="0" ${dto.classType=="0"?"checked='checked'":""}>
+		<c:if test="${mode=='update'}">
+			<input type="radio" name="classType" value="0" ${dto.classType=="0"?"checked='checked'":"disabled='disabled'"}>
 			<label for="notice"> 온라인 </label>
 			
-			<input type="radio" name="classType" onclick="selectClassType(1)" value="1" ${dto.classType=="1"?"checked='checked'":""}>
+			<input type="radio" name="classType" value="1" ${dto.classType=="1"?"checked='checked'":"disabled='disabled'"}>
 			<label for="notice"> 오프라인 </label>
+		</c:if>
+		<c:if test="${mode=='created'}">
+			<input type="radio" name="classType" onclick="selectClassType(0)" value="0">
+			<label for="notice"> 온라인 </label>
+			
+			<input type="radio" name="classType" onclick="selectClassType(1)" value="1">
+			<label for="notice"> 오프라인 </label>
+		</c:if>
 		</td>
 	</tr>
 	
@@ -435,18 +434,19 @@ $(function(){
 			</tr>
 		</table>
 	</div>
+	
 	<div style="width:1000px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
 	<div style="width: 1000px; margin: 20px auto 0;" align="center">
-	<button type="button" class="btn-default02" onclick="sendOk();">등록</button>
-	<button type="button" class="btn-default02" onclick="javascript:location.href='<%=cp%>/dietClass/onList';">등록취소</button>
-	<c:if test="${mode=='update'}">
-		<input type="hidden" name="classNum" value="${dto.classNum}">
-		<input type="hidden" name="saveFileName" value="${dto.saveFileName}">
-		<input type="hidden" name="originalFileName" value="${dto.originalFileName}">
-	</c:if>
+		<button type="button" class="btn-default02" onclick="sendOk();">${mode=='update'?'수정완료':'등록하기'}</button>
+		<button type="button" class="btn-default02" onclick="javascript:location.href='<%=cp%>/dietClass/list?type=${dto.classType}';">${mode=='update'?'수정취소':'등록취소'}</button>
+		<c:if test="${mode=='update'}">
+			<input type="hidden" name="classNum" value="${dto.classNum}">
+			<input type="hidden" name="classType" value="${dto.classType}">
+			<input type="hidden" name="saveFileName" value="${dto.saveFileName}">
+			<input type="hidden" name="originalFileName" value="${dto.originalFileName}">
+		</c:if>
 	</div>
-
-</form>
+	</form>
 </div>
 </body>
 </html>

@@ -62,14 +62,14 @@ function send(f){
 }
 </style>
 
-<div class="body-container" style="width: 1100px; margin-top: 100px;">
+<div class="body-container" style="width: 800px; margin: 100px auto;">
 
 <div class="body-title">
         <h3><span style="font-family: Webdings">2</span>재료리스트</h3>
 </div>
 
 
-<table style="width: 1100px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0">
+<table style="width: 800px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0">
 
 	<tr height="40">
 		<td align="left" colspan="7">
@@ -78,39 +78,37 @@ function send(f){
 	</tr>
 
 	<tr height="40" style="background: #666666; color: #ffffff;" align="center">
-		<th width="60">번호</th>
-		<th width="80">카테고리</th>
-		<th>제목</th>
-		<th width="65" >작성자</th>
-		<th width="100" >작성일</th>
-		<th width="65">댓글수</th>
-		<th width="65">조회수</th>
+		<th width="40">번호</th>
+		<th width="80">이미지</th>
+		<th width="80">재료명</th>
+		<th width="65">영양소정보</th>
+		<th width="65" >최소단위</th><!-- 재료최소단위랑,단위합침-->
+		<th width="65" >열량</th>
+
 	</tr>
 	
-	
-	<tr height="40" align="center" class="board">
-		<td width="60">하하하</td>
-		<td width="80" >쇼핑몰</td>
-		<td align="left">임지훈</td>
-		<td width="65">안녕</td>
-		<td width="100">안녕</td>
-		<td width="65">안녕2탄</td>
-		<td width="65">100</td>
+	<c:forEach var="dto" items="${list}">
+	<tr height="100" align="left" class="board">
+		<td width="40">${dto.listNum}</td>
+		<td width="80"><a href="${articleUrl}&num=${dto.ingrerdientsNum}"><img src="<%=cp%>/uploads/myClass/${dto.image}" style="height: 80px; width: 80px;" ></a></td>
+		<td width="80">${dto.ingredientsName}</td>
+		<td width="65">${dto.nutrient}</td>
+		<td width="65">${dto.ingredientsUnit}&nbsp;&nbsp;${dto.unit}</td>
+		<td width="65">${dto.calory} Kcal</td>
 	</tr>
-	
+	</c:forEach>
 	<tr height="60" align="center">
-		<td colspan="7">1</td>
+		<td colspan="7">${paging}</td>
 	</tr>
 	
 	<tr>
 		<td colspan="7">
-		<form name="searchList" method="post" action="<%=cp%>/notice/list">
-			<select name="searchKey" style="height: 25px;">
-				<option value="subject">제목</option>
-				<option value="content">내용</option>
-				<option value="created">작성일</option>
+		<form name="searchList" method="post" action="<%=cp%>/myclass/addingrerdients/list">
+			<select name="searchKey" style="width: 65px; height: 30px;">
+				<option value="ingredientsName">재료명</option>
+				<option value="nutrient">영양소</option>
 			</select>	
-			<input type="text" name="searchValue">
+			<input type="text" name="searchValue" style="width: 15%; height: 30px;">
 			<input type="text" style="display:none;">
 			
 			<button type="button" onclick="send(this.form);" class="btn-search" style="width: 60px;">검색</button>

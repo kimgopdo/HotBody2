@@ -5,7 +5,6 @@
 <%
 	String cp=request.getContextPath();
 %>
-
 <script type="text/javascript">
 $(function() {
     $("input[name=startDay]").datepicker();
@@ -65,12 +64,15 @@ $(function() {
 	  <tr height="40"> 
 		      <td width="100" style="font-weight:600; padding-right:15px; text-align: right;">식사분류</td>
 		      <td> 
-		        	<select name='color' class='selectField'>
+		        	<select name='color' style="width:100px; height: 35px;">
 	                     <option value='blue'> 아침 </option>
 	                     <option value='black'> 점심 </option>
 	                     <option value='green'> 저녁 </option>
                     </select>
-		      <a href="#"><img src="<%=cp%>/resource/images/search.png" height="26"></a></td>
+		      		<a href="#">
+		     	 		<img src="<%=cp%>/resource/images/search.png" height="26">
+		      		</a>
+		      </td>
 	  </tr>
 		
 	  <tr style="border-bottom:1px solid #ccc;"> 
@@ -97,7 +99,7 @@ $(function() {
 		      <td> 
                      <input name='title' type='text' class='boxTF' style="width:98%;">
               </td>
-	  		  <td>&nbsp;&nbsp;<input type="checkbox" id="allDayChk"  name="allDay" value="true"></td>
+	  		  <td>&nbsp;&nbsp;<input type="checkbox" class="checkbox" id="allDayChk"  name="allDay" value="true"></td>
 	  </tr>
 	  
 	  <tr height="40"> 

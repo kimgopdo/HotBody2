@@ -1,6 +1,109 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="temp">
+<mapper namespace="myClass">
+	<select id="insertIng" parameterType="com.hotbody.myclass.Ing">
+		insert into ingredients(ingrerdientsNum,nutrient,ingredientsName,ingredientsUnit,
+								calory,image,content,unit) values
+								(ing_seq.nextval,#{nutrient}, #{ingredientsName}, #{ingredientsUnit},
+								#{calory},#{image, jdbcType=VARCHAR},#{content},#{unit})
+	</select>
+	
+	<!-- 검색조건.. -->
+	<sql id="where-list">
+	  <if test="searchKey=='ingredientsName'">
+	      INSTR(ingredientsName, #{searchValue}) &gt; 0
+	  </if>
+	  <if test="searchKey=='nutrient'">
+	       INSTR(nutrient, #{searchValue}) &gt; 0
+	  </if>
+	</sql>
+	
+	<!-- 데이터갯수 -->
+	<select id="dataCount" resultType="Integer" parameterType="map">
+		SELECT NVL(COUNT(*),0) FROM ingredients
+		<where>
+			<if test="searchValue != null and searchValue !=''">  
+				<include refid="where-list"/>
+			</if>
+		</where>
+	</select>
+	
+	<!-- 리스트보여주기 -->
+	<select id="listIng" resultType="com.hotbody.myclass.Ing" parameterType="map">
+	 	SELECT * FROM (
+	 		SELECT ROWNUM rnum, tb.* FROM (
+				SELECT ingrerdientsNum, nutrient, ingredientsName, ingredientsUnit, calory,image,
+					   content,unit
+				FROM ingredients 
+				<where>
+					<if test="searchValue != null and searchValue !=''">
+						<include refid="where-list"/>
+					</if>
+				</where>
+				ORDER BY calory DESC 
+	 			) tb WHERE ROWNUM  &lt;= #{end}
+	 	) WHERE rnum  &gt;= #{start}
+	</select>
+	
+	<!-- 글보기 -->
+	<select id="readIng" resultType="com.hotbody.myclass.Ing" parameterType="Integer">
+		SELECT ingrerdientsNum, nutrient, ingredientsName, ingredientsUnit, calory, image,
+			   content,unit
+		FROM ingredients 
+		WHERE ingrerdientsNum = #{ingrerdientsNum}
+	</select>
+	
+	<!-- 이전글 -->
+	<select id="preReadIng" resultType="com.hotbody.myclass.Ing" parameterType="map">
+		SELECT tb.* FROM (
+			SELECT ingrerdientsNum, image
+			      FROM ingredients
+                  <where>
+                       <if test="searchValue != null and searchValue != '' ">
+			                 <include refid="where-list"/>
+		                </if>
+		           <![CDATA[
+		                AND (ingrerdientsNum > #{ingrerdientsNum})
+		             ]]>
+	              </where>
+				ORDER BY ingrerdientsNum ASC
+			) tb WHERE ROWNUM=1
+	</select>
+
+	<!-- 다음글 -->
+	<select id="nextReadIng" resultType="com.hotbody.myclass.Ing" 
+				parameterType="map">
+		SELECT tb.* FROM (
+			SELECT ingrerdientsNum, image
+			       FROM ingredients     
+                    <where>
+                         <if test="searchValue != null and searchValue != '' ">
+			                  <include refid="where-list"/>
+		                 </if>
+		               <![CDATA[
+		                 AND (ingrerdientsNum < #{ingrerdientsNum})
+		                 ]]>
+	                </where>
+				ORDER BY ingrerdientsNum DESC
+			) tb WHERE ROWNUM=1
+	</select>
+
+
+     <!-- 수정 -->
+     <update id="updateIng" parameterType="com.hotbody.myclass.Ing">
+         UPDATE ingredients SET nutrient=#{nutrient}, ingredientsName=#{ingredientsName},
+                     ingredientsUnit=#{ingredientsUnit}, content=#{content}, unit=#{unit},
+                     calory=#{calory}, image=#{image, jdbcType=VARCHAR}
+                    WHERE ingrerdientsNum = #{ingrerdientsNum}
+      </update>
+
+     
+      <!-- 삭제 -->
+      <delete id="deleteIng" parameterType="Integer">
+            DELETE FROM ingredients WHERE ingrerdientsNum = #{ingrerdientsNum}
+      </delete>
+	
+	
 
 </mapper>

@@ -26,7 +26,15 @@ public class HotShop {
 	private MultipartFile upload;
 	private String imgPath;
 	private String mode;
+	private int listOrArticle;
 	
+	
+	public int getListOrArticle() {
+		return listOrArticle;
+	}
+	public void setListOrArticle(int listOrArticle) {
+		this.listOrArticle = listOrArticle;
+	}
 	public String getMode() {
 		return mode;
 	}

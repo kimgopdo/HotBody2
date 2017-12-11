@@ -1,6 +1,7 @@
 package com.hotbody.hotShop.board;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ public class HotShopServiceImpl implements HotShopService{
 	private CommonDAO dao;
 	@Autowired
 	private FileManager fileManager;
+	
 	@Override
 	public int insertProductList(HotShop dto, String pathname) {
 		int result=0;
@@ -35,10 +37,10 @@ public class HotShopServiceImpl implements HotShopService{
 		return result;
 	}
 	@Override
-	public List<HotShop> productList() {
+	public List<HotShop> productList(Map<String, Object> map) {
 		List<HotShop> list=null;
 		try {
-			list=dao.selectList("product.productList");
+			list=dao.selectList("product.productList",map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -47,10 +49,10 @@ public class HotShopServiceImpl implements HotShopService{
 	}
 	
 	@Override
-	public HotShop productArticle(int pdnum) {
+	public HotShop productArticle(Map<String, Object> map) {
 		HotShop dto=null;
 		try {
-			dto=dao.selectOne("product.productArticle", pdnum);
+			dto=dao.selectOne("product.productList", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -75,6 +77,26 @@ public class HotShopServiceImpl implements HotShopService{
 		}
 		
 		return result;
+	}
+	@Override
+	public int insertSchedule(Schedule dto) {
+		int result=0;
+		try {
+			result=dao.insertData("product.insertSchedule", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	@Override
+	public List<Schedule> readSchedules() {
+		List<Schedule> list=null;
+		try {
+			list=dao.selectList("");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 	
 	
