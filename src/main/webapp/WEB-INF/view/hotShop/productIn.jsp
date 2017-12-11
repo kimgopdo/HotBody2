@@ -461,38 +461,6 @@ $(function() {
     $("#datepicker1, #datepicker2").datepicker();
   });
 </script>
-<script>
-function schedule(){ 
-	var scheduleData = $("form[name=scheduleForm]").serialize();
-	var url="<%=cp%>/hotShop/schedule";
-		$.ajax({
-			type:"post"//생략시 text
-			,url:url
-			,data:scheduleData
-			,dataType:"xml"
-			,success:function(data){
-				//console.log(data);
-				$(data).find("name");
-				var out;
-				out="게시물수 : "+$(data).find("dataCount").text();
-				$(data).find("record").each(function(){
-					var item=$(this);
-					var num=item.attr("num");
-					var name=item.find("name").text();
-					var content=item.find("content").text();
-					out+="<br>번호 : "+num+"<br>";
-					out+="<br>이름 : "+name+"<br>";
-					out+="<br>내용 : "+content+"<br>";
-					out+="<br>-----------------<br>";
-				});
-				$("#resultLayout").html(out);
-			}
-			,error:function(e){
-				console.log(e.responseText);
-			}
-		});
-}
-</script>
 <table style="width:100%; margin-top: 100px; border-collapse: collapse;">
 	
 	<tr height="30px" style="border-bottom: 2px solid #373737">
@@ -519,7 +487,7 @@ function schedule(){
 	</c:forEach>
 	<tr>
 		<td colspan="8">
-		조회기간:
+		조회기간: 
 	  		<input type="text" id="datepicker1"> ~ <input type="text" id="datepicker2">
 		</td>
 	</tr>
@@ -531,8 +499,12 @@ function schedule(){
 	<tr>
 		<td colspan="8">     
 			<form name="scheduleForm">
-				일정등록 :
+			일정명 : <input type="text" name="name">
+				일정등록 : 
 	  			<input type="text" name="startdate" id="datepicker1"> ~ <input type="text" name="enddate" id="datepicker2">
+	  			일정시작시간 : <input type="time" name="starttime">
+	  			일정종료시간 : <input type="time" name="endtime">
+	  			컬러 : <input type="color" name="color">
 	  			<button type="button" onclick="sales();">등록</button>
 			</form>
 		</td>
@@ -540,108 +512,125 @@ function schedule(){
 </table>
 
 <script type="text/javascript">
-
-	var sampleEvents = {
-	"monthly": [
-		{
-		"id": 1,
-		"name": "Whole month event",
-		"startdate": "2016-10-01",
-		"enddate": "2016-10-31",
-		"starttime": "12:00",
-		"endtime": "2:00",
-		"color": "#99CCCC",
-		"url": ""
-		},
-		{
-		"id": 2,
-		"name": "Test encompasses month",
-		"startdate": "2016-10-29",
-		"enddate": "2016-12-02",
-		"starttime": "12:00",
-		"endtime": "2:00",
-		"color": "#CC99CC",
-		"url": ""
-		},
-		{
-		"id": 3,
-		"name": "Test single day",
-		"startdate": "2016-11-04",
-		"enddate": "",
-		"starttime": "",
-		"endtime": "",
-		"color": "#666699",
-		"url": "https://www.google.com/"
-		},
-		{
-		"id": 8,
-		"name": "Test single day",
-		"startdate": "2016-11-05",
-		"enddate": "",
-		"starttime": "",
-		"endtime": "",
-		"color": "#666699",
-		"url": "https://www.google.com/"
-		},
-		{
-		"id": 4,
-		"name": "Test single day with time",
-		"startdate": "2016-11-07",
-		"enddate": "",
-		"starttime": "12:00",
-		"endtime": "02:00",
-		"color": "#996666",
-		"url": ""
-		},
-		{
-		"id": 5,
-		"name": "Test splits month",
-		"startdate": "2016-11-25",
-		"enddate": "2016-12-04",
-		"starttime": "",
-		"endtime": "",
-		"color": "#999999",
-		"url": ""
-		},
-		{
-		"id": 6,
-		"name": "Test events on same day",
-		"startdate": "2016-11-25",
-		"enddate": "",
-		"starttime": "",
-		"endtime": "",
-		"color": "#99CC99",
-		"url": ""
-		},
-		{
-		"id": 7,
-		"name": "Test events on same day",
-		"startdate": "2016-11-25",
-		"enddate": "",
-		"starttime": "",
-		"endtime": "",
-		"color": "#669966",
-		"url": ""
-		},
-		{
-		"id": 9,
-		"name": "Test events on same day",
-		"startdate": "2016-11-25",
-		"enddate": "",
-		"starttime": "",
-		"endtime": "",
-		"color": "#999966",
-		"url": ""
-		}
-	]
-	};
+var sampleEvents;
+	
+function schedule(){ 
+	var scheduleData = $("form[name=scheduleForm]").serialize();
+	var url="<%=cp%>/hotShop/schedule";
+		$.ajax({
+			type:"post"//생략시 text
+			,url:url
+			,data:scheduleData
+			,dataType:"json"
+			,success:function(data){
+				sampleEvents = {/* data?? */
+						"(리스트명)monthly": [
+							{
+							"id": 1,
+							"name": "Whole month event",
+							"startdate": "2016-10-01",
+							"enddate": "2016-10-31",
+							"starttime": "12:00",
+							"endtime": "2:00",
+							"color": "#99CCCC",
+							"url": ""
+							},
+							{
+							"id": 2,
+							"name": "Test encompasses month",
+							"startdate": "2016-10-29",
+							"enddate": "2016-12-02",
+							"starttime": "12:00",
+							"endtime": "2:00",
+							"color": "#CC99CC",
+							"url": ""
+							},
+							{
+							"id": 3,
+							"name": "Test single day",
+							"startdate": "2016-11-04",
+							"enddate": "",
+							"starttime": "",
+							"endtime": "",
+							"color": "#666699",
+							"url": "https://www.google.com/"
+							},
+							{
+							"id": 8,
+							"name": "Test single day",
+							"startdate": "2016-11-05",
+							"enddate": "",
+							"starttime": "",
+							"endtime": "",
+							"color": "#666699",
+							"url": "https://www.google.com/"
+							},
+							{
+							"id": 4,
+							"name": "Test single day with time",
+							"startdate": "2016-11-07",
+							"enddate": "",
+							"starttime": "12:00",
+							"endtime": "02:00",
+							"color": "#996666",
+							"url": ""
+							},
+							{
+							"id": 5,
+							"name": "Test splits month",
+							"startdate": "2016-11-25",
+							"enddate": "2016-12-04",
+							"starttime": "",
+							"endtime": "",
+							"color": "#999999",
+							"url": ""
+							},
+							{
+							"id": 6,
+							"name": "Test events on same day",
+							"startdate": "2016-11-25",
+							"enddate": "",
+							"starttime": "",
+							"endtime": "",
+							"color": "#99CC99",
+							"url": ""
+							},
+							{
+							"id": 7,
+							"name": "Test events on same day",
+							"startdate": "2016-11-25",
+							"enddate": "",
+							"starttime": "",
+							"endtime": "",
+							"color": "#669966",
+							"url": ""
+							},
+							{
+							"id": 9,
+							"name": "Test events on same day",
+							"startdate": "2016-11-25",
+							"enddate": "",
+							"starttime": "",
+							"endtime": "",
+							"color": "#999966",
+							"url": ""
+							}
+						]
+						};
+				
+			}
+			,error:function(e){
+				console.log(e.responseText);
+			}
+		});
+}
 
 	$(window).load( function() {
 		$('#mycalendar').monthly({
 			mode: 'event',
-			//dataType: 'json',
-			//events: sampleEvents,
-			xmlUrl: 'monthly_events.jsp'
+			dataType: 'json',
+			events: sampleEvents//json형식으로 위에 쏴줄것!
+			//xmlUrl: '''
 		});
 	});
 </script>

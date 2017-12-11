@@ -167,7 +167,7 @@ public class MypageContoller {
 			map.put("today", today);
 			dataCount = service.dataCount(map);
 			
-
+			
 			map.put("dataCount",dataCount);
 			if (dataCount != 0)
 				total_page = myUtil.pageCount(rows, dataCount);
@@ -179,6 +179,7 @@ public class MypageContoller {
 			// 리스트에 출력할 데이터를 가져오기
 			int start = (current_page - 1) * rows + 1;
 			int end = current_page * rows;
+			map.put("userId", userId);
 			map.put("start", start);
 			map.put("end", end);
 
@@ -288,7 +289,7 @@ public class MypageContoller {
 			map.put("today", today);
 			dataCount = service.dataCount(map);
 			
-
+			
 			map.put("dataCount",dataCount);
 			if (dataCount != 0)
 				total_page = myUtil.pageCount(rows, dataCount);
@@ -300,6 +301,7 @@ public class MypageContoller {
 			// 리스트에 출력할 데이터를 가져오기
 			int start = (current_page - 1) * rows + 1;
 			int end = current_page * rows;
+			map.put("userId", userId);
 			map.put("start", start);
 			map.put("end", end);
 
@@ -330,4 +332,13 @@ public class MypageContoller {
 			
 		return ".mypage.usedMilelageList";
 	}
+	
+	
+	@RequestMapping(value="/mypage/messageMain", method=RequestMethod.GET)
+	public String messageForm() throws Exception{
+		
+		return ".mypage.messageMain";
+	}
+	
+	
 }

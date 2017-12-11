@@ -8,4 +8,6 @@ public interface HotShopService {
 	public List<HotShop> productList(Map<String, Object> map);
 	public HotShop productArticle(Map<String, Object> map);
 	public int productUpdate(HotShop dto, String pathname);
+	public int insertSchedule(Schedule dto);
+	public List<Schedule> readSchedules();
 }

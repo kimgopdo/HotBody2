@@ -13,9 +13,9 @@
 	<event>
 		<id>1</id>
 		<name>XML Events</name>
-		<startdate>2017-11-02</startdate>
-		<enddate>2017-12-08</enddate>
-		<starttime>12:00</starttime>
+		<startdate><%=startdate%></startdate>
+		<enddate><%=enddate%>2017-12-8</enddate>
+		<starttime>오전 12:00</starttime>
 		<endtime>2:00</endtime>
 		<color>#ffb128</color>
 		<url></url>

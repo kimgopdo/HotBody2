@@ -6,7 +6,6 @@
    String cp = request.getContextPath();
 %>
 
-<link rel="stylesheet" href="<%=cp%>/resource/css/tabs.css" type="text/css">
 <script type="text/javascript">
 $(function(){
 	$("#tab-week").addClass("active");

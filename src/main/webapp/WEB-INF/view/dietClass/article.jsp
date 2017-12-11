@@ -10,9 +10,9 @@ p {margin: 10px;}
 </style>
 
 <script type="text/javascript">
-function deleteOk(num) {
+function deleteOk(num,type) {
 	
-	var f = {num : num};
+	var f = {num : num, type:type};
 	
 	var url="<%=cp%>/dietClass/deleteClass";
 		
@@ -24,7 +24,7 @@ function deleteOk(num) {
 		,success:function(data) {
 			if(data.state=="true"){
 				alert("등록완료");
-				location.href="<%=cp%>/dietClass/onList";
+				location.href="<%=cp%>/dietClass/list?type="+type;
 			}
 		}
 	    ,error:function(e) {
@@ -66,8 +66,8 @@ function deleteOk(num) {
 		 -->
 		 
 		<c:if test="${sessionScope.member.userId!='admin'}">
-    	<button id="paymentBtn" type="button" style="width: 45%; height: 50px; background: #1abc9c; border: 0px; color: #ffffff; font-weight: bold;" onclick="javascript:location.href='<%=cp%>/dietClass/update?num=${dto.classNum}';"> 클래스 수정 </button>
-    	<button id="paymentBtn" type="button" style="width: 45%; height: 50px; background: #1abc9c; border: 0px; color: #ffffff; font-weight: bold;" onclick="deleteOk(${dto.classNum});"> 클래스 삭제 </button>
+    	<button id="paymentBtn" type="button" style="width: 45%; height: 50px; background: #1abc9c; border: 0px; color: #ffffff; font-weight: bold;" onclick="javascript:location.href='<%=cp%>/dietClass/update?num=${dto.classNum}&type=${dto.classType}';"> 클래스 수정 </button>
+    	<button id="paymentBtn" type="button" style="width: 45%; height: 50px; background: #1abc9c; border: 0px; color: #ffffff; font-weight: bold;" onclick="deleteOk(${dto.classNum},${dto.classType});"> 클래스 삭제 </button>
     	</c:if>
     	<c:if test="${sessionScope.member.userId=='admin'}">
     	<button id="paymentBtn" type="button" style="width: 100%; height: 50px; background: #1abc9c; border: 0px; color: #ffffff; font-weight: bold;" onclick="javascript:location.href='<%=cp%>/dietClass/payment';">수강 신청하기</button>
