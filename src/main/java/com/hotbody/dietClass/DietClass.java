@@ -23,6 +23,8 @@ public class DietClass {
 	
 	private String showTuition;
 	
+	private int point;
+	
 	public int getClassNum() {
 		return classNum;
 	}
@@ -160,5 +162,11 @@ public class DietClass {
 	}
 	public void setShowTuition(String showTuition) {
 		this.showTuition = showTuition;
+	}
+	public int getPoint() {
+		return point;
+	}
+	public void setPoint(int point) {
+		this.point = point;
 	}
 }

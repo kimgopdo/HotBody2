@@ -8,9 +8,15 @@
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.form.js"></script>
 <script type="text/javascript">
 function sendOk() {
+	var mode = "${mode}";
+	
 	var f = document.pForm;
 	var formData=new FormData(f);
-	var url="<%=cp%>/cprogram/insert";
+	if(mode=='created')
+		var url="<%=cp%>/cprogram/insert";
+	else if(mode=='update')
+		var url="<%=cp%>/cprogram/updateOk";
+		
 	$.ajax({
 		type:"post"
 		,url:url
@@ -36,7 +42,7 @@ function fileChange() {
 }
 function deleteFile() {
 	if(confirm("첨부파일을 삭제하시겠습니까?")){
-		location.href="<%=cp%>/notice/deleteFile?page=${page}&num=${dto.num}"
+		location.href="<%=cp%>/cprogram/deleteFile?num=${dto.programNum}"
 	}
 }
 </script>
@@ -108,8 +114,8 @@ function deleteFile() {
 	<button type="button" class="btn-default02" onclick="#">등록취소</button>
 	<c:if test="${mode=='update'}">
 		<input type="hidden" name="programNum" value="${dto.programNum}">
-		<input type="hidden" name="saveFilename" value="${dto.saveFileName}">
-		<input type="hidden" name="originalFilename" value="${dto.originalFileName}">
+		<input type="hidden" name="saveFileName" value="${dto.saveFileName}">
+		<input type="hidden" name="originalFileName" value="${dto.originalFileName}">
 	</c:if>
 	</div>
 

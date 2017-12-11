@@ -20,9 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.hotbody.common.MyUtil;
 import com.hotbody.member.SessionInfo;
 
-
-
-@Controller("orderController")
+@Controller("order.orderController")
 public class OrderController {
 
 	@Autowired

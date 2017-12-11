@@ -223,6 +223,7 @@ public class DietClassServiceImpl implements DietClassService {
 
 	@Override
 	public int updatecProgram(CProgram dto,String pathname) {
+		System.out.println("들어옴");
 		int result=0;
 		try {
 			if(dto.getUpload()!=null && !dto.getUpload().isEmpty()) {

@@ -6,8 +6,8 @@
 	<select id="selectMilelage" resultType="com.hotbody.milelage.Milelage"
 		parameterType="String">
 
-		select nvl(count(rnum),0) orderCount,sum(milelage) totalMilelage,sum(milelagePay) usedMilelage
-		,(sum(milelage)-sum(milelagePay))useableMilelage
+		select nvl(count(rnum),0) orderCount,sum(milelage) totalMilelage,nvl(sum(milelagePay),0) usedMilelage
+		,(nvl(sum(milelage),0) - nvl(sum(milelagePay),0)) useableMilelage
 		from(
 		select rownum rnum,ml.milelage,o.milelagePay
 		from milelage ml left outer join orders o
