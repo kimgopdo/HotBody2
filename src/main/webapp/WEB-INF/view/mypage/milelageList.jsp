@@ -16,31 +16,26 @@
 
 $(function() {
     $("#datepicker1, #datepicker2").datepicker({
-        dateFormat: 'yy.mm.dd'
+        dateFormat: 'yy-mm-dd'
     });
 });
 
-function formatDate(date) {
 
-	  var day = date.getDate();
-	  var monthIndex = date.getMonth();
-	  var year = date.getFullYear();
-
-	  return  year+ '-' + monthIndex + '-' +day ;
-	}
 
 $(function() {
 
 	
 	$("#today").click(function() {
 		var date =new Date();
+		
 		var day = date.getDate();
+		if(day<10)day="0"+day;
 		var month = date.getMonth()+1;
+		if(month<10)month="0"+month;
 		var year = date.getFullYear();
 		var today =year+ '-' + month + '-' +day;
 
-		
-		var lastday = year+ '-' + month + '-' +day;
+		var lastday =today;
 
 		$("#datepicker1").val(lastday);
 		$("#datepicker2").val(today);
@@ -49,16 +44,22 @@ $(function() {
 	
 	$("#week").click(function() {
 		var date =new Date();
+		
 		var day = date.getDate();
+		if(day<10)day="0"+day;
 		var month = date.getMonth()+1;
+		if(month<10)month="0"+month;
 		var year = date.getFullYear();
 		var today =year+ '-' + month + '-' +day;
 
 		date.setDate(date.getDate()-7);
+		day = date.getDate();
+		if(day<10)day="0"+day;
+		month = date.getMonth()+1;
+		if(month<10)month="0"+month;
+		year = date.getFullYear();
+		var lastday =year+ '-' + month + '-' +day;
 		
-		var lastday = date.getFullYear()+ '-' + (date.getMonth()+1) + '-' +date.getDate();
-		
-
 		$("#datepicker1").val(lastday);
 		$("#datepicker2").val(today);
 	
@@ -68,14 +69,22 @@ $(function() {
 	
 	$("#month").click(function() {
 		var date =new Date();
+		
 		var day = date.getDate();
+		if(day<10)day="0"+day;
 		var month = date.getMonth()+1;
+		if(month<10)month="0"+month;
 		var year = date.getFullYear();
 		var today =year+ '-' + month + '-' +day;
 
 		date.setMonth(date.getMonth()-1);
+		day = date.getDate();
+		if(day<10)day="0"+day;
+		month = date.getMonth()+1;
+		if(month<10)month="0"+month;
+		year = date.getFullYear();
+		var lastday =year+ '-' + month + '-' +day;		
 		
-		var lastday = date.getFullYear()+ '-' + (date.getMonth()+1) + '-' +date.getDate();
 		
 		$("#datepicker1").val(lastday);
 		$("#datepicker2").val(today);
@@ -85,14 +94,19 @@ $(function() {
 	$("#tmonth").click(function() {
 		var date =new Date();
 		var day = date.getDate();
+		if(day<10)day="0"+day;
 		var month = date.getMonth()+1;
+		if(month<10)month="0"+month;
 		var year = date.getFullYear();
 		var today =year+ '-' + month + '-' +day;
-		
+
 		date.setMonth(date.getMonth()-3);
-		
-		var lastday = date.getFullYear()+ '-' + (date.getMonth()+1) + '-' +date.getDate();
-		
+		day = date.getDate();
+		if(day<10)day="0"+day;
+		month = date.getMonth()+1;
+		if(month<10)month="0"+month;
+		year = date.getFullYear();
+		var lastday =year+ '-' + month + '-' +day;		
 		
 		$("#datepicker1").val(lastday);
 		$("#datepicker2").val(today);
@@ -103,13 +117,19 @@ $(function() {
 	$("#smonth").click(function() {
 		var date =new Date();
 		var day = date.getDate();
+		if(day<10)day="0"+day;
 		var month = date.getMonth()+1;
+		if(month<10)month="0"+month;
 		var year = date.getFullYear();
 		var today =year+ '-' + month + '-' +day;
-		
+
 		date.setMonth(date.getMonth()-6);
-		
-		var lastday = date.getFullYear()+ '-' + (date.getMonth()+1) + '-' +date.getDate();
+		day = date.getDate();
+		if(day<10)day="0"+day;
+		month = date.getMonth()+1;
+		if(month<10)month="0"+month;
+		year = date.getFullYear();
+		var lastday =year+ '-' + month + '-' +day;		
 		
 		$("#datepicker1").val(lastday);
 		$("#datepicker2").val(today);
@@ -214,16 +234,16 @@ $(function() {
 	
 <c:forEach var="list" items="${list}">
 	<tr height="80px" style="text-align: center; ">
-		<td  style="width: 15%;  ">
+		<td  style="width: 15%; border-bottom: 1px solid silver;  ">
 		${list.payDate}
 		</td>
-		<td  style="width: 15%;  ">
+		<td  style="width: 15%;  border-bottom: 1px solid silver;">
 		${list.totalPay}
 		</td>
-		<td  style="width: 15%; ">
+		<td  style="width: 15%; border-bottom: 1px solid silver;">
 		${list.milelage}
 		</td>
-		<td  style="width: 55%;  ">
+		<td  style="width: 55%;  border-bottom: 1px solid silver;">
 		${list.pdBoardName}
 		</td>
 	</tr>

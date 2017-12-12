@@ -19,6 +19,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hotbody.common.FileManager;
 import com.hotbody.common.MyUtil;
+import com.hotbody.member.SessionInfo;
+import com.hotbody.milelage.Milelage;
+import com.hotbody.milelage.MilelageService;
+import com.hotbody.order.Order;
+import com.hotbody.order.OrderService;
 
 @Controller("dietClass.dietClassController")
 public class DietClassController {
@@ -26,6 +31,12 @@ public class DietClassController {
 	
 	@Autowired
 	private DietClassService service;
+	
+	@Autowired
+	private MilelageService serviceM;
+	
+	@Autowired
+	private OrderService serviceO;
 	
 	@Autowired
 	private FileManager fileManager;
@@ -220,9 +231,61 @@ public class DietClassController {
 	}
 	
 	@RequestMapping(value="/dietClass/payment")
-	public String classPayment() {
+	public String classPayment(HttpSession session,
+								HttpServletRequest req,
+								@RequestParam int num,
+								@RequestParam int type) {
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		if(info!=null)
+			System.out.println("로그인상태");
+		if(info==null) {
+			System.out.println("로그인상태XXXXXXXXXXX");
+			//return "redirect:/member/login";
+		}
+		Milelage mdto = serviceM.selectMilelage(info.getUserId());
+		
+		int milelage = mdto.getUseableMilelage();
+		req.setAttribute("milelage", milelage);
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("classNum", num);
+		map.put("classType", type);
+		
+		DietClass dto = service.readClass(map);
+		
+		dto.setShowTuition("￦ "+df.format(dto.getTuition())+"원");
+		
+		dto.setPoint((int)(dto.getTuition()*0.01));
+		
+		req.setAttribute("dto", dto);
+		
+		
 		return ".dietClass.payment";
 	}
+	
+	@RequestMapping(value="dietClass/paymentSubmit")
+	public Map<String, Object> paymentSubmit(@RequestParam int payType,
+											@RequestParam(defaultValue="off") String payPoint,
+											@RequestParam(defaultValue="0") int useMilelage,
+											Order odto,
+											HttpSession session){
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		
+		odto.setAmount(1);
+		odto.setMilelagePay(useMilelage);
+		odto.setUserId(info.getUserId());
+		
+		serviceO.insertOrder(odto);
+		
+		Map<String, Object> model = new HashMap<>();
+		model.put("state", "true");
+		
+		return model;
+	}
+	
+	
 	
 	@RequestMapping(value="dietClass/survey")
 	public String classSurvey() {
@@ -240,14 +303,14 @@ public class DietClassController {
 	}
 	
 	@RequestMapping(value="/cprogram/update")
-	@ResponseBody
-	public Map<String, Object> cprogramUpdate(@RequestParam int num){
-		Map<String, Object> model = new HashMap<>();
+	public String cprogramUpdate(@RequestParam int num,
+									Model model){
 		
 		CProgram dto = service.readProgramInfo(num);
-		model.put("updateDto", dto);
-		model.put("mode", "update");
-		return model;
+		model.addAttribute("dto", dto);
+		model.addAttribute("mode", "update");
+		
+		return ".dietClass.classProgram.created";
 	}
 	
 	@RequestMapping(value="/cprogram/updateOk")
@@ -255,6 +318,7 @@ public class DietClassController {
 	public Map<String, Object> cprogramUpdateOk(CProgram dto,
 												HttpSession session){
 		Map<String, Object> model = new HashMap<>();
+		
 		String root = session.getServletContext().getRealPath("/");
 		String pathname = root+File.separator+"uploads"+File.separator+"dietClass";
 		
@@ -322,5 +386,27 @@ public class DietClassController {
 		
 		model.put("state", "true");
 		return model;
+	}
+	
+	@RequestMapping(value="/cprogram/deleteFile")
+	public String deletecFile(@RequestParam int num,
+								HttpSession session) {
+		
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root+File.separator+"uploads"+File.separator+"dietClass";
+		
+		CProgram dto = service.readProgramInfo(num);
+		try {
+			if(dto.getSaveFileName()!=null)
+				fileManager.doFileDelete(dto.getSaveFileName(), pathname);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		dto.setSaveFileName("");
+		dto.setOriginalFileName("");
+		
+		service.updatecProgram(dto, pathname);
+		
+		return "redirect:/cprogram/update?num="+num;
 	}
 }

@@ -19,10 +19,8 @@ public class MilelageServiceImpl implements MilelageService{
 		Milelage dto=null;
 		try {
 			dto= dao.selectOne("milelage.selectMilelage",userId);
-			
 		} catch (Exception e) {
 			System.out.println(e.toString());
-				
 		}
 		
 		return dto;

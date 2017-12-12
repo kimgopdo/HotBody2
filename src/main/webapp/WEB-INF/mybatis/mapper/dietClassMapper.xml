@@ -133,7 +133,7 @@
 	</select>
 	
 	<update id="updatecProgram" parameterType="com.hotbody.dietClass.CProgram">
-		UPDATE cProgram SET programName=#{programName}, programContent=#{programContent}, saveFileName=#{saveFileName}, originalFileName=#{originalfileName}
+		UPDATE cProgram SET programName=#{programName}, programContent=#{programContent}, saveFileName=#{saveFileName}, originalFileName=#{originalFileName}
 		WHERE programNum=#{programNum}
 	</update>
 	

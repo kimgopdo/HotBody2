@@ -6,8 +6,8 @@
 	<select id="selectMilelage" resultType="com.hotbody.milelage.Milelage"
 		parameterType="String">
 
-		select nvl(count(rnum),0) orderCount,sum(milelage) totalMilelage,sum(milelagePay) usedMilelage
-		,(sum(milelage)-sum(milelagePay))useableMilelage
+		select nvl(count(rnum),0) orderCount,sum(milelage) totalMilelage,nvl(sum(milelagePay),0) usedMilelage
+		,(nvl(sum(milelage),0) - nvl(sum(milelagePay),0)) useableMilelage
 		from(
 		select rownum rnum,ml.milelage,o.milelagePay
 		from milelage ml left outer join orders o
@@ -21,7 +21,7 @@
 	
 	 SELECT * FROM (
 		SELECT ROWNUM rnum, tb.* FROM (
-      select ml.milelage,o.TOTALPAY, TO_CHAR(tl.PAYDATE, 'YYYY-MM-DD') PAYDATE,pl.PDBOARDNAME
+      select ml.milelage,o.TOTALPAY, TO_CHAR(tl.PAYDATE, 'YYYY-MM-DD') PAYDATE,pl.PDBOARDNAME,o.milelagePay
         from orders o
         left outer join totalordlist tl on o.delorder = tl.delorder
         left outer join cartlist ctl   on o.delorder = ctl.delorder
@@ -29,7 +29,7 @@
         left outer join pmainimg pm  on pm.pdnum = pl.pdnum
         left outer join milelage ml   on o.delorder = ml.delorder
         where
-         o.userid=#{userid} and
+         o.userId=#{userId} and
         <![CDATA[
         TO_CHAR(tl.PAYDATE, 'YYYY-MM-DD') <= #{today} and  TO_CHAR(PAYDATE, 'YYYY-MM-DD')>= #{lastday}
 
