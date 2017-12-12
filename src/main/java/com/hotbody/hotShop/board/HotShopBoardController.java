@@ -141,15 +141,64 @@ public class HotShopBoardController {
 		service.insertSchedule(dto);
 		scheduleList=service.readSchedules();
 		Map<String, Object> map=new HashMap<>();
-		map.put("scheduleList", scheduleList);
+		map.put("monthly", scheduleList);
+		return map;
+	}
+	@RequestMapping(value="/hotShop/schedule")
+	@ResponseBody
+	public Map<String, Object> scheduleRead(
+			Model model
+			) {
+		List<Schedule> scheduleList=null;
+		scheduleList=service.readSchedules();
+		Map<String, Object> map=new HashMap<>();
+		map.put("monthly", scheduleList);
+		return map;
+	}
+	@RequestMapping(value="/hotShop/productInInfo")
+	@ResponseBody
+	public Map<String, Object> productLike(
+			HttpSession session
+			){
+		String root=session.getServletContext().getRealPath("/");
+		String pathname=root+"uploads"+File.separator+"shopProduct";
+		Map<String, Object> map=new HashMap<>();
+		List<HotShop> productList=null;
+		map.put("listOrArticle", 0);
+		productList=service.productList(map);
+		Iterator<HotShop> it=productList.iterator();
+		while(it.hasNext()) {
+			HotShop dto=it.next();
+			dto.setImgPath(pathname+File.separator+dto.getImgSaveFilename());
+			System.out.println(dto.getImgPath());
+		}
+		List<Supply> supplyList=null;
+		supplyList=service.readSupply();
+		map.put("productList", productList);
+		map.put("supplyList",supplyList);
 		return map;
 	}
 	
 	@RequestMapping(value="/hotShop/productInlist")
-	public String productInListForm() {
-		List<Schedule> scheduleList=null;
-		scheduleList=service.readSchedules();
-		
+	public String productInListForm(
+			Model model
+			) {
+		List<ProductIn> productInList=null;
+		productInList=service.readProductIn();
+		for(ProductIn dto : productInList) {
+			System.out.println(dto.getPdName()+" : "+dto.getPdrawprice());
+		}
+		model.addAttribute("productInList", productInList);
 		return ".hotShop.productIn";
+	}
+	@RequestMapping(value="/hotShop/productInlist", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> productInSubmit(
+			ProductIn dto
+			) {
+		int result=service.insertProductIn(dto);
+		Map<String, Object> map=new HashMap<>();
+		map.put("result", result);
+		return map;
 	}
 }

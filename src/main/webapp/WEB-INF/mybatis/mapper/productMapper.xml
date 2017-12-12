@@ -18,16 +18,20 @@
 		Temporary (pdnum,pdPrice,pdNutrient,pdArea,pdStMethod,pdType,pdRawName) 
 		values(#{pdnum},#{pdPrice},#{pdNutrient},#{pdArea},#{pdStMethod},#{pdType},#{pdRawName})
 	</insert>
-	<insert id="insertSchedule" parameterType="com.hotbody.hotShop.board.HotShop">
+	<insert id="insertSchedule" parameterType="com.hotbody.hotShop.board.Schedule">
 	INSERT INTO 
 		schedule (sdCode,sdName,StartDate,EndDate,startTime,endTime,color)
-		 values (schedule_seq.NEXTVAL,#{sdname},#{startdate},#{enddate},#{starttime},#{endtime},#{color})
+		 values (schedule_seq.NEXTVAL,#{name},#{startdate},#{enddate},#{starttime},#{endtime},#{color})
+	</insert>
+	<insert id="insertSupply" parameterType="com.hotbody.hotShop.board.Supply">
+		INSERT INTO productIn (pdincode,pdrawprice,pdinnum,pdexdate,pdindate,pdnum,supplycode) 
+		 values(pdin_seq.NEXTVAL,#{pdrawprice},#{pdinnum},#{pdexdate},sysdate,#{pdnum},#{supplycode})
 	</insert>
 	<select id="readProductNum" parameterType="String" resultType="Integer">
 	SELECT pdnum FROM productList WHERE pdName=#{pdName}
 	</select>
 	<select id="productList" parameterType="map" resultType="com.hotbody.hotShop.board.HotShop">
-	SELECT p.pdnum, imgOriginalFilename, imgSaveFilename, pdName,
+	SELECT p.pdnum pdnum, imgOriginalFilename, imgSaveFilename, pdName,
 			 pdSumContent, pdPrice, pdcontent content,
 			pdNutrient, pdStMethod, pdType, pdRawName, pdArea,
 			 pdDelRule, pdCreated, pdstCount, pdExDate
@@ -43,10 +47,12 @@
 				</where>
 				ORDER BY p.pdcreated DESC
 	</select>
-	<select id="scheduleList">
-		SELECT sdcode,sdname,startdate,enddate,starttime,endtime,color 
-		FROM schedule
+	<select id="readProductIn" resultType="com.hotbody.hotShop.board.ProductIn">
+		SELECT pdincode,pdrawprice,pdinnum,pdexdate,pdindate,pi.pdnum pdnum,pl.pdName pdName,supplycode
+		FROM productin pi 
+		JOIN productList pl ON pi.pdnum=pl.pdnum 
 	</select>
+	
 	<update id="productListUpdate" parameterType="com.hotbody.hotShop.board.HotShop">
 	UPDATE productList 
 	SET 
@@ -76,4 +82,8 @@
 	
 	WHERE pdnum=#{pdnum}
 	</update>
+	<select id="supplyList" resultType="com.hotbody.hotShop.board.Supply">
+		SELECT supplycode, supplyname, supplytel, supplypd
+		FROM supply
+	</select>
 </mapper>

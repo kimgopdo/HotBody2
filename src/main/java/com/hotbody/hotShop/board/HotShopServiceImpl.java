@@ -92,12 +92,43 @@ public class HotShopServiceImpl implements HotShopService{
 	public List<Schedule> readSchedules() {
 		List<Schedule> list=null;
 		try {
-			list=dao.selectList("");
+			/*list=dao.selectList("product.scheduleList");*/
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return list;
 	}
+	@Override
+	public List<Supply> readSupply() {
+		List<Supply> list=null;
+		try {
+			list=dao.selectList("product.supplyList");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	@Override
+	public int insertProductIn(ProductIn dto) {
+		int result=0;
+		try {
+			result=dao.insertData("product.insertSupply", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	@Override
+	public List<ProductIn> readProductIn() {
+		List<ProductIn> list=null;
+		try {
+			list=dao.selectList("product.readProductIn");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
 	
 	
 }
