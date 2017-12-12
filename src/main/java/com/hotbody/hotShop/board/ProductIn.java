@@ -9,7 +9,24 @@ public class ProductIn{
 	private String pdindate;
 	private int pdnum;
 	private int supplycode;
+	private String imgSaveFilename;
+	private String supplyname;
 	
+	
+	
+	
+	public String getSupplyname() {
+		return supplyname;
+	}
+	public void setSupplyname(String supplyname) {
+		this.supplyname = supplyname;
+	}
+	public String getImgSaveFilename() {
+		return imgSaveFilename;
+	}
+	public void setImgSaveFilename(String imgSaveFilename) {
+		this.imgSaveFilename = imgSaveFilename;
+	}
 	public String getPdName() {
 		return pdName;
 	}

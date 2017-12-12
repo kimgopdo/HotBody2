@@ -12,5 +12,5 @@ public interface HotShopService {
 	public List<Schedule> readSchedules();
 	public List<Supply> readSupply();
 	public int insertProductIn(ProductIn dto);
-	public List<ProductIn> readProductIn();
+	public List<ProductIn> readProductIn(Map<String, Object> map);
 }

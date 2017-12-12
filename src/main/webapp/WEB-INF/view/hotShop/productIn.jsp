@@ -478,6 +478,9 @@ $(function() {
   });
 </script>
 <script>
+$(function(){
+	productInList();
+})
 function showImg(){
 	
 	var imgName=$("#productName option:selected").attr('data-imgSaveFilename');
@@ -494,13 +497,28 @@ function call(){
 	var price=$("#pdRawPrice").val();
 	var	num=$("#pdInNum").val();
 	
-	if(price!="" && num!=""){
 		var tot=parseInt(price)*parseInt(num);
-		$("#totalPrice").text(tot);
-	}else{
-			$("#totalPrice").html("<input type='hidden' value="+tot+">"+tot);
-	}
+		if(! tot){
+			$("#totalPrice").text("0");
+		}else{
+			$("#totalPrice").text(tot);
+		}
 }
+function productInList(){
+	var url="<%=cp%>/hotShop/productInInfo";
+	var data="colum="+$("input[name=colum]").val();
+	console.log(data);
+	$.ajax({
+		type: "post"
+		,url: url
+		,data:data
+		,success:function(a){
+			console.log(a);
+			$("#productInList").html(a);
+		}
+	});
+}
+
 function productInSend(f){
 	var str=f.pdnum.value;
 	console.log(str);
@@ -520,29 +538,10 @@ function productInSend(f){
 		,data:data
 		,dataType:"json"
 		,success:function(data){
-			alert("성공");
+			productInList();
 		}
 	});
 }
-$(function(){
-
-	var url="<%=cp%>/hotShop/productInInfo";
-	$.ajax({
-		type:"post"
-		,url:url
-		,dataType:"json"
-		,success:function(data){
-			
-			$.each(data.productList, function(index, value){
-				$("#productName").append("<option value="+value.pdnum+" data-imgSaveFilename='"+value.imgSaveFilename+"'>"+value.pdName+"</option>");
-			})
-			$.each(data.supplyList, function(index, value){
-				$("#supplyName").append("<option value="+value.supplycode+">"+value.supplyname+"</option>");
-			})
-			
-		}
-	});
-});
 </script>
 <form name="productInForm" method="post">
 <table style="width:100%; margin-top: 100px; border-collapse: collapse;">
@@ -555,13 +554,16 @@ $(function(){
 		<td width="10%">총액</td>
 		<td width="10%">유통기한</td>
 		<td width="10%">입고날</td>      
-		<td width="10%">업체명</td>
+		<td width="10%">업체명</td>                          
 	</tr>
 	<tr class="productIn" height="70px" style="border-bottom: 2px solid #e7e7e7">
 		<td id="showImgArea">상품이미지</td>
 		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; ">
 		<select id="productName" name="pdnum" onchange="showImg();">
 			<option>::상품</option>
+			<c:forEach var="dto" items="${productList}">
+				<option value="${dto.pdnum}"  data-imgSaveFilename="${dto.imgSaveFilename}">${dto.pdName}</option>
+			</c:forEach>
 		</select>
 		</td>
 		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; "><input style="width: 70px;" type="text" name="pdrawprice" id="pdRawPrice" onkeyup='call()'></td>
@@ -572,21 +574,12 @@ $(function(){
 		<td>
 		<select id="supplyName" name="supplycode" onchange="showImg();">
 			<option>::업체명</option>
+			<c:forEach var="dto" items="${supplyList}">
+				<option value="${dto.supplycode}">${dto.supplyname}</option>
+			</c:forEach>
 		</select>
 		</td>
 	</tr>
-	<c:forEach var="dto" items="${productInList}">
-	<tr class="productIn" height="70px" style="border-bottom: 2px solid #e7e7e7">
-		<td>상품이미지</td>
-		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; ">상품명: ${dto.pdName}</td>
-		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; ">원가: ${dto.pdrawprice}</td>
-		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; ">수량: ${dto.pdinnum}</td>
-		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; ">총액: ${dto.pdinnum*dto.pdrawprice}</td>
-		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; ">유통기한: ${dto.pdexdate}</td>
-		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; ">입고날짜: ${dto.pdindate}</td>
-		<td>업체명</td>
-	</tr>
-	</c:forEach>
 	<tr>
 		<td colspan="8">
 		조회기간: 
@@ -595,6 +588,23 @@ $(function(){
 	</tr>
 </table>
 </form>
+<table style="width:100%; margin-top: 100px; border-collapse: collapse;">
+	<tr height="30px" style="border-bottom: 2px solid #373737">
+		<td width="15%">상품이미지</td>
+		<td width="25%">상품이름</td>
+		<td width="10%">원가</td>
+		<td width="10%">입고수량</td>
+		<td width="10%">총액</td>
+		<td width="10%">유통기한</td>
+		<td width="10%">입고날</td>      
+		<td width="10%">업체명</td>
+	</tr>
+	<tr>
+		<td colspan="8"><input name="colum" type="radio" checked="checked" value="pdincode">등록순 <input name="colum" type="radio" value="pdexdate">유통기한순</td>
+	</tr>
+	<tbody id="productInList">
+	</tbody>
+</table>
 <input type="hidden" id="SJson"></input>
 <script type="text/javascript">
 function sales(){

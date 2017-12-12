@@ -119,10 +119,10 @@ public class HotShopServiceImpl implements HotShopService{
 		return result;
 	}
 	@Override
-	public List<ProductIn> readProductIn() {
+	public List<ProductIn> readProductIn(Map<String, Object> map) {
 		List<ProductIn> list=null;
 		try {
-			list=dao.selectList("product.readProductIn");
+			list=dao.selectList("product.readProductIn",map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

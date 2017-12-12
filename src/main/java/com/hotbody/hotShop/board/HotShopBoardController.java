@@ -156,10 +156,42 @@ public class HotShopBoardController {
 		return map;
 	}
 	@RequestMapping(value="/hotShop/productInInfo")
-	@ResponseBody
-	public Map<String, Object> productLike(
+	public String productInInfoList(
+			String order,
+			String colum,
+			Model model,
 			HttpSession session
 			){
+		List<ProductIn> productInList=null;
+		Map<String, Object> map=new HashMap<>();
+		map.put("colum", colum);
+		map.put("order", order);
+		productInList=service.readProductIn(map);
+		String root=session.getServletContext().getRealPath("/");
+		String pathname=root+"uploads"+File.separator+"shopProduct";
+		map=new HashMap<>();
+		List<HotShop> productList=null;
+		map.put("listOrArticle", 0);
+		productList=service.productList(map);
+		Iterator<HotShop> it=productList.iterator();
+		while(it.hasNext()) {
+			HotShop dto=it.next();
+			dto.setImgPath(pathname+File.separator+dto.getImgSaveFilename());
+		}
+		List<Supply> supplyList=null;
+		supplyList=service.readSupply();
+		model.addAttribute("productInList", productInList);
+		model.addAttribute("productList", productList);
+		model.addAttribute("supplyList",supplyList);
+		return "hotShop/productInList";
+	}
+	
+	@RequestMapping(value="/hotShop/productInlist")
+	public String productInListForm(
+			
+			Model model,
+			HttpSession session
+			) {
 		String root=session.getServletContext().getRealPath("/");
 		String pathname=root+"uploads"+File.separator+"shopProduct";
 		Map<String, Object> map=new HashMap<>();
@@ -174,20 +206,13 @@ public class HotShopBoardController {
 		}
 		List<Supply> supplyList=null;
 		supplyList=service.readSupply();
-		map.put("productList", productList);
-		map.put("supplyList",supplyList);
-		return map;
-	}
-	
-	@RequestMapping(value="/hotShop/productInlist")
-	public String productInListForm(
-			Model model
-			) {
 		List<ProductIn> productInList=null;
-		productInList=service.readProductIn();
+		productInList=service.readProductIn(map);
 		for(ProductIn dto : productInList) {
 			System.out.println(dto.getPdName()+" : "+dto.getPdrawprice());
 		}
+		model.addAttribute("productList", productList);
+		model.addAttribute("supplyList",supplyList);
 		model.addAttribute("productInList", productInList);
 		return ".hotShop.productIn";
 	}
