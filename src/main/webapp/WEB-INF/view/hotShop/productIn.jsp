@@ -479,6 +479,12 @@ $(function() {
 </script>
 <script>
 $(function(){
+	$("input[name=colum]").click(function(){
+		productInList();
+	});
+	$("input[name=order]").click(function(){
+		productInList();
+	})
 	productInList();
 })
 function showImg(){
@@ -506,8 +512,8 @@ function call(){
 }
 function productInList(){
 	var url="<%=cp%>/hotShop/productInInfo";
-	var data="colum="+$("input[name=colum]").val();
-	console.log(data);
+	var data="colum="+$(':radio[name="colum"]:checked').val()+"&order="+$(':radio[name="order"]:checked').val();
+	alert(data);
 	$.ajax({
 		type: "post"
 		,url: url
@@ -538,6 +544,8 @@ function productInSend(f){
 		,data:data
 		,dataType:"json"
 		,success:function(data){
+			
+			
 			productInList();
 		}
 	});
@@ -586,9 +594,14 @@ function productInSend(f){
 	  		<input type="text" id="datepicker1"> ~ <input type="text" id="datepicker2">
 		</td>
 	</tr>
+	
 </table>
 </form>
+
 <table style="width:100%; margin-top: 100px; border-collapse: collapse;">
+	<tr>
+		<td colspan="8"><input name="order" type="radio" checked="checked" value="desc">오름차순 <input name="order" type="radio" checked="checked" value="asc">내림차순 <input name="colum" type="radio" checked="checked" value="pdincode">입고순 <input name="colum" type="radio" value="pdexdate">유통기한순</td>
+	</tr>
 	<tr height="30px" style="border-bottom: 2px solid #373737">
 		<td width="15%">상품이미지</td>
 		<td width="25%">상품이름</td>
@@ -598,9 +611,6 @@ function productInSend(f){
 		<td width="10%">유통기한</td>
 		<td width="10%">입고날</td>      
 		<td width="10%">업체명</td>
-	</tr>
-	<tr>
-		<td colspan="8"><input name="colum" type="radio" checked="checked" value="pdincode">등록순 <input name="colum" type="radio" value="pdexdate">유통기한순</td>
 	</tr>
 	<tbody id="productInList">
 	</tbody>

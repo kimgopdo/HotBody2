@@ -48,16 +48,13 @@
 				ORDER BY p.pdcreated DESC
 	</select>
 	<select id="readProductIn" parameterType="map" resultType="com.hotbody.hotShop.board.ProductIn">
-		SELECT pdincode,pdrawprice,pdinnum,TO_CHAR(pdexdate, 'YYYY-MM-DD') pdexdate,pdindate,pi.pdnum pdnum,pl.pdname pdname,pi.supplycode,supplyname
+		SELECT pdincode,pdrawprice,pdinnum,TO_CHAR(pdexdate, 'YYYY-MM-DD') pdexdate,TO_CHAR(pdindate, 'YYYY-MM-DD') pdindate,pi.pdnum pdnum,pl.pdname pdname,pi.supplycode,supplyname
 		FROM productin pi 
 		JOIN productList pl ON pi.pdnum=pl.pdnum 
         JOIN supply s ON pi.supplycode=s.supplycode 
          ORDER BY 
         <choose>
-        	<when test="colum==pdincode">
-        		pdincode
-        	</when>
-        	<when test="colum==pdexdate">
+        	<when test="colum=='pdexdate'">
         		pdexdate
         	</when>
         	<otherwise>
@@ -65,10 +62,7 @@
         	</otherwise>
         </choose>
         <choose>
-        	<when test="order==desc">
-        		 DESC
-        	</when>
-        	<when test="order==asc">
+        	<when test="order=='asc'">
         		 asc
         	</when>
         	<otherwise>
