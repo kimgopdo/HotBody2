@@ -106,7 +106,6 @@ function paymentOk() {
 		}
 	}
 	var q = $("form[name=paymentForm]").serialize();
-	alert(q);
 	
 	var url="<%=cp%>/dietClass/paymentSubmit";
 		
@@ -115,10 +114,6 @@ function paymentOk() {
 		,url:url
 		,data: q
 		,dataType:"json"
-		,success:function(data) {
-			if(data.state=='true')
-				alert("등록완료");
-		}
 	    ,error:function(e) {
 	    	alert("등록실패");
 	    	console.log(e.responseText);
@@ -148,7 +143,7 @@ function paymentOk() {
 					  location.href="<%=cp%>/dietClass/article";
 				  } else {
 					  //다시 리스트로
-				    location.href="<%=cp%>/dietClass/list";
+				    location.href="<%=cp%>/dietClass/list?type="+${dto.classType};
 				  }
 				});
 			}

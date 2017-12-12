@@ -21,4 +21,10 @@ public interface DietClassService {
 	public int programCount();
 	public int deletecProgram(int programNum, String pathname);
 	public int updatecProgram(CProgram dto, String pathname);
+	
+	/*
+	 * 미션 관련
+	 */
+	public int insertMission(Mission dto);
+	public List<Mission> readMission(Map<String, Object> map);
 }

@@ -31,6 +31,12 @@
 		VALUES(#{delOrder}, #{userId}, #{milelage})
 	</insert>
 	
+	<!-- 등록회원 테이블에 insert -->
+	<insert id="register" parameterType="com.hotbody.order.Order">
+		INSERT INTO register(classNum, userId)
+		VALUES(#{classNum}, #{userId})
+	</insert>
+	
 	<!-- 주문횟수 -->
 	<select id="dataCount" parameterType="map" resultType="Integer">
 		SELECT NVL(COUNT(*), 0) 

@@ -50,6 +50,7 @@ public class OderServiceImpl implements OrderService {
 			dao.insertData("order.insertCartList", dto);
 			dao.insertData("order.insertTotalOrderList", dto.getDelOrder());
 			dao.insertData("order.insertMilelage", dto);
+			dao.insertData("order.register", dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

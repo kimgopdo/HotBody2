@@ -4,6 +4,7 @@ import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -265,6 +267,7 @@ public class DietClassController {
 	}
 	
 	@RequestMapping(value="dietClass/paymentSubmit")
+	@ResponseBody
 	public Map<String, Object> paymentSubmit(@RequestParam int payType,
 											@RequestParam(defaultValue="off") String payPoint,
 											@RequestParam(defaultValue="0") int useMilelage,
@@ -408,5 +411,90 @@ public class DietClassController {
 		service.updatecProgram(dto, pathname);
 		
 		return "redirect:/cprogram/update?num="+num;
+	}
+	
+	/*
+	 * 미션 관련
+	 */
+	
+	@RequestMapping(value="/mission/created", method=RequestMethod.GET)
+	public String missionForm(HttpServletRequest req,
+								@RequestParam int num) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("classNum", num);
+		map.put("classType", 0);
+		
+		DietClass dto = service.readClass(map);
+		
+		int day[] = new int[dto.getOnperiod()];
+		for(int idx=0;idx<dto.getOnperiod();idx++) {
+			day[idx] = idx+1;
+		}
+		
+		req.setAttribute("day", day);
+		req.setAttribute("dto", dto);
+		req.setAttribute("mode", "created");
+		return ".dietClass.mission.created";
+	}
+	
+	@RequestMapping(value="/mission/update", method=RequestMethod.GET)
+	public String updateForm(HttpServletRequest req,
+								@RequestParam int num) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("classNum", num);
+		map.put("classType", 0);
+		DietClass dto = service.readClass(map);
+		
+		int day[] = new int[dto.getOnperiod()];
+		for(int a=1;a<=dto.getOnperiod();a++) {
+			day[a-1] = a;
+			map.put("missDay", a);
+			List<Mission> list = service.readMission(map);
+			req.setAttribute("list"+a, list);
+		}
+		req.setAttribute("day", day);
+		req.setAttribute("dto", dto);
+		req.setAttribute("mode", "update");
+		return ".dietClass.mission.created";
+	}
+	
+	@RequestMapping(value="/mission/created", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> missionSubmit(@RequestParam Map<String, String> dataMap){
+		Mission mdto = new Mission();
+		int classNum = Integer.parseInt(dataMap.get("classNum"));
+		
+		Map<String, Object> model = new HashMap<>();
+		model.put("classNum", classNum);
+		model.put("classType", 0);
+		DietClass dto = service.readClass(model);
+		
+		mdto.setClassNum(classNum);
+		
+		for(int a=1;a<=dto.getOnperiod();a++) {
+			for(Map.Entry<String, String> entry : dataMap.entrySet()) {
+				if(entry.getKey().contains("mission."+a+".")) {
+					mdto.setMissDay(a);
+					mdto.setMissionContent(entry.getValue());
+					service.insertMission(mdto);
+				}
+			}
+		}
+		
+		model.put("state", "true");
+		return model;
+	}
+	
+	@RequestMapping(value="/mission/update", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> updateSubmit(){
+		Map<String, Object> model = new HashMap<>();
+		
+		return model;
+	}
+	
+	@RequestMapping(value="/mission/list")
+	public String missionList() {
+		return ".dietClass.mission.list";
 	}
 }
