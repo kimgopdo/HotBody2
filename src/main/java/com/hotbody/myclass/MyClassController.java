@@ -53,14 +53,235 @@ public class MyClassController {
 		return "myclass/diary/inputForm";
 	}
 	
+	
+	
+	// 운동관련컨트롤러(운동추가)	
 	@RequestMapping(value="/myclass/addexercise/list")
-	public String listExercise() throws Exception{
+	public String listExercise(
+			@RequestParam(value="page", defaultValue="1") int current_page,
+			@RequestParam(value="searchKey", defaultValue="exerciseName") String searchKey,
+			@RequestParam(value="searchValue", defaultValue="") String searchValue,
+			HttpServletRequest req,
+			Model model) throws Exception {
+
+		String cp = req.getContextPath();
+   	    
+		int rows = 10; // 한 화면에 보여주는 게시물 수
+		int total_page = 0;
+		int dataCount = 0;
+   	    
+		if(req.getMethod().equalsIgnoreCase("GET")) { // GET 방식인 경우
+			searchValue = URLDecoder.decode(searchValue, "utf-8");
+		}
+		
+        // 전체 페이지 수
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("searchKey", searchKey);
+        map.put("searchValue", searchValue);
+
+        dataCount = service.dataCount2(map);
+        if(dataCount != 0)
+            total_page = myUtil.pageCount(rows, dataCount) ;
+
+        
+        // 다른 사람이 자료를 삭제하여 전체 페이지수가 변화 된 경우
+        if(total_page < current_page) 
+            current_page = total_page;
+
+        // 리스트에 출력할 데이터를 가져오기
+        int start = (current_page - 1) * rows + 1;
+        int end = current_page * rows;
+        map.put("start", start);
+        map.put("end", end);
+
+        // 글 리스트
+        List<Exercise> list = service.listExercise(map);
+
+        // 리스트의 번호
+        int listNum, n = 0;
+        Iterator<Exercise> it=list.iterator();
+        while(it.hasNext()) {
+        	Exercise data = it.next();
+            listNum = dataCount - (start + n - 1);
+            data.setListNum(listNum);
+            n++;
+        }
+        
+        String query = "";
+        String listUrl = cp+"/myclass/addexercise/list";
+        String articleUrl = cp+"/myclass/addexercise/article?page=" + current_page;
+        if(searchValue.length()!=0) {
+        	query = "searchKey=" +searchKey + 
+        	         "&searchValue=" + URLEncoder.encode(searchValue, "utf-8");	
+        }
+        
+        if(query.length()!=0) {
+        	listUrl = cp+"/myclass/addexercise/list?" + query;
+        	articleUrl = cp+"/myclass/addexercise/article?page=" + current_page + "&"+ query;
+        }
+        
+        String paging = myUtil.paging(current_page, total_page, listUrl);
+
+        model.addAttribute("list", list);
+        model.addAttribute("articleUrl", articleUrl);
+        model.addAttribute("page", current_page);
+        model.addAttribute("dataCount", dataCount);
+        model.addAttribute("total_page", total_page);
+        model.addAttribute("paging", paging);
+		
 		return ".myclass.addexercise.list";
+	}
+	
+	@RequestMapping(value = "/myclass/addexercise/created", method = RequestMethod.GET)
+	public String exerciseInput(Model model) throws Exception {	
+		List<ExerciseType> list = service.readExerciseType();
+		
+		model.addAttribute("mode", "created");
+		model.addAttribute("list", list);
+		return ".myclass.addexercise.created";
+	}
+	
+	@RequestMapping(value = "/myclass/addexercise/created", method = RequestMethod.POST)
+	public String exerciseSubmit(Exercise dto, HttpSession session) throws Exception {
+	
+		String root=session.getServletContext().getRealPath("/");
+		String pathname=root+File.separator+"uploads"+File.separator+"myClass";
+		
+		System.out.println(dto.getExerciseType());
+		service.insertExercise(dto, pathname);
+	
+		return "redirect:/myclass/addexercise/list";
+	}
+	@RequestMapping(value="/myclass/addexercise/article")
+	public String articleExercise(
+			@RequestParam(value="num") int num,
+			@RequestParam(value="page") String page,
+			@RequestParam(value="searchKey", defaultValue="exerciseName") String searchKey,
+			@RequestParam(value="searchValue", defaultValue="") String searchValue,
+			HttpSession session,
+			Model model) throws Exception {
+
+		searchValue = URLDecoder.decode(searchValue, "utf-8");
+
+		// 해당 상세정보 보여주기
+		Exercise dto = service.readExercise(num);
+		if(dto==null)
+			return "redirect:/myclass/addexercise/list?page="+page;
+		
+		
+        
+		//이전글 다음글에 map에 값 담아서 넣기
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("searchKey", searchKey);
+		map.put("searchValue", searchValue);
+		map.put("ingrerdientsNum", num);
+
+		Exercise preReadDto = service.preReadExercise(map);
+		Exercise nextReadDto = service.nextReadExercise(map);
+        
+		
+		//엔터를 띄어쓰기<br>로...
+		dto.setPic(dto.getPic().replaceAll("\n", "<br>"));
+
+		
+		String query = "page="+page;
+		if(searchValue.length()!=0) {
+			query += "&searchKey=" + searchKey + 
+		                    "&searchValue=" + URLEncoder.encode(searchValue, "utf-8");
+		}
+
+		model.addAttribute("dto", dto);
+		model.addAttribute("preReadDto", preReadDto);
+		model.addAttribute("nextReadDto", nextReadDto);
+		model.addAttribute("page", page);
+		model.addAttribute("query", query);
+
+        return ".myclass.addexercise.article";
+	}
+	
+	@RequestMapping(value="/myclass/addexercise/update", 
+			method=RequestMethod.GET)
+	public String updateFormExercise(
+			@RequestParam int num,
+			@RequestParam String page,
+			Model model) throws Exception {
+
+		Ing dto = service.readIng(num);
+		if(dto==null) {
+			return "redirect:/myclass/addexercise/list?page="+page;
+		}
+				
+		model.addAttribute("dto", dto);
+		model.addAttribute("mode", "update");
+		model.addAttribute("page", page);
+		
+		return ".myclass.addexercise.created";
+	}
+	
+	@RequestMapping(value="/myclass/addexercise/update", 
+			method=RequestMethod.POST)
+	public String updateSubmitExercise(
+			Exercise dto, 
+			@RequestParam String page,
+			HttpSession session) throws Exception {
+
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root + File.separator + "uploads" + File.separator + "myClass";		
+	
+		// 수정 하기
+		service.updateExercise(dto, pathname);		
+		
+		return "redirect:/myclass/addexercise/list?page="+page;
+	}
+	
+	
+	@RequestMapping(value="/myclass/addexercise/deleteFile", 
+			method=RequestMethod.GET)
+	public String deleteFileExercise(
+			@RequestParam int num,
+			@RequestParam String page,
+			HttpSession session) throws Exception {
+
+		Exercise dto = service.readExercise(num);
+		
+		if(dto==null) {
+			return "redirect:/myclass/addexercise/list?page="+page;
+		}
+		
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root + File.separator + "uploads" + File.separator + "myClass";
+		
+		if(dto.getVideo() != null && dto.getVideo().length()!=0) {
+			  fileManager.doFileDelete(dto.getVideo(), pathname);
+			  
+			  dto.setVideo("");
+			  service.updateExercise(dto, pathname);
+       }
+		
+		return "redirect:/myclass/addexercise/update?num="+num+"&page="+page;
+	}
+	
+	@RequestMapping(value="/myclass/addexercise/delete")
+	public String deleteExercise(
+			@RequestParam int num,
+			@RequestParam String page,
+			HttpSession session) throws Exception {
+
+		
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root + File.separator + "uploads" + File.separator + "myClass";		
+ 	
+		service.deleteExercise(num, pathname);
+		
+		return "redirect:/myclass/addexercise/list?page="+page;
 	}
 	
 	
 	
-	// 재료관련컨트롤러
+	
+	
+	
+	// 재료관련컨트롤러(재료추가)
 	@RequestMapping(value="/myclass/addingrerdients/list")
 	public String listIngre(
 			@RequestParam(value="page", defaultValue="1") int current_page,

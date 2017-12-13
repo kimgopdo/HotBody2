@@ -2,6 +2,8 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="myClass">
+
+	<!-- 재료관련쿼리 -->
 	<select id="insertIng" parameterType="com.hotbody.myclass.Ing">
 		insert into ingredients(ingrerdientsNum,nutrient,ingredientsName,ingredientsUnit,
 								calory,image,content,unit) values
@@ -41,7 +43,7 @@
 						<include refid="where-list"/>
 					</if>
 				</where>
-				ORDER BY calory DESC 
+				ORDER BY ingrerdientsNum DESC 
 	 			) tb WHERE ROWNUM  &lt;= #{end}
 	 	) WHERE rnum  &gt;= #{start}
 	</select>
@@ -104,6 +106,122 @@
             DELETE FROM ingredients WHERE ingrerdientsNum = #{ingrerdientsNum}
       </delete>
 	
+	
+	
+<!-- 운동관련쿼리 -->
+	<select id="insertExercise" parameterType="com.hotbody.myclass.Exercise">
+		insert into exerciseInfo(exerciseNum, exerciseType, exerciseName, unitTime,
+								lossCal, video, pic, unit) 
+								values(exercise_seq.nextval, #{exerciseType}, #{exerciseName}, #{unitTime},
+								#{lossCal}, #{video, jdbcType=VARCHAR}, #{pic}, #{unit})
+	</select>
+	
+	<!-- 운동분류가져오기 -->
+	<select id="exerciseType" resultType="com.hotbody.myclass.ExerciseType">
+		select exerciseType, typeName
+		from execiseType
+	</select>
+
+	
+	<sql id="where-list2">
+	  <if test="searchKey=='exerciseName'">
+	      INSTR(exerciseName, #{searchValue}) &gt; 0
+	  </if>
+	  <if test="searchKey=='typeName'">
+	       INSTR(typeName, #{searchValue}) &gt; 0
+	  </if>
+	</sql>
+	
+	
+	<!-- 운동정보의 데이터갯수 -->
+	<select id="dataCount2" resultType="Integer" parameterType="map">
+		SELECT NVL(COUNT(*),0)
+		FROM exerciseInfo i
+		join execiseType t on i.exerciseType = t.exerciseType
+		<where>
+			<if test="searchValue != null and searchValue !=''">  
+				<include refid="where-list2"/>
+			</if>
+		</where>
+	</select>
+	
+	
+	<select id="listExercise" resultType="com.hotbody.myclass.Exercise" parameterType="map">
+	 	SELECT * FROM (
+	 		SELECT ROWNUM rnum, tb.* FROM (
+				SELECT exerciseNum, i.exerciseType,typeName, exerciseName, unitTime, unit,lossCal,
+					   video,pic
+				FROM exerciseInfo i
+                join execiseType t on i.exerciseType = t.exerciseType
+				<where>
+					<if test="searchValue != null and searchValue !=''">
+						<include refid="where-list2"/>
+					</if>
+				</where>
+				ORDER BY exerciseNum DESC 
+	 			) tb WHERE ROWNUM  &lt;= #{end}
+	 	) WHERE rnum  &gt;= #{start}
+	</select>
+	
+	
+	<select id="readExercise" resultType="com.hotbody.myclass.Exercise" parameterType="Integer">
+		SELECT exerciseNum, exerciseType, exerciseName, unitTime, unit, lossCal,
+			   video,pic
+		FROM exerciseInfo 
+		WHERE exerciseNum = #{exerciseNum}
+	</select>
+	
+	
+	<select id="preReadExercise" resultType="com.hotbody.myclass.Exercise" parameterType="map">
+		SELECT tb.* FROM (
+			SELECT exerciseNum, exerciseName
+			      FROM exerciseInfo i
+				  join execiseType t on i.exerciseType = t.exerciseType
+                  <where>
+                       <if test="searchValue != null and searchValue != '' ">
+			                 <include refid="where-list2"/>
+		                </if>
+		           <![CDATA[
+		                AND (exerciseNum > #{exerciseNum})
+		             ]]>
+	              </where>
+				ORDER BY exerciseNum ASC
+			) tb WHERE ROWNUM=1
+	</select>
+
+	
+	<select id="nextReadExercise" resultType="com.hotbody.myclass.Exercise" 
+				parameterType="map">
+		SELECT tb.* FROM (
+			SELECT exerciseNum, exerciseName
+			      FROM exerciseInfo i
+				  join execiseType t on i.exerciseType = t.exerciseType    
+                    <where>
+                         <if test="searchValue != null and searchValue != '' ">
+			                  <include refid="where-list2"/>
+		                 </if>
+		               <![CDATA[
+		                 AND (exerciseNum < #{exerciseNum})
+		                 ]]>
+	                </where>
+				ORDER BY exerciseNum DESC
+			) tb WHERE ROWNUM=1
+	</select>
+
+
+     
+     <update id="updateExercise" parameterType="com.hotbody.myclass.Exercise">
+         UPDATE exerciseInfo SET exerciseType=#{exerciseType}, exerciseName=#{exerciseName},
+                     unitTime=#{unitTime}, unit=#{unit}, lossCal=#{lossCal},
+                     video=#{video}, pic=#{pic, jdbcType=VARCHAR}
+                    WHERE exerciseNum = #{exerciseNum}
+      </update>
+
+     
+      
+      <delete id="deleteExercise" parameterType="Integer">
+            DELETE FROM exerciseInfo WHERE exerciseNum = #{exerciseNum}
+      </delete>
 	
 
 </mapper>

@@ -15,5 +15,16 @@ public interface MyClassService {
 	public Ing preReadIng(Map<String, Object> map);
 	public Ing nextReadIng(Map<String, Object> map);
 	
-	//
+	//운동관련서비스
+	public int insertExercise(Exercise dto, String pathname);
+	public List<Exercise> listExercise(Map<String, Object> map);
+	public int dataCount2(Map<String, Object> map);
+	public Exercise readExercise(int num);
+	public int updateExercise(Exercise dto, String pathname);
+	public int deleteExercise(int num, String pathname);
+	public Exercise preReadExercise(Map<String, Object> map);
+	public Exercise nextReadExercise(Map<String, Object> map);
+	public List<ExerciseType> readExerciseType(); // 운동분류 보여주기
+	
+	
 }
