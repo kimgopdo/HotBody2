@@ -1190,13 +1190,12 @@ footer h4 {color:#fff;}
 textarea,
 input[type="text"] {
 	width:100%;
-	margin:0 0 10px;
 	padding: 10px 8px;
 	text-transform:none;
 	font-family: 'Roboto', sans-serif;
 	font-weight:400;
 	line-height:20px;
-	font-size: 12px;
+	font-size: 14px;
 	color: #333;
 	font-style:normal;
 	border-radius: 0;	

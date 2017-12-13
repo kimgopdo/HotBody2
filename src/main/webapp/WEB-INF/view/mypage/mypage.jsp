@@ -48,24 +48,19 @@
 
 	<tr align="center">
 		<td ><img src="<%=cp%>/resource/images/myshop_icon03.gif" onclick="location.href='<%=cp%>/#';"><br><b>장바구니<b></td>
-		<td><img style="display: none;" src="<%=cp%>/resource/images/myshop_icon01.gif"></td>
+		<td><img src="<%=cp%>/resource/images/main_menu_icon03.png" onclick="location.href='<%=cp%>/mypage/orderList';"><br><b>주문내역<b></td>
 		<td><img src="<%=cp%>/resource/images/myshop_icon07.gif" onclick="location.href='<%=cp%>/mypage/milelageList';"><br><b>마일리지<b></td>
 	</tr>
 		<tr align="center">
 		<td><img src="<%=cp%>/resource/images/main_menu_icon04.png" onclick="location.href='<%=cp%>/#';"><br><b>회원탈퇴<b></td>
 		<td><img src="<%=cp%>/resource/images/main_menu_icon05.png" onclick="location.href='<%=cp%>/#';"> <br><b>회원정보수정<b></td>
 		<td><img src="<%=cp%>/resource/images/main_menu_icon07.png" onclick="location.href='<%=cp%>/#';"><br><b>상담내역<b></td>
-	</tr>
-		<tr align="center">
-		<td ><img  src="<%=cp%>/resource/images/record-27195_1280.png" onclick="location.href='<%=cp%>/#';"><br><b>다이어리<b></td>
-		<td><img style="display: none;" src="<%=cp%>/resource/images/myshop_icon07.gif"></td>
-		<td><img src="<%=cp%>/resource/images/main_menu_icon03.png" onclick="location.href='<%=cp%>/mypage/orderList';"><br><b>주문내역<b></td>
-	</tr>
-
+		</tr>
+		
 </table>
 
 
-<div style="height: 100px">
+<div style="height: 150px">
 </div>
 
 	

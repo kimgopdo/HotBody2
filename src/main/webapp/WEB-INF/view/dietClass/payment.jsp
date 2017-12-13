@@ -9,67 +9,6 @@
 <script type="text/javascript" src="/hotbody/resource/jquery/js/jquery.oLoader.min.js"></script>
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
-<style type="text/css">
-.checkbox label:after, 
-.radio label:after {
-    content: '';
-    display: table;
-    clear: both;
-}
-
-.checkbox .cr,
-.radio .cr {
-    position: relative;
-    display: inline-block;
-    border: 1px solid #a9a9a9;
-    border-radius: .25em;
-    width: 1.3em;
-    height: 1.3em;
-    float: left;
-    margin-right: .5em;
-}
-
-.radio .cr {
-    border-radius: 50%;
-}
-
-.checkbox .cr .cr-icon,
-.radio .cr .cr-icon {
-    position: absolute;
-    font-size: .8em;
-    line-height: 0;
-    top: 50%;
-    left: 20%;
-}
-
-.radio .cr .cr-icon {
-    margin-left: 0.04em;
-}
-
-.checkbox label input[type="checkbox"],
-.radio label input[type="radio"] {
-    display: none;
-}
-
-.checkbox label input[type="checkbox"] + .cr > .cr-icon,
-.radio label input[type="radio"] + .cr > .cr-icon {
-    transform: scale(3) rotateZ(-20deg);
-    opacity: 0;
-    transition: all .3s ease-in;
-}
-
-.checkbox label input[type="checkbox"]:checked + .cr > .cr-icon,
-.radio label input[type="radio"]:checked + .cr > .cr-icon {
-    transform: scale(1) rotateZ(0deg);
-    opacity: 1;
-}
-
-.checkbox label input[type="checkbox"]:disabled + .cr,
-.radio label input[type="radio"]:disabled + .cr {
-    opacity: .5;
-}
-</style>
-
 <script type="text/javascript">
 function oneCheckbox(p){
 	//결제수단 체크박스 하나만 체크하기
@@ -81,6 +20,44 @@ function oneCheckbox(p){
     }
 }
 
+//마일리지 사용을 체크했을 경우,
+function inputAbled() {
+	var tuition = "${dto.tuition}";
+	if($("input:checkbox[name=payPoint]").is(':checked') == true){
+		$("#useMilelage").attr("disabled",false);
+	}
+	if($("input:checkbox[name=payPoint]").is(':checked') == false){
+		$("#useMilelage").val('');
+		$("#total").html(tuition+"원");
+		$("#useMilelage").attr("disabled",true);
+	}
+}
+
+//마일리지 입력 후 계산
+function inputOut() {
+	var tuition = parseInt("${dto.tuition}");
+	var use = parseInt($("#useMilelage").val());
+	var milelage = parseInt("${milelage}");
+	
+	if(use==tuition && use<milelage){
+		if($("input:checkbox[name=payType]").is(':checked')){
+			$("input:checkbox[name=payType]").prop("checked",false);
+		}
+	}
+	else if(use>tuition){
+		swal("총결제금액보다 많은 마일리지를 입력했습니다.");
+		$("#useMilelage").val('');
+		return;
+	}
+	else if(use>milelage){
+		swal("사용가능한 마일리지를 확인해주세요.");
+		$("#total").html(tuition+"원");
+		$("#useMilelage").val('');
+		return;
+	}
+	$("#total").html(tuition-use+"원");	
+}
+	
 function selectConfirm(num){
 	//클래스 내용을 확인하였습니다-1
 	if(num==1){
@@ -105,6 +82,44 @@ function selectAgree() {
 }
 
 function paymentOk() {
+	if(! $("input:checkbox[name=payType]").is(':checked')){
+		swal("결제수단을 선택해주세요");
+		return;
+	}
+	if($("input:checkbox[name=payPoint]").is(':checked') == true){
+		if($("#useMilelage").val()==""){
+			swal({
+				  title: "마일리지가 입력되지 않았습니다!",
+				  text: "마일리지 사용을 취소하시겠습니까?",
+				  icon: "warning",
+				  buttons: true,
+				  dangerMode: true,
+				})
+				.then((willDelete) => {
+				  if (willDelete) {
+					  $("input[name=payPoint]").prop("checked",false);
+					  $("#useMilelage").attr("disabled",true);
+				  } else {
+				  }
+				});
+			return;
+		}
+	}
+	var q = $("form[name=paymentForm]").serialize();
+	
+	var url="<%=cp%>/dietClass/paymentSubmit";
+		
+	$.ajax({
+		type:"post"
+		,url:url
+		,data: q
+		,dataType:"json"
+	    ,error:function(e) {
+	    	alert("등록실패");
+	    	console.log(e.responseText);
+	    }
+	});
+	
 	$('body').oLoader({
 		  wholeWindow: true, //makes the loader fit the window size
 		  lockOverflow: true, //disable scrollbar on body
@@ -128,7 +143,7 @@ function paymentOk() {
 					  location.href="<%=cp%>/dietClass/article";
 				  } else {
 					  //다시 리스트로
-				    location.href="<%=cp%>/dietClass/list";
+				    location.href="<%=cp%>/dietClass/list?type="+${dto.classType};
 				  }
 				});
 			}
@@ -141,34 +156,42 @@ function paymentOk() {
     <div style="width: 1000px;">
 	<p style="font-size: 25px; font-weight: bold; margin-bottom: 20px;" align="left">수강하실 클래스</p>
     </div>
+    
+    <form id="paymentForm" action="" method="post" name="paymentForm">
 	<table style="border-collapse: collapse; width: 1000px;">
 	<tr style="height: 50px; background: #bbddd4;">
+		<th width="20%"></th>
 		<th style="text-align: center;">
 			클래스명
 		</th>
 		<th style="text-align: center;" width="25%">
-			수강날짜
+			<c:if test="${dto.classType=='0'}">수강기간</c:if>
+			<c:if test="${dto.classType=='1'}">수강날짜</c:if>
 		</th>
 		<th style="text-align: center;" width="15%">
 			가격
 		</th>
 		<th style="text-align: center;" width="15%">
-			발생포인트
+			적립 마일리지
 		</th>
 	</tr>
-	
 	<tr style="height: 100px; border-bottom: 1px solid #e6e6e6;" align="center">
-		<td style="font-weight: bold; padding: 5px 0; border-right: 1px solid #e6e6e6;" align="left">
-			<img style="height: 100px; width: auto;" src="https://dietnote.net/static/mydano/class/detail/new/program_leg.jpg"> 클래스이름
+		<td>
+			<div style="width: 200px; height: 100px; float: left; overflow: hidden;">
+				<img style="vertical-align: middle; width: 100%;" src="<%=cp%>/uploads/dietClass/${dto.saveFileName}">
+			</div>
 		</td>
 		<td style="border-right: 1px solid #e6e6e6;">
-		2017년 12월 1일~30일
+		${dto.className}
 		</td>
 		<td style="border-right: 1px solid #e6e6e6;">
-		99,000원
+		${dto.onperiod}일
+		</td>
+		<td style="border-right: 1px solid #e6e6e6;">
+		${dto.showTuition}
 		</td>
 		<td style="border-left: 1px solid #e6e6e6;">
-		400원
+		${dto.point}원
 		</td>
 	</tr>
 	</table>
@@ -258,26 +281,31 @@ function paymentOk() {
 				<p style="font-size: 25px; font-weight: bold; margin-bottom: 20px;" align="left">결제수단</p>
 			</div>
 			<div style="width: 800px; display: inline-block; line-height: 2.5em;" align="left">
-				<span><input type="checkbox" name="payType" value="p1" onclick="oneCheckbox(this)"><b> 무통장입금 (가상계좌 발급)</b></span><br>
-				<span><input type="checkbox" name="payType" value="p2" onclick="oneCheckbox(this)"><b> 신용/체크카드</b></span><br>
-				<span><input type="checkbox" name="payType" value="p3" onclick="oneCheckbox(this)"><b> 온라인 계좌이체</b></span><br>
-				<span><input type="checkbox" name="payType" value="p4" onclick="oneCheckbox(this)"><b> 휴대폰 결제</b></span><br>
-				<span><input type="checkbox" name="payPoint" onclick="#"><b> 포인트 사용 : </b></span>
-				<input type="text" id="#" name="#" style="width: 100px; height: 25px;">원 <span style="color: tomato;">(총 사용가능 포인트 : 1234점)</span>
+				<span><input type="checkbox" name="payType" value="1" onclick="oneCheckbox(this)"><b> 무통장입금 (가상계좌 발급)</b></span><br>
+				<span><input type="checkbox" name="payType" value="2" onclick="oneCheckbox(this)"><b> 신용/체크카드</b></span><br>
+				<span><input type="checkbox" name="payType" value="3" onclick="oneCheckbox(this)"><b> 온라인 계좌이체</b></span><br>
+				<span><input type="checkbox" name="payType" value="4" onclick="oneCheckbox(this)"><b> 휴대폰 결제</b></span><br>
+				<span><input type="checkbox" name="payPoint" onclick="inputAbled();"><b> 포인트 사용 : </b></span>
+				<input type="text" id="useMilelage" name="useMilelage" style="width: 100px; height: 25px;" onblur="inputOut();" disabled="disabled">원 <br> 
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: tomato;">(총 사용가능 마일리지 : ${milelage}점)</span>
 			</div>
 		</div>
 		
-		<div style="width: 100%; background: #e6e6e6; padding: 20px 20px; margin-top: 50px;">
-			<div style="width: 200px; display: inline-block; vertical-align: top;">
-				<p style="font-size: 25px; font-weight: bold; margin-bottom: 20px;" align="left">결제금액</p>
+		
+		<div style="width: 100%; height:200px; background: #e6e6e6; padding: 20px 20px; margin-top: 50px;">
+			<div style="width: 200px; display: inline-block; vertical-align: middle;">
+				<p style="font-size: 25px; font-weight: bold; margin-bottom: 20px;" align="left">총 결제금액</p>
 			</div>
 			<div style="width: 800px; display: inline-block;" align="left">
-				<span style="font-size: 25px; color: #0a9696; font-weight: bold; margin-bottom: 20px;">99000원</span>
+				<span id="total" style="font-size: 25px; color: #0a9696; font-weight: bold; margin-bottom: 20px;">${dto.tuition}원</span>
+				<input type="hidden" name="totalPay" value="${dto.tuition}">
+				<input type="hidden" name="milelage" value="${dto.point}">
+				<input type="hidden" name="classNum" value="${dto.classNum}">
 			</div>
 		</div>
 		<div style="width: 1000px; margin-top: 30px;" align="center">
 		<button id="paymentBtn" type="button" style="width:1000px; height: 50px; background: #bbddd4; border: 0px; font-weight: bold;" onclick="paymentOk();">수강 신청완료!</button>
 		</div>	
 	</div>
-	
+	</form>
 </div>

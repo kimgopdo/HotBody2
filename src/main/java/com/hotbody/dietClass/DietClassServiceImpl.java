@@ -1,6 +1,7 @@
 package com.hotbody.dietClass;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -38,8 +39,15 @@ public class DietClassServiceImpl implements DietClassService {
 				dao.insertData("dietClass.proToClass", dto);
 			}
 			
-			if(dto.getClassType()==0)
+			if(dto.getClassType()==0) {
 				dao.insertData("dietClass.insertOn", dto);
+				Map<String, Object> map = new HashMap<>();
+				map.put("classNum", dto.getClassNum());
+				for(int a=1;a<=dto.getOnperiod();a++) {
+					map.put("missday", a);
+					dao.insertData("dietClass.readyMission", map);
+				}
+			}
 			else
 				dao.insertData("dietClass.insertOff", dto);
 			
@@ -127,9 +135,18 @@ public class DietClassServiceImpl implements DietClassService {
 				}
 			}
 			
-			result = dao.updateData("dietClass.updateClass", dto);
-			dao.deleteData("dietClass.deletepInClass", dto.getClassNum());
+			Map<String, Object> map = new HashMap<>();
+			map.put("classNum", dto.getClassNum());
+			map.put("onperiod", dto.getOnperiod());
 			
+			dao.deleteData("dietClass.deleteReadyMission", map);
+			
+			if(dto.getClassType()==0)
+				dao.updateData("dietClass.updateOn", dto);
+			else if(dto.getClassType()==1)
+				dao.updateData("diteclass.updateOff", dto);
+			
+			result = dao.updateData("dietClass.updateClass", dto);
 			for(int a : dto.getProSelect()) {
 				dto.setProgramNum(a);
 				dao.insertData("dietClass.proToClass", dto);
@@ -152,6 +169,10 @@ public class DietClassServiceImpl implements DietClassService {
 				}
 			}
 			dao.deleteData("dietClass.deletepInClass", dto.getClassNum());
+			
+			Map<String, Object> mapperMap = new HashMap<>();
+			mapperMap.put("classNum", dto.getClassNum());
+			dao.deleteData("dietClass.deleteReadyMission", mapperMap);
 			
 			//////////////////////////////////////////////////////////////
 			if(dto.getClassType()==0) 
@@ -223,6 +244,7 @@ public class DietClassServiceImpl implements DietClassService {
 
 	@Override
 	public int updatecProgram(CProgram dto,String pathname) {
+		System.out.println("들어옴");
 		int result=0;
 		try {
 			if(dto.getUpload()!=null && !dto.getUpload().isEmpty()) {
@@ -242,5 +264,27 @@ public class DietClassServiceImpl implements DietClassService {
 			e.printStackTrace();
 		}
 		return result;
+	}
+
+	@Override
+	public int insertMission(Mission dto) {
+		int result=0;
+		try {
+			result = dao.insertData("dietClass.insertMission", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public List<Mission> readMission(Map<String, Object> map) {
+		List<Mission> list = null;
+		try {
+			list = dao.selectList("dietClass.readMission", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 }

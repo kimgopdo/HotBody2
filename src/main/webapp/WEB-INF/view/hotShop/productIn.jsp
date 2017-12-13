@@ -440,29 +440,168 @@ establish the rules based on the calendar element width rather than the device w
 		margin: 2em auto 0 auto;
 		max-width: 80em;
 		border: 1px solid #666;
-	}                 
+	}   
+	.aspect { width: 50px; height: 100px; }              
 </style>
 <script type="text/javascript">
 $.datepicker.setDefaults({
-    dateFormat: 'yy-mm-dd',
-    prevText: '이전 달',
-    nextText: '다음 달',
-    monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-    monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-    dayNames: ['일', '월', '화', '수', '목', '금', '토'],
-    dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
-    dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
-    showMonthAfterYear: true,
-    yearSuffix: '년'
+	 inline: true, 
+	 dateFormat: "yy-mm-dd",    /* 날짜 포맷 */ 
+	 prevText: 'prev', 
+	 nextText: 'next', 
+	 showButtonPanel: true,    /* 버튼 패널 사용 */ 
+	 changeMonth: true,        /* 월 선택박스 사용 */ 
+	 changeYear: true,        /* 년 선택박스 사용 */ 
+	 showOtherMonths: true,    /* 이전/다음 달 일수 보이기 */ 
+	 selectOtherMonths: true,    /* 이전/다음 달 일 선택하기 */ 
+	 showOn: "button", 
+	 buttonImage: "img/calendar03.gif",
+	 buttonImageOnly: true, 
+	 minDate: '-30y', 
+	 closeText: '닫기', 
+	 currentText: '오늘', 
+	 showMonthAfterYear: true,        /* 년과 달의 위치 바꾸기 */ 
+	 /* 한글화 */ 
+	 monthNames : ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'], 
+	 monthNamesShort : ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'], 
+	 dayNames : ['일', '월', '화', '수', '목', '금', '토'],
+	 dayNamesShort : ['일', '월', '화', '수', '목', '금', '토'],
+	 dayNamesMin : ['일', '월', '화', '수', '목', '금', '토'],
+	 showAnim: 'slideDown'
   });
 
 
 $(function() {
     $("#datepicker1, #datepicker2").datepicker();
+    $("#datepicker3, #datepicker4").datepicker();
+    $("#datepickerDate").datepicker();
   });
 </script>
-<table style="width:100%; margin-top: 100px; border-collapse: collapse;">
+<script>
+$(function(){
+	$("input[name=colum]").click(function(){
+		productInList();
+	});
+	$("input[name=order]").click(function(){
+		productInList();
+	})
+	productInList();
+})
+function showImg(){
 	
+	var imgName=$("#productName option:selected").attr('data-imgSaveFilename');
+	//alert($("#productName").val());
+
+	if(imgName=="null"){
+		$("#showImgArea").text("상품이미지가 없습니다.");
+	}else{
+		$("#showImgArea").html("<img width='50' height='80' onError='<%=cp%>/uploads/shopProduct/error.png' src=<%=cp%>/uploads/shopProduct/"+imgName+">");
+	}
+}
+function call(){
+	console.log("dddd");
+	var price=$("#pdRawPrice").val();
+	var	num=$("#pdInNum").val();
+	
+		var tot=parseInt(price)*parseInt(num);
+		if(! tot){
+			$("#totalPrice").text("0");
+		}else{
+			$("#totalPrice").text(tot);
+		}
+}
+function productInList(){
+	var url="<%=cp%>/hotShop/productInInfo";
+	var data="colum="+$(':radio[name="colum"]:checked').val()+"&order="+$(':radio[name="order"]:checked').val();
+	alert(data);
+	$.ajax({
+		type: "post"
+		,url: url
+		,data:data
+		,success:function(a){
+			console.log(a);
+			$("#productInList").html(a);
+		}
+	});
+}
+
+function productInSend(f){
+	var str=f.pdnum.value;
+	console.log(str);
+	str=f.pdrawprice.value;
+	console.log(str);
+	str=f.pdinnum.value;
+	console.log(str);
+	str=f.pdexdate.value;
+	console.log(str);
+	str=f.supplycode.value;
+	console.log(str);
+	var data=$("form[name=productInForm]").serialize();
+	var url="<%=cp%>/hotShop/productInlist";
+	$.ajax({
+		type:"post"
+		,url:url
+		,data:data
+		,dataType:"json"
+		,success:function(data){
+			
+			
+			productInList();
+		}
+	});
+}
+</script>
+<form name="productInForm" method="post">
+<table style="width:100%; margin-top: 100px; border-collapse: collapse;">
+	<tr><td><button type="button" onclick="productInSend(this.form);">입고</button></td></tr>
+	<tr height="30px" style="border-bottom: 2px solid #373737">
+		<td width="15%">상품이미지</td>
+		<td width="25%">상품이름</td>
+		<td width="10%">원가</td>
+		<td width="10%">입고수량</td>
+		<td width="10%">총액</td>
+		<td width="10%">유통기한</td>
+		<td width="10%">입고날</td>      
+		<td width="10%">업체명</td>                          
+	</tr>
+	<tr class="productIn" height="70px" style="border-bottom: 2px solid #e7e7e7">
+		<td id="showImgArea">상품이미지</td>
+		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; ">
+		<select id="productName" name="pdnum" onchange="showImg();">
+			<option>::상품</option>
+			<c:forEach var="dto" items="${productList}">
+				<option value="${dto.pdnum}"  data-imgSaveFilename="${dto.imgSaveFilename}">${dto.pdName}</option>
+			</c:forEach>
+		</select>
+		</td>
+		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; "><input style="width: 70px;" type="text" name="pdrawprice" id="pdRawPrice" onkeyup='call()'></td>
+		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; "><input style="width: 70px;" type="text" name="pdinnum" id="pdInNum" onkeyup='call()'></td>
+		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; " id="totalPrice" ></td>
+		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; "><input style="width: 90px;" name="pdexdate" type="text" id="datepickerDate"></td>
+		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; ">입고날(자동생성)</td>                 
+		<td>
+		<select id="supplyName" name="supplycode" onchange="showImg();">
+			<option>::업체명</option>
+			<c:forEach var="dto" items="${supplyList}">
+				<option value="${dto.supplycode}">${dto.supplyname}</option>
+			</c:forEach>
+		</select>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="8">
+		조회기간: 
+	  		<input type="text" id="datepicker1"> ~ <input type="text" id="datepicker2">
+		</td>
+	</tr>
+	
+</table>
+</form>
+
+<table style="width:100%; margin-top: 100px; border-collapse: collapse;">
+	<tr>
+		<td colspan="8"><input name="order" type="radio" checked="checked" value="desc">오름차순 <input name="order" type="radio" checked="checked" value="asc">내림차순 <input name="colum" type="radio" checked="checked" value="pdincode">입고순 <input name="colum" type="radio" value="pdexdate">유통기한순</td>
+	</tr>
 	<tr height="30px" style="border-bottom: 2px solid #373737">
 		<td width="15%">상품이미지</td>
 		<td width="25%">상품이름</td>
@@ -473,164 +612,62 @@ $(function() {
 		<td width="10%">입고날</td>      
 		<td width="10%">업체명</td>
 	</tr>
-	<c:forEach begin="0" end="5">
-	<tr class="productIn" height="70px" style="border-bottom: 2px solid #e7e7e7">
-		<td>상품이미지</td>
-		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; ">상품이름</td>
-		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; ">원가</td>
-		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; ">입고수량</td>
-		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; ">총액</td>
-		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; ">유통기한</td>
-		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; ">입고날</td>
-		<td>업체명</td>
-	</tr>
-	</c:forEach>
-	<tr>
-		<td colspan="8">
-		조회기간: 
-	  		<input type="text" id="datepicker1"> ~ <input type="text" id="datepicker2">
-		</td>
-	</tr>
-	<tr>
-		<td colspan="8">
-		<div class="monthly" id="mycalendar"></div>
-		</td>
-	</tr>
-	<tr>
-		<td colspan="8">     
-			<form name="scheduleForm">
-			일정명 : <input type="text" name="name">
-				일정등록 : 
-	  			<input type="text" name="startdate" id="datepicker1"> ~ <input type="text" name="enddate" id="datepicker2">
-	  			일정시작시간 : <input type="time" name="starttime">
-	  			일정종료시간 : <input type="time" name="endtime">
-	  			컬러 : <input type="color" name="color">
-	  			<button type="button" onclick="sales();">등록</button>
-			</form>
-		</td>
-	</tr>
+	<tbody id="productInList">
+	</tbody>
 </table>
-
+<input type="hidden" id="SJson"></input>
 <script type="text/javascript">
-var sampleEvents;
-	
-function schedule(){ 
-	var scheduleData = $("form[name=scheduleForm]").serialize();
+function sales(){
+	var f=document.scheduleForm;
+	var str=f.name.value
+	if(str==""){
+		alert("일정내용을 입력해주세요");
+		f.sdname.focus();
+		return;
+	}
+	alert(str);
+	str=f.startdate.value;
+	if(str==""){
+		alert("일정 시작일을 입력해주세요");
+		f.startdate.focus();
+		return;
+	}
+	alert(str);
+	str=f.enddate.value;
+	if(str==""){
+		alert("일정 종료일을 입력해주세요");
+		f.enddate.focus();
+		return;
+	}
+	alert(str);
+	str=f.starttime.value;
+	if(str==""){
+		alert("일정 시작시간을 입력해주세요");
+		f.starttime.focus();
+		return;
+	}
+	alert(str);
+	str=f.endtime.value;
+	if(str==""){
+		alert("일정 종료시간을 입력해주세요");
+		f.endtime.focus();
+		return;
+	}
+	alert(str);
+	var scheduleData=$("form[name=scheduleForm]").serialize();
 	var url="<%=cp%>/hotShop/schedule";
-		$.ajax({
-			type:"post"//생략시 text
-			,url:url
-			,data:scheduleData
-			,dataType:"json"
-			,success:function(data){
-				sampleEvents = {/* data?? */
-						"(리스트명)monthly": [
-							{
-							"id": 1,
-							"name": "Whole month event",
-							"startdate": "2016-10-01",
-							"enddate": "2016-10-31",
-							"starttime": "12:00",
-							"endtime": "2:00",
-							"color": "#99CCCC",
-							"url": ""
-							},
-							{
-							"id": 2,
-							"name": "Test encompasses month",
-							"startdate": "2016-10-29",
-							"enddate": "2016-12-02",
-							"starttime": "12:00",
-							"endtime": "2:00",
-							"color": "#CC99CC",
-							"url": ""
-							},
-							{
-							"id": 3,
-							"name": "Test single day",
-							"startdate": "2016-11-04",
-							"enddate": "",
-							"starttime": "",
-							"endtime": "",
-							"color": "#666699",
-							"url": "https://www.google.com/"
-							},
-							{
-							"id": 8,
-							"name": "Test single day",
-							"startdate": "2016-11-05",
-							"enddate": "",
-							"starttime": "",
-							"endtime": "",
-							"color": "#666699",
-							"url": "https://www.google.com/"
-							},
-							{
-							"id": 4,
-							"name": "Test single day with time",
-							"startdate": "2016-11-07",
-							"enddate": "",
-							"starttime": "12:00",
-							"endtime": "02:00",
-							"color": "#996666",
-							"url": ""
-							},
-							{
-							"id": 5,
-							"name": "Test splits month",
-							"startdate": "2016-11-25",
-							"enddate": "2016-12-04",
-							"starttime": "",
-							"endtime": "",
-							"color": "#999999",
-							"url": ""
-							},
-							{
-							"id": 6,
-							"name": "Test events on same day",
-							"startdate": "2016-11-25",
-							"enddate": "",
-							"starttime": "",
-							"endtime": "",
-							"color": "#99CC99",
-							"url": ""
-							},
-							{
-							"id": 7,
-							"name": "Test events on same day",
-							"startdate": "2016-11-25",
-							"enddate": "",
-							"starttime": "",
-							"endtime": "",
-							"color": "#669966",
-							"url": ""
-							},
-							{
-							"id": 9,
-							"name": "Test events on same day",
-							"startdate": "2016-11-25",
-							"enddate": "",
-							"starttime": "",
-							"endtime": "",
-							"color": "#999966",
-							"url": ""
-							}
-						]
-						};
-				
-			}
-			,error:function(e){
-				console.log(e.responseText);
-			}
-		});
+	$.ajax({
+		type:"post"
+		,url:url
+		,data:scheduleData
+		,dataType:"json"
+		,success:function(data){
+			console.log(data);
+			console.log(data.scheduleList);
+			alert(data.scheduleList);
+		}
+	});
 }
 
-	$(window).load( function() {
-		$('#mycalendar').monthly({
-			mode: 'event',
-			dataType: 'json',
-			events: sampleEvents//json형식으로 위에 쏴줄것!
-			//xmlUrl: '''
-		});
-	});
+
 </script>

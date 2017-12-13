@@ -1,32 +1,25 @@
 package com.hotbody.hotShop.board;
 
 public class Schedule {
-	private int sdcode;
-	private String sdname;
+	private int id;
+	private String name;
 	private String startdate;
 	private String enddate;
 	private String starttime;
 	private String endtime;
 	private String color;
-	
-	
-	public int getSdcode() {
-		return sdcode;
+	private String url;
+	public int getId() {
+		return id;
 	}
-	public void setSdcode(int sdcode) {
-		this.sdcode = sdcode;
+	public void setId(int id) {
+		this.id = id;
 	}
-	public String getSdname() {
-		return sdname;
+	public String getName() {
+		return name;
 	}
-	public void setSdname(String sdname) {
-		this.sdname = sdname;
-	}
-	public String getColor() {
-		return color;
-	}
-	public void setColor(String color) {
-		this.color = color;
+	public void setName(String name) {
+		this.name = name;
 	}
 	public String getStartdate() {
 		return startdate;
@@ -52,6 +45,19 @@ public class Schedule {
 	public void setEndtime(String endtime) {
 		this.endtime = endtime;
 	}
+	public String getColor() {
+		return color;
+	}
+	public void setColor(String color) {
+		this.color = color;
+	}
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	
 	
 	
 }

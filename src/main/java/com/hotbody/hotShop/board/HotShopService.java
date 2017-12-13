@@ -10,4 +10,7 @@ public interface HotShopService {
 	public int productUpdate(HotShop dto, String pathname);
 	public int insertSchedule(Schedule dto);
 	public List<Schedule> readSchedules();
+	public List<Supply> readSupply();
+	public int insertProductIn(ProductIn dto);
+	public List<ProductIn> readProductIn(Map<String, Object> map);
 }
