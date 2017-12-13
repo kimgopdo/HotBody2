@@ -4,7 +4,6 @@ import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -438,7 +437,7 @@ public class DietClassController {
 	}
 	
 	@RequestMapping(value="/mission/update", method=RequestMethod.GET)
-	public String updateForm(HttpServletRequest req,
+	public String updateForm(Model model,
 								@RequestParam int num) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("classNum", num);
@@ -446,15 +445,23 @@ public class DietClassController {
 		DietClass dto = service.readClass(map);
 		
 		int day[] = new int[dto.getOnperiod()];
+		String max="";
+		
+		List<List<Mission>> list = new ArrayList<>();
 		for(int a=1;a<=dto.getOnperiod();a++) {
 			day[a-1] = a;
 			map.put("missDay", a);
-			List<Mission> list = service.readMission(map);
-			req.setAttribute("list"+a, list);
+			List<Mission> list2 = service.readMission(map);
+			max += list2.size()+",";
+			System.out.println(a+":"+max);
+			list.add(list2);
 		}
-		req.setAttribute("day", day);
-		req.setAttribute("dto", dto);
-		req.setAttribute("mode", "update");
+		model.addAttribute("max", max);
+		model.addAttribute("list", list);
+		model.addAttribute("day", day);
+		model.addAttribute("dto", dto);
+		model.addAttribute("mode", "update");
+		
 		return ".dietClass.mission.created";
 	}
 	
@@ -476,7 +483,8 @@ public class DietClassController {
 				if(entry.getKey().contains("mission."+a+".")) {
 					mdto.setMissDay(a);
 					mdto.setMissionContent(entry.getValue());
-					service.insertMission(mdto);
+					if(mdto.getMissionContent()!=null && mdto.getMissionContent()!="")
+						service.insertMission(mdto);
 				}
 			}
 		}
