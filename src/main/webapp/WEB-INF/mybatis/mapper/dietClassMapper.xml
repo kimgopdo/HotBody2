@@ -167,8 +167,8 @@
 	</insert>
 	
 	<select id="readMission" parameterType="map" resultType="com.hotbody.dietClass.Mission">
-		SELECT missionNum, missionContent
-		FROM misContent WHERE classNum=#{classNum} AND missDay=#{missDay}
+		SELECT missionNum, missionContent, missDay
+		FROM misContent WHERE classNum=#{classNum} AND missDay=#{missDay} AND missionContent IS NOT NULL
 	</select>
 	
 </mapper>
