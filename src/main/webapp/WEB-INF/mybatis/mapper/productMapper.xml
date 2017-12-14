@@ -27,6 +27,11 @@
 		INSERT INTO productIn (pdincode,pdrawprice,pdinnum,pdexdate,pdindate,pdnum,supplycode) 
 		 values(pdin_seq.NEXTVAL,#{pdrawprice},#{pdinnum},#{pdexdate},sysdate,#{pdnum},#{supplycode})
 	</insert>
+	
+	<select id="pdInDataCount" resultType="Integer">
+		SELECT NVL(COUNT(*),0) FROM productin
+	</select>
+	
 	<select id="readProductNum" parameterType="String" resultType="Integer">
 	SELECT pdnum FROM productList WHERE pdName=#{pdName}
 	</select>
@@ -34,12 +39,11 @@
 	SELECT p.pdnum pdnum, imgOriginalFilename, imgSaveFilename, pdName,
 			 pdSumContent, pdPrice, pdcontent content,
 			pdNutrient, pdStMethod, pdType, pdRawName, pdArea,
-			 pdDelRule, pdCreated, pdstCount, pdExDate
+			 pdDelRule, pdCreated, pdstCount, (SELECT MIN(TO_CHAR(pdExDate,'YYYY-MM-DD')) FROM productin) pdExDate 
 				FROM productList p 
 				Left OUTER Join Temporary t ON p.pdnum=t.pdnum 
 				Left OUTER JOIN Temporary2 t2 ON p.pdnum=t2.pdnum 
 				Left OUTER JOIN pmainimg pi ON p.pdnum=pi.pdnum 
-				Left OUTER JOIN productin pin ON p.pdnum=pin.pdnum
 				<where>
 					<if test="listOrArticle!=0">
 						 p.pdnum=#{pdnum}
@@ -48,10 +52,20 @@
 				ORDER BY p.pdcreated DESC
 	</select>
 	<select id="readProductIn" parameterType="map" resultType="com.hotbody.hotShop.board.ProductIn">
-		SELECT pdincode,pdrawprice,pdinnum,TO_CHAR(pdexdate, 'YYYY-MM-DD') pdexdate,TO_CHAR(pdindate, 'YYYY-MM-DD') pdindate,pi.pdnum pdnum,pl.pdname pdname,pi.supplycode,supplyname
+		SELECT * FROM (SELECT ROWNUM rnum, pdin.* FROM (SELECT pdincode,pdrawprice,pdinnum,TO_CHAR(pdexdate, 'YYYY-MM-DD') pdexdate,TO_CHAR(pdindate, 'YYYY-MM-DD') pdindate,pi.pdnum pdnum,pl.pdname pdname,pi.supplycode,supplyname
 		FROM productin pi 
 		JOIN productList pl ON pi.pdnum=pl.pdnum 
         JOIN supply s ON pi.supplycode=s.supplycode 
+        <where>
+        	<if test="startDate!=''">
+        	 TO_CHAR(pdindate, 'YYYY-MM-DD')&gt;=#{startDate} AND TO_CHAR(pdindate, 'YYYY-MM-DD')&lt;=#{endDate}
+        	</if>
+        	<if test="startDate!=''">
+        		<if test="colum=='pdexdate'">
+	        	 TO_CHAR(pdindate, 'YYYY-MM-DD')&gt;=#{startDate} AND TO_CHAR(pdindate, 'YYYY-MM-DD')&lt;=#{endDate}    		
+        		</if>
+        	</if>
+        </where>
          ORDER BY 
         <choose>
         	<when test="colum=='pdexdate'">
@@ -68,8 +82,8 @@
         	<otherwise>
         		 DESC
         	</otherwise>
-        </choose>
-        
+        </choose>) pdin WHERE ROWNUM&lt;=#{end})
+         WHERE rnum&gt;=#{start}
 	</select>
 	
 	<update id="productListUpdate" parameterType="com.hotbody.hotShop.board.HotShop">
