@@ -123,6 +123,20 @@ public class DietClassController {
 		
 		dto.setShowTuition("￦ "+df.format(dto.getTuition())+"원");
 		
+		if(type==1) {
+			String date=null;
+			
+			date = dto.getStartDate().substring(0, 4)+"년 ";
+			date += dto.getStartDate().substring(4, 6)+"월 ";
+			date += dto.getStartDate().substring(6, 8)+"일 ";
+			dto.setStartDate(date);
+			
+			date = dto.getEndDate().substring(0, 4)+"년 ";
+			date += dto.getEndDate().substring(4, 6)+"월 ";
+			date += dto.getEndDate().substring(6, 8)+"일 ";
+			dto.setEndDate(date);
+		}
+		
 		req.setAttribute("dto", dto);
 		req.setAttribute("cProgram", list);
 		
@@ -241,7 +255,7 @@ public class DietClassController {
 			System.out.println("로그인상태");
 		if(info==null) {
 			System.out.println("로그인상태XXXXXXXXXXX");
-			//return "redirect:/member/login";
+			return "redirect:/member/login";
 		}
 		Milelage mdto = serviceM.selectMilelage(info.getUserId());
 		
@@ -415,29 +429,9 @@ public class DietClassController {
 	/*
 	 * 미션 관련
 	 */
-	
-	@RequestMapping(value="/mission/created", method=RequestMethod.GET)
-	public String missionForm(HttpServletRequest req,
-								@RequestParam int num) {
-		Map<String, Object> map = new HashMap<>();
-		map.put("classNum", num);
-		map.put("classType", 0);
-		
-		DietClass dto = service.readClass(map);
-		
-		int day[] = new int[dto.getOnperiod()];
-		for(int idx=0;idx<dto.getOnperiod();idx++) {
-			day[idx] = idx+1;
-		}
-		
-		req.setAttribute("day", day);
-		req.setAttribute("dto", dto);
-		req.setAttribute("mode", "created");
-		return ".dietClass.mission.created";
-	}
-	
-	@RequestMapping(value="/mission/update", method=RequestMethod.GET)
-	public String updateForm(Model model,
+
+	@RequestMapping(value="/mission/article", method=RequestMethod.GET)
+	public String article(Model model,
 								@RequestParam int num) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("classNum", num);
@@ -453,6 +447,14 @@ public class DietClassController {
 			map.put("missDay", a);
 			List<Mission> list2 = service.readMission(map);
 			max += list2.size()+",";
+			
+			if(list2.size()==0) {
+				Mission mdto = new Mission();
+				mdto.setMissionContent(null);
+				mdto.setMissDay(a);
+				list2.add(mdto);
+			}
+			
 			System.out.println(a+":"+max);
 			list.add(list2);
 		}
@@ -462,12 +464,13 @@ public class DietClassController {
 		model.addAttribute("dto", dto);
 		model.addAttribute("mode", "update");
 		
-		return ".dietClass.mission.created";
+		return ".dietClass.mission.article";
 	}
-	
-	@RequestMapping(value="/mission/created", method=RequestMethod.POST)
+
+	@RequestMapping(value="/mission/update", method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> missionSubmit(@RequestParam Map<String, String> dataMap){
+	public Map<String, Object> updateSubmit(@RequestParam Map<String, String> dataMap){
+		
 		Mission mdto = new Mission();
 		int classNum = Integer.parseInt(dataMap.get("classNum"));
 		
@@ -475,34 +478,40 @@ public class DietClassController {
 		model.put("classNum", classNum);
 		model.put("classType", 0);
 		DietClass dto = service.readClass(model);
-		
 		mdto.setClassNum(classNum);
 		
 		for(int a=1;a<=dto.getOnperiod();a++) {
 			for(Map.Entry<String, String> entry : dataMap.entrySet()) {
 				if(entry.getKey().contains("mission."+a+".")) {
+					String lastIndex = entry.getKey().substring(entry.getKey().lastIndexOf(".")+1, entry.getKey().length());
+					mdto.setMissIndex(Integer.parseInt(lastIndex));
 					mdto.setMissDay(a);
 					mdto.setMissionContent(entry.getValue());
-					if(mdto.getMissionContent()!=null && mdto.getMissionContent()!="")
+					
+					int count = service.haveMission(mdto);
+					if(count==0 && mdto.getMissionContent()!="")
 						service.insertMission(mdto);
+					else 
+						service.updateMission(mdto);
 				}
 			}
 		}
-		
 		model.put("state", "true");
 		return model;
 	}
 	
-	@RequestMapping(value="/mission/update", method=RequestMethod.POST)
-	@ResponseBody
-	public Map<String, Object> updateSubmit(){
-		Map<String, Object> model = new HashMap<>();
+	@RequestMapping(value="/mission/delete")
+	public String deleteMission(@RequestParam int num,
+								@RequestParam int index,
+								@RequestParam int day) {
+		System.out.println(num+":"+index+":"+day);
+		Map<String, Object> map = new HashMap<>();
+		map.put("classNum", num);
+		map.put("missDay", day);
+		map.put("missIndex", index);
 		
-		return model;
+		service.deleteMission(map);
+		return "redirect:/mission/article?num="+num;
 	}
 	
-	@RequestMapping(value="/mission/list")
-	public String missionList() {
-		return ".dietClass.mission.list";
-	}
 }

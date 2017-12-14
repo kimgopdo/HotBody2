@@ -3,7 +3,7 @@ package com.hotbody.dietClass;
 public class Mission {
 	private int classNum, missDay;
 	
-	private int missionNum;
+	private int missionNum, missIndex;
 	private String missionContent;
 	
 	public int getClassNum() {
@@ -29,5 +29,11 @@ public class Mission {
 	}
 	public void setMissionContent(String missionContent) {
 		this.missionContent = missionContent;
+	}
+	public int getMissIndex() {
+		return missIndex;
+	}
+	public void setMissIndex(int missIndex) {
+		this.missIndex = missIndex;
 	}
 }

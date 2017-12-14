@@ -82,6 +82,12 @@ function selectAgree() {
 }
 
 function paymentOk() {
+	var uid="${sessionScope.member.userId}";
+   	if(! uid) {
+      modalFormLogin();
+      return;
+   	}
+   	
 	if(! $("input:checkbox[name=payType]").is(':checked')){
 		swal("결제수단을 선택해주세요");
 		return;
@@ -140,7 +146,7 @@ function paymentOk() {
 				.then((willDelete) => {
 				  if (willDelete) {
 					  //마이클래스로 가기
-					  location.href="<%=cp%>/dietClass/article";
+					  location.href="<%=cp%>/member/myclass";
 				  } else {
 					  //다시 리스트로
 				    location.href="<%=cp%>/dietClass/list?type="+${dto.classType};

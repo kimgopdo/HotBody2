@@ -172,6 +172,7 @@ public class DietClassServiceImpl implements DietClassService {
 			
 			Map<String, Object> mapperMap = new HashMap<>();
 			mapperMap.put("classNum", dto.getClassNum());
+			dao.deleteData("dietClass.deleteMission", mapperMap);
 			dao.deleteData("dietClass.deleteReadyMission", mapperMap);
 			
 			//////////////////////////////////////////////////////////////
@@ -286,5 +287,38 @@ public class DietClassServiceImpl implements DietClassService {
 			e.printStackTrace();
 		}
 		return list;
+	}
+
+	@Override
+	public int updateMission(Mission dto) {
+		int result=0;
+		try {
+			result = dao.updateData("dietClass.updateMission", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public int deleteMission(Map<String, Object> map) {
+		int result=0;
+		try {
+			result = dao.deleteData("dietClass.deleteMission", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public int haveMission(Mission dto) {
+		int count = 0;
+		try {
+			count = dao.selectOne("dietClass.haveMission", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return count;
 	}
 }

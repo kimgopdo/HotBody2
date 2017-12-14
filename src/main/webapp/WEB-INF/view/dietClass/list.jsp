@@ -26,6 +26,14 @@ function classNotice() {
 		});
 }
  */
+function payGo(num,type) {
+	var uid="${sessionScope.member.userId}";
+   	if(! uid) {
+      modalFormLogin();
+      return;
+   	}
+   	location.href="<%=cp%>/dietClass/payment?num="+num+"&type="+type;
+}
 function articleGo(num) {
 	location.href="<%=cp%>/dietClass/articleOn?num="+num;
 }
@@ -66,10 +74,18 @@ function articleGo(num) {
 		    			</td>
 		    		</tr>
 		    		<tr height="20px;"></tr>
+		    		<c:if test="${dto.classType==0}">
 		    		<tr>
 		    			<th width="35%">멘토</th>
 		    			<td align="left" style="padding-left: 5px;">${dto.mento} 님</td>
 		    		</tr>
+		    		</c:if>
+		    		<c:if test="${dto.classType==1}">
+		    		<tr>
+		    			<th width="35%">코치</th>
+		    			<td align="left" style="padding-left: 5px;">${dto.coach} 님</td>
+		    		</tr>
+		    		</c:if>
 		    		<tr>
 		    			<th width="35%">운동강도</th>
 		    			<c:if test="${dto.cllevel==1}">
@@ -115,7 +131,7 @@ function articleGo(num) {
 	   		<!-- 
 	   		<button type="button" style="width: 100%; height: 50px; background: #1abc9c; border: 0px; color: #ffffff; font-weight: bold;" onclick="classNotice();">클래스 알림받기</button>
 	    	 -->
-	    	<button type="button" style="width: 100%; height: 50px; background: #1abc9c; border: 0px; color: #ffffff; font-weight: bold;" onclick="#">수강 신청하기</button>
+	    	<button type="button" style="width: 100%; height: 50px; background: #1abc9c; border: 0px; color: #ffffff; font-weight: bold;" onclick="payGo(${dto.classNum},${dto.classType});">수강 신청하기</button>
 	   		</div>
     	</td>
     </tr>

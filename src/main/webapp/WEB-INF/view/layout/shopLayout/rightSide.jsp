@@ -6,6 +6,9 @@
 	String cp=request.getContextPath();
 %>
 <script type="text/javascript">
+function modalFormLogin() {
+	   $('#myLoginModal').modal('show');
+}
 function modalSendLogin() {
 	var f=document.loginForm;
 	if(!f.userId.value) {
