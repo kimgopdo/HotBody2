@@ -537,7 +537,7 @@ function productInList(page){
 		if(checkDate==""){
 			alert("조회기간을 설정해주세요");
 			checkDate.focus();
-			return;
+			return;  
 		}
 		data+="&startDate="+checkDate;
 		checkDate=$('input[name="endDate"]').val();
