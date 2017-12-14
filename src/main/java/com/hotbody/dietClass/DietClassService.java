@@ -27,4 +27,7 @@ public interface DietClassService {
 	 */
 	public int insertMission(Mission dto);
 	public List<Mission> readMission(Map<String, Object> map);
+	public int updateMission(Mission dto);
+	public int deleteMission(Map<String, Object> map);
+	public int haveMission(Mission dto);
 }
