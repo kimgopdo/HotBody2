@@ -32,7 +32,8 @@
 	
 	<tr height="200" align="center" style="margin-top: 80px;">
 		<td><a href="<%=cp%>/myclass/addingrerdients/list"><img src="<%=cp%>/resource/images/diary.png"></a><br><b>재료등록및보기</b></td>
-		<td><a href="<%=cp%>/myclass/addexercise/list"><img src="<%=cp%>/resource/images/diary.png"></a><br><b>운동등록및보기</b></td>	
+		<td><a href="<%=cp%>/myclass/addexercise/list"><img src="<%=cp%>/resource/images/diary.png"></a><br><b>운동등록및보기</b></td>
+		<td><a href="<%=cp%>/myclass/addinfo/list"><img src="<%=cp%>/resource/images/diary.png"></a><br><b>유용한정보등록</b></td>	
 	</tr>
 </table>
 

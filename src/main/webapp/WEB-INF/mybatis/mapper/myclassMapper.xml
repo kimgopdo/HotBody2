@@ -4,6 +4,7 @@
 <mapper namespace="myClass">
 
 	<!-- 재료관련쿼리 -->
+	
 	<select id="insertIng" parameterType="com.hotbody.myclass.Ing">
 		insert into ingredients(ingrerdientsNum,nutrient,ingredientsName,ingredientsUnit,
 								calory,image,content,unit) values
@@ -149,7 +150,7 @@
 	<select id="listExercise" resultType="com.hotbody.myclass.Exercise" parameterType="map">
 	 	SELECT * FROM (
 	 		SELECT ROWNUM rnum, tb.* FROM (
-				SELECT exerciseNum, i.exerciseType,typeName, exerciseName, unitTime, unit,lossCal,
+				SELECT exerciseNum, i.exerciseType, typeName, exerciseName, unitTime, unit,lossCal,
 					   video,pic
 				FROM exerciseInfo i
                 join execiseType t on i.exerciseType = t.exerciseType
@@ -165,9 +166,11 @@
 	
 	
 	<select id="readExercise" resultType="com.hotbody.myclass.Exercise" parameterType="Integer">
-		SELECT exerciseNum, exerciseType, exerciseName, unitTime, unit, lossCal,
+		SELECT exerciseNum, i.exerciseType, exerciseName, unitTime, unit, lossCal, typeName,
 			   video,pic
-		FROM exerciseInfo 
+		FROM exerciseInfo i
+        join execiseType t on i.exerciseType = t.exerciseType
+        
 		WHERE exerciseNum = #{exerciseNum}
 	</select>
 	
@@ -221,6 +224,102 @@
       
       <delete id="deleteExercise" parameterType="Integer">
             DELETE FROM exerciseInfo WHERE exerciseNum = #{exerciseNum}
+      </delete>
+      
+    
+<!-- 유용한정보관련 쿼리 -->
+	<insert id="insertInfo" parameterType="com.hotbody.myclass.Information">
+		insert into informationd(infoNum, subject, content) 
+					     values (information_seq.nextval, #{subject}, #{content})
+	</insert>
+	
+	<!-- 유용한정보 검색조건.. -->
+	<sql id="where-list3">
+	  <if test="searchKey=='subject'">
+	      INSTR(subject, #{searchValue}) &gt; 0
+	  </if>
+	</sql>
+	
+	<!-- 데이터갯수 -->
+	<select id="dataCount3" resultType="Integer" parameterType="map">
+		SELECT NVL(COUNT(*),0) FROM informationd
+		<where>
+			<if test="searchValue != null and searchValue !=''">  
+				<include refid="where-list3"/>
+			</if>
+		</where>
+	</select>
+	
+	<!-- 리스트보여주기 -->
+	<select id="listInfo" resultType="com.hotbody.myclass.Information" parameterType="map">
+	 	SELECT * FROM (
+	 		SELECT ROWNUM rnum, tb.* FROM (
+				SELECT infoNum, subject, content
+				FROM informationd 
+				<where>
+					<if test="searchValue != null and searchValue !=''">
+						<include refid="where-list3"/>
+					</if>
+				</where>
+				ORDER BY infoNum DESC 
+	 			) tb WHERE ROWNUM  &lt;= #{end}
+	 	) WHERE rnum  &gt;= #{start}
+	</select>
+	
+	<!-- 글보기 -->
+	<select id="readInfo" resultType="com.hotbody.myclass.Information" parameterType="Integer">
+		SELECT infoNum, subject, content
+		FROM informationd 
+		WHERE infoNum = #{infoNum}
+	</select>
+	
+	<!-- 이전글 -->
+	<select id="preReadInfo" resultType="com.hotbody.myclass.Information" parameterType="map">
+		SELECT tb.* FROM (
+			SELECT infoNum, subject
+			      FROM informationd
+                  <where>
+                       <if test="searchValue != null and searchValue != '' ">
+			                 <include refid="where-list3"/>
+		                </if>
+		           <![CDATA[
+		                AND (infoNum > #{infoNum})
+		             ]]>
+	              </where>
+				ORDER BY infoNum ASC
+			) tb WHERE ROWNUM=1
+	</select>
+
+	<!-- 다음글 -->
+	<select id="nextReadInfo" resultType="com.hotbody.myclass.Information" 
+				parameterType="map">
+		SELECT tb.* FROM (
+			SELECT infoNum, subject
+			       FROM informationd     
+                    <where>
+                         <if test="searchValue != null and searchValue != '' ">
+			                  <include refid="where-list3"/>
+		                 </if>
+		               <![CDATA[
+		                 AND (infoNum < #{infoNum})
+		                 ]]>
+	                </where>
+				ORDER BY infoNum DESC
+			) tb WHERE ROWNUM=1
+	</select>
+
+
+     <!-- 수정 -->
+     <update id="updateInfo" parameterType="com.hotbody.myclass.Information">
+         UPDATE informationd SET subject=#{subject}, content=#{content}
+         WHERE infoNum = #{infoNum}
+      </update>
+
+     
+      <!-- 삭제 -->
+      <delete id="deleteInfo" parameterType="Integer">
+            DELETE FROM informationd 
+            WHERE infoNum = #{infoNum}
       </delete>
 	
 

@@ -18,6 +18,9 @@ function send(f){
 }
 </script>
 <style type="text/css">
+th {
+    text-align: center;
+}
 .btn-list {
     display: inline-block;
     margin-bottom: 0;
@@ -78,23 +81,21 @@ function send(f){
 	</tr>
 
 	<tr height="40" style="background: #666666; color: #ffffff;" align="center">
-		<th width="40">번호</th>
-		<th width="80">이미지</th>
-		<th width="80">재료명</th>
-		<th width="65">영양소정보</th>
-		<th width="65" >최소단위</th><!-- 재료최소단위랑,단위합침-->
-		<th width="65" >열량</th>
+		<th width="20">번호</th>
+		<th width="65">운동명</th>
+		<th width="50">운동부위</th>
+		<th width="60" >최소단위</th><!-- 최소단위랑,단위합침-->
+		<th width="60" >소모칼로리</th>
 
 	</tr>
 	
 	<c:forEach var="dto" items="${list}">
-	<tr height="100" align="left" class="board">
-		<td width="40">${dto.listNum}</td>
-		<td width="80"><a href="${articleUrl}&num=${dto.ingrerdientsNum}"><img src="<%=cp%>/uploads/myClass/${dto.image}" style="height: 80px; width: 80px;" ></a></td>
-		<td width="80">${dto.ingredientsName}</td>
-		<td width="65">${dto.nutrient}</td>
-		<td width="65">${dto.ingredientsUnit}&nbsp;&nbsp;${dto.unit}</td>
-		<td width="65">${dto.calory} Kcal</td>
+	<tr height="50" align="center" class="board">
+		<td width="20">${dto.listNum}</td>
+		<td width="60"><a href="${articleUrl}&num=${dto.exerciseNum}">${dto.exerciseName}</a></td>
+		<td width="50">${dto.typeName} 운동</td>
+		<td width="60">${dto.unitTime}&nbsp;&nbsp;${dto.unit}</td>
+		<td width="60">${dto.lossCal} Kcal</td>
 	</tr>
 	</c:forEach>
 	<tr height="60" align="center">
@@ -104,7 +105,7 @@ function send(f){
 	<tr>
 		<td colspan="7">
 		<form name="searchList" method="post" action="<%=cp%>/myclass/addexercise/list">
-			<select name="searchKey" style="width: 65px; height: 30px;">
+			<select name="searchKey" style="width: 80px; height: 30px;">
 				<option value=exerciseName>운동명</option>
 				<option value="typeName">운동부위</option>
 			</select>	
@@ -112,8 +113,9 @@ function send(f){
 			<input type="text" style="display:none;">
 			
 			<button type="button" onclick="send(this.form);" class="btn-search" style="width: 60px;">검색</button>
-			<button type="button" class="btn-list" onclick="javascript:location.href='<%=cp%>/myclass/addexercise/created'" style="float: right; width: 80px;">글올리기</button>
-			<button type="button" class="btn-list" onclick="javascript:location.href='<%=cp%>/myclass/addexercise/list';" style="float: right; width: 80px; margin-right: 10px;">새로고침</button>
+			<button type="button" class="btn-list" onclick="javascript:location.href='<%=cp%>/member/myclass'" style="float: right; width: 80px;">메뉴선택창</button>
+			<button type="button" class="btn-list" onclick="javascript:location.href='<%=cp%>/myclass/addexercise/created'" style="float: right; width: 80px; margin-right: 5px;">글올리기</button>
+			<button type="button" class="btn-list" onclick="javascript:location.href='<%=cp%>/myclass/addexercise/list';" style="float: right; width: 80px; margin-right: 5px;">새로고침</button>
 		</form>
 		</td>
 	</tr>

@@ -27,4 +27,14 @@ public interface MyClassService {
 	public List<ExerciseType> readExerciseType(); // 운동분류 보여주기
 	
 	
+	//유용한정보관련 서비스
+	public int insertInfo(Information dto);
+	public List<Information> listInfo(Map<String, Object> map);
+	public int dataCount3(Map<String, Object> map);
+	public Information readInfo(int num);
+	public int updateInfo(Information dto);
+	public int deleteInfo(int num);
+	public Information preReadInfo(Map<String, Object> map);
+	public Information nextReadInfo(Map<String, Object> map);
+	
 }

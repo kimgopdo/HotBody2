@@ -45,9 +45,9 @@ body{
 
 </style>
 <script type="text/javascript">
-function deleteIng(num) {
-	if(confirm("재료를 삭제하시겠습니까?")){
-		location.href="<%=cp%>/myclass/addingrerdients/delete?num="+num+"&page=${page}";
+function deleteExercise(num) {
+	if(confirm("운동를 삭제하시겠습니까?")){
+		location.href="<%=cp%>/myclass/addexercise/delete?num="+num+"&page=${page}";
 	}
 }
 
@@ -57,7 +57,7 @@ function viewNext() {
 		swal("다음글이 존재하지 않습니다.");
 		return;
 	}
-	location.href="<%=cp%>/myclass/addingrerdients/article?num=${nextReadDto.ingrerdientsNum}&page=${page}";
+	location.href="<%=cp%>/myclass/addexercise/article?num=${nextReadDto.exerciseNum}&page=${page}";
 	
 }
 
@@ -67,44 +67,112 @@ function viewPre() {
 		swal("이전글이 존재하지 않습니다.");
 		return;
 	}
-	location.href="<%=cp%>/myclass/addingrerdients/article?num=${preReadDto.ingrerdientsNum}&page=${page}";
+	location.href="<%=cp%>/myclass/addexercise/article?num=${preReadDto.exerciseNum}&page=${page}";
 }
+
+function closeLayer() {
+	$('.popupLayer').hide();
+}
+
+$(function(){
+	
+	var b = "false";
+	/* 클릭 클릭시 클릭을 클릭한 위치 근처에 레이어가 나타난다. */
+	$("#filedown").click(function(e)
+	{
+		var fi = "${dto.video}";
+		if(fi=="")
+			return;
+		
+		var sWidth = window.innerWidth;
+		var sHeight = window.innerHeight;
+
+		var oWidth = $("#fileinfo").width();
+		var oHeight = $("#fileinfo").height();
+		
+		var divEl = $("#filedown");
+        
+		var divX = divEl.offset().left;
+		var divY = divEl.offset().top;
+
+		// 레이어가 나타날 위치를 셋팅한다.
+		var divLeft =  divX-160;
+		var divTop =  divY+25;
+		
+		// 레이어가 화면 크기를 벗어나면 위치를 바꾸어 배치한다.
+		if( divLeft + oWidth > sWidth ) divLeft -= oWidth;
+		if( divTop + oHeight > sHeight ) divTop -= oHeight;
+
+		// 레이어 위치를 바꾸었더니 상단기준점(0,0) 밖으로 벗어난다면 상단기준점(0,0)에 배치한다.
+		if( divLeft < 0 ) divLeft = 0;
+		if( divTop < 0 ) divTop = 0;
+		
+		if(b=="false"){
+			$('.popupLayer').css({
+				"top": divTop,
+				"left": divLeft,
+			}).show();
+			b="true";
+		} else{
+			$('.popupLayer').hide();
+			b="false";
+		}
+	});
+
+});
 
 </script>
 
 <div class="body-container" style="width: 800px; margin: 100px auto;">
 
 <div class="body-title">
-        <h3><span style="font-family: Webdings">2</span>재료상세</h3>
+        <h3><span style="font-family: Webdings">2</span>운동상세</h3>
 </div>
 
 <table style="width: 800px; margin: 20px auto 0; border-top: 2px solid #333333; border-bottom: 2px solid #333333; border-collapse: collapse; border-spacing: 0">
 
 <tr height="50" style="border-bottom: 1px solid #cccccc">
-	<td style="width:100px; padding-left: 10px; font-weight: bold; color: #666666;">재료명</td>
-	<td style="width:200px;">${dto.ingredientsName}</td>
-	<td style="width:100px; margin-left: 10px; font-weight: bold; color: #666666;">영양소</td>
-	<td>${dto.nutrient}</td>
+	<td style="width:100px; padding-left: 10px; font-weight: bold; color: #666666;">운동명</td>
+	<td style="width:200px;">${dto.exerciseName}</td>
+	<td style="width:100px; margin-left: 10px; font-weight: bold; color: #666666;">운동부위</td>
+	<td>${dto.typeName} 운동</td>
 </tr>
 
 <tr height="50" style="border-bottom: 1px solid #cccccc">
-	<td style="width:100px; padding-left: 10px; font-weight: bold; color: #666666;">재료단위</td>
-	<td style="width:200px;">${dto.ingredientsUnit}&nbsp;&nbsp;${dto.unit}</td>
-	<td style="width:100px; margin-left: 10px; font-weight: bold; color: #666666;">칼로리</td>
-	<td>${dto.calory} Kcal</td>
+	<td style="width:100px; padding-left: 10px; font-weight: bold; color: #666666;">운동단위</td>
+	<td style="width:200px;">${dto.unitTime}&nbsp;&nbsp;${dto.unit}</td>
+	<td style="width:100px; margin-left: 10px; font-weight: bold; color: #666666;">소모칼로리</td>
+	<td>${dto.lossCal} Kcal</td>
 </tr>
-
+<tr height="30" style="font-size: 13px; color: gray; padding: 5px 15px;">
+	<td colspan="3"></td>
+	<td align="right">
+	<p id="filedown" style="text-decoration: none; color: #666666; cursor: pointer;"> 
+	첨부파일 <span style="color: tomato; font: bold;">(개수)</span>
+	</p>
+	</td>
+</tr>
 <tr height="400" style="border-bottom: 1px solid #cccccc;">
-	<td colspan="4" valign="top" style="padding-left: 10px; word-break:break-all;">${dto.content}<br><br></td>
+	<td colspan="4" valign="top" style="padding-left: 10px; word-break:break-all;">${dto.pic}<br><br></td>
 </tr>
 </table>
 
 <div style="width:800px; margin: 20px auto 0;">
-<input type="button" class="btn-article" value="목록" onclick="javascript:location.href='<%=cp%>/myclass/addingrerdients/list?${query}';">
-<input type="button" class="btn-article" value="수정" onclick="javascript:location.href='<%=cp%>/myclass/addingrerdients/update?num=${dto.ingrerdientsNum}&${query}';">
-<input type="button" class="btn-article" value="삭제" onclick="deleteIng(${dto.ingrerdientsNum});">
+<input type="button" class="btn-article" value="목록" onclick="javascript:location.href='<%=cp%>/myclass/addexercise/list?${query}';">
+<input type="button" class="btn-article" value="수정" onclick="javascript:location.href='<%=cp%>/myclass/addexercise/update?num=${dto.exerciseNum}&${query}';">
+<input type="button" class="btn-article" value="삭제" onclick="deleteExercise(${dto.exerciseNum});">
 <input type="button" class="btn-article" value="다음▶ " onclick="viewNext();" style="float: right; margin-left: 5px;">
 <input type="button" class="btn-article" value="◀이전" onclick="viewPre();" style="float: right;">
+</div>
+
+<div class="popupLayer" style="display: none; z-index: 9000;">
+	<div>
+		<div id="fileinfo">
+		<img src="<%=cp%>/resource/images/disk.gif">${dto.video} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+		<a href="<%=cp%>/myclass/addexercise/download?num=${dto.exerciseNum}" style="text-decoration: none; color: #666666;"> PC저장하기</a>
+			<span onClick="closeLayer()" style="cursor:pointer; color: #cccccc; float: right;">X</span>
+		</div>
+	</div>
 </div>
 </div>
 

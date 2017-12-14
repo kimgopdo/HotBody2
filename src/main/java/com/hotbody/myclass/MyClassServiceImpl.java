@@ -21,7 +21,9 @@ public class MyClassServiceImpl implements MyClassService {
 	
 	
 	
-	// 재료관련서비스
+	/*
+	 * 재료관련
+	 */
 	@Override
 	public int insertIng(Ing dto, String pathname) {
 		int result = 0;
@@ -148,7 +150,9 @@ public class MyClassServiceImpl implements MyClassService {
 	}
 	
 	
-	// 운동관련서비스
+	/*
+	 * 운동관련 서비스
+	 */
 	@Override
 	public int insertExercise(Exercise dto, String pathname) {
 		int result = 0;
@@ -282,6 +286,104 @@ public class MyClassServiceImpl implements MyClassService {
 			System.out.println(e.toString());
 		}
 		return list;
+	}
+	
+	
+	/*
+	 * 유용한정보관련
+	 */
+	
+	@Override
+	public int insertInfo(Information dto) {
+		int result = 0;
+		
+		try {
+			result = dao.insertData("myClass.insertInfo", dto);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+	}
+
+	@Override
+	public List<Information> listInfo(Map<String, Object> map) {
+		List<Information> list = null;
+		
+		try {
+			list = dao.selectList("myClass.listInfo", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return list;
+	}
+
+	@Override
+	public int dataCount3(Map<String, Object> map) {
+		int result = 0;
+		try {
+			result = dao.selectOne("myClass.dataCount3",map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		
+		return result;
+	}
+
+	@Override
+	public Information readInfo(int num) {
+		Information dto = null;
+		
+		try {
+			dto=dao.selectOne("myClass.readInfo", num);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return dto;
+	}
+
+	@Override
+	public int updateInfo(Information dto) {
+		int result = 0;
+		try {
+			result = dao.updateData("myClass.updateInfo", dto);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+	}
+
+	@Override
+	public int deleteInfo(int num) {
+		int result = 0;
+		try {
+			result = dao.deleteData("myClass.deleteInfo", num);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+	}
+
+	@Override
+	public Information preReadInfo(Map<String, Object> map) {
+		Information dto = null;
+		try {
+			dto = dao.selectOne("myClass.preReadInfo", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return dto;
+	}
+
+	@Override
+	public Information nextReadInfo(Map<String, Object> map) {
+		Information dto = null;
+		
+		try {
+			dto = dao.selectOne("myClass.nextReadInfo", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return dto;
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.hotbody.myclass;
 
 import java.io.File;
+import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,11 @@ public class MyClassController {
 		return ".myclass.diary.mydiary";
 	}
 	
+	@RequestMapping(value="/myclass/diary/inputForm")
+	public String inputForm() throws Exception{
+		return "myclass/diary/inputForm";
+	}
+	
 	@RequestMapping(value="/myclass/exercise/myexercise", method=RequestMethod.GET)
 	public String myexerciseForm() throws Exception{
 		return ".myclass.exercise.myexercise";
@@ -48,14 +55,189 @@ public class MyClassController {
 		return ".myclass.message.main";
 	}
 	
-	@RequestMapping(value="/myclass/diary/inputForm")
-	public String inputForm() throws Exception{
-		return "myclass/diary/inputForm";
+	
+	/*
+	 * 유용한정보관련
+	 */
+	@RequestMapping(value="/myclass/addinfo/list")
+	public String addInfo(
+			@RequestParam(value="page", defaultValue="1") int current_page,
+			@RequestParam(value="searchKey", defaultValue="subject") String searchKey,
+			@RequestParam(value="searchValue", defaultValue="") String searchValue,
+			HttpServletRequest req,
+			Model model) throws Exception {
+
+		String cp = req.getContextPath();
+   	    
+		int rows = 10; // 한 화면에 보여주는 게시물 수
+		int total_page = 0;
+		int dataCount = 0;
+   	    
+		if(req.getMethod().equalsIgnoreCase("GET")) { // GET 방식인 경우
+			searchValue = URLDecoder.decode(searchValue, "utf-8");
+		}
+		
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("searchKey", searchKey);
+        map.put("searchValue", searchValue);
+
+        dataCount = service.dataCount3(map);
+        if(dataCount != 0)
+            total_page = myUtil.pageCount(rows, dataCount) ;
+
+        
+        // 다른 사람이 자료를 삭제하여 전체 페이지수가 변화 된 경우
+        if(total_page < current_page) 
+            current_page = total_page;
+
+        // 리스트에 출력할 데이터를 가져오기
+        int start = (current_page - 1) * rows + 1;
+        int end = current_page * rows;
+        map.put("start", start);
+        map.put("end", end);
+
+        List<Information> list = service.listInfo(map);
+
+        // 리스트의 번호
+        int listNum, n = 0;
+        Iterator<Information> it=list.iterator();
+        while(it.hasNext()) {
+        	Information data = it.next();
+            listNum = dataCount - (start + n - 1);
+            data.setListNum(listNum);
+            n++;
+        }
+        
+        String query = "";
+        String listUrl = cp+"/myclass/addinfo/list";
+        String articleUrl = cp+"/myclass/addinfo/article?page=" + current_page;
+        if(searchValue.length()!=0) {
+        	query = "searchKey=" +searchKey + 
+        	         "&searchValue=" + URLEncoder.encode(searchValue, "utf-8");	
+        }
+        
+        if(query.length()!=0) {
+        	listUrl = cp+"/myclass/addinfo/list?" + query;
+        	articleUrl = cp+"/myclass/addinfo/article?page=" + current_page + "&"+ query;
+        }
+        
+        String paging = myUtil.paging(current_page, total_page, listUrl);
+
+        model.addAttribute("list", list);
+        model.addAttribute("articleUrl", articleUrl);
+        model.addAttribute("page", current_page);
+        model.addAttribute("dataCount", dataCount);
+        model.addAttribute("total_page", total_page);
+        model.addAttribute("paging", paging);
+        
+		return ".myclass.addinfo.list";
+	}
+	
+	@RequestMapping(value = "/myclass/addinfo/created", method = RequestMethod.GET)
+	public String infoInput(Model model) throws Exception {	
+		model.addAttribute("mode", "created");
+
+		return ".myclass.addinfo.created";
+	}
+	
+	@RequestMapping(value = "/myclass/addinfo/created", method = RequestMethod.POST)
+	public String infoSubmit(Information dto, HttpSession session) throws Exception {
+	
+		service.insertInfo(dto);
+	
+		return "redirect:/myclass/addinfo/list";
+	}
+	@RequestMapping(value="/myclass/addinfo/article")
+	public String articleInfo(
+			@RequestParam(value="num") int num,
+			@RequestParam(value="page") String page,
+			@RequestParam(value="searchKey", defaultValue="subject") String searchKey,
+			@RequestParam(value="searchValue", defaultValue="") String searchValue,
+			HttpSession session,
+			Model model) throws Exception {
+
+		searchValue = URLDecoder.decode(searchValue, "utf-8");
+
+		// 해당 상세정보 보여주기
+		Information dto = service.readInfo(num);
+		if(dto==null)
+			return "redirect:/myclass/addinfo/list?page="+page;
+		
+		//이전글 다음글에 map에 값 담아서 넣기
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("searchKey", searchKey);
+		map.put("searchValue", searchValue);
+		map.put("infoNum", num);
+
+		Information preReadDto = service.preReadInfo(map);
+		Information nextReadDto = service.nextReadInfo(map);
+        
+		
+		String query = "page="+page;
+		if(searchValue.length()!=0) {
+			query += "&searchKey=" + searchKey + 
+		                    "&searchValue=" + URLEncoder.encode(searchValue, "utf-8");
+		}
+
+		model.addAttribute("dto", dto);
+		model.addAttribute("preReadDto", preReadDto);
+		model.addAttribute("nextReadDto", nextReadDto);
+		model.addAttribute("page", page);
+		model.addAttribute("query", query);
+
+        return ".myclass.addinfo.article";
+	}
+	
+	@RequestMapping(value="/myclass/addinfo/update", 
+			method=RequestMethod.GET)
+	public String updateFormInfo(
+			@RequestParam int num,
+			@RequestParam String page,
+			Model model) throws Exception {
+		
+
+		Information dto = service.readInfo(num);
+		if(dto==null) {
+			return "redirect:/myclass/addinfo/list?page="+page;
+		}
+		
+		model.addAttribute("dto", dto);
+		model.addAttribute("mode", "update");
+		model.addAttribute("page", page);
+		
+		return ".myclass.addinfo.created";
+	}
+	
+	@RequestMapping(value="/myclass/addinfo/update", 
+			method=RequestMethod.POST)
+	public String updateSubmitInfo(
+			Information dto, 
+			@RequestParam String page,
+			HttpSession session) throws Exception {
+	
+		// 수정 하기
+		service.updateInfo(dto);	
+		
+		return "redirect:/myclass/addinfo/list?page="+page;
 	}
 	
 	
 	
-	// 운동관련컨트롤러(운동추가)	
+	@RequestMapping(value="/myclass/addinfo/delete")
+	public String deleteInfo(
+			@RequestParam int num,
+			@RequestParam String page,
+			HttpSession session) throws Exception {
+
+		service.deleteInfo(num);
+		
+		return "redirect:/myclass/addinfo/list?page="+page;
+	}
+	
+		
+	/*
+	 * 운동관련컨트롤러
+	 */ 
 	@RequestMapping(value="/myclass/addexercise/list")
 	public String listExercise(
 			@RequestParam(value="page", defaultValue="1") int current_page,
@@ -147,7 +329,6 @@ public class MyClassController {
 		String root=session.getServletContext().getRealPath("/");
 		String pathname=root+File.separator+"uploads"+File.separator+"myClass";
 		
-		System.out.println(dto.getExerciseType());
 		service.insertExercise(dto, pathname);
 	
 		return "redirect:/myclass/addexercise/list";
@@ -174,14 +355,14 @@ public class MyClassController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("searchKey", searchKey);
 		map.put("searchValue", searchValue);
-		map.put("ingrerdientsNum", num);
+		map.put("exerciseNum", num);
 
 		Exercise preReadDto = service.preReadExercise(map);
 		Exercise nextReadDto = service.nextReadExercise(map);
         
 		
-		//엔터를 띄어쓰기<br>로...
-		dto.setPic(dto.getPic().replaceAll("\n", "<br>"));
+		//엔터를 띄어쓰기<br>로... (스마트에디터는 엔터를 띄어쓰기 안해도됨)
+		//dto.setPic(dto.getPic().replaceAll("\n", "<br>"));
 
 		
 		String query = "page="+page;
@@ -205,12 +386,15 @@ public class MyClassController {
 			@RequestParam int num,
 			@RequestParam String page,
 			Model model) throws Exception {
-
-		Ing dto = service.readIng(num);
+		
+		List<ExerciseType> list = service.readExerciseType();
+		
+		Exercise dto = service.readExercise(num);
 		if(dto==null) {
 			return "redirect:/myclass/addexercise/list?page="+page;
 		}
-				
+		
+		model.addAttribute("list", list);
 		model.addAttribute("dto", dto);
 		model.addAttribute("mode", "update");
 		model.addAttribute("page", page);
@@ -276,12 +460,39 @@ public class MyClassController {
 		return "redirect:/myclass/addexercise/list?page="+page;
 	}
 	
+	@RequestMapping(value="/myclass/addexercise/download")
+	public void download(
+			@RequestParam int num,
+			HttpServletRequest req,
+			HttpServletResponse resp,
+			HttpSession session) throws Exception{
+		
+		String root=session.getServletContext().getRealPath("/");
+		String pathname=root+File.separator+"uploads"+File.separator+"myClass";
+		Exercise dto=service.readExercise(num);
+		boolean flag=false;
+		
+		if(dto!=null) {
+			flag=fileManager.doFileDownload(
+					     dto.getVideo(), 
+					     dto.getVideo(), pathname, resp);
+		}
+		
+		if(! flag) {
+			resp.setContentType("text/html;charset=utf-8");
+			PrintWriter out=resp.getWriter();
+			out.print("<script>alert('파일 다운로드가 실패했습니다.');history.back();</script>");
+		}
+	}
 	
 	
 	
 	
 	
-	// 재료관련컨트롤러(재료추가)
+	
+	/*
+	 * 재료관련컨트롤러
+	 */ 
 	@RequestMapping(value="/myclass/addingrerdients/list")
 	public String listIngre(
 			@RequestParam(value="page", defaultValue="1") int current_page,

@@ -8,8 +8,18 @@ public class Exercise {
 	private String exerciseName, unitTime, lossCal, unit; // 운동이름, 단위시간, 소모칼로리, 단위
 	private String video, pic; // 동영상자료, 사진자료
 	private MultipartFile upload; // (파일처리하면 넣어줘야된데)
-
+	private String typeName;
 	
+	
+	
+	public String getTypeName() {
+		return typeName;
+	}
+
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
+	}
+
 	public int getListNum() {
 		return listNum;
 	}
