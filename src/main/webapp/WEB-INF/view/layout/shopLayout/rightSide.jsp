@@ -81,7 +81,7 @@ function modalSendLogin() {
 <!-- 오른쪽 사이드 바 -->
    <div id="rightSide" style="width: 10%; height: 100%; float:right; top:0px; right:0; position: fixed; z-index: 10;">
       <div id="mainImge" style="width: 160px; height: 130px; margin-top: 100px; position: absolute;">
-         <a href="#" style="color: black;height: 60px; padding: 1px;">
+         <a href="<%=cp%>/" style="color: black;height: 60px; padding: 1px;">
             <img src="<%=cp%>/resource/images/shop_images/HOTBODY_Logo.png"/>
          </a>
         </div>
