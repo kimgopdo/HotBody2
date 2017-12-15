@@ -83,51 +83,6 @@ fieldset[disabled] .form-control {
     cursor: pointer;
 }
 
-.btn-default {
-    display: inline-block;
-    margin-bottom: 0;
-    font-weight: normal;
-    text-align: center;
-    width : 150px;
-    vertical-align: middle;
-    touch-action: manipulation;
-    cursor: pointer;
-    background-image: none;
-    white-space: nowrap;
-    font-size: 12px;
-    user-select: none;
-    border-width: 1px;
-    border-style: solid;
-    background-color: #666666;
-    border-color: #333333;
-    border-image: initial;
-    padding: 6px 9px;
-    border-radius: 2px;
-    color: #ffffff;
-}
-
-.btn-default02 {
-    display: inline-block;
-    margin-bottom: 0;
-    font-weight: normal;
-    text-align: center;
-    width : 100px;
-    vertical-align: middle;
-    touch-action: manipulation;
-    cursor: pointer;
-    background-image: none;
-    white-space: nowrap;
-    font-size: 12px;
-    user-select: none;
-    border-width: 1px;
-    border-style: solid;
-    background-color: #999999;
-    border-color: #cccccc;
-    border-image: initial;
-    padding: 6px 9px;
-    border-radius: 2px;
-    color: #ffffff;
-}
 </style>
 
 <script type="text/javascript" src="<%=cp%>/resource/se/js/HuskyEZCreator.js" charset="utf-8"></script>
@@ -135,7 +90,7 @@ fieldset[disabled] .form-control {
 
 function check() {
 	var f = document.boardForm;
-	
+	var mode = "${mode}";
 	if(!f.pdQSubject.value){
 		alert("제목을 입력하세요.");
 		f.pdQSubject.focus();
@@ -149,49 +104,55 @@ function check() {
 		return;
 	}
 	
-	f.action="<%=cp%>/qna/${mode}";
+	f.action="<%=cp%>/hotShop/pQnA_"+mode;
 
     f.submit();
 }
 
 </script>
 </head>
-<body>
+<body style="min-height: 950px;">
 <div style="height: 50px;"></div>
-<div style="font-size: 40px; width: 700px; margin: 20px auto 0; font-weight: bold; color: #666666;">질문 등록</div>
-<div style="width:700px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
+<div style="font-size: 40px; width: 100%; margin: 20px auto 0; font-weight: bold; color: #666666;" align="left"> Q & A 등록</div>
+<div style="width:100%; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
 
 <form method="post" name="boardForm" enctype="multipart/form-data" onsubmit="return submitContents(this);">
-<table style="width: 700px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0">
+<table style="width: 100%; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0">
 
 <tr height="30">
 	<td width="80">제목</td>
 	<td>
-		<input type="text" name="pdQSubject" style="width: 600px; height: 25px;" value="${dto.pdQSubject}">
+		<input type="text" name="pdQSubject" style="width: 100%; height: 25px;" value="${dto.pdQSubject}">
 	</td>
 </tr>
 
 <tr height="30">
 	<td width="80">작성자</td>
-	<td style="width: 600px; height: 25px; color: black;"><p style="font-weight: bold;">${sessionScope.member.userName}</p></td>
+	<td style="width: 90%; height: 25px; color: black;" align="left"><p style="font-weight: bold;">${sessionScope.member.userName}</p></td>
 </tr>
 
 <tr height="40">
 	<td width="80" valign="top">내용</td>
 	<td>
-		<textarea style="width: 600px;" rows=10; name="pdQContent" id="pdQContent">${dto.pdQContent}</textarea>
+		<textarea style="width: 90%;" rows=10; name="pdQContent" id="pdQContent">${dto.pdQContent}</textarea>
 	</td>
 </tr>
 
 </table>
-<div style="width:700px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
-<div style="width: 700px; margin: 20px auto 0;" align="center">
-<button type="submit" class="btn-default02">등록</button>
-<button type="button" class="btn-default02" onclick="javascript:location.href='<%=cp%>/';">등록취소</button>
+<div style="width:100%; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
+<div style="width: 100%; margin: 20px auto 0;" align="center">
+<button type="submit" style="background: white; border: 1px solid #999999; border-radius: 3px; height: 30px;" onclick="check();">${mode=="created"? "등록완료":(mode=="update"?"수정완료":"답변등록")}</button>
+<button type="button" style="background: white; border: 1px solid #999999; border-radius: 3px; height: 30px;" onclick="javascript:location.href='<%=cp%>/hotShop/pQnA_list';">${mode=="created"? "등록취소":(mode=="update"?"수정취소":"답변취소")}</button>
 <c:if test="${mode=='update'}">
 	<input type="hidden" name="page" value="${page}">
 	<input type="hidden" name="pdQCode" value="${dto.pdQCode}">
 	<input type="hidden" name="query" value="${query}">
+</c:if>
+<c:if test="${mode=='answer'}">
+	<input type="hidden" name="page" value="${page}">
+	<input type="hidden" name="groupNum" value="${dto.groupNum}">
+	<input type="hidden" name="answerNum" value="${dto.pdQCode}">
+	<input type="hidden" name="pdNum" value="${dto.pdNum}">
 </c:if>
 </div>
 
