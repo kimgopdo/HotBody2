@@ -139,6 +139,13 @@ $(function(){
 	$( ".star_rating a" ).click(function() {
 	    $(this).parent().children("a").removeClass("on");
 	    $(this).addClass("on").prevAll("a").addClass("on");
+	    
+	    var n=0;
+	    $( ".star_rating a").each(function(){
+	    	if($(this).hasClass("on")) n++;
+	    });
+	    $("#starInput").val(n);
+	    
 	    return false;
 	});
 });
@@ -171,6 +178,7 @@ $(function(){
 		    <a href="#">★</a>
 		    <a href="#">★</a>
 		</p>
+		<input type="hidden" name="star" id="starInput" value="0">
 	</td>
 </tr>
 
