@@ -135,4 +135,3 @@ function removeBox(p,day,index) {
 	</div>
 </form>
 </div>
-</body>
