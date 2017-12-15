@@ -8,6 +8,11 @@
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.form.js"></script>
 <script type="text/javascript">
 function sendOk() {
+	var uid="${sessionScope.member.userId}";
+   	if(! uid) {
+      modalFormLogin();
+      return;
+   	}
 	var mode = "${mode}";
 	
 	var f = document.pForm;

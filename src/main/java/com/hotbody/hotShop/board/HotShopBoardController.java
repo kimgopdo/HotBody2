@@ -19,12 +19,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hotbody.common.FileManager;
+import com.hotbody.common.MyUtil;
 @Controller("hotShop.board")
 public class HotShopBoardController {
 	@Autowired
 	private HotShopService service;
 	@Autowired
 	FileManager file;
+	@Autowired
+	MyUtil util;
 	//상품분류에따른 list 
 	//main list는 따로 드래그엔 드롭으로 순서 변경 가능하게 만들꺼임.
 	@RequestMapping("/hotShop/productList")
@@ -141,15 +144,118 @@ public class HotShopBoardController {
 		service.insertSchedule(dto);
 		scheduleList=service.readSchedules();
 		Map<String, Object> map=new HashMap<>();
-		map.put("scheduleList", scheduleList);
+		map.put("monthly", scheduleList);
 		return map;
+	}
+	@RequestMapping(value="/hotShop/schedule")
+	@ResponseBody
+	public Map<String, Object> scheduleRead(
+			Model model
+			) {
+		List<Schedule> scheduleList=null;
+		scheduleList=service.readSchedules();
+		Map<String, Object> map=new HashMap<>();
+		map.put("monthly", scheduleList);
+		return map;
+	}
+	@RequestMapping(value="/hotShop/productInInfo")
+	public String productInInfoList(
+			@RequestParam(defaultValue="") String startDate,
+			@RequestParam(defaultValue="") String endDate,
+			@RequestParam(value="page") int page,
+			String order,
+			String colum,
+			Model model,
+			HttpSession session
+			){
+		int row=5;
+		int start=0;
+		int end=0;
+		int dataCount=0;
+		int current_page=1;
+		int total_page=0;
+		String paging;
+		if(page!=1) {
+			current_page=page;
+		}
+		dataCount=service.dataCount();
+		total_page=dataCount/row;
+		if(current_page>total_page)
+			current_page=total_page;
+		start=current_page-1*row+1;
+		end=current_page*row;
+		
+		List<ProductIn> productInList=null;
+		Map<String, Object> map=new HashMap<>();
+		map.put("start", start);
+		map.put("end", end);
+		map.put("page", page);
+		map.put("startDate", startDate);
+		map.put("endDate", endDate);
+		map.put("colum", colum);
+		map.put("order", order);
+		productInList=service.readProductIn(map);
+		String root=session.getServletContext().getRealPath("/");
+		String pathname=root+"uploads"+File.separator+"shopProduct";
+		map=new HashMap<>();
+		List<HotShop> productList=null;
+		map.put("listOrArticle", 0);
+		productList=service.productList(map);
+		Iterator<HotShop> it=productList.iterator();
+		while(it.hasNext()) {
+			HotShop dto=it.next();
+			dto.setImgPath(pathname+File.separator+dto.getImgSaveFilename());
+		}
+		paging=util.paging(current_page, total_page);
+		List<Supply> supplyList=null;
+		supplyList=service.readSupply();
+		model.addAttribute("productInList", productInList);
+		model.addAttribute("productList", productList);
+		model.addAttribute("supplyList",supplyList);
+		model.addAttribute("paging", paging);
+		model.addAttribute("current_page", current_page);
+		model.addAttribute("total_page", total_page);
+		return "hotShop/productInList";
 	}
 	
 	@RequestMapping(value="/hotShop/productInlist")
-	public String productInListForm() {
-		List<Schedule> scheduleList=null;
-		scheduleList=service.readSchedules();
-		
+	public String productInListForm(
+			Model model,
+			HttpSession session
+			) {
+		String root=session.getServletContext().getRealPath("/");
+		String pathname=root+"uploads"+File.separator+"shopProduct";
+		Map<String, Object> map=new HashMap<>();
+		List<HotShop> productList=null;
+		map.put("listOrArticle", 0);
+		productList=service.productList(map);
+		Iterator<HotShop> it=productList.iterator();
+		while(it.hasNext()) {
+			HotShop dto=it.next();
+			dto.setImgPath(pathname+File.separator+dto.getImgSaveFilename());
+			System.out.println(dto.getImgPath());
+		}
+		List<Supply> supplyList=null;
+		supplyList=service.readSupply();
+		int row=5;
+		int dataCount=service.dataCount();
+		int total_page=dataCount/row;
+		List<ProductIn> productInList=null;
+		productInList=service.readProductIn(map);
+		model.addAttribute("productList", productList);
+		model.addAttribute("supplyList",supplyList);
+		model.addAttribute("productInList", productInList);
+		model.addAttribute("total_page", total_page);
 		return ".hotShop.productIn";
+	}
+	@RequestMapping(value="/hotShop/productInlist", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> productInSubmit(
+			ProductIn dto
+			) {
+		int result=service.insertProductIn(dto);
+		Map<String, Object> map=new HashMap<>();
+		map.put("result", result);
+		return map;
 	}
 }

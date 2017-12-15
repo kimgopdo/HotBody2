@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="notice">
+	<insert id="insertNotice" parameterType="com.hotbody.notice.Notice">
+		INSERT INTO notice (noticeCode, userId, subject, content, created, hitCount,	
+			saveFile, originalFile, notice) 
+			VALUES (notice_req.NEXTVAL, #{userId}
+			, #{subject}, #{content}
+			, SYSDATE
+			, 0
+			, #{saveFile, jdbcType=VARCHAR}
+			, #{originalFile, jdbcType=VARCHAR}
+			, #{notice})
+	</insert>
+	
+	<!-- sql태그: 반복작업에 유용 -->
+	<sql id="where-list">
+		<if test="searchKey=='userName'">
+			userName = #{searchValue}
+		</if>
+		<if test="searchKey=='subject'">
+			INSTR(subject, #{searchValue}) &gt; 0
+		</if>
+		<if test="searchKey=='content'">
+			INSTR(content, #{searchValue}) &gt; 0
+		</if>
+		<if test="searchKey=='created'">
+			TO_CHAR(created, 'YYYY-MM-DD') = #{searchValue}
+				OR TO_CHAR(created, 'YYYYMMDD') = #{searchValue}
+		</if>
+	</sql>
+	
+	<!--글개수-->
+	<select id="dataCount" resultType="Integer" parameterType="map">
+		SELECT NVL(COUNT(noticeCode), 0) FROM notice
+		<where>
+			<if test="searchValue != null and searchValue !=''">
+				<include refid="where-list"/>
+			</if>
+		</where>
+	</select>
+	
+	<!--글 리스트-->
+	<select id="listNotice" resultType="com.hotbody.notice.Notice" 
+		parameterType="map">
+		SELECT * FROM (
+			SELECT ROWNUM rnum, tb.* FROM(
+				SELECT noticeCode, n.userId, subject, hitCount,
+					TO_CHAR(created, 'yyyy-mm-dd') created,
+					saveFile
+					FROM notice n
+					JOIN member1 m1 ON n.userId = m1. userId
+					<where>
+						<if test="searchValue !=null and searchValue !=''">
+							<include refid="where-list"/>
+						</if>					
+					</where>
+					ORDER BY noticeCode DESC
+		<![CDATA[
+				) tb WHERE ROWNUM <= #{end}
+			) WHERE rnum >= #{start}
+		]]>			
+	</select>	
+	
+	<!-- 글 리스트탑 -->
+	<select id="listNoticeTop" resultType="com.hotbody.notice.Notice">
+		SELECT noticeCode, n.userId, subject, hitCount,
+					TO_CHAR(created, 'yyyy-mm-dd') created,
+					saveFile
+					FROM notice n
+					JOIN member1 m1 ON n.userId = m1.userId
+					WHERE notice = 1
+					ORDER BY noticeCode DESC
+	</select>
+
+	<!-- 글보기 -->
+	<select id="readNotice" resultType="com.hotbody.notice.Notice"
+			parameterType="Integer">
+		SELECT noticeCode, userId, subject, content, notice,
+		 	hitCount, created, saveFile FROM notice WHERE noticeCode = #{noticeCode}	 
+	</select>
+	
+	<!-- 조회수 증가 -->
+	<update id="supdateHitCount" parameterType="Integer">
+		UPDATE notice SET hitCount=hitCount+1 WHERE noticeCode = #{noticeCode}
+	</update>
+	
+	<!-- 이전글 -->
+	<select id="preReadNotice" resultType="com.hotbody.notice.Notice"
+			parameterType="map">
+		SELECT tb.* FROM (
+			SELECT noticeCode, subject FROM notice
+				<where>
+					<if test="searchValue != null and searchValue !=''">
+						<include refid="where-list"/>
+					</if>
+					<![CDATA[
+						AND (noticeCode > #{noticeCode})
+					]]>
+				</where>
+				ORDER BY noticeCode ASC
+			) tb WHERE ROWNUM=1
+	</select>
+	
+	<!-- 다음글 -->
+	<select id="nextReadNotice" resultType="com.hotbody.notice.Notice"
+			parameterType="map">
+		SELECT tb.* FROM (
+			SELECT noticeCode, subject FROM notice
+				<where>
+					<if test="searchValue != null and searchValue !=''">
+						<include refid="where-list"/>
+					</if>
+				<![CDATA[
+						AND (noticeCode > #{noticeCode})
+				]]>		
+			</where>
+			ORDER BY noticeCode DESC
+		) tb WHERE ROWNUM=1
+	</select>
+	
+	<!-- 글 수정 -->
+	<update id="updateNotice" parameterType="com.hotbody.notice.Notice">
+		UPDATE notice SET subject =#{subject},
+			 content =#{content}, notice=#{notice},
+			 saveFile =#{saveFile, jdbcType=VARCHAR},
+			 originalFile =#{originalFile, jdbcType=VARCHAR}
+			WHERE noticeCode =#{noticeCode}	
+	</update>
+	
+	<!-- 글 삭제 -->
+	
+	<delete id="deleteNotice" parameterType="Integer">
+		DELETE FROM notice WHERE noticeCode = #{noticeCode}
+	</delete>
+	
+	<!-- 댓글처리 -->
+	<insert id="insertReply" parameterType="com.hotbody.notice.Reply">
+	INSERT INTO noticeReply(replyNum, noticeCode, userId, content, answer)
+		VALUES (noticeReply_seq.NextVal, #{noticeCode}, #{userId},
+			 #{content}, #{answer})
+	</insert>
+	
+	<select id="replyDataCount" resultType="Integer"
+				parameterType="map">
+		SELECT NVL(COUNT(*), 0)
+			FROM noticeReply WHERE noticeCode=#{noticeCode} AND answer=0			
+	</select>
+	
+	<!-- 댓글리스트 -->
+	<select id="listReply" resultType="com.hotbody.notice.Reply"
+				parameterType="map">
+		SELECT * FROM (
+			SELECT ROWNUM rnum, tb.* FROM(
+				SELECT tbreply.replyNum, noticeCode, userId, userName
+						,content, created, tbreply.answer
+						,NVL(answerCount, 0) answerCount		
+				FROM
+				(
+					(
+						SELECT replyNum, r.noticeCode, r.userId,userName, r.content, r.created, answer
+							FROM noticeReply r
+							JOIN notice n ON r.noticeCode=n.noticeCode
+							JOIN member1 m ON r.userId=m.userId
+							WHERE r.noticeCode=#{noticeCode} AND answer=0	
+						) tbreply
+						LEFT OUTER JOIN
+						(
+							SELECT answer, COUNT(*) answerCount
+								FROM noticeReply GROUP BY answer
+						) tbanswer ON tbreply.replyNum = tbanswer.answer					
+					)
+					ORDER BY replyNum DESC
+				<![CDATA[
+					) tb WHERE ROWNUM <= #{end}
+				) WHERE rnum >= #{start}
+				
+				]]>	
+				</select>
+				
+	<delete id="deleteReply" parameterType="map">
+		DELETE noticeReply WHERE
+			<if test="mode == 'noticeCode' ">
+				noticeCode=#{noticeCode}
+			</if> 
+			<if test="mode == 'reply' ">
+				replyNum IN
+					(SELECT replyNum FROM noticeReply START WITH replyNum = #{replyNum}
+						CONNECT BY PRIOR replyNum = answer)
+			</if>
+			<if test="mode == 'answer' ">
+				replyNum =#{replyNum}
+			</if>
+	</delete>	
+
+</mapper>
+

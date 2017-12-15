@@ -27,8 +27,15 @@ public class HotShop {
 	private String imgPath;
 	private String mode;
 	private int listOrArticle;
+	private int pdInNum;
 	
 	
+	public int getPdInNum() {
+		return pdInNum;
+	}
+	public void setPdInNum(int pdInNum) {
+		this.pdInNum = pdInNum;
+	}
 	public int getListOrArticle() {
 		return listOrArticle;
 	}

@@ -210,14 +210,14 @@ function deleteFile() {
 	<td width="100">단위</td>
 	<td> 
 		<select id="unitSelect" name="unitSelect" style="height: 35px; width: 100px;">
-	           <option value='g' selected="selected" ${dto.nutrient =="g" ? "selected='selected'" : ""}> g </option>
+	           <option value='g' selected="selected" ${dto.unit =="g" ? "selected='selected'" : ""}> g </option>
 	           <option value='ml' ${dto.unit =="ml" ? "selected='selected'" : ""}> ml </option>
 	           <option value='인분' ${dto.unit =="인분" ? "selected='selected'" : ""}> 인분 </option>
 	           <option value='개' ${dto.unit =="개" ? "selected='selected'" : ""}> 개 </option>
 	           <option value='mg' ${dto.unit =="mg" ? "selected='selected'" : ""}> mg </option>
 	           <option value="direct">직접입력</option>
        </select>
-       <input type="text" id="unit" name="unit" style="width: 8%; height: 35px;" value="${dto.nutrient}">
+       <input type="text" id="unit" name="unit" style="width: 8%; height: 35px;" value="${dto.unit}">
        <span style="font-weight: bold;">(선택하세요)</span>
 	</td>
 </tr>

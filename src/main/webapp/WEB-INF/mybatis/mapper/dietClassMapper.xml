@@ -65,7 +65,18 @@
 	<update id="updateClass" parameterType="com.hotbody.dietClass.DietClass">
 		UPDATE dietClass SET className=#{className}, classType=#{classType}, classGoal=#{classGoal}, classGoalD=#{classGoalD}, 
 		cllevel=#{cllevel}, tuition=#{tuition}, saveFileName=#{saveFileName}, originalFileName=#{originalFileName}
-		WHERE classNum=${classNum}
+		WHERE classNum=#{classNum}
+	</update>
+	
+	<update id="updateOn" parameterType="com.hotbody.dietClass.DietClass">
+		UPDATE onClass SET mento=#{mento}, onperiod=#{onperiod} 
+		WHERE classNum=#{classNum}
+	</update>
+	
+	<update id="updateOff" parameterType="com.hotbody.dietClass.DietClass">
+		UPDATE offClass SET location1=#{location1}, location2=#{location2}, startTime=#{startTime}, endTime=#{endTime}, offLimit=#{offLimit},
+			coach=#{coach}, startDate=#{startDate}, endDate=#{endDate}
+			WHERE classNum=#{classNum}
 	</update>
 	
 	<delete id="deleteOn" parameterType="Integer">
@@ -137,4 +148,43 @@
 		WHERE programNum=#{programNum}
 	</update>
 	
+	<!-- 미션관련 -->
+	<insert id="readyMission" parameterType="map">
+		INSERT INTO mission(classNum, missday)
+		VALUES(#{classNum}, #{missday})
+	</insert>
+	
+	<delete id="deleteReadyMission" parameterType="map">
+		DELETE mission WHERE classNum=#{classNum}
+		<if test="onperiod!=null">
+			AND missday &gt; #{onperiod}
+		</if>
+	</delete>
+	
+	<insert id="insertMission" parameterType="com.hotbody.dietClass.Mission">
+		INSERT INTO miscontent(missionNum, missionContent, classNum, missDay, missIndex)
+		VALUES(misContent_seq.NEXTVAL, #{missionContent}, #{classNum}, #{missDay}, #{missIndex})
+	</insert>
+	
+	<select id="readMission" parameterType="map" resultType="com.hotbody.dietClass.Mission">
+		SELECT missionNum, missionContent, missDay
+		FROM misContent WHERE classNum=#{classNum} AND missDay=#{missDay} AND missionContent IS NOT NULL
+	</select>
+	
+	<update id="updateMission" parameterType="com.hotbody.dietClass.Mission">
+		UPDATE misContent SET missionContent = #{missionContent}
+		WHERE classNum=#{classNum} AND missDay=#{missDay} AND missIndex=#{missIndex}
+	</update>
+	
+	<delete id="deleteMission" parameterType="map">
+		DELETE misContent WHERE classNum=#{classNum} 
+		<if test="missDay!=null and missIndex!=null">
+			AND missDay=#{missDay} AND missIndex=#{missIndex}
+		</if>
+	</delete>	
+	
+	<select id="haveMission" parameterType="com.hotbody.dietClass.Mission" resultType="Integer">
+		SELECT COUNT(missionContent) FROM misContent
+		WHERE classNum=#{classNum} AND missDay=#{missDay} AND missIndex=#{missIndex}
+	</select>
 </mapper>

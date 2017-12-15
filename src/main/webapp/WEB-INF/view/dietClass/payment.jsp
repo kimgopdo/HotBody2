@@ -82,6 +82,12 @@ function selectAgree() {
 }
 
 function paymentOk() {
+	var uid="${sessionScope.member.userId}";
+   	if(! uid) {
+      modalFormLogin();
+      return;
+   	}
+   	
 	if(! $("input:checkbox[name=payType]").is(':checked')){
 		swal("결제수단을 선택해주세요");
 		return;
@@ -106,7 +112,6 @@ function paymentOk() {
 		}
 	}
 	var q = $("form[name=paymentForm]").serialize();
-	alert(q);
 	
 	var url="<%=cp%>/dietClass/paymentSubmit";
 		
@@ -115,10 +120,6 @@ function paymentOk() {
 		,url:url
 		,data: q
 		,dataType:"json"
-		,success:function(data) {
-			if(data.state=='true')
-				alert("등록완료");
-		}
 	    ,error:function(e) {
 	    	alert("등록실패");
 	    	console.log(e.responseText);
@@ -145,10 +146,10 @@ function paymentOk() {
 				.then((willDelete) => {
 				  if (willDelete) {
 					  //마이클래스로 가기
-					  location.href="<%=cp%>/dietClass/article";
+					  location.href="<%=cp%>/member/myclass";
 				  } else {
 					  //다시 리스트로
-				    location.href="<%=cp%>/dietClass/list";
+				    location.href="<%=cp%>/dietClass/list?type="+${dto.classType};
 				  }
 				});
 			}

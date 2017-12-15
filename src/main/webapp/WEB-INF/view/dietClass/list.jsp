@@ -16,6 +16,7 @@ function on(num) {
         $("#ctd"+num).hide();
     });
 }
+/* 
 function classNotice() {
 	swal("Write something here:", {
 		  content: "input",
@@ -24,13 +25,24 @@ function classNotice() {
 		  swal(${value});
 		});
 }
+ */
+function payGo(num,type) {
+	var uid="${sessionScope.member.userId}";
+   	if(! uid) {
+      modalFormLogin();
+      return;
+   	}
+   	location.href="<%=cp%>/dietClass/payment?num="+num+"&type="+type;
+}
 function articleGo(num) {
 	location.href="<%=cp%>/dietClass/articleOn?num="+num;
 }
 
 </script>
 <div class="body-container" style="width: 1000px; margin: 100px auto;">
-	<button type="button" class="btn02" onclick="javascript:location.href='<%=cp%>/dietClass/created'" style="float: right; width: 120px;">클래스등록</button>
+	<c:if test="${sessionScope.member.userId=='admin'}">
+		<button type="button" class="btn02" onclick="javascript:location.href='<%=cp%>/dietClass/created'" style="float: right; width: 120px;">클래스등록</button>
+	</c:if>
 	<div style="height: 30px;"></div>
 	<c:forEach var="dto" items="${diet}">
     <table id="ct${dto.classNum}" onmouseover="on(${dto.classNum});" style="width: 1000px; height:420px; border-spacing: 0; border-collapse: collapse; border-bottom: 1px solid #cccccc; border-top: 1px solid #cccccc; margin: 20px 0;">
@@ -62,10 +74,18 @@ function articleGo(num) {
 		    			</td>
 		    		</tr>
 		    		<tr height="20px;"></tr>
+		    		<c:if test="${dto.classType==0}">
 		    		<tr>
 		    			<th width="35%">멘토</th>
 		    			<td align="left" style="padding-left: 5px;">${dto.mento} 님</td>
 		    		</tr>
+		    		</c:if>
+		    		<c:if test="${dto.classType==1}">
+		    		<tr>
+		    			<th width="35%">코치</th>
+		    			<td align="left" style="padding-left: 5px;">${dto.coach} 님</td>
+		    		</tr>
+		    		</c:if>
 		    		<tr>
 		    			<th width="35%">운동강도</th>
 		    			<c:if test="${dto.cllevel==1}">
@@ -111,7 +131,7 @@ function articleGo(num) {
 	   		<!-- 
 	   		<button type="button" style="width: 100%; height: 50px; background: #1abc9c; border: 0px; color: #ffffff; font-weight: bold;" onclick="classNotice();">클래스 알림받기</button>
 	    	 -->
-	    	<button type="button" style="width: 100%; height: 50px; background: #1abc9c; border: 0px; color: #ffffff; font-weight: bold;" onclick="#">수강 신청하기</button>
+	    	<button type="button" style="width: 100%; height: 50px; background: #1abc9c; border: 0px; color: #ffffff; font-weight: bold;" onclick="payGo(${dto.classNum},${dto.classType});">수강 신청하기</button>
 	   		</div>
     	</td>
     </tr>
