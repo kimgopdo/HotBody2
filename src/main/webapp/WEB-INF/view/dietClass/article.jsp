@@ -46,7 +46,7 @@ function payGo(num,type) {
 <div class="body-container" style="width: 1000px; margin: 100px auto;">
 
 	<div style="margin: 20px 0px;">
-	<a href="<%=cp%>/dietClass/onList" style="color: #333333;"><img style="width: 30px;" src="<%=cp%>/resource/images/dano_arrow.png"></a>
+	<a href="<%=cp%>/dietClass/list?type=${dto.classType}" style="color: #333333;"><img style="width: 30px;" src="<%=cp%>/resource/images/dano_arrow.png"></a>
 	</div>
     <p style="font-size: 45px; font-weight: bold; padding: 15px 0px; margin-left: 0;">${dto.className}</p>
     
