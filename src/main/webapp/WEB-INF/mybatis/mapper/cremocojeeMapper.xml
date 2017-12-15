@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mocojee">
+
+<insert id="insertMocojee" parameterType="com.hotbody.mocojee.Mocojee">
+	INSERT INTO mocojee (geNum, moName, moIntro, moContent, moImage, soGae, userId)
+	VALUES ( mocogenum_seq.NEXTVAL, #{moName}, #{moIntro}, #{moContent}, #{moImage, jdbcType=VARCHAR}, #{soGae}, #{userId} )
+</insert>
+
+	
+	<!-- 글 개수 -->
+		<select id="dataCount" resultType="Integer" parameterType="map">
+			SELECT NVL(COUNT(geNum), 0)FROM mocojee
+
+		</select>
+		
+	<!-- 리스트 -->
+	<select id="listMocojee" resultType="com.hotbody.mocojee.Mocojee" parameterType="map">
+		SELECT * FROM (
+			SELECT ROWNUM rNum, tb.* FROM(
+				SELECT geNum, moName, moIntro, soGae, moImage FROM mocojee
+					ORDER BY geNum DESC
+		<![CDATA[
+				) tb WHERE ROWNUM <= #{end}
+			) WHERE rNum >= #{start}
+		]]>
+	</select>
+	
+	<!-- 글 보기 -->
+	<select id="readMocojee" resultType="com.hotbody.mocojee.Mocojee" parameterType="Integer">
+		SELECT geNum, moName, moIntro, moContent, moImage, soGae, userId 
+			FROM mocojee WHERE geNum = #{geNum}
+	</select>
+	
+	<!-- 글 수정 -->
+		<update id="updateMocojee" parameterType="com.hotbody.mocojee.Mocojee">
+			UPDATE mocojee SET moName=#{moName}, moIntro=#{moIntro}, moContent=#{moContent}, moImage=#{moImage}, soGae=#{soGae} 
+				WHERE geNum=#{geNum}
+		</update>
+		
+	<!-- 글 삭제 -->
+		<delete id="deleteMocojee" parameterType="Integer">
+			DELETE mocojee WHERE geNum = #{geNum}
+		</delete>
+</mapper>
+	
