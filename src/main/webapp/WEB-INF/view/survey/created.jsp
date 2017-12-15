@@ -218,7 +218,6 @@ function addEx(t) {
                    	<img id="" style="width: 20px; height: 20px; margin-left: 15px; cursor: pointer; margin-top: 5px;" src="<%=cp%>/resource/images/plus2.png" onclick="addEx(this);">
                  </td>
                  </tr>
-	                 
 				</table>
 			</form>
 		</div>
