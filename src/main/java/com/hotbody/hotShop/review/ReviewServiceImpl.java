@@ -105,15 +105,15 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 	
 	@Override
-	public Reply listReply(Map<String, Object> map) {
-		Reply dto=null;
+	public List<Reply> listReply(Map<String, Object> map) {
+		List<Reply> list=null;
 		
 		try {
-			dto = dao.selectOne("review.listReply", map);
+			list = dao.selectList("review.listReply", map);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
-		return dto;
+		return list;
 	}
 
 	@Override

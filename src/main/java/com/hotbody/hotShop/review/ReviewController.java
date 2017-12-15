@@ -53,7 +53,7 @@ public class ReviewController {
 		dto.setUserName(info.getUserName());
 		dto.setPdName(dto.getPdName());
 		////////////////////////////////////////////////////
-		dto.setPdNum(15); // 임시로 상품번호 넣어줌(나중에 삭제)
+		dto.setPdNum(3); // 임시로 상품번호 넣어줌(나중에 삭제)
 		////////////////////////////////////////////////////
 		
 		String root=session.getServletContext().getRealPath("/");
@@ -185,12 +185,13 @@ public class ReviewController {
 		Map<String, Object> map = new HashMap<>();
 		map.put("reviewCode", reviewCode);
 		int replyCount=service.replyDataCount(map);
-		Reply dto = service.listReply(map);
-		
+		List<Reply> listReply= service.listReply(map);
+		for(Reply dto:listReply) {
 			dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
+		}
 		
 		model.addAttribute("replyCount", replyCount);
-		model.addAttribute("dto", dto);
+		model.addAttribute("listReply", listReply);
 		
 		return "hotShop/hotShop_review/listReply";
 	}
