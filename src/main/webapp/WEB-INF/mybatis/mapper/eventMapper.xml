@@ -2,5 +2,150 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="event">
+	<insert id="inserEvent" parameterType="com.hotbody.event.Event">
+		INSERT INTO event (eventCode,userId,subject,content,created,hitCount,
+			saveFile, originalFile, notice)
+			VALUES (event_seq.NEXTVAL, #{userId}
+			, #{subject}, #{content}
+			,SYSDATE
+			,0
+			, #{saveFile, jdbcType=VARCHAR}
+			, #{originalFile, jdbcType=VARCHAR}
+			, #{notice})	
+	</insert>
+	
+	<!-- sql태그: 반복작업에 유용 -->
+	<sql id="where-list">
+		<if test="searchKey=='userName'">
+			userName = #{searchValue}
+		</if>
+		<if test="searchKey=='subject'">
+			INSTR(subject, #{searchValue}) &gt; 0
+		</if>
+		<if test="searchKey=='content'">
+			INSTR(content, #{searchValue}) &gt; 0
+		</if>
+		<if test="searchKey=='created'">
+			TO_CHAR(created, 'YYYY-MM-DD') = #{searchValue}
+				OR TO_CHAR(created, 'YYYYMMDD') = #{searchValue}
+		</if>
+	</sql>
 
+<!--글개수-->
+	<select id="dataCount" resultType="Integer" parameterType="map">
+		SELECT NVL(COUNT(eventCode), 0) FROM event
+		<where>
+			<if test="searchValue != null and searchValue !=''">
+				<include refid="where-list"/>
+			</if>
+		</where>
+	</select>
+	
+<!--글 리스트-->
+	<select id="listEvent" resultType="com.hotbody.event.Event" 
+		parameterType="map">
+		SELECT * FROM (
+			SELECT ROWNUM rnum, tb.* FROM(
+				SELECT eventCode, n.userId, subject, hitCount,
+					TO_CHAR(created, 'yyyy-mm-dd') created,
+					saveFile
+					FROM event n
+					JOIN member1 m1 ON n.userId = m1. userId
+					<where>
+						<if test="searchValue !=null and searchValue !=''">
+							<include refid="where-list"/>
+						</if>					
+					</where>
+					ORDER BY eventCode DESC
+		<![CDATA[
+				) tb WHERE ROWNUM <= #{end}
+			) WHERE rnum >= #{start}
+		]]>			
+	</select>	
+	
+<!-- 글 리스트탑 -->
+	<select id="listEventTop" resultType="com.hotbody.event.Event">
+		SELECT eventCode, n.userId, subject, hitCount,
+					TO_CHAR(created, 'yyyy-mm-dd') created,
+					saveFile
+					FROM event n
+					JOIN member1 m1 ON n.userId = m1.userId
+					WHERE event = 1
+					ORDER BY eventCode DESC
+	</select>	
+	
+<!-- 글보기 -->
+	<select id="readEvent" resultType="com.hotbody.event.Event"
+			parameterType="Integer">
+		SELECT eventCode, userId, subject, content, notice,
+		 	hitCount, created, saveFile FROM event WHERE eventCode = #{eventCode}	 
+	</select>	
+	
+<!-- 조회수 증가 -->
+	<update id="updateHitCount" parameterType="Integer">
+		UPDATE event SET hitCount=hitCount+1 WHERE eventCode = #{eventCode}
+	</update>	
+
+<!-- 이전글 -->
+	<select id="preReadEvent" resultType="com.hotbody.event.Event"
+			parameterType="map">
+		SELECT tb.* FROM (
+			SELECT eventCode, subject FROM event
+				<where>
+					<if test="searchValue != null and searchValue !=''">
+						<include refid="where-list"/>
+					</if>
+					<![CDATA[
+						AND (eventCode > #{eventCode})
+					]]>
+				</where>
+				ORDER BY eventCode ASC
+			) tb WHERE ROWNUM=1
+	</select>	
+	
+<!-- 다음글 -->
+	<select id="nextReadEvent" resultType="com.hotbody.event.Event"
+			parameterType="map">
+		SELECT tb.* FROM (
+			SELECT eventCode, subject FROM event
+				<where>
+					<if test="searchValue != null and searchValue !=''">
+						<include refid="where-list"/>
+					</if>
+				<![CDATA[
+						AND (eventCode > #{eventCode})
+				]]>		
+			</where>
+			ORDER BY eventCode DESC
+		) tb WHERE ROWNUM=1
+	</select>	
+	
+<!-- 글 수정 -->
+	<update id="updateEvent" parameterType="com.hotbody.event.Event">
+		UPDATE event SET subject =#{subject},
+			 content =#{content}, notice=#{notice},
+			 saveFile =#{saveFile, jdbcType=VARCHAR},
+			 originalFile =#{originalFile, jdbcType=VARCHAR}
+			WHERE eventCode =#{eventCode}	
+	</update>	
+	
+<!-- 글 삭제 -->
+	<delete id="deleteEvent" parameterType="Integer">
+		DELETE FROM event WHERE eventCode = #{eventCode}
+	</delete>	
+	
+<!-- 댓글처리 -->
+	<insert id="insertReply" parameterType="com.hotbody.event.Reply">
+	INSERT INTO eventReply(replyNum, eventCode, userId, content, answer)
+		VALUES (eventReply_seq.NextVal, #{eventCode}, #{userId},
+			 #{content}, #{answer})
+	</insert>	
+	
+	<select id="replyDataCount" resultType="Integer"
+				parameterType="map">
+		SELECT NVL(COUNT(*), 0)
+			FROM eventReply WHERE eventCode=#{eventCode} AND answer=0			
+	</select>	
+
+	
 </mapper>

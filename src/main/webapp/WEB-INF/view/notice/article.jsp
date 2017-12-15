@@ -176,13 +176,12 @@ function sendReply() {
 
 
 
-
+	
 </script>
 </head>
-<body>
+<body style="height: 2800px">
 
-<div style="height: 50px;"></div>
-<div style="font-size: 40px; width: 700px; margin: 20px auto 0; font-weight: bold; color: #666666;">공지사항</div>
+<div style="height: 50px; font-size: 40px; width: 700px; margin: 20px auto 0; font-weight: bold; color: #666666;">공지사항</div>
 
 <table style="width: 700px; margin: 20px auto 0; border-top: 2px solid #333333; border-bottom: 2px solid #333333; border-collapse: collapse; border-spacing: 0">
 <tr height="50" style="border-bottom: 1px solid #cccccc">
@@ -236,7 +235,7 @@ function sendReply() {
 	</div>
 </div>
 
-<div style="width:700px; margin: 20px auto 0;">
+<div style=" width:700px; margin: 20px auto 0;">
 	<table style='width: 100%"; margin: 15px auto 0px; border-spacing: 0px;'>
 		<tr height='30'>
 			<td align='left'>
@@ -249,7 +248,7 @@ function sendReply() {
 			</td>	
 		</tr>
 		<tr>
-			<td align='right'>
+			<td style= 'padding:5px 5px 0px;' align=right'>
 				<button type='button' class='btn' style='padding:10px 20px;' onclick='sendReply();'>댓글 등록</button>
 			</td>	
 		</tr>

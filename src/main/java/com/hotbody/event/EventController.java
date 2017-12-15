@@ -1,4 +1,4 @@
-package com.hotbody.notice;
+package com.hotbody.event;
 
 import java.io.File;
 import java.net.URLDecoder;
@@ -22,10 +22,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.hotbody.common.FileManager;
 import com.hotbody.common.MyUtil;
 
-@Controller("notice.noticeController")
-public class NoticeController {
+@Controller("event.eventController")
+public class EventController {
 	@Autowired
-	private NoticeService service;
+	private EventService service;
 	
 	@Autowired
 	private MyUtil myUtil;
@@ -33,7 +33,7 @@ public class NoticeController {
 	@Autowired
 	private FileManager fileManager;
 	
-	@RequestMapping(value="/notice/list")
+	@RequestMapping(value="/event/list")
 	public String list(HttpServletRequest req,
 			@RequestParam(value="page", defaultValue="1") int current_page,
 			@RequestParam(value="searchKey", defaultValue="subject") String searchKey,
@@ -68,18 +68,18 @@ public class NoticeController {
 			int end = current_page * rows;
 			map.put("start", start);
 			map.put("end", end);		
-			List<Notice> list = service.listNotice(map);
+			List<Event> list = service.listEvent(map);
 			
 			//1페이지인 경우 공지글 가져오기
-			List<Notice> listTop = null;
+			List<Event> listTop = null;
 			if(current_page == 1)
-				listTop = service.listNoticeTop();
+				listTop = service.listEventTop();
 			
 			//출력 번호
 			int listNum, n=0;
-			Iterator<Notice> it=list.iterator();
+			Iterator<Event> it=list.iterator();
 			while(it.hasNext()) {
-				Notice data=it.next();
+				Event data=it.next();
 				listNum = dataCount - (start + n-1);
 				data.setListNum(listNum);
 				n++;
@@ -93,8 +93,8 @@ public class NoticeController {
 							"&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
 			}
 			String cp = req.getContextPath();
-			listUrl = cp+"/notice/list";
-			articleUrl = cp+"/notice/article?page=" + current_page;
+			listUrl = cp+"/event/list";
+			articleUrl = cp+"/event/article?page=" + current_page;
 			if(query.length()!=0) {
 				listUrl = listUrl + "?" + query;
 				articleUrl = articleUrl + "&" + query;				
@@ -111,35 +111,35 @@ public class NoticeController {
 			model.addAttribute("dataCount", dataCount);
 			model.addAttribute("paging", paging);
 			
-			return ".notice.list";
+			return ".event.list";
 			
 	}
 	
-	@RequestMapping(value="/notice/created",
+	@RequestMapping(value="/event/created",
 					method=RequestMethod.GET)
 	public ModelAndView createdForm() throws Exception {
-		ModelAndView mav=new ModelAndView("notice/created");
+		ModelAndView mav=new ModelAndView("event/created");
 		mav.addObject("mode", "created");
 		return mav;
 	}
 	
-	@RequestMapping(value="/notice/created",
+	@RequestMapping(value="/event/created",
 					method=RequestMethod.POST)
-	public String createdSubmit(HttpServletRequest session, Notice dto) throws Exception {
+	public String createdSubmit(HttpServletRequest session, Event dto) throws Exception {
 		dto.setUserId("asd");
 		
 		String root = session.getServletContext().getRealPath("/");
 		
-		String pathname = root + File.separator + "uploads" + File.separator + "notice";
+		String pathname = root + File.separator + "uploads" + File.separator + "Event";
 		
-		service.insertNotice(dto, pathname);
+		service.insertEvent(dto, pathname);
 		
-		return "redirect:/notice/list";
+		return "redirect:/event/list";
 	}
 	
-	@RequestMapping(value="/notice/article")
+	@RequestMapping(value="/event/article")
 	public String article(
-			@RequestParam int noticeCode,
+			@RequestParam int eventCode,
 			@RequestParam int page,
 			@RequestParam(value="searchKey", defaultValue="subject") String searchKey,
 			@RequestParam(value="searchValue", defaultValue="") String searchValue,
@@ -149,23 +149,23 @@ public class NoticeController {
 		searchValue = URLDecoder.decode(searchValue, "utf-8");
 		
 		//조회수 증가 
-		service.updateHitCount(noticeCode);
+		service.updateHitCount(eventCode);
 		//해당 레코드 가져오기
-		Notice dto = service.readNotice(noticeCode);
+		Event dto = service.readEvent(eventCode);
 		if(dto==null) 
-			return "redirect:/notice/list";
+			return "redirect:/event/list";
 	
 		//스타일로 처리하는 경우
 		dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
 	
 		//이전글 다음글
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("noticeCode", noticeCode);
+		map.put("eventCode", eventCode);
 		map.put("searchKey", searchKey);
 		map.put("searchValue", searchValue);
 		
-		Notice preReadDto = service.preReadNotice(map);
-		Notice nextReadDto = service.nextReadNotice(map);
+		Event preReadDto = service.preReadEvent(map);
+		Event nextReadDto = service.nextReadEvent(map);
 		
 		String query = "page="+page;
 		if(searchValue.length()!=0) {
@@ -182,32 +182,32 @@ public class NoticeController {
 		model.addAttribute("page", page);
 		model.addAttribute("query", query);
 		
-		return ".notice.article";	
+		return ".event.article";	
 	}
 	
-	@RequestMapping(value="/notice/update",
+	@RequestMapping(value="/event/update",
 			method=RequestMethod.GET)
 	public String updateForm(
-			@RequestParam int noticeCode,
+			@RequestParam int eventCode,
 			@RequestParam String page,
 			Model model) {		
-		Notice dto = service.readNotice(noticeCode);
+		Event dto = service.readEvent(eventCode);
 		if(dto==null) {
-			return "redirect:/notice/list?page="+page;			
+			return "redirect:/event/list?page="+page;			
 		}
 		
 		model.addAttribute("dto", dto);
 		model.addAttribute("mode", "update");
 		model.addAttribute("page", page);
 		
-		return ".notice.created";
+		return ".event.created";
 		
 	}
 	
-	@RequestMapping(value="/notice/update",
+	@RequestMapping(value="/event/update",
 			method=RequestMethod.POST)
 	public String updateSubmit(
-		Notice dto,
+		Event dto,
 		@RequestParam int page,
 		HttpSession session,
 		Model model
@@ -215,24 +215,24 @@ public class NoticeController {
 
 		String root=session.getServletContext().getRealPath("/");
 		
-		String pathname=root+File.separator+"uploads"+File.separator+"notice";
-		service.updateNotice(dto, pathname);
+		String pathname=root+File.separator+"uploads"+File.separator+"Event";
+		service.updateEvent(dto, pathname);
 		
-		return "redirect:/notice/list?page="+page;
+		return "redirect:/event/list?page="+page;
 	}
 
-	@RequestMapping(value="notice/delete")
+	@RequestMapping(value="event/delete")
 	public String delete(
-			@RequestParam int noticeCode,
+			@RequestParam int eventCode,
 			@RequestParam String page,
 			HttpSession session
 			) {
 		String root=session.getServletContext().getRealPath("/");
 		//업로드 할 경로
 		String pathname=root+File.separator+"uploads"
-				+File.separator+"notice";
-		Notice dto=service.readNotice(noticeCode);
-		service.deleteNotice(noticeCode,pathname);
+				+File.separator+"event";
+		Event dto=service.readEvent(eventCode);
+		service.deleteEvent(eventCode,pathname);
 		try {
 			//업로드 된 파일 삭제
 			if(dto.getSaveFile()!=null)
@@ -242,16 +242,16 @@ public class NoticeController {
 		
 		dto.setSaveFile("");
 		dto.setOriginalFile("");
-		service.updateNotice(dto, pathname);
+		service.updateEvent(dto, pathname);
 		
-		return "redirect:/notice/list?page="+page;
-		//return "redirect:/notice/update?noticeCode="+noticeCode+"&page="+page;
+		return "redirect:/event/list?page="+page;
+		//return "redirect:/Event/update?eventCode="+eventCode+"&page="+page;
 	}
 	
 	//댓글 리스트
-	@RequestMapping(value="/notice/listReply")
+	@RequestMapping(value="/event/listReply")
 	public String listReply(
-			@RequestParam(value="noticeCode") int noticeCode,
+			@RequestParam(value="eventCode") int eventCode,
 			@RequestParam(value="pageNo", defaultValue="1") int current_page,
 			Model model) throws Exception {
 		
@@ -260,7 +260,7 @@ public class NoticeController {
 		int dataCount=0;
 		
 		Map<String, Object> map=new HashMap<String, Object>();
-		map.put("noticeCode", noticeCode);
+		map.put("eventCode", eventCode);
 		
 		dataCount=service.replyDataCount(map);
 		total_page=myUtil.pageCount(rows, dataCount);
@@ -295,7 +295,7 @@ public class NoticeController {
 		model.addAttribute("total_page", total_page);
 		model.addAttribute("paging", paging);
 			
-		return ".notice.listReply";
+		return ".event.listReply";
 		
 	}
 	

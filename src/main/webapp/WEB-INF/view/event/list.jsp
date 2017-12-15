@@ -71,7 +71,7 @@ body{
 }
 </style>
 </head>
-<body>
+<body style="height: 1000px">
 <div style="height: 50px;"></div>
 <div style="font-size: 40px; width: 1000px; margin: 20px auto 0; font-weight: bold; color: #666666;">|공지사항</div>
 <table style="width: 1000px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0">
@@ -96,7 +96,7 @@ body{
 				style="border-bottom: 1px sild #cccccc;">
 		<td width="60" style="font-weight: bold; color: red;"><span>공지</span></td>
 		<td align="left" style="padding-left: 5px">
-			<a href="${articleUrl}&noticeCode=${dto.noticeCode}" style="text-decoration: none; color: black;">${dto.subject}</a>
+			<a href="${articleUrl}&eventCode=${dto.eventCode}" style="text-decoration: none; color: black;">${dto.subject}</a>
 		</td>
 		<td width="40">${dto.userId}</td>
 		<td width="40">${dto.created}</td>
@@ -108,7 +108,7 @@ body{
 			<td width="65">${dto.hitCount}</td>
 			<td>
 				<c:if test="${not empty dto.saveFile}">
-					<a href="<%=cp%>/notice/download?noticeCode=${dto.noticeCode}"><img src="<%=cp%>/resource/images/disk.gif"></a>
+					<a href="<%=cp%>/event/download?eventCode=${dto.eventCode}"><img src="<%=cp%>/resource/images/disk.gif"></a>
 				</c:if>		
 		</td>	
 		</c:otherwise>
@@ -120,7 +120,7 @@ body{
 	<tr height="40" align="center" class="board">
 		<td width="60">${dto.listNum}</td>
 		<td align="left">
-			<a href="${articleUrl}&noticeCode=${dto.noticeCode}" style="text-decoration: none; color: black;">${dto.subject}</a>
+			<a href="${articleUrl}&eventCode=${dto.eventCode}" style="text-decoration: none; color: black;">${dto.subject}</a>
 		</td>
 		<td width="65">${dto.userId}</td>
 		<td width="100">${dto.created}</td>
@@ -132,7 +132,7 @@ body{
 			<td width="65">${dto.hitCount}</td>
 			<td>
 				<c:if test="${not empty dto.saveFile}">
-				<a href="<%=cp%>/notice/download?noticeCode=${dto.noticeCode}"><img src="<%=cp%>/resource/images/disk.gif"></a>
+				<a href="<%=cp%>/event/download?eventCode=${dto.eventCode}"><img src="<%=cp%>/resource/images/disk.gif"></a>
 			</c:if>		
 		</td>	
 		</c:otherwise>
@@ -146,7 +146,7 @@ body{
 	
 	<tr>
 		<td colspan="6">
-		<form name="searchList" method="post" action="<%=cp%>/notice/list">
+		<form name="searchList" method="post" action="<%=cp%>/event/list">
 			<select name="searchKey" style="height: 25px;">
 				<option value="subject">제목</option>
 				<option value="subject">내용</option>
@@ -156,8 +156,8 @@ body{
 			<input type="text" style="display:none;">
 			
 			<button type="button" onclick="send(this.form);" class="btn-search" style="width: 60px;">검색</button>
-			<button type="button" class="btn-list" onclick="javascript:location.href='<%=cp%>/notice/created'" style="float: right; width: 80px;">글올리기</button>
-			<button type="button" class="btn-list" onclick="javascript:location.href='<%=cp%>/notice/list';" style="float: right; width: 80px; margin-right: 10px;">새로고침</button>
+			<button type="button" class="btn-list" onclick="javascript:location.href='<%=cp%>/event/created'" style="float: right; width: 80px;">글올리기</button>
+			<button type="button" class="btn-list" onclick="javascript:location.href='<%=cp%>/event/list';" style="float: right; width: 80px; margin-right: 10px;">새로고침</button>
 		</form>
 		</td>
 	</tr>
