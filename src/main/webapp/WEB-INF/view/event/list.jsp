@@ -73,7 +73,7 @@ body{
 </head>
 <body style="height: 1000px">
 <div style="height: 50px;"></div>
-<div style="font-size: 40px; width: 1000px; margin: 20px auto 0; font-weight: bold; color: #666666;">|공지사항</div>
+<div style="font-size: 40px; width: 1000px; margin: 20px auto 0; font-weight: bold; color: #666666;">| 이벤트</div>
 <table style="width: 1000px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0">
 	
 	<tr height="40">
