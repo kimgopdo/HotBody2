@@ -15,113 +15,134 @@
 #holder img { display: block; }
 </style>
 <script type="text/javascript">
+$(function(){
+	var url="<%=cp%>/hotShop/menuCall"
+	$.ajax({
+		type:"post"
+		,url:url
+		,success:function(menuData){
+			$.each(menuData.bclList,function(index, item){
+					$("#bciSelect").append("<option value=\""+item.bclcode+"\">"+item.bclname+"</option>");
+					
+			});
+			$.each(menuData.sciList,function(index, item){
+					$("#sciSelect").append("<option value=\""+item.scicode+"\">"+item.sciname+"</option>");
+			});
+		}
+	});
+})
     function send() {
     	var f = document.boardForm;
         var regNumber = /^[0-9]*$/
     	var str=f.upload.value;
+        console.log(str);
         if(str==""){
     		alert("메인이미지가 없습니다.");
     		f.upload.focus();
-    		return;
+    		return false;
     	}
-        str=f.bci.value;
+        str=f.bclcode.value;
+        console.log(str);
         if(!str || str=="::대분류") {
             alert("대분류를 선택하세요. ");
             f.bci.focus();
-            return;
+            return false;
         }
-        str=f.sci.value;
+        str=f.scicode.value;
+        console.log(str);
         if(!str || str=="::소분류") {
             alert("소분류를 선택하세요. ");
             f.sci.focus();
-            return;
+            return false;
         }
         str=f.pdName.value;
+        console.log(str);
         if(!str || str=="") {
             alert("상품명을 입력하세요. ");
             f.pdName.focus();
-            return;
+            return false;
         }
         str=f.pdSumContent.value;//메인 추가내용
+        console.log(str);
         if(!str || str=="") {
             alert("메인내용을 입력하세요. ");
             f.pdSumContent.focus();
-            return;
+            return false;
         }
         str=f.pdPrice.value;//상품소비자가격
+        console.log(str);
         if(! regNumber.test(str)) {
             alert("가격을 입력하세요. ");
             f.pdPrice.focus();
-            return;
+            return false;
         }
+        console.log(document.getElementById("content").value);
         if(document.getElementById("content").value=="<p>&nbsp;</p>"){
     		alert("내용입력해주세요");
     		document.getElementById("content").focus;
-    		return;
+    		return false;
     	}
         
         str=f.pdNutrient.value;//영양성분표시
+        console.log(str);
         if(!str || str=="") {
             alert("영양성분표시를 입력하세요. ");
             f.pdNutrient.focus();
-            return;
+            return false;
         }
         str=f.pdArea.value;//생산지
+        console.log(str);
         if(!str || str=="") {
             alert("생산지를 입력하세요. ");
             f.pdArea.focus();
-            return;
+            return false;
         }
         str=f.pdStMethod.value;//보관방법
+        console.log(str);
         if(!str || str=="") {
             alert("보관방법을 입력하세요. ");
             f.pdStMethod.focus();
-            return;
+            return false;
         }
         str=f.pdType.value;//식품유형
+        console.log(str);
         if(!str || str=="") {
             alert("식품유형을 입력하세요. ");
             f.pdType.focus();
-            return;
+            return false;
         }
         str=f.pdRawName.value;//상품원재료명
+        console.log(str);
         if(!str || str=="") {
             alert("상품원재료명을 입력하세요. ");
             f.pdRawName.focus();
-            return;
+            return false;
         }
-   		f.action="<%=cp%>/hotShop/created.ok";
+   		f.action="<%=cp%>/hotShop/created";
         f.submit();
+        
+        return true;
     }
 </script>
 <!--  onsubmit="return submitContents(this);" -->
-<form name="boardForm" method="post" enctype="multipart/form-data"onsubmit="return submitContents(this);">
+<form name="boardForm" method="post" enctype="multipart/form-data">
 	<div style="min-width:1140px; margin-top: 50px;">
-		<select name="bci" style="padding: 10px;">
-			<option selected="selected">::대분류</option>
-			<option value="7">음료</option>
-			<option value="8">간식</option>
-			<option value="9">식사</option>
-			<option value="10">드레싱</option>
-			<option value="11">보충제</option>
-			<option value="12">건강식</option>
+		<select id="bciSelect" name="bclcode" style="padding: 10px;">
+			<option selected="selected">::영양소별</option>
 		</select>
-		<select name="sci" style="padding: 10px;">
-			<option selected="selected">::소분류</option>
-			<option value="1">단백질</option>
-			<option value="2">탄수화물</option>
-			<option value="3">지방</option>
-			<option value="4">무기질</option>
-			<option value="5">식이섬유</option>
+		<select id="sciSelect" name="scicode" style="padding: 10px;">
+			<option selected="selected">::유형별</option>                       
 		</select><br>
-		<div id="holder" style="float: left;">
+		<div id="holder" class="aspect" style="float: left;">
 			<c:if test="${mode=='update'}">
-				<img class="aspect" src="<%=cp%>/uploads/shopProduct/${dto.imgSaveFilename}">
+				<img src="<%=cp%>/uploads/shopProduct/${dto.imgSaveFilename}">
 			</c:if>
 		</div>
+		<c:if test="${mode=='update'}">
 		<input name="pdnum" type="hidden" value="${dto.pdnum}">
 		<input name="imgSaveFilename" type="hidden" value="${dto.imgSaveFilename}">
 		<input name="mode" type="hidden" value="update">
+		</c:if>
 		<div style="width:40%; float: right;">
 		<span style="font-weight: bold;">상&nbsp;&nbsp;&nbsp;품&nbsp;&nbsp;&nbsp;명&nbsp;&nbsp;&nbsp;</span><br><input type="text" name="pdName" style="width: 100%; border: 1px solid #BDBDBD; outline: none;" value="${dto.pdName}"><br>
 		<span style="font-weight: bold;">상품내용&nbsp;&nbsp;</span><textarea name="pdSumContent" style="width: 100%; height:300px; border: 1px solid #BDBDBD; outline: none;">${mode=="update"?dto.pdSumContent:""}</textarea><br>

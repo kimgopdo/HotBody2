@@ -106,16 +106,12 @@ function modalSendLogin() {
 								<li><a href="<%=cp%>/dietClass/list?type=1">오프라인</a></li>
 							</ul></li>
 						<li class="scroll_btn last"><a href="<%=cp%>/hotShop">쇼핑몰</a></li>
-						<li class="sub-menu"><a href="">모꼬지</a>
-							<ul>
-								<li><a href="<%=cp%>/moco_board/article">1</a></li>
-								<li><a href="<%=cp%>">2</a></li>
-								<li><a href="<%=cp%>">3</a></li>
-							</ul></li>
+						<li class="scroll_btn last"><a href="<%=cp%>/mocojee/list_mocojee">모꼬지</a>
+							
 						<li class="sub-menu"><a href="<%=cp%>">공지사항</a>
 							<ul>
-								<li><a href="blog.html">공지사항</a></li>
-								<li><a href="blog-post.html">이벤트</a></li>
+								<li><a href="<%=cp%>/notice/list">공지사항</a></li>
+								<li><a href="<%=cp%>/event/list">이벤트</a></li>
 							</ul></li>
 						<li class="scroll_btn last"><a href="#contacts">자주묻는질문</a></li>
 						
@@ -133,7 +129,8 @@ function modalSendLogin() {
 							<li class="scroll_btn last"><a href="<%=cp%>">관리자페이지</a></li>
 						</c:if>
 						<c:if test="${sessionScope.member.userId!='admin'}">
-						<li class="scroll_btn last"><a href="<%=cp%>">마이페이지</a></li>
+						<li class="scroll_btn last"><a href="<%=cp%>/mypage/mypage">마이페이지</a></li>
+						<li class="scroll_btn last"><a href="<%=cp%>/member/myclass">마이클래스</a></li>
 						</c:if>
 						<li class="scroll_btn last">
 							<button type="button" name="searchBtn"  data-toggle="modal" data-target="#myLoginModal" style="background: white; border: none; outline: none;" onclick="javascript:location.href='<%=cp%>/member/logout';">
