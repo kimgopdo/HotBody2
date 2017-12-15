@@ -32,20 +32,23 @@ public class HotShopBoardController {
 	//main list는 따로 드래그엔 드롭으로 순서 변경 가능하게 만들꺼임.
 	@RequestMapping("/hotShop/productList")
 	public String productList(
-			@RequestParam String cl
-			,@RequestParam String name
+			@RequestParam String code
+			,@RequestParam String menuname
+			,@RequestParam String cl
 			,HttpServletRequest req
 			,HttpSession session
 			,Model model
 			) throws Exception {
 		if(req.getMethod().equalsIgnoreCase("GET")) {
-			name = URLDecoder.decode(name, "UTF-8");
+			menuname = URLDecoder.decode(menuname, "UTF-8");
 		}
 		String root=session.getServletContext().getRealPath("/");
 		String pathname=root+"uploads"+File.separator+"shopProduct";
 		List<HotShop> list=null;
 		Map<String, Object> map=new HashMap<>();
 		map.put("listOrArticle", 0);
+		map.put("cl", cl);
+		map.put("code", code);
 		list=service.productList(map);
 		
 		Iterator<HotShop> it=list.iterator();
@@ -56,7 +59,7 @@ public class HotShopBoardController {
 		}
 		
 		model.addAttribute("list", list);
-		model.addAttribute("state", name);
+		model.addAttribute("state", menuname);
 		return ".hotShop.productList";
 	}
 	
@@ -111,7 +114,7 @@ public class HotShopBoardController {
 	
 	
 	//created submit
-	@RequestMapping(value="/hotShop/created.ok",  method=RequestMethod.POST)
+	@RequestMapping(value="/hotShop/created",  method=RequestMethod.POST)
 	public String createdSubmit(
 			HotShop dto
 			,@RequestParam(defaultValue="created") String mode
@@ -119,6 +122,7 @@ public class HotShopBoardController {
 			,HttpSession session
 			,Model model
 			) throws Exception {
+		System.out.println("-------------------------------------------------------------------------------------");
 		System.out.println(dto.getPdnum());
 		System.out.println(imgSaveFilename);
 		String root=session.getServletContext().getRealPath("/");
@@ -128,10 +132,10 @@ public class HotShopBoardController {
 			file.doFileDelete(imgSaveFilename, pathname);
 			service.productUpdate(dto, pathname);
 		}else {
-			service.insertProductList(dto, pathname);			
+			service.insertProductList(dto, pathname);
 		}
 		
-		return "redirect:/hotShop/productList";
+		return "redirect:/hotShop";
 	}
 	
 	@RequestMapping(value="/hotShop/schedule", method=RequestMethod.POST)

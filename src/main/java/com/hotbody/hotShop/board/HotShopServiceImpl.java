@@ -20,7 +20,7 @@ public class HotShopServiceImpl implements HotShopService{
 	@Override
 	public int insertProductList(HotShop dto, String pathname) {
 		int result=0;
-		try {
+		try { 
 			if(! dto.getUpload().isEmpty()) {
 				System.out.println("파일업로드 if문");
 				String saveFilename=fileManager.doFileUpload(dto.getUpload(), pathname);

@@ -531,8 +531,13 @@ function call(){
 function productInList(page){
 	
 	var url="<%=cp%>/hotShop/productInInfo";
-	var data="colum="+$(':radio[name="colum"]:checked').val()+"&order="+$(':radio[name="order"]:checked').val()+"&page="+page;
-	if($('input[name="startDate"]').val()!=""||$('input[name="endDate"]').val()!=""){
+	var data=
+		"colum="+$(':radio[name="colum"]:checked').val()
+		+"&order="+$(':radio[name="order"]:checked').val()
+		+"&page="+page;
+	if($('input[name="startDate"]').val()!=""
+			||$('input[name="endDate"]').val()!=""){
+		
 		var checkDate=$('input[name="startDate"]').val();
 		if(checkDate==""){
 			alert("조회기간을 설정해주세요");
@@ -598,7 +603,7 @@ function productInSend(f){
 		<td width="10%">총액</td>
 		<td width="10%">유통기한</td>
 		<td width="10%">입고날</td>
-		<td width="10%">업체명</td>    
+		<td width="10%">업체명</td>
 	</tr>
 	<tr class="productIn" height="70px" style="border-bottom: 2px solid #e7e7e7">
 		<td id="showImgArea">상품이미지</td>
@@ -606,7 +611,7 @@ function productInSend(f){
 		<select id="productName" name="pdnum" onchange="showImg();">
 			<option>::상품</option>
 			<c:forEach var="dto" items="${productList}">
-				<option value="${dto.pdnum}"  data-imgSaveFilename="${dto.imgSaveFilename}">${dto.pdName}</option>
+				<option value="${dto.pdnum}" data-imgSaveFilename="${dto.imgSaveFilename}">${dto.pdName}</option>
 			</c:forEach>
 		</select>
 		</td>
