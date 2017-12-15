@@ -205,9 +205,7 @@ $(function(){
 			<textarea style="width: 98%;" rows=10; name="classGoalD">${dto.classGoalD}</textarea>
 		</td>
 	</tr>
-	<!-- 
-		프로그램 등록하는 부분 수정 필요함 
-	 -->
+	
 	<tr height="40">
 		<td width="100" valign="top">프로그램 등록</td>
 		<td>

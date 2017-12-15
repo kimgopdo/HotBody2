@@ -301,13 +301,6 @@ public class DietClassController {
 		return model;
 	}
 	
-	
-	
-	@RequestMapping(value="dietClass/survey")
-	public String classSurvey() {
-		return "dietClass/surveyForm";
-	}
-	
 	/*
 	 * 클래스 프로그램 관련
 	 */

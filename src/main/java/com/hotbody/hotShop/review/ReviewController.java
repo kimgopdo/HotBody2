@@ -53,7 +53,7 @@ public class ReviewController {
 		dto.setUserName(info.getUserName());
 		dto.setPdName(dto.getPdName());
 		////////////////////////////////////////////////////
-		dto.setPdNum(13); // 임시로 상품번호 넣어줌(나중에 삭제)
+		dto.setPdNum(15); // 임시로 상품번호 넣어줌(나중에 삭제)
 		////////////////////////////////////////////////////
 		
 		String root=session.getServletContext().getRealPath("/");
@@ -179,67 +179,22 @@ public class ReviewController {
 	@RequestMapping(value="/hotShop/review_listReply", method=RequestMethod.POST)
 	public String listReply(
 			@RequestParam(value="reviewCode") int reviewCode,
-			@RequestParam(value="pageNo") int current_page,
 			Model model
 			) {
-		
-		int rows = 5;
-		int total_page = 0;
-		int dataCount = 0;
-		
+
 		Map<String, Object> map = new HashMap<>();
 		map.put("reviewCode", reviewCode);
+		int replyCount=service.replyDataCount(map);
+		Reply dto = service.listReply(map);
 		
-		dataCount = service.replyDataCount(map);
-		total_page = util.pageCount(rows, dataCount);
-		if(current_page > total_page)
-			current_page = total_page;
-		
-		int start = (current_page - 1) * rows + 1;
-		int end = current_page * rows;
-		map.put("start", start);
-		map.put("end", end);
-		
-		List<Reply> listReply = service.listReply(map);
-		
-		for(Reply dto : listReply) {
 			dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
-		}
 		
-		String paging = util.paging(current_page, total_page);
+		model.addAttribute("replyCount", replyCount);
+		model.addAttribute("dto", dto);
 		
-		model.addAttribute("listReply", listReply);
-		model.addAttribute("paging", paging);
-		model.addAttribute("replyCount", dataCount);
-		model.addAttribute("total_page", total_page);
-		model.addAttribute("pageNo", current_page);
-		
-		return "/hotShop/listReply";
+		return "hotShop/hotShop_review/listReply";
 	}
 	
-	@RequestMapping(value="/hotShop/review_deleteReply", method=RequestMethod.POST)
-	@ResponseBody
-	public Map<String, Object> deleteReply(
-			@RequestParam int CNUM,
-			HttpSession session
-			){
-		
-		SessionInfo info = (SessionInfo)session.getAttribute("member");
-		String state;
-		
-		if(info == null) {
-			state = "loginFail";
-		} else {
-			Map<String, Object> map = new HashMap<>();
-			map.put("CNUM", CNUM);
-			map.put("userId", info.getUserId());
-			service.deleteReply(map);
-			state = "true";
-		}
-		
-		Map<String, Object> model = new HashMap<>();
-		model.put("state", state);
-		return model;
-	}
+
 	
 }

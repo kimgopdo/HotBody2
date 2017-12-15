@@ -6,9 +6,10 @@
 	String cp=request.getContextPath();
 %>
 <script type="text/javascript">
-function modalFormLogin() {
-	   $('#myLoginModal').modal('show');
+function modalFormLogin() {	
+	$("#myLoginModal").modal('show');
 }
+
 function modalSendLogin() {
 	var f=document.loginForm;
 	if(!f.userId.value) {
@@ -32,7 +33,7 @@ function modalSendLogin() {
 			var state=data.state;
 			var msg=data.message;
 			if(state=="true") {
-				location.href="<%=cp%>/hotShop";
+				location.reload();
 			} else {
 				alert(msg);
 			}
@@ -47,7 +48,7 @@ function modalSendLogin() {
 	<!-- 로그인 모달-->
 	<div class="modal fade" id="myLoginModal" tabindex="-1" role="dialog" aria-labelledby="myLoginModalLabel" aria-hidden="true">
 	  <div class="modal-dialog modal-sm" style="width: 320px;">
-	    <div class="modal-content">
+	    <div class="modal-content" style="top: 300px;">
 	      <div class="modal-header" style="height: 50px;">
 		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
 		<h4 class="modal-title" id="myLoginModalLabel">Login</h4>
@@ -80,8 +81,8 @@ function modalSendLogin() {
 <!-- 오른쪽 사이드 바 -->
    <div id="rightSide" style="width: 10%; height: 100%; float:right; top:0px; right:0; position: fixed; z-index: 10;">
       <div id="mainImge" style="width: 160px; height: 130px; margin-top: 100px; position: absolute;">
-         <a href="#" style="color: black;height: 60px; padding: 1px;">
-            <img src="<%=cp%>/resource/shop_images/HOTBODY_Logo.png"/>
+         <a href="<%=cp%>/" style="color: black;height: 60px; padding: 1px;">
+            <img src="<%=cp%>/resource/images/shop_images/HOTBODY_Logo.png"/>
          </a>
         </div>
         <ul class="btn_Side">
@@ -97,7 +98,7 @@ function modalSendLogin() {
         	</li>
 			<c:if test="${empty sessionScope.member}">
 			<li>
-			     <button type="button" name="searchBtn"  data-toggle="modal" data-target="#myLoginModal" class="btn btn-default btn-lg" style="background: white; border: none; outline: none;" onclick="modalSendLogin();">
+			     <button type="button" name="searchBtn"  class="btn btn-default btn-lg" style="background: white; border: none; outline: none;" onclick="modalFormLogin();">
 			        <span class="glyphicon glyphicon-log-in"></span>
 			     </button>
 			</li>
