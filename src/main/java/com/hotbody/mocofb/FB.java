@@ -1,6 +1,8 @@
-package com.hotbody.mocoboard;
+package com.hotbody.mocofb;
 
-public class Board {
+import org.springframework.web.multipart.MultipartFile;
+
+public class FB {
 	private int moFBNum;
 	private String moFBSubject;
 	private String userId;
@@ -8,6 +10,16 @@ public class Board {
 	private String moFBContent;
 	private String moFBFile;
 	private int geNum;
+	private int moFBHit;
+	
+
+	public int getMoFBHit() {
+		return moFBHit;
+	}
+	public void setMoFBHit(int moFBHit) {
+		this.moFBHit = moFBHit;
+	}
+	private MultipartFile upload;
 	
 	public int getMoFBNum() {
 		return moFBNum;
@@ -51,6 +63,13 @@ public class Board {
 	public void setGeNum(int geNum) {
 		this.geNum = geNum;
 	}
+	public MultipartFile getUpload() {
+		return upload;
+	}
+	public void setUpload(MultipartFile upload) {
+		this.upload = upload;
+	}
+	
 	
 	
 }
