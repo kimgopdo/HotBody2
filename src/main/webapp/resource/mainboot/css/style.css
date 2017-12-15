@@ -44,7 +44,7 @@ section {background-color:#fff;}
 	background-attachment:fixed !important;
 }
 
-a, input, select, textarea {
+input, select, textarea {
 	vertical-align:top;
 	outline:none !important;
 	-webkit-border-radius: 0;
@@ -1188,9 +1188,8 @@ footer h4 {color:#fff;}
 /*-----------------------------------------------------------------------------------*/
 /* __________ Contact Form __________ */
 textarea,
-input[type="text"] {
-	width:100%;
-	padding: 10px 8px;
+input[type="text"],input[type="password"] {
+	padding: 2px 2px;
 	text-transform:none;
 	font-family: 'Roboto', sans-serif;
 	font-weight:400;
@@ -2033,37 +2032,3 @@ input[type="color"]:focus {
 	.col-ss-1 {width: 8.333333333333332%;}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

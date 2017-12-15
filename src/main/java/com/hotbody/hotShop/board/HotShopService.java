@@ -13,4 +13,5 @@ public interface HotShopService {
 	public List<Supply> readSupply();
 	public int insertProductIn(ProductIn dto);
 	public List<ProductIn> readProductIn(Map<String, Object> map);
+	public int dataCount();
 }

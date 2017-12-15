@@ -1,4 +1,3 @@
-
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -9,8 +8,13 @@
 %>
 
 <script type="text/javascript">
+function modalFormLogin() {
+	   $('#myLoginModal').modal('show');
+}
 function modalSendLogin() {
+	
 	var f=document.loginForm;
+	
 	if(!f.userId.value) {
     	f.userId.focus();
     	return false;
@@ -32,7 +36,7 @@ function modalSendLogin() {
 			var state=data.state;
 			var msg=data.message;
 			if(state=="true") {
-				location.href="<%=cp%>/";
+				location.reload();
 			} else {
 				alert(msg);
 			}
@@ -46,8 +50,8 @@ function modalSendLogin() {
 
 	<!-- 로그인 모달-->
 	<div class="modal fade" id="myLoginModal" tabindex="-1" role="dialog" aria-labelledby="myLoginModalLabel" aria-hidden="true">
-	  <div class="modal-dialog modal-sm" style="width: 320px;">
-	    <div class="modal-content">
+	  <div class="modal-dialog modal-sm" style="width: 320px; top: 200px;">
+	    <div class="modal-content" style="top: 200px;">
 	      <div class="modal-header" style="height: 50px;">
 		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
 		<h4 class="modal-title" id="myLoginModalLabel">Login</h4>
@@ -56,19 +60,19 @@ function modalSendLogin() {
 	      <div class="modal-body" style="height: 130px;">
 			  <table style="margin-top: 1px;">
 				<tr height="30">
-					<td>아 이 디&nbsp;&nbsp;&nbsp;<input type="text" name="userId" style="color : black;" placeholder="Id"></td>
+					<td>아 이 디&nbsp;&nbsp;&nbsp;<input type="text" name="userId" style="color : black; width: 176px;" placeholder="Id"></td>
 				</tr>
 				<tr height="30">
 					<td style="padding-top: 20px;">비밀번호 <input type="password" name="pwd" style="margin-left:1px; width: 175px; color: black;" placeholder="Password"></td>
 				</tr>
 				<tr height="30">
-					<td style="padding-left: 17px; font-size: 11px; padding-bottom: 3px; padding-top: 10px;"><a href="#" style="margin-left: 140px; width: 206px;">아이디 / 비밀번호 찾기</a></td>
+					<td style="padding-left: 17px; font-size: 11px; padding-bottom: 3px; padding-top: 10px;"><a href="#" style="margin-left: 120px; width: 206px;">아이디 / 비밀번호 찾기</a></td>
 				</tr>
 			  </table>
 	      </div>
-	      <div class="modal-footer" style="height: 70px;">
-	      	<a href="#"><button type="button" class="btn btn-default" data-dismiss="modal" style="height: 35px; float: left"><span style="font-size: 11px;">회원가입</span></button></a>
-			<button type="button" class="btn btn-default" style="height: 35px;" onclick="modalSendLogin();"><span style="font-size: 11px;">login</span></button>
+	      <div class="modal-footer" style="height: 70px;" align="center">
+	      	<button type="button" class="btn btn-default" data-dismiss="modal" style="height: 35px; width:123px;"><span style="font-size: 11px;">회원가입</span></button>
+			<button type="button" class="btn btn-default" style="height: 35px; width: 123px;" onclick="modalSendLogin();"><span style="font-size: 11px;">login</span></button>
 	      </div>
 	    </form>
 	    </div>
@@ -98,8 +102,8 @@ function modalSendLogin() {
 						<li class="first active scroll_btn"><a href="#home">Home</a></li>
 						<li class="sub-menu"><a href="">클래스</a>
 							<ul>
-								<li><a href="<%=cp%>">온라인</a></li>
-								<li><a href="<%=cp%>">오프라인</a></li>
+								<li><a href="<%=cp%>/dietClass/list?type=0">온라인</a></li>
+								<li><a href="<%=cp%>/dietClass/list?type=1">오프라인</a></li>
 							</ul></li>
 						<li class="scroll_btn last"><a href="<%=cp%>">쇼핑몰</a></li>
 						<li class="sub-menu"><a href="">모꼬지</a>
@@ -114,6 +118,7 @@ function modalSendLogin() {
 								<li><a href="blog-post.html">이벤트</a></li>
 							</ul></li>
 						<li class="scroll_btn last"><a href="#contacts">자주묻는질문</a></li>
+						
 						<c:if test="${empty sessionScope.member}">
 						<li class="scroll_btn last">
 							<button type="button" name="searchBtn"  data-toggle="modal" data-target="#myLoginModal" style="background: white; border: none; outline: none;" onclick="modalSendLogin();">
@@ -122,7 +127,14 @@ function modalSendLogin() {
 						</li>
 						<li class="scroll_btn last"><a href="<%=cp%>">회원가입</a></li>
 						</c:if>
+						
 						<c:if test="${not empty sessionScope.member}">
+						<c:if test="${sessionScope.member.userId=='admin'}">
+							<li class="scroll_btn last"><a href="<%=cp%>">관리자페이지</a></li>
+						</c:if>
+						<c:if test="${sessionScope.member.userId!='admin'}">
+						<li class="scroll_btn last"><a href="<%=cp%>">마이페이지</a></li>
+						</c:if>
 						<li class="scroll_btn last">
 							<button type="button" name="searchBtn"  data-toggle="modal" data-target="#myLoginModal" style="background: white; border: none; outline: none;" onclick="javascript:location.href='<%=cp%>/member/logout';">
 							로그아웃

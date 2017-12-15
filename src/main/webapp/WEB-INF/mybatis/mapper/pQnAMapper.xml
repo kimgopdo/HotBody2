@@ -3,27 +3,34 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="qna">
 
-	<insert id="insertQnA" parameterType="com.hotbody.hotShop.qna.Qna">
-		INSERT INTO pQnA (pdQCode, pdQSubject, pdQContent, pdNum, userId, pdQDepth, userName) 
-			VALUES(pdQCode_SEQ.NEXTVAL, #{pdQSubject}, #{pdQContent}, '1', #{userId}, #{pdQDepth}, #{userName})
+	<!-- 질문 등록 -->
+	<select id="seq" resultType="Integer">
+		SELECT pdQCode_SEQ.NEXTVAL FROM dual
+	</select>
+	
+	<insert id="insertQna" parameterType="com.hotbody.hotShop.qna.Qna">
+		INSERT INTO pQnA (pdQCode, pdQSubject, pdQContent, pdNum, userId, answerNum, userName, groupNum) 
+			VALUES(pdQCode_SEQ.NEXTVAL, #{pdQSubject}, #{pdQContent}, #{pdNum}, #{userId}, #{answerNum}, #{userName}, #{groupNum})
 	</insert>
 	
+	<!-- 검색 키 -->
 	<sql id="where-list">
-		<if test="searchKey == 'name' ">
-			name = #{searchValue}
+		<if test="searchKey == 'userName' ">
+			userName = #{searchValue}
 		</if>
-		<if test="searchKey == 'subject' ">
-			INSTR(subject, #{searchValue}) &gt; 0
+		<if test="searchKey == 'pdQSubject' ">
+			INSTR(pdQSubject, #{searchValue}) &gt; 0
 		</if>
-		<if test="searchKey == 'content' ">
-			INSTR(content, #{searchValue}) &gt; 0
+		<if test="searchKey == 'pdQContent' ">
+			INSTR(pdQContent, #{searchValue}) &gt; 0
 		</if>
-		<if test="searchKey == 'created' ">
-			TO_CHAR(created, 'YYYY-MM-DD') = #{searchValue} OR TO_CHAR(created, 'YYYYMMDD') = #{searchValue}
+		<if test="searchKey == 'pdQCreated' ">
+			TO_CHAR(pdQCreated, 'YYYY-MM-DD') = #{searchValue} OR TO_CHAR(pdQCreated, 'YYYYMMDD') = #{searchValue}
 		</if>
 	</sql>
 	
-		<select id="dataCount" resultType="Integer" parameterType="map">
+	<!-- 게시물 개수 -->
+	<select id="dataCount" resultType="Integer" parameterType="map">
 		SELECT NVL(COUNT(*), 0) FROM pqna
 		<where>
 			<if test="searchValue != null and searchValue != ''">
@@ -32,22 +39,39 @@
 		</where>
 	</select>
 	
-		<!-- 리스트 start - end 내림차순 정렬 -->
+	<!-- 리스트 start - end 내림차순 정렬 -->
 	<select id="listQna" resultType="com.hotbody.hotShop.qna.Qna" parameterType="map">
 		SELECT * FROM(
     		SELECT ROWNUM rnum, tb.* FROM(
-        		SELECT pdQCode, userName, pdQSubject, pdQCreated
+        		SELECT pdQCode, userName, pdQSubject, pdQCreated, answerNum, groupNum
         		FROM pQnA
         		<where>
 					<if test="searchValue != null and searchValue != ''">
 						<include refid="where-list"/>
 					</if>
 				</where>
-        		ORDER BY pdQCode DESC
+        		ORDER BY groupNum DESC, answerNum, pdQCode DESC
      	<![CDATA[
     		) tb WHERE ROWNUM <= #{end}      
 		) WHERE rnum >= #{start}
 		]]>
 	</select>
 
+	<!-- 게시물 번호로 게시물 가져오기 -->
+	<select id="readQna" resultType="com.hotbody.hotShop.qna.Qna" parameterType="Integer">
+		SELECT pdQCode, p.userId, p.userName, pdQSubject, pdQContent, p.pdQCreated, pdNum, answerNum, groupNum
+		FROM pqna p JOIN member1 m ON p.userId=m.userId
+		WHERE pdQCode = #{pdQCode}
+	</select>
+	
+	<!-- 게시물 수정 -->
+	<update id="updateQna" parameterType="com.hotbody.hotShop.qna.Qna">
+		UPDATE pQnA SET pdQSubject=#{pdQSubject}, pdQContent=#{pdQContent} WHERE pdQCode=#{pdQCode}
+	</update>
+	
+	<!-- 게시물 삭제 -->
+	<delete id="deleteQna" parameterType="integer">
+		DELETE FROM pQnA WHERE pdQCode=#{pdQCode}
+	</delete>
+	
 </mapper>

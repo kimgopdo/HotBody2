@@ -35,6 +35,11 @@
 
 <script type="text/javascript">
 function sendOk() {
+	var uid="${sessionScope.member.userId}";
+   	if(! uid) {
+      modalFormLogin();
+      return;
+   	}
 	var mode = "${mode}";
 	
 	var f = document.dietClassForm;
@@ -128,18 +133,7 @@ function sample6_execDaumPostcode() {
         }
     }).open();
 }
-/* 
-function programOk() {
-	var data="";
-    $('input:checkbox[name=proSelect]').each(function() {
-       if($(this).is(':checked'))
-    	   data += $(this).attr("data-programName")+" | ";
-    });
-    
-    $("#showpro").show();
-    $("#showproInfo").html(data);
-}
- */
+
 $(function(){
 	var t = "${dto.classType}";
 	if(t==0)

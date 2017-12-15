@@ -15,12 +15,16 @@ public class QnaServiceImpl implements QnaService{
 	private CommonDAO dao;
 	
 	@Override
-	public int insertQnA(Qna dto) {
+	public int insertQna(Qna dto, String mode) {
 		int result = 0;
 		
 		try {
-			dto.setPdQDepth(0);
-			result = dao.insertData("qna.insertQnA", dto);
+			int seq=dao.selectOne("qna.seq");
+			dto.setPdQCode(seq);
+			if(mode.equals("created"))
+				dto.setGroupNum(seq);
+				
+			result = dao.insertData("qna.insertQna", dto);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -52,5 +56,50 @@ public class QnaServiceImpl implements QnaService{
 		
 		return result;
 	}
-      
+
+	@Override
+	public Qna readQna(int pdQCode) {
+		Qna dto = null;
+		
+		try {
+			dto = dao.selectOne("qna.readQna", pdQCode);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		
+		return dto;
+	}
+
+	@Override
+	public int updateQna(Qna dto) {
+		int result = 0;
+		
+		try {
+		dao.updateData("qna.updateQna", dto);
+		result=1;
+		} catch(Exception e) {
+			System.out.println(e.toString());
+		}
+		
+		return result;
+	}
+
+	@Override
+	public int deleteQna(int pdQCode, String userId) {
+		int result=0;
+
+		try{
+			Qna dto=readQna(pdQCode);
+			if(dto!=null) {
+				if(! dto.getUserId().equals(userId) && ! userId.equals("admin"))
+					return result;
+			}
+			
+			dao.deleteData("qna.deleteQna", pdQCode);
+			result=1;
+		} catch(Exception e) {
+		}
+		return result;
+	}
+
 }

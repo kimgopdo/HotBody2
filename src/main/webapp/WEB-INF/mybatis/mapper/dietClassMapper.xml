@@ -162,8 +162,8 @@
 	</delete>
 	
 	<insert id="insertMission" parameterType="com.hotbody.dietClass.Mission">
-		INSERT INTO miscontent(missionNum, missionContent, classNum, missDay)
-		VALUES(misContent_seq.NEXTVAL, #{missionContent}, #{classNum}, #{missDay})
+		INSERT INTO miscontent(missionNum, missionContent, classNum, missDay, missIndex)
+		VALUES(misContent_seq.NEXTVAL, #{missionContent}, #{classNum}, #{missDay}, #{missIndex})
 	</insert>
 	
 	<select id="readMission" parameterType="map" resultType="com.hotbody.dietClass.Mission">
@@ -171,4 +171,20 @@
 		FROM misContent WHERE classNum=#{classNum} AND missDay=#{missDay} AND missionContent IS NOT NULL
 	</select>
 	
+	<update id="updateMission" parameterType="com.hotbody.dietClass.Mission">
+		UPDATE misContent SET missionContent = #{missionContent}
+		WHERE classNum=#{classNum} AND missDay=#{missDay} AND missIndex=#{missIndex}
+	</update>
+	
+	<delete id="deleteMission" parameterType="map">
+		DELETE misContent WHERE classNum=#{classNum} 
+		<if test="missDay!=null and missIndex!=null">
+			AND missDay=#{missDay} AND missIndex=#{missIndex}
+		</if>
+	</delete>	
+	
+	<select id="haveMission" parameterType="com.hotbody.dietClass.Mission" resultType="Integer">
+		SELECT COUNT(missionContent) FROM misContent
+		WHERE classNum=#{classNum} AND missDay=#{missDay} AND missIndex=#{missIndex}
+	</select>
 </mapper>

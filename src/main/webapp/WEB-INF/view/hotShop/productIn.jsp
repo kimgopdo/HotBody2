@@ -478,14 +478,32 @@ $(function() {
   });
 </script>
 <script>
+var page=1;
+var totalPage=${total_page};
+$(function(){
+	productInList(1);
+	if ($("body").height() < $(window).height()) {
+		++page;
+		productInList(page);
+	}
+})
+$(function(){
+	window.onscroll = function(ev) {
+	    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+	    	if(page<totalPage) {
+	    		++page;
+	    		productInList(page);
+	    	}
+	    }
+	};
+})
 $(function(){
 	$("input[name=colum]").click(function(){
-		productInList();
+		productInList(page);
 	});
 	$("input[name=order]").click(function(){
-		productInList();
-	})
-	productInList();
+		productInList(page);
+	});
 })
 function showImg(){
 	
@@ -499,28 +517,47 @@ function showImg(){
 	}
 }
 function call(){
-	console.log("dddd");
 	var price=$("#pdRawPrice").val();
 	var	num=$("#pdInNum").val();
 	
 		var tot=parseInt(price)*parseInt(num);
 		if(! tot){
-			$("#totalPrice").text("0");
+			$("#totalPrice").text("0원");
 		}else{
-			$("#totalPrice").text(tot);
+			tot=tot.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+			$("#totalPrice").text(tot+"원");
 		}
 }
-function productInList(){
+function productInList(page){
+	
 	var url="<%=cp%>/hotShop/productInInfo";
-	var data="colum="+$(':radio[name="colum"]:checked').val()+"&order="+$(':radio[name="order"]:checked').val();
-	alert(data);
+	var data="colum="+$(':radio[name="colum"]:checked').val()+"&order="+$(':radio[name="order"]:checked').val()+"&page="+page;
+	if($('input[name="startDate"]').val()!=""||$('input[name="endDate"]').val()!=""){
+		var checkDate=$('input[name="startDate"]').val();
+		if(checkDate==""){
+			alert("조회기간을 설정해주세요");
+			checkDate.focus();
+			return;  
+		}
+		data+="&startDate="+checkDate;
+		checkDate=$('input[name="endDate"]').val();
+		if(checkDate==""){
+			alert("조회기간을 설정해주세요");
+			checkDate.focus();
+			return;
+		}
+		data+="&endDate="+checkDate;
+	}
 	$.ajax({
 		type: "post"
 		,url: url
 		,data:data
 		,success:function(a){
-			console.log(a);
 			$("#productInList").html(a);
+			if ($("body").height() < $(window).height()) {
+				++page;
+				productInList(page);
+			}
 		}
 	});
 }
@@ -544,25 +581,24 @@ function productInSend(f){
 		,data:data
 		,dataType:"json"
 		,success:function(data){
-			
-			
-			productInList();
+			productInList(1);
 		}
 	});
 }
+
 </script>
 <form name="productInForm" method="post">
 <table style="width:100%; margin-top: 100px; border-collapse: collapse;">
 	<tr><td><button type="button" onclick="productInSend(this.form);">입고</button></td></tr>
-	<tr height="30px" style="border-bottom: 2px solid #373737">
-		<td width="15%">상품이미지</td>
+	<tr height="30px"style="border-bottom: 2px solid #373737">
+		<td width="15%">상품이미지</td>                                            
 		<td width="25%">상품이름</td>
 		<td width="10%">원가</td>
 		<td width="10%">입고수량</td>
 		<td width="10%">총액</td>
 		<td width="10%">유통기한</td>
-		<td width="10%">입고날</td>      
-		<td width="10%">업체명</td>                          
+		<td width="10%">입고날</td>
+		<td width="10%">업체명</td>    
 	</tr>
 	<tr class="productIn" height="70px" style="border-bottom: 2px solid #e7e7e7">
 		<td id="showImgArea">상품이미지</td>
@@ -588,33 +624,35 @@ function productInSend(f){
 		</select>
 		</td>
 	</tr>
-	<tr>
-		<td colspan="8">
-		조회기간: 
-	  		<input type="text" id="datepicker1"> ~ <input type="text" id="datepicker2">
-		</td>
-	</tr>
-	
 </table>
 </form>
 
-<table style="width:100%; margin-top: 100px; border-collapse: collapse;">
+<form name="searchDateForm" method="post">
+<table style="width:100%; margin-top: 50px; margin-bottom:100px; border-collapse: collapse;">
 	<tr>
-		<td colspan="8"><input name="order" type="radio" checked="checked" value="desc">오름차순 <input name="order" type="radio" checked="checked" value="asc">내림차순 <input name="colum" type="radio" checked="checked" value="pdincode">입고순 <input name="colum" type="radio" value="pdexdate">유통기한순</td>
+		<td colspan="8">
+		조회기간: 
+	  		<input type="text" name="startDate" id="datepicker1" disabled="disabled"> ~ <input type="text" name="endDate" id="datepicker2" disabled="disabled">
+	  		<button type="button" onclick="productInList(1);">조회</button>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="4" style="text-align: left;"><input name="order" type="radio" checked="checked" value="asc">오름차순 <input name="order" type="radio" checked="checked" value="desc">내림차순 </td> <td colspan="4" style="text-align: right;"><input name="colum" type="radio" checked="checked" value="pdincode">입고순 <input name="colum" type="radio" value="pdexdate">유통기한순</td>
 	</tr>
 	<tr height="30px" style="border-bottom: 2px solid #373737">
-		<td width="15%">상품이미지</td>
-		<td width="25%">상품이름</td>
+		<td width="10%">상품이미지</td>
+		<td width="25%">상품이름</td>                  
 		<td width="10%">원가</td>
 		<td width="10%">입고수량</td>
 		<td width="10%">총액</td>
 		<td width="10%">유통기한</td>
-		<td width="10%">입고날</td>      
+		<td width="10%">입고날</td>                                          
 		<td width="10%">업체명</td>
 	</tr>
 	<tbody id="productInList">
 	</tbody>
 </table>
+</form>
 <input type="hidden" id="SJson"></input>
 <script type="text/javascript">
 function sales(){

@@ -9,7 +9,22 @@ public class Qna {
 	private String pdQContent;
 	private int pdNum;
 	private String userId;
+	private int listNum;
+	private int answerNum;
+	private int groupNum;
 	
+	public int getAnswerNum() {
+		return answerNum;
+	}
+	public void setAnswerNum(int answerNum) {
+		this.answerNum = answerNum;
+	}
+	public int getListNum() {
+		return listNum;
+	}
+	public void setListNum(int listNum) {
+		this.listNum = listNum;
+	}
 	public int getPdQCode() {
 		return pdQCode;
 	}
@@ -57,5 +72,11 @@ public class Qna {
 	}
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+	public int getGroupNum() {
+		return groupNum;
+	}
+	public void setGroupNum(int groupNum) {
+		this.groupNum = groupNum;
 	}
 }

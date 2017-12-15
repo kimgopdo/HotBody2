@@ -33,6 +33,15 @@ function deleteOk(num,type) {
 	    }
 	});
 }
+
+function payGo(num,type) {
+	var uid="${sessionScope.member.userId}";
+   	if(! uid) {
+      modalFormLogin();
+      return;
+   	}
+   	location.href="<%=cp%>/dietClass/payment?num="+num+"&type="+type;
+}
 </script>
 <div class="body-container" style="width: 1000px; margin: 100px auto;">
 
@@ -47,10 +56,20 @@ function deleteOk(num,type) {
 	
 	<div id="classinfo" style="float: left; font-size: 16px; width: 350px; height: 260px;">
 		<p style="font-weight: bold; font-size: 19px; padding-top: 2px;">클래스 기간</p>
+		<c:if test="${dto.classType==0}">
 		<p style="color: #666666;">${dto.onperiod}일</p>
+		</c:if>
+		<c:if test="${dto.classType==1}">
+		<p style="color: #666666;">${dto.startDate}<br>~ ${dto.endDate}</p>
+		</c:if>
 
 		<p style="font-weight: bold; font-size: 19px; padding-top: 2px;">멘토</p>
+		<c:if test="${dto.classType==0}">
 		<p style="color: #666666;">${dto.mento} 님</p>
+		</c:if>
+		<c:if test="${dto.classType==1}">
+		<p style="color: #666666;">${dto.coach} 님</p>
+		</c:if>
 		
 		<p style="font-weight: bold; font-size: 19px; padding-top: 2px;">운동강도</p>
 		<img style="width: 100px; margin-left: 7px;" src="<%=cp%>/resource/images/level${dto.cllevel}.PNG">
@@ -70,7 +89,7 @@ function deleteOk(num,type) {
     	<button id="paymentBtn" type="button" style="width: 45%; height: 50px; background: #1abc9c; border: 0px; color: #ffffff; font-weight: bold;" onclick="deleteOk(${dto.classNum},${dto.classType});"> 클래스 삭제 </button>
     	</c:if>
     	<c:if test="${sessionScope.member.userId!='admin'}">
-    	<button id="paymentBtn" type="button" style="width: 100%; height: 50px; background: #1abc9c; border: 0px; color: #ffffff; font-weight: bold;" onclick="javascript:location.href='<%=cp%>/dietClass/payment?num=${dto.classNum}&type=${dto.classType}';">수강 신청하기</button>
+    	<button id="paymentBtn" type="button" style="width: 100%; height: 50px; background: #1abc9c; border: 0px; color: #ffffff; font-weight: bold;" onclick="payOk();">수강 신청하기</button>
     	</c:if>
 	</div>
 
