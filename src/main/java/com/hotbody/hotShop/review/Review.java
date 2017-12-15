@@ -14,6 +14,10 @@ public class Review {
 	private String image;
 	private int listNum;
 	
+	
+	private int cNum;
+	private String replyUserId, replyContent, replyCreated, replyUserName;
+	
 	public int getListNum() {
 		return listNum;
 	}
@@ -81,5 +85,35 @@ public class Review {
 	}
 	public void setImage(String image) {
 		this.image = image;
+	}
+	public int getcNum() {
+		return cNum;
+	}
+	public void setcNum(int cNum) {
+		this.cNum = cNum;
+	}
+	public String getReplyUserId() {
+		return replyUserId;
+	}
+	public void setReplyUserId(String replyUserId) {
+		this.replyUserId = replyUserId;
+	}
+	public String getReplyContent() {
+		return replyContent;
+	}
+	public void setReplyContent(String replyContent) {
+		this.replyContent = replyContent;
+	}
+	public String getReplyCreated() {
+		return replyCreated;
+	}
+	public void setReplyCreated(String replyCreated) {
+		this.replyCreated = replyCreated;
+	}
+	public String getReplyUserName() {
+		return replyUserName;
+	}
+	public void setReplyUserName(String replyUserName) {
+		this.replyUserName = replyUserName;
 	}
 }

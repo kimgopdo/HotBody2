@@ -105,7 +105,7 @@ function modalSendLogin() {
 								<li><a href="<%=cp%>/dietClass/list?type=0">온라인</a></li>
 								<li><a href="<%=cp%>/dietClass/list?type=1">오프라인</a></li>
 							</ul></li>
-						<li class="scroll_btn last"><a href="<%=cp%>">쇼핑몰</a></li>
+						<li class="scroll_btn last"><a href="<%=cp%>/hotShop">쇼핑몰</a></li>
 						<li class="sub-menu"><a href="">모꼬지</a>
 							<ul>
 								<li><a href="<%=cp%>/moco_board/article">1</a></li>
@@ -125,7 +125,7 @@ function modalSendLogin() {
 							로그인
 							</button>
 						</li>
-						<li class="scroll_btn last"><a href="<%=cp%>">회원가입</a></li>
+						<li class="scroll_btn last"><a href="<%=cp%>/member/member">회원가입</a></li>
 						</c:if>
 						
 						<c:if test="${not empty sessionScope.member}">
