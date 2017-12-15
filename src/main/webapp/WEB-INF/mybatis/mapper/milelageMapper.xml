@@ -42,5 +42,48 @@
 	
 	</select>
 	
+	
+		<!-- 주문횟수 메세지로 이동예정-->
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0) 
+		FROM msg
+        where  userId =#{userId}
+		<if test="userId2 != null and userId2 != ''">
+				and userId2 = #{userId2}  
+		</if>
+		<if test="content != null and content != ''">
+			and	INSTR(content, #{content}) &gt; 0
+		</if>
+		<if test="subject != null and subject != ''">
+			and	INSTR(subject, #{subject}) &gt; 0 
+		</if>
+	</select>
+	
+	<select id="listMessage" parameterType="map" resultType="com.hotbody.milelage.Message">
+	
+	 SELECT * FROM (
+		SELECT ROWNUM rnum, tb.* FROM (
+      	select userId,userId2,subject,content
+        from msg
+        where  userId =#{userId}
+		<if test="userId2 != null and userId2 != ''">
+				and userId2 = #{userId2}  
+		</if>
+		<if test="content != null and content != ''">
+			and	INSTR(content, #{content}) &gt; 0
+		</if>
+		<if test="subject != null and subject != ''">
+			and	INSTR(subject, #{subject}) &gt; 0 
+		</if>
+        <![CDATA[
+		ORDER BY SCREATED DESC
+
+	        ) tb WHERE ROWNUM <= #{end}
+	    ) WHERE rnum >= #{start}
+	]]>
+	
+	
+	</select>
+	
 
 </mapper>
