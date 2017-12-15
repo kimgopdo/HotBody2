@@ -12,7 +12,9 @@ function modalFormLogin() {
 	   $('#myLoginModal').modal('show');
 }
 function modalSendLogin() {
+	
 	var f=document.loginForm;
+	
 	if(!f.userId.value) {
     	f.userId.focus();
     	return false;
