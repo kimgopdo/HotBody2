@@ -1,15 +1,16 @@
 package com.hotbody.hotShop.review;
 
 public class Reply {
-	private int CNUM, reviewCode;
+	private int cNum, reviewCode;
 	private String userId, userName;
 	private String content, created;
 	
-	public int getCNUM() {
-		return CNUM;
+
+	public int getcNum() {
+		return cNum;
 	}
-	public void setCNUM(int cNUM) {
-		CNUM = cNUM;
+	public void setcNum(int cNum) {
+		this.cNum = cNum;
 	}
 	public int getReviewCode() {
 		return reviewCode;

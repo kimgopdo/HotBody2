@@ -98,8 +98,8 @@ function deleteQna() {
 			    </td>
 			
 			 	<td align="right">
-			        <button type="button" class="btn" style="background: white; border: 1px solid #BDBDBD; border-radius: 3px; height: 30px;" onclick="answerQna()">답변</button>
-			        <button type="button" class="btn" style="background: white; border: 1px solid #BDBDBD; border-radius: 3px; height: 30px;" onclick="javascript:location.href='<%=cp%>/hotShop/pQnA_list?${query}';">리스트</button>
+			        <button type="button" class="btn" style="background: white; border: 1px solid #999999; border-radius: 3px; height: 30px;" onclick="answerQna()">답변</button>
+			        <button type="button" class="btn" style="background: white; border: 1px solid #999999; border-radius: 3px; height: 30px;" onclick="javascript:location.href='<%=cp%>/hotShop/pQnA_list?${query}';">리스트</button>
 			    </td>
 			</tr>
 			</table>

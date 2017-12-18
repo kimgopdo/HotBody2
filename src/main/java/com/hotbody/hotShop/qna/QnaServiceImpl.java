@@ -45,6 +45,19 @@ public class QnaServiceImpl implements QnaService{
 	}
 
 	@Override
+	public List<Qna> listQnaArticle(Map<String, Object> map) {
+		List<Qna> list = null;
+		
+		try {
+			list = dao.selectList("qna.listQnaArticle", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		
+		return list;
+	}
+
+	@Override
 	public int dataCount(Map<String, Object> map) {
 		int result = 0;
 		

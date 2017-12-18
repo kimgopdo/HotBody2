@@ -24,7 +24,7 @@
 	</select>
 	
 	<select id="readReview" resultType="com.hotbody.hotShop.review.Review" parameterType="map">
-		SELECT reviewCode, userName, reviewContent, starScore, reviewCreated, r.pdNum, pdName, userId, image 
+		SELECT r.reviewCode, r.userName, r.reviewContent, r.starScore, r.reviewCreated, r.pdNum, p.pdName, r.userId, r.image 
 		FROM shReviews r
 		JOIN productList p 
 		ON r.pdNum=p.pdNum
@@ -35,7 +35,7 @@
 		SELECT * FROM(
 			SELECT ROWNUM rnum, tb.* FROM(
        			SELECT r.reviewCode, r.userName, r.reviewContent, r.starScore, r.reviewCreated, r.pdNum, p.pdName, r.userId, r.image,
-       			       NVL(c.cNum, 0) cNum, c.userId replyUserId, c.content replyContent, c.created replyCreated, c.userName replyUserName
+       			       c.cNum, c.userId replyUserId, c.content replyContent, c.created replyCreated, c.userName replyUserName
 				FROM shReviews r
 				LEFT OUTER JOIN productList p ON r.pdNum=p.pdNum
 				LEFT OUTER JOIN
@@ -80,11 +80,8 @@
                      WHERE reviewCode=#{reviewCode} AND ROWNUM=1 ORDER BY cNum DESC
        </select>
       
-      <delete id="deleteReply" parameterType="map">
+      <delete id="deleteReply" parameterType="Integer">
       		DELETE FROM ReComment WHERE cNum=#{cNum}
-      		<if test="userId != 'admin'">
-      			AND userId=#{userId}
-      		</if>
       </delete>
 	
 </mapper>
