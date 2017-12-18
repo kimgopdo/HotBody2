@@ -91,17 +91,17 @@ fieldset[disabled] .form-control {
 function check() {
 	var f = document.boardForm;
 	var mode = "${mode}";
+	
+	
 	if(!f.pdQSubject.value){
 		alert("제목을 입력하세요.");
 		f.pdQSubject.focus();
-		return;
+		return false;
 	}
-	
-	
-	if(!str || str=="<p>&nbsp;</p>") {
-		alert("내용을 입력하세요");
-		f.pdQContent.focus();
-		return;
+	if(! document.getElementById("pdQContent").value){
+		alert("내용을 입력하세요.");
+		f.pdQSubject.focus();
+		return false;
 	}
 	
 	f.action="<%=cp%>/hotShop/pQnA_"+mode;
@@ -141,7 +141,7 @@ function check() {
 </table>
 <div style="width:100%; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
 <div style="width: 100%; margin: 20px auto 0;" align="center">
-<button type="submit" style="background: white; border: 1px solid #999999; border-radius: 3px; height: 30px;" onclick="check();">${mode=="created"? "등록완료":(mode=="update"?"수정완료":"답변등록")}</button>
+<button type="button" style="background: white; border: 1px solid #999999; border-radius: 3px; height: 30px;" onclick="submitContents(this);">${mode=="created"? "등록완료":(mode=="update"?"수정완료":"답변등록")}</button>
 <button type="button" style="background: white; border: 1px solid #999999; border-radius: 3px; height: 30px;" onclick="javascript:location.href='<%=cp%>/hotShop/pQnA_list';">${mode=="created"? "등록취소":(mode=="update"?"수정취소":"답변취소")}</button>
 <c:if test="${mode=='update'}">
 	<input type="hidden" name="page" value="${page}">
