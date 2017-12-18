@@ -172,6 +172,7 @@ function deleteFile() {
 	}
 }
 
+
 </script>
 </head>
 <body style="overflow: hidden; height: 1100px;">
@@ -199,24 +200,6 @@ function deleteFile() {
 			
 			<tr height="10px;"></tr>
 			
-			<tr height="40">
-				<td width="100">모임일시</td>
-				<td><input type="date" name="moDate">${dto.moDate}</td>
-			</tr>
-						
-			<tr height="40px;">
-				<td width="100" valign="top">시작시간</td>
-				<td><input type="time" name="moStart">${dto.Start} }</td>
-			</tr>
-
-			<tr height="10px;"></tr>
-			
-			<tr height="40px;">
-				<td width="100" valign="top">종료시간</td>
-				<td><input type="time" name="moEnd">${dto.moEnd} }</td>
-			</tr>
-			
-			<tr height="10px;"></tr>
 
 			<tr height="40px;">
 				<td width="100" valign="top">최대 참석자수</td>
@@ -231,6 +214,11 @@ function deleteFile() {
 				<td><textarea style="width: 98%;" rows=10; name="moContent"
 						id="moContent">${dto.moContent}</textarea></td>
 			</tr>
+			
+			<div>
+              <h4 class="md-subhead">Standard date picker</h4>
+              <mdp-date-picker mdp-placeholder="Date" ng-model="currentDate"></mdp-date-picker>
+            </div>
 
 
 			<tr height="10px;"></tr>
@@ -288,10 +276,10 @@ function deleteFile() {
 		</div>
 
 		<script type="text/javascript">
-var oEditors = [];
-nhn.husky.EZCreator.createInIFrame({
-	oAppRef: oEditors,
-	elPlaceHolder: "moContent",
+	var oEditors = [];
+	nhn.husky.EZCreator.createInIFrame({
+		oAppRef: oEditors,
+		elPlaceHolder: "moContent",
 	sSkinURI: "<%=cp%>/resource/se/SmartEditor2Skin.html",
 				htParams : {
 					bUseToolbar : true,
@@ -334,6 +322,20 @@ nhn.husky.EZCreator.createInIFrame({
 				oEditors.getById["moContent"].setDefaultFont(sDefaultFont,
 						nFontSize);
 			}
+			
+
+			$('#fromDate').datetimepicker({
+				  language : 'ko', // 화면에 출력될 언어를 한국어로 설정한다.
+				  pickTime : false, // 사용자로부터 시간 선택을 허용하려면 true를 설정하거나 pickTime 옵션을 생략한다.
+				  defalutDate : new Date() // 기본값으로 오늘 날짜를 입력한다. 기본값을 해제하려면 defaultDate 옵션을 생략한다.
+				});
+
+				$('#toDate').datetimepicker({
+				  language : 'ko',
+				  pickTime : false,
+				  defalutDate : new Date()
+				});	
+			
 		</script>
 	</form>
 </body>

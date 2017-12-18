@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.hotbody.common.FileManager;
 import com.hotbody.common.dao.CommonDAO;
+import com.hotbody.hotShop.qna.Qna;
 
 @Service("hotShop.hotShopService")
 public class HotShopServiceImpl implements HotShopService{
@@ -58,6 +59,20 @@ public class HotShopServiceImpl implements HotShopService{
 		}
 		return dto;
 	}
+	
+	@Override
+	public List<Qna> productArticle_QnA(Map<String, Object> map) {
+		List<Qna> list = null;
+		
+		try {
+			list = dao.selectList("qna.listQna", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		
+		return list;
+	}
+	
 	@Override
 	public int productUpdate(HotShop dto, String pathname) {
 		int result=0;
@@ -136,6 +151,19 @@ public class HotShopServiceImpl implements HotShopService{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return result;
+	}
+	
+	@Override
+	public int dataCount_review(Map<String, Object> map) {
+		int result = 0;
+		
+		try {
+			result = dao.selectOne("product.pdInDataCount");
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		
 		return result;
 	}
 	

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="fb">
+
+<insert id="insertFB" parameterType="com.hotbody.mocofb.FB">
+	INSERT INTO MOFRBOARD3 (moFBNum, moFBSubject, userId, moFBCreated, moFBContent)
+		VALUES(mocofb_seq.NEXTVAL, #{moFBSubject}, #{userId}, SYSDATE, #{moFBContent})	
+</insert>
+
+	<select id="dataCount" resultType="Integer" parameterType="map">
+		SELECT NVL(COUNT(moFBNum),0) FROM MOFRBOARD3
+	</select>
+	
+	<!-- 리스트 스타토! -->
+	<select id="listFB" resultType="com.hotbody.mocofb.FB" parameterType="map">
+		SELECT * FROM(
+			SELECT ROWNUM rnum, tb.* FROM(
+				SELECT moFBNum, moFBSubject, userId, moFBHit, 
+				TO_CHAR(moFBCreated,'yyyy-mm-dd')as moFBCreated
+				FROM MOFRBOARD3
+				ORDER BY moFBNum DESC
+				<![CDATA[
+					) tb WHERE ROWNUM <= #{end}
+				) WHERE rnum >= #{start}
+				]]>
+	</select>
+	
+	<!-- 글보기 스타토 -->
+	<select id="readFB" resultType="com.hotbody.mocofb.FB" parameterType="Integer">
+		SELECT moFBNum, userId, moFBSubject, moFBContent, moFBHit, moFBCreated 
+			FROM MOFRBOARD3 WHERE moFBNum = #{moFBNum}
+	</select>
+	
+	<!-- 조회수 증가 스타토! -->
+	<update id="dataCount" parameterType="Integer">
+		UPDATE MOFRBOARD3 SET moFBHit = moFBHit+1 WHERE moFBNum = #{moFBNum}
+	</update>
+	
+	
+</mapper>

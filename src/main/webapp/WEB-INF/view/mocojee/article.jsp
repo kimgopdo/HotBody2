@@ -254,8 +254,8 @@ $(document).ready(function(){
 					
 						<!-- 번개등록 만들기  -->
 						<c:if test="${sessionScope.member.userId==dto.userId}">	
-							<button type="button" class="btn btn-primary btn-block" data-toggle="modal" 
-									data-target="#modalPoll" style="margin-top: 10px;">
+							<button type="button" class="btn btn-primary btn-block"
+									onclick="javascript:location.href='<%=cp%>/mocojee/ccbung'" style="margin-top: 10px;">
 								<i class="fa fa-bolt"></i> 벙개 등록하기
 							</button>
 						</c:if>

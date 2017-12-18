@@ -5,7 +5,7 @@
 	<insert id="insertNotice" parameterType="com.hotbody.notice.Notice">
 		INSERT INTO notice (noticeCode, userId, subject, content, created, hitCount,	
 			saveFile, originalFile, notice) 
-			VALUES (notice_req.NEXTVAL, #{userId}
+			VALUES (notice_seq.NEXTVAL, #{userId}
 			, #{subject}, #{content}
 			, SYSDATE
 			, 0
@@ -82,7 +82,7 @@
 	</select>
 	
 	<!-- 조회수 증가 -->
-	<update id="supdateHitCount" parameterType="Integer">
+	<update id="updateHitCount" parameterType="Integer">
 		UPDATE notice SET hitCount=hitCount+1 WHERE noticeCode = #{noticeCode}
 	</update>
 	

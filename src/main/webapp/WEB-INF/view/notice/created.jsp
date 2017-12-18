@@ -6,129 +6,6 @@
 	String cp=request.getContextPath();
 %>
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<style type="text/css">
-body{
-	font-family: "맑은 고딕";
-	font-size: 14px;
-}
-* {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box
-}
-
-:after,
-:before {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box
-}
-
-.form-group {
-    display: inline-block;
-    margin-bottom: 0;
-    vertical-align: middle;
-}
-
-.form-control {
-    display: inline-block;
-    width: 100%;
-    height: 30px;
-    font-size: 12px;
-    line-height: 1.42857;
-    color: rgb(85, 85, 85);
-    background-color: rgb(255, 255, 255);
-    background-image: none;
-    box-shadow: rgba(0, 0, 0, 0.0745098) 0 1px 1px inset;
-    padding: 6px 9px;
-    border-width: 1px;
-    border-style: solid;
-    border-color: rgb(204, 204, 204);
-    border-image: initial;
-    border-radius: 2px;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
-
-.form-control[readonly],
-fieldset[disabled] .form-control {
-    background-color: #ffffff;
-    opacity: 1;
-}
-
-.form_file .file_load {
-    display: inline-block;
-    position: relative;
-    width: 95px;
-    height: 31px;
-    cursor: pointer;
-}
-
-.form_file .file_load [type="file"] {
-    display: inline-block;
-    position: absolute;
-    width: inherit;
-    height: inherit;
-    z-index: 1;
-    opacity: 0;
-}
-
-.form_file .file_load label {
-    position: relative;
-    z-index: 5;
-    cursor: pointer;
-}
-
-.btn-default {
-    display: inline-block;
-    margin-bottom: 0;
-    font-weight: normal;
-    text-align: center;
-    width : 150px;
-    vertical-align: middle;
-    touch-action: manipulation;
-    cursor: pointer;
-    background-image: none;
-    white-space: nowrap;
-    font-size: 12px;
-    user-select: none;
-    border-width: 1px;
-    border-style: solid;
-    background-color: #666666;
-    border-color: #333333;
-    border-image: initial;
-    padding: 6px 9px;
-    border-radius: 2px;
-    color: #ffffff;
-}
-
-.btn-default02 {
-    display: inline-block;
-    margin-bottom: 0;
-    font-weight: normal;
-    text-align: center;
-    width : 100px;
-    vertical-align: middle;
-    touch-action: manipulation;
-    cursor: pointer;
-    background-image: none;
-    white-space: nowrap;
-    font-size: 12px;
-    user-select: none;
-    border-width: 1px;
-    border-style: solid;
-    background-color: #999999;
-    border-color: #cccccc;
-    border-image: initial;
-    padding: 6px 9px;
-    border-radius: 2px;
-    color: #ffffff;
-}
-</style>
 
 <script type="text/javascript" src="<%=cp%>/resource/se/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">
@@ -162,7 +39,7 @@ function deleteFile() {
 
 </script>
 </head>
-<body>
+<body style="height: 1000px">
 <div style="height: 50px;"></div>
 <div style="font-size: 40px; width: 700px; margin: 20px auto 0; font-weight: bold; color: #666666;">공지사항</div>
 <div style="width:700px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>

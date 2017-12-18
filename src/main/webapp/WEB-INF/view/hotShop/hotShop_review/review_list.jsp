@@ -46,7 +46,6 @@ $(function(){
 
 <script type="text/javascript">
 function listReply(reviewCode){
-	alert("아아아아아");
 	var url = "<%=cp%>/hotShop/review_listReply";
 	var q = "reviewCode=" + reviewCode;
 	$.ajax({
@@ -54,9 +53,6 @@ function listReply(reviewCode){
 		,url:url
 		,data:q
 		,success:function(a){
-
-			
-			$("#listReply"+reviewCode).append("아아아아아아");
 			$("#listReply"+reviewCode).html(a);
 		}
 		,beforeSend : function(e){
@@ -236,11 +232,10 @@ function searchList() {
 							</c:if>
 							
 							<c:if test="${dto.cNum!=0}">
-							<div style="width: 78%; height: 32%; border: 1px solid #BDBDBD; float: left; margin-top: 5px; padding-top: 13px; font-size: 12px;">
+							<div id="listReply${dto.reviewCode}" style="width: 78%; height: 32%; border: 1px solid #BDBDBD; float: left; margin-top: 5px; padding-top: 13px; font-size: 12px;">
 								<div style="float: left; width: 80%; text-align: left; padding-left: 10px;">${dto.replyContent}</div>
 								<div style="float: left; width: 10%; font-weight: bold; text-align: right; padding-right: 15px;">${dto.userName}</div>
 								<div style="float: left; width: 10%; text-align: right; padding-right: 15px;">${dto.replyCreated}</div>
-								<div id="listReply${dto.reviewCode}">asdd</div>
 							</div>
 							</c:if>
 

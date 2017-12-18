@@ -553,6 +553,7 @@ function productInList(page){
 		}
 		data+="&endDate="+checkDate;
 	}
+	alert(data);
 	$.ajax({
 		type: "post"
 		,url: url
@@ -594,7 +595,6 @@ function productInSend(f){
 </script>
 <form name="productInForm" method="post">
 <table style="width:100%; margin-top: 100px; border-collapse: collapse;">
-	<tr><td><button type="button" onclick="productInSend(this.form);">입고</button></td></tr>
 	<tr height="30px"style="border-bottom: 2px solid #373737">
 		<td width="15%">상품이미지</td>                                            
 		<td width="25%">상품이름</td>
@@ -629,6 +629,7 @@ function productInSend(f){
 		</select>
 		</td>
 	</tr>
+	<tr><td colspan="8"><button type="button" class="btn" style="float: right;" onclick="productInSend(this.form);">입고</button></td></tr>
 </table>
 </form>
 
@@ -638,7 +639,7 @@ function productInSend(f){
 		<td colspan="8">
 		조회기간: 
 	  		<input type="text" name="startDate" id="datepicker1" disabled="disabled"> ~ <input type="text" name="endDate" id="datepicker2" disabled="disabled">
-	  		<button type="button" onclick="productInList(1);">조회</button>
+	  		<button type="button" class="btn" onclick="productInList(1);">조회</button>
 		</td>
 	</tr>
 	<tr>

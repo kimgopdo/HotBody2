@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hotbody.common.FileManager;
 import com.hotbody.common.MyUtil;
+import com.hotbody.hotShop.qna.Qna;
 @Controller("hotShop.board")
 public class HotShopBoardController {
 	@Autowired
@@ -78,16 +79,56 @@ public class HotShopBoardController {
 	//상품 아티클
 	@RequestMapping(value="/hotShop/shopArticle")
 	public String shopArticle(
+			@RequestParam(value="page", defaultValue="1") int current_page,
+			@RequestParam(defaultValue="10") int rows,
 			@RequestParam int pdnum
 			,Model model
 			) {
-		System.out.println(pdnum);
-		Map<String, Object> map=new HashMap<>();
+		
+		int dataCount;
+		int total_page;
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		dataCount = service.dataCount_review(map);
+		
+		total_page = util.pageCount(rows, dataCount);
+		
+		if(total_page < current_page)
+			current_page = total_page;
+		
+		
+		int start = (current_page - 1) * rows + 1;
+		int end = current_page * rows;
+		map.put("start", start);
+		map.put("end", end);
+
+		List<Qna> list = service.productArticle_QnA(map);
+		
+		int listNum, n = 0;
+		Iterator<Qna> it = list.iterator();
+		while(it.hasNext()) {
+			Qna dto = it.next();
+			listNum = dataCount - (start + n - 1);
+			dto.setListNum(listNum);
+			n++;
+			
+			dto.setPdQCreated(dto.getPdQCreated().substring(0, 10));
+		}
+		
+		
 		HotShop dto=null;
+		
 		map.put("listOrArticle", 1);
 		map.put("pdnum", pdnum);
+		
 		dto=service.productArticle(map);
+		String paging = util.paging(current_page, total_page);
+		
+		model.addAttribute("paging", paging);
 		model.addAttribute("dto", dto);
+		model.addAttribute("list", list);
+		
 		return ".hotShop.shopArticle";
 	}
 	

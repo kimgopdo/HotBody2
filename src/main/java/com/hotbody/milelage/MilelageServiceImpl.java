@@ -41,4 +41,33 @@ public class MilelageServiceImpl implements MilelageService{
 		return list;
 	}
 
+
+	@Override
+	public List<Message> listMessage(Map<String, Object> map) {
+		List<Message> list=null;
+		try {
+			list= dao.selectList("milelage.listMessage",map);
+			
+		} catch (Exception e) {
+			System.out.println(e.toString());
+				
+		}
+		
+		return list;
+	}
+
+
+	@Override
+	public int dataCount(Map<String, Object> map) {
+		int result=0;
+		try {
+			result=dao.selectOne("milelage.dataCount",map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+	}
+
+	
+	
 }

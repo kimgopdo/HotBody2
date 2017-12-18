@@ -11,124 +11,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style type="text/css">
-body{
-	font-family: "맑은 고딕";
-	font-size: 14px;
-}
-* {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box
-}
-
-:after,
-:before {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box
-}
-
-.form-group {
-    display: inline-block;
-    margin-bottom: 0;
-    vertical-align: middle;
-}
-
-.form-control {
-    display: inline-block;
-    width: 100%;
-    height: 30px;
-    font-size: 12px;
-    line-height: 1.42857;
-    color: rgb(85, 85, 85);
-    background-color: rgb(255, 255, 255);
-    background-image: none;
-    box-shadow: rgba(0, 0, 0, 0.0745098) 0 1px 1px inset;
-    padding: 6px 9px;
-    border-width: 1px;
-    border-style: solid;
-    border-color: rgb(204, 204, 204);
-    border-image: initial;
-    border-radius: 2px;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
-
-.form-control[readonly],
-fieldset[disabled] .form-control {
-    background-color: #ffffff;
-    opacity: 1;
-}
-
-.form_file .file_load {
-    display: inline-block;
-    position: relative;
-    width: 95px;
-    height: 31px;
-    cursor: pointer;
-}
-
-.form_file .file_load [type="file"] {
-    display: inline-block;
-    position: absolute;
-    width: inherit;
-    height: inherit;
-    z-index: 1;
-    opacity: 0;
-}
-
-.form_file .file_load label {
-    position: relative;
-    z-index: 5;
-    cursor: pointer;
-}
-
-.btn-default {
-    display: inline-block;
-    margin-bottom: 0;
-    font-weight: normal;
-    text-align: center;
-    width : 150px;
-    vertical-align: middle;
-    touch-action: manipulation;
-    cursor: pointer;
-    background-image: none;
-    white-space: nowrap;
-    font-size: 12px;
-    user-select: none;
-    border-width: 1px;
-    border-style: solid;
-    background-color: #666666;
-    border-color: #333333;
-    border-image: initial;
-    padding: 6px 9px;
-    border-radius: 2px;
-    color: #ffffff;
-}
-
-.btn-default02 {
-    display: inline-block;
-    margin-bottom: 0;
-    font-weight: normal;
-    text-align: center;
-    width : 100px;
-    vertical-align: middle;
-    touch-action: manipulation;
-    cursor: pointer;
-    background-image: none;
-    white-space: nowrap;
-    font-size: 12px;
-    user-select: none;
-    border-width: 1px;
-    border-style: solid;
-    background-color: #999999;
-    border-color: #cccccc;
-    border-image: initial;
-    padding: 6px 9px;
-    border-radius: 2px;
-    color: #ffffff;
-}
-</style>
 
 <script type="text/javascript" src="<%=cp%>/resource/se/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">
@@ -136,19 +18,20 @@ fieldset[disabled] .form-control {
 function check() {
 	var f = document.boardForm;
 	
-/* 	if(!f.subject.value){
+ 	if(!f.moFBSubject.value){
 		alert("제목을 입력하세요.");
-		f.subject.focus();
+		f.moFBSubject.focus();
+		return;
+	} 
+ 	 
+	if(document.getElementById("moFBContent").value == "<p>&nbsp;</p>") {
+		alert("내용을 입력하세요");
+		document.getElementById("moFBContent").focus();
 		return;
 	}
-	
-	
-	if(!str || str=="<p>&nbsp;</p>") {
-		alert("내용을 입력하세요");
-		f.content.focus();
-		return;
-	} */
-
+	 
+	f.action="<%=cp%>/moco_board/c_free";
+	f.submit();
 }
 function fileChange() {
 	var upload=document.getElementById("upload").value;
@@ -156,7 +39,7 @@ function fileChange() {
 }
 function deleteFile() {
 	if(confirm("첨부파일을 삭제하시겠습니까?")){
-		location.href="<%=cp%>/notice/deleteFile?page=${page}&num=${dto.num}"
+		location.href="<%=cp%>/notice/deleteFile?page=${page}&num=${dto.moFBNum}"
 	}
 }
 </script>
@@ -166,44 +49,30 @@ function deleteFile() {
 <div style="font-size: 40px; width: 700px; margin: 20px auto 0; font-weight: bold; color: #666666;">자유게시판</div>
 <div style="width:700px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
 
-<form method="post" name="boardForm" enctype="multipart/form-data" onsubmit="return submitContents(this);">
+<form method="post" name="boardForm" enctype="multipart/form-data">
 <table style="width: 700px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0">
 
-<tr height="40">
-
-	<td width="100">분류</td>
-	
-	<td width="100"><select name="category">
-		<option value="분류">-------</option>
-		<option value="모꼬지">모꼬지</option>
-		<option value="클래스">클래스</option>
-		<option value="쇼핑몰">쇼핑몰</option>
-		<option value="기타">기타</option>
-	</select></td>
-</tr>
 
 <tr height="40">
 	<td width="100">제목</td>
 	<td>
-		<input type="text" name="subject" style="width: 98%; height: 35px;" value="${dto.subject}">
+		<input type="text" name="moFBSubject" style="width: 98%; height: 35px;" value="${dto.moFBSubject}">
 	</td>
 </tr>
 
 <tr height="40">
-	<td width="100">작성자</td>
-	<td>
-		<input type="text" name="subject" style="width: 98%; height: 35px;" value="${dto.name}">
-	</td>
-</tr>
+	<td width="100">글쓴이</td>
+	<td>${sessionScope.member.userId}</td>
+	</tr>
 
 <tr height="40">
 	<td width="100" valign="top">내용</td>
 	<td>
-		<textarea style="width: 98%;" rows=10; name="content" id="content">${dto.content}</textarea>
+		<textarea style="width: 98%;" rows=10; name="moFBContent" id="moFBContent">${dto.moFBContent}</textarea>
 	</td>
 </tr>
 <tr height="10px;"></tr>
-
+ 
 <tr height="40">
 	<td width="100">파일등록</td>
 	<td>
@@ -230,8 +99,8 @@ function deleteFile() {
 <tr height="40">
 	<td width="100">첨부된 파일</td>
 	<td>
-		${dto.originalFilename}
-		<c:if test="${not empty dto.saveFilename}">
+		${dto.moFBFile}
+		<c:if test="${not empty dto.moFBFile}">
 			&nbsp;<a href="javascript:deleteFile();">
 			<img src="<%=cp%>/resource/images/close_icon.png">
 			</a>
@@ -239,18 +108,15 @@ function deleteFile() {
 	</td>
 </tr>
 </c:if>
+
 </table>
 <div style="width:700px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
 <div style="width: 700px; margin: 20px auto 0;" align="center">
-<button type="submit" class="btn-default02" onclick="check();">등록</button>
-<button type="button" class="btn-default02" onclick="javascript:location.href='<%=cp%>/notice/list?page=${page}';">등록취소</button>
+<button type="button" class="btn-default02" onclick="submitContents(this);">등록</button>
+<button type="button" class="btn-default02" onclick="javascript:location.href='<%=cp%>/mocojee/list_mocojee';">등록취소</button>
 <c:if test="${mode=='update'}">
-	<input type="hidden" name="page" value="${page}">
-	<input type="hidden" name="num" value="${dto.num}">
-	<input type="hidden" name="query" value="${query}">
-	<input type="hidden" name="saveFilename" value="${dto.saveFilename}">
-	<input type="hidden" name="fileSize" value="${dto.fileSize}">
-	<input type="hidden" name="originalFilename" value="${dto.originalFilename}">
+	<input type="hidden" name="moFBNum" value="${dto.moFBNum}">
+	<input type="hidden" name="moFBFile" value="${dto.moFBFile}">
 </c:if>
 </div>
 
@@ -258,7 +124,7 @@ function deleteFile() {
 var oEditors = [];
 nhn.husky.EZCreator.createInIFrame({
 	oAppRef: oEditors,
-	elPlaceHolder: "content",
+	elPlaceHolder: "moFBContent",
 	sSkinURI: "<%=cp%>/resource/se/SmartEditor2Skin.html",	
 	htParams : {bUseToolbar : true,
 		fOnBeforeUnload : function(){
@@ -274,21 +140,20 @@ nhn.husky.EZCreator.createInIFrame({
 
 function pasteHTML() {
 	var sHTML = "<span style='color:#FF0000;'>이미지도 같은 방식으로 삽입합니다.<\/span>";
-	oEditors.getById["content"].exec("PASTE_HTML", [sHTML]);
+	oEditors.getById["moFBContent"].exec("PASTE_HTML", [sHTML]);
 }
 
 function showHTML() {
-	var sHTML = oEditors.getById["content"].getIR();
+	var sHTML = oEditors.getById["moFBContent"].getIR();
 	alert(sHTML);
 }
 	
 function submitContents(elClickedObj) {
-	oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);	// 에디터의 내용이 textarea에 적용됩니다.
+	oEditors.getById["moFBContent"].exec("UPDATE_CONTENTS_FIELD", []);	// 에디터의 내용이 textarea에 적용됩니다.
 	
 	// 에디터의 내용에 대한 값 검증은 이곳에서 document.getElementById("content").value를 이용해서 처리하면 됩니다.
-	
 	try {
-		// elClickedObj.form.submit();
+		//elClickedObj.form.submit();
 		return check();
 	} catch(e) {}
 }
@@ -296,7 +161,7 @@ function submitContents(elClickedObj) {
 function setDefaultFont() {
 	var sDefaultFont = '돋움';
 	var nFontSize = 24;
-	oEditors.getById["content"].setDefaultFont(sDefaultFont, nFontSize);
+	oEditors.getById["moFBContent"].setDefaultFont(sDefaultFont, nFontSize);
 }
 </script>
 </form>

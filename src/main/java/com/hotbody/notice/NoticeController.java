@@ -111,7 +111,7 @@ public class NoticeController {
 			model.addAttribute("dataCount", dataCount);
 			model.addAttribute("paging", paging);
 			
-			return "notice/list";
+			return ".notice.list";
 			
 	}
 	
@@ -182,7 +182,7 @@ public class NoticeController {
 		model.addAttribute("page", page);
 		model.addAttribute("query", query);
 		
-		return "notice/article";	
+		return ".notice.article";	
 	}
 	
 	@RequestMapping(value="/notice/update",
@@ -200,7 +200,7 @@ public class NoticeController {
 		model.addAttribute("mode", "update");
 		model.addAttribute("page", page);
 		
-		return "notice/created";
+		return ".notice.created";
 		
 	}
 	
@@ -295,7 +295,7 @@ public class NoticeController {
 		model.addAttribute("total_page", total_page);
 		model.addAttribute("paging", paging);
 			
-		return "notice/listReply";
+		return ".notice.listReply";
 		
 	}
 	

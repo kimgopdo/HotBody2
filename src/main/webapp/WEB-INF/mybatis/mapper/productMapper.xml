@@ -47,7 +47,7 @@
 	SELECT p.pdnum pdnum, imgOriginalFilename, imgSaveFilename, pdName,
 			 pdSumContent, pdPrice, pdcontent content,
 			pdNutrient, pdStMethod, pdType, pdRawName, pdArea,
-			 pdDelRule, pdCreated, pdstCount, (SELECT MIN(TO_CHAR(pdExDate,'YYYY-MM-DD')) FROM productin) pdExDate 
+			 pdDelRule, pdCreated, pdstCount, (SELECT MIN(TO_CHAR(pdExDate,'YYYY-MM-DD')) FROM productin) pdExDate
 				FROM productList p 
 				Left OUTER Join Temporary t ON p.pdnum=t.pdnum 
 				Left OUTER JOIN Temporary2 t2 ON p.pdnum=t2.pdnum 
