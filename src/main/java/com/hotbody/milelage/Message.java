@@ -4,9 +4,39 @@ public class Message {
 	
 	String userId,userId2,subject,content;
 	String state,box;
-	
-	
+	int fileCode,fileSize,mCode;
+	String ofileName,fileName;
 
+	public int getFileCode() {
+		return fileCode;
+	}
+	public void setFileCode(int fileCode) {
+		this.fileCode = fileCode;
+	}
+	public int getFileSize() {
+		return fileSize;
+	}
+	public void setFileSize(int fileSize) {
+		this.fileSize = fileSize;
+	}
+	public int getmCode() {
+		return mCode;
+	}
+	public void setmCode(int mCode) {
+		this.mCode = mCode;
+	}
+	public String getOfileName() {
+		return ofileName;
+	}
+	public void setOfileName(String ofileName) {
+		this.ofileName = ofileName;
+	}
+	public String getFileName() {
+		return fileName;
+	}
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
 	public String getUserId() {
 		return userId;
 	}

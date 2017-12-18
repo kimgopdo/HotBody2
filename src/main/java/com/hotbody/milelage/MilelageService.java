@@ -9,4 +9,5 @@ public interface MilelageService {
 	public List<Milelage> listMilelage(Map<String, Object> map);
 	public List<Message> listMessage(Map<String, Object> map);
 	public int dataCount(Map<String, Object> map);
+	public int checkUserId2(String userId2);
 }

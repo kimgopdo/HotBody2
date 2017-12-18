@@ -85,5 +85,23 @@
 	
 	</select>
 	
+	<select id="checkUserId2" resultType="Integer" parameterType="String">
+		select NVL(count(userId),0) from member1 where userId=#{userId2}
+	</select>
+	
+	<insert id="sendMessage1" parameterType="map">
+		insert into msg 
+		(mcode,content,screated,userid,userid2,subject)
+        values
+        (MSG_SEQ.nextval,#{content},sysdate,#{userId},#{userId2},#{subject})
+	</insert>
+	
+	<insert id="sendMessage2" parameterType="map">
+		insert into msgfile 
+		(filecode,filename,filesize,mcode)
+        values
+        (filecode_SEQ.nextval,#{filename},#{filesize},#{mcode})
+	</insert>
+	
 
 </mapper>
