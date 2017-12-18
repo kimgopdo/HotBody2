@@ -27,7 +27,7 @@
 	</select>
 	
 	<!-- 글보기 스타토 -->
-	<select id="readFB" resultType="com.hotbody.mofofb.FB" parameterType="Integer">
+	<select id="readFB" resultType="com.hotbody.mocofb.FB" parameterType="Integer">
 		SELECT moFBNum, userId, moFBSubject, moFBContent, moFBHit, moFBCreated 
 			FROM MOFRBOARD3 WHERE moFBNum = #{moFBNum}
 	</select>
