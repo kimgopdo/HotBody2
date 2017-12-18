@@ -82,7 +82,7 @@ public class HotShopBoardController {
 	public String shopArticle(
 			@RequestParam(value="page", defaultValue="1") int current_page,
 			@RequestParam(defaultValue="10") int rows,
-			@RequestParam int pdnum,
+			@RequestParam(defaultValue="1") int pdnum,
 			HttpServletRequest req
 			,Model model
 			) {
@@ -91,7 +91,7 @@ public class HotShopBoardController {
 		int total_page;
 		
 		Map<String, Object> map = new HashMap<>();
-		
+		map.put("pdnum", pdnum);
 		dataCount = service.dataCount_review(map);
 		
 		total_page = util.pageCount(rows, dataCount);
@@ -104,7 +104,7 @@ public class HotShopBoardController {
 		int end = current_page * rows;
 		map.put("start", start);
 		map.put("end", end);
-
+		map.put("pdnum", pdnum);
 		List<Qna> list = service.productArticle_QnA(map);
 		
 		int listNum, n = 0;
