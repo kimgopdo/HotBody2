@@ -11,23 +11,13 @@
 function move(code,menuname,cl){
 	name=encodeURI(menuname);
 	location.href="<%=cp%>/hotShop/productList?code="+code+"&menuname="+menuname+"&cl="+cl;
-	return;                        
+	return;
 }
 </script>
    <!-- 내비 -->
    <div align="center" class="pull-right" style="min-width:1140px;z-index: 9;" id="div4">
       <nav class="navmenu center" style="background: white; height: 60px; margin: 0px auto; border: none;">
           <ul>
-            <li class="sub-menu">
-            	<a href="#" style="font-size: 16px;">베스트</a>
-            	<ul>
-            		<li onclick="move('hitCount','조회수');"><a>조회수</a></li>
-            		<li onclick="move('like','좋아요');"><a>좋아요</a></li>
-            		<li onclick="move('star','후기별점');"><a>후기별점</a></li>
-            		<li onclick="move('sellOrder','판매순');"><a>판매순</a></li>
-            		<li onclick="move('recommend','사장추천');"><a>사장추천</a></li>
-            	</ul>
-            </li>
             <li>
             	<a href="move('newProduct');">신상품</a>
             </li>

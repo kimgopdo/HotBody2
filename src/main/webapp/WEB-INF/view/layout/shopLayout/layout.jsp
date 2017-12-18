@@ -97,12 +97,16 @@ $(function(){
 		,success:function(menuData){
 			$.each(menuData.bclList,function(index, item){
 					$(".productNutrient").append("<li><a onclick='move("+item.bclcode+",\""+item.bclname+"\",\"bcl\");'>"+item.bclname+"</a></li>");
+					$(".QproductNutrient").append("<li><a onclick='move("+item.bclcode+",\""+item.bclname+"\",\"bcl\");'>"+item.bclname+"</a></li>");
 			});
 			$.each(menuData.sciList,function(index, item){
 					$(".productLike").append("<li><a onclick='move("+item.scicode+",\""+item.sciname+"\",\"sci\");'>"+item.sciname+"</a></li>");
+					$(".QproductLike").append("<li><a onclick='move("+item.scicode+",\""+item.sciname+"\",\"sci\");'>"+item.sciname+"</a></li>");
 			});
 			$("#productNutrient").trigger("create");
 			$("#productLike").trigger("create");
+			$("#QproductNutrient").trigger("create");
+			$("#QproductLike").trigger("create");
 		}
 	});
 })

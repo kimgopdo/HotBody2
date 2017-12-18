@@ -1,7 +1,10 @@
 package com.hotbody.hotShop.board;
 
+
+
 import java.io.File;
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -20,7 +23,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hotbody.common.FileManager;
 import com.hotbody.common.MyUtil;
-import com.hotbody.hotShop.qna.Qna;
 @Controller("hotShop.board")
 public class HotShopBoardController {
 	@Autowired
@@ -37,6 +39,7 @@ public class HotShopBoardController {
 			,@RequestParam String menuname
 			,@RequestParam String cl
 			,HttpServletRequest req
+			,@RequestParam(value="page", defaultValue="1") int page
 			,HttpSession session
 			,Model model
 			) throws Exception {
@@ -52,7 +55,9 @@ public class HotShopBoardController {
 		map.put("cl", cl);
 		map.put("code", code);
 		list=service.productList(map);
-		
+		int row=5;
+		int dataCount=service.dataCount();
+		int total_page=dataCount/row;
 		Iterator<HotShop> it=list.iterator();
 		while(it.hasNext()) {
 			HotShop dto=it.next();
@@ -62,6 +67,9 @@ public class HotShopBoardController {
 		
 		model.addAttribute("list", list);
 		model.addAttribute("state", menuname);
+		model.addAttribute("total_page", total_page);
+		model.addAttribute("code", code);
+		model.addAttribute("cl", cl);
 		return ".hotShop.productList";
 	}
 	
@@ -86,59 +94,14 @@ public class HotShopBoardController {
 			HttpServletRequest req
 			,Model model
 			) {
-		
-		int dataCount;
-		int total_page;
-		service.productHitCount(pdnum);
-		Map<String, Object> map = new HashMap<>();
-		map.put("pdnum", pdnum);
-		dataCount = service.dataCount_review(map);
-		
-		total_page = util.pageCount(rows, dataCount);
-		
-		if(total_page < current_page)
-			total_page=current_page;
-		
-		
-		int start = (current_page - 1) * rows + 1;
-		int end = current_page * rows;
-		map.put("start", start);
-		map.put("end", end);
-		map.put("pdnum", pdnum);
-		List<Qna> list = service.productArticle_QnA(map);
-		
-		int listNum, n = 0;
-		Iterator<Qna> it = list.iterator();
-		while(it.hasNext()) {
-			Qna dto = it.next();
-			listNum = dataCount - (start + n - 1);
-			dto.setListNum(listNum);
-			n++;
-			
-			dto.setPdQCreated(dto.getPdQCreated().substring(0, 10));
-		}
-		
-		
 		HotShop dto=null;
-		
+		Map<String, Object> map = new HashMap<>();
 		map.put("listOrArticle", 1);
 		map.put("pdnum", pdnum);
 		
 		dto=service.productArticle(map);
 		
-		String query = "rows=" + rows +"&pdnum="+pdnum;
-	      String listUrl, articleUrl;
-	      String cp = req.getContextPath();
-	      listUrl = cp + "/hotShop/shopArticle?" + query;
-	      articleUrl = cp + "/hotShop/pQnA_article?" + query + "&page=" + current_page;
-		
-		String paging = util.paging(current_page, total_page,listUrl);
-		
-		model.addAttribute("paging", paging);
 		model.addAttribute("dto", dto);
-		model.addAttribute("list", list);
-		model.addAttribute("listUrl", listUrl);
-		model.addAttribute("articleUrl", articleUrl);
 		return ".hotShop.shopArticle";
 	}
 	
@@ -326,5 +289,47 @@ public class HotShopBoardController {
 		Map<String, Object> map=new HashMap<>();
 		map.put("result", result);
 		return map;
+	}
+	
+	@RequestMapping(value="/hotShop/productListAjax")
+	public String productListAjax(
+			@RequestParam String code,
+			@RequestParam String cl,
+			@RequestParam(value="page",defaultValue="1") int page,
+			@RequestParam String formal,
+			Model model
+			) {
+		int row=5;
+		int start=0;
+		int end=0;
+		int dataCount=0;
+		int current_page=1;
+		int total_page=0;
+		String paging;
+		if(page!=1) {
+			current_page=page;
+		}
+		dataCount=service.dataCount();
+		total_page=dataCount/row;
+		if (total_page<0) {
+			total_page=1;
+		}
+		if(current_page>total_page)
+			total_page=current_page;
+		start=current_page-1*row+1;
+		end=current_page*row;
+		List<HotShop> list=new ArrayList<>();
+		Map<String, Object> map=new HashMap<>();
+		map.put("start", start);
+		map.put("end", end);
+		map.put("page", page);
+		map.put("listOrArticle", 0);
+		map.put("cl", cl);
+		map.put("code", code);
+		map.put("formal", formal);
+		list=service.productList(map);
+		
+		model.addAttribute("list", list);
+		return "hotShop/productListAjax";
 	}
 }

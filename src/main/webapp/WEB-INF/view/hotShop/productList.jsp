@@ -5,9 +5,36 @@
 <%
 	String cp=request.getContextPath();
 %>
-<style>
-.aspect { width: 350px; height: 400px; }
-</style>
+<script type="text/javascript">
+var page=1;
+var totalPage=${total_page};
+$(function(){
+	$("input[name=formal]").click(function(){
+		productList(page);
+	});
+})
+$(function(){
+	productList(1);
+})
+
+function productList(page){
+	var url="<%=cp%>/hotShop/productListAjax";
+	var data=$("#hiddenForm").serialize()+"&page="+page+"&formal="+$(':radio[name="formal"]:checked').val();
+	alert(data);
+	$.ajax({
+		type:"post"
+		,url:url
+		,data:data
+		,success:function(data){
+			$("#productList").html(data);
+		}
+	});
+}
+</script>
+<form id="hiddenForm">
+<input type="hidden" name="cl" value="${cl}">
+<input type="hidden" name="code" value="${code}">
+</form>
 <table style="margin-top: 100px; width:100%; border-collapse: collapse;">
 <tr style="border-bottom: 2px solid #e7e7e7;">                                
 	<td><h5 style="font-size: 20px; font-weight:bold; margin-left: 30px; margin-bottom:30px; text-align: left;">${state}</h5></td>
@@ -16,26 +43,12 @@
 	<td style="text-align: left;">
 		<input type="radio" name="formal" value="hitCount">조회순 &nbsp;&nbsp;
 		<input type="radio" name="formal" value="star">별점순 &nbsp;&nbsp;
-		<input type="radio" name="formal" value="created">등록순 &nbsp;&nbsp;
+		<input type="radio" name="formal" value="created" checked="checked">등록순 &nbsp;&nbsp;
 	</td>
 </tr>
 <tr>
 	<td>
-		<ul id="#" class="list">
-		    <c:forEach var="dto" items="${list}">
-		    <li class="list">
-		         <div class="aspect">
-		         	<img src="<%=cp%>/uploads/shopList/${dto.imgSaveFilename}">
-		         </div>
-		         <div align="left">
-		            <span style=" text-align: left;">상품명: <a href="javascript:location.href='<%=cp%>/hotShop/shopArticle?pdnum=${dto.pdnum}';">${dto.pdName}</a></span><img src=""><br>
-		            <span style=" text-align: left;">가격 : ${dto.pdPrice}</span>
-		            <!-- if로 막아야함 -->
-		            <a href="" style="color:black; font-weight:bold; float: right;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;입고</a>
-		            <a href="javascript:location.href='<%=cp%>/hotShop/created?pdnum=${dto.pdnum}&mode=update';" style="color:black; font-weight:bold; float: right;">수정</a>
-		         </div>
-		    </li>
-		    </c:forEach>                                                         
+		<ul id="productList" class="list">                                                        
 		</ul>
 	</td>
 </tr>

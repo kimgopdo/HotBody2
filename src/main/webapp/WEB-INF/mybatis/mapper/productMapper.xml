@@ -39,7 +39,18 @@
 	<select id="pdInDataCount" resultType="Integer">
 		SELECT NVL(COUNT(*),0) FROM productin
 	</select>
-	
+	<select id="pdListDataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*),0) FROM productList
+		<where>
+			<if test="cl=='bcl'">
+				bclcode=#{code}
+			</if>
+			<if test="cl=='sci'">
+				scicode=#{code}
+			</if>
+				AND showandhide!=0
+		</where>
+	</select>
 	<select id="readProductNum" parameterType="String" resultType="Integer">
 	SELECT pdnum FROM productList WHERE pdName=#{pdName}
 	</select>
@@ -64,7 +75,29 @@
 					</if>
 					 AND showandhide!=0
 				</where>
-				ORDER BY p.pdcreated DESC
+				ORDER BY 
+		<choose>
+        	<when test="formal=='created'">
+        		pdCreated
+        	</when>
+        	<when test="formal=='hitCount'">
+        		hitCount
+        	</when>
+        	<when test="formal=='star'">
+        		hitCount
+        	</when>
+        	<otherwise>
+        		p.pdcreated
+        	</otherwise>
+        </choose>
+        <choose>
+        	<when test="order=='asc'">
+        		 asc
+        	</when>
+        	<otherwise>
+        		 DESC
+        	</otherwise>
+        </choose>
 	</select>
 	<select id="readProductIn" parameterType="map" resultType="com.hotbody.hotShop.board.ProductIn">
 		SELECT * FROM (SELECT ROWNUM rnum, pdin.* FROM (SELECT pdincode,pdrawprice,pdinnum,TO_CHAR(pdexdate, 'YYYY-MM-DD') pdexdate,TO_CHAR(pdindate, 'YYYY-MM-DD') pdindate,pi.pdnum pdnum,pl.pdname pdname,pi.supplycode,supplyname,imgSaveFilename
