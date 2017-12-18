@@ -6,7 +6,7 @@
 	String cp=request.getContextPath();
 %>
 <!DOCTYPE html>
-<html>
+<html>  
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -181,7 +181,7 @@ function sendReply() {
 <body>
 
 <div style="height: 50px;"></div>
-<div style="font-size: 40px; width: 700px; margin: 20px auto 0; font-weight: bold; color: #666666;">공지사항</div>
+<div style="font-size: 40px; width: 700px; margin: 20px auto 0; font-weight: bold; color: #666666;">| 이벤트</div>
 
 <table style="width: 700px; margin: 20px auto 0; border-top: 2px solid #333333; border-bottom: 2px solid #333333; border-collapse: collapse; border-spacing: 0">
 <tr height="50" style="border-bottom: 1px solid #cccccc">
