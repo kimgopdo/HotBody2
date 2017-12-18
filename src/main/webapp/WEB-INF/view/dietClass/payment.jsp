@@ -84,7 +84,7 @@ function selectAgree() {
 function paymentOk() {
 	var uid="${sessionScope.member.userId}";
    	if(! uid) {
-      modalFormLogin();
+   		location.href="<%=cp%>/member/login";
       return;
    	}
    	

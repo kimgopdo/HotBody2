@@ -37,7 +37,7 @@ function deleteOk(num,type) {
 function payGo(num,type) {
 	var uid="${sessionScope.member.userId}";
    	if(! uid) {
-      modalFormLogin();
+   		location.href="<%=cp%>/member/login";
       return;
    	}
    	location.href="<%=cp%>/dietClass/payment?num="+num+"&type="+type;

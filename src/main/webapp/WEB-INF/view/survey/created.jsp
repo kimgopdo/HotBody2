@@ -10,15 +10,16 @@ function objectiveAdd() {
 		
 	var out;
 	out="<div class='questionLayout' style='border-bottom: 1px solid #dcdcdc;'>";
-	out+="<form name='surveyForm' method='post'>";
+	//out+="<form name='surveyForm' method='post'>";
 	out+="<table id='surveyTb' style='width: 1000px;'>";
 	out+="<tr id='' height='55' align='center'>";
 	out+="<td width='100'>";
 	out +="<span class='qOrder' style='font-size: 16px; font-weight: bold;'>3</span>&nbsp;&nbsp;";
 	out +="<input type='hidden' name='qOrder'>";
+	out +="<input type='hidden' name='qType' value='0'>";
 	out +="</td>";
 	out +="<td align='left'>";
-	out +="질문 : &nbsp;&nbsp;&nbsp;<input type='text' name='question' style='width:90%; height: 30px; margin-left: 10px;' placeholder='질문을 입력 하세요'>";
+	out +="질문 : &nbsp;&nbsp;&nbsp;<input type='text' name='qContent' style='width:90%; height: 30px; margin-left: 10px;' placeholder='질문을 입력 하세요'>";
     out +="</td>";
     out +="<td width='180'>";
     out +="<img class='btnLast' src='<%=cp%>/resource/images/downdown.png'>";
@@ -33,12 +34,12 @@ function objectiveAdd() {
     out +="<tr height='55' align='center'>";
     out +="<td></td>";
     out +="<td align='left'>";
-    out +="<span>보기-</span><span class='exOrder'>1</span> : &nbsp;&nbsp;&nbsp;<input type='text' name='ex' style='width:85%; height: 30px;' placeholder='보기를 입력 하세요'>";
+    out +="<span>보기-</span><span class='exOrder'>1</span> : &nbsp;&nbsp;&nbsp;<input type='text' name='exContent' style='width:85%; height: 30px;' placeholder='보기를 입력 하세요'>";
     out +="<img id='' style='width: 20px; height: 20px; margin-left: 15px; cursor: pointer; margin-top: 5px;' src='<%=cp%>/resource/images/plus2.png' onclick='addEx(this);'>";
     out +="</td>";
     out +="</tr>";
     out +="</table>";
-    out +="</form>";
+    //out +="</form>";
     out +="</div>";
 	
 	$('#questionContainer').append(out);
@@ -51,15 +52,16 @@ function subjectiveAdd() {
 	
 	var out;
 	out="<div class='questionLayout' style='border-bottom: 1px solid #dcdcdc;'>";
-	out+="<form name='surveyForm' method='post'>";
+	//out+="<form name='surveyForm' method='post'>";
 	out+="<table id='surveyTb' style='width: 1000px;'>";
 	out+="<tr height='55' align='center' style='padding: 20px auto 20px;'>";
 	out+="<td width='100'>";
 	out +="<span class='qOrder' style='font-size: 16px; font-weight: bold;'>3</span>&nbsp;&nbsp;";
 	out +="<input type='hidden' name='qOrder'>";
+	out +="<input type='hidden' name='qType' value='1'>";
 	out+="</td>";
 	out+="<td align='left'>";
-	out+="질문 : &nbsp;&nbsp;&nbsp;<input type='text' name='question' style='width:90%; height: 30px; margin-left: 10px;' placeholder='질문을 입력 하세요'>";
+	out+="질문 : &nbsp;&nbsp;&nbsp;<input type='text' name='qContent' style='width:90%; height: 30px; margin-left: 10px;' placeholder='질문을 입력 하세요'>";
 	out+="</td>";
 	out+="<td width='180'>";
 	out+="<img class='btnLast' src='<%=cp%>/resource/images/downdown.png'>";
@@ -72,7 +74,7 @@ function subjectiveAdd() {
 	out+="</td>";
 	out+="</tr>";
 	out+="</table>";
-	out+="</form>";    	
+	//out+="</form>";    	
 	out+="</div>";
 	
 	$('#questionContainer').append(out);
@@ -88,9 +90,9 @@ function questionReNo() {
 	});
 }
 
-function exReNo() {
+function exReNo(){
 	var no=1;
-	$("#questionContainer .exOrder").each(function() {
+	$(".questionLayout .exOrder").each(function() {
 		$(this).text(no);
 		$(this).siblings("input[name=exOrder]").val(no);
 		no++;
@@ -160,6 +162,9 @@ function removeEx(p) {
 	exReNo();
 }
 
+function surveySubmit() {
+	var f = $("form[name=]").serialize();
+}
 </script>
 <div class="body-container" style="width: 1000px; margin: 100px auto;">
 	<div style="font-size: 40px; width: 1000px; margin: 20px auto 0; font-weight: bold; color: #666666;">설문 등록</div>
@@ -178,18 +183,19 @@ function removeEx(p) {
 				</tr>
 	</table>
 	
+	<form action="" name="surveyAll" method="post">
 	
 	<div id="questionContainer">
     	<div class='questionLayout' style="border-bottom: 1px solid #dcdcdc;">
-			<form name="surveyForm" method="post">
 				<table id="surveyTb" style="width: 1000px;">
 				<tr height="55" align="center">
                     <td width="100">
                         <span class='qOrder' style="font-size: 16px; font-weight: bold;">1</span>&nbsp;&nbsp;
 		                <input type='hidden' name='qOrder'>
+		                <input type='hidden' name='qType' value="1">
                     </td>
                     <td align="left">
-                    	질문 : &nbsp;&nbsp;&nbsp;<input type='text' name='question' style='width:90%; height: 30px; margin-left: 10px;' placeholder='질문을 입력 하세요'>
+                    	질문 : &nbsp;&nbsp;&nbsp;<input type='text' name='qContent' style='width:90%; height: 30px; margin-left: 10px;' placeholder='질문을 입력 하세요'>
                     </td>
                     <td width="180">
                         <img class="btnLast" src="<%=cp%>/resource/images/downdown.png">
@@ -202,18 +208,17 @@ function removeEx(p) {
                     </td>
                  </tr>
 				</table>
-			</form>
 		</div>
 		<div class='questionLayout' style="border-bottom: 1px solid #dcdcdc;">
-			<form name="surveyForm" method="post">
 				<table id="surveyTb" style="width: 1000px;">
 				<tr id="" height="55" align="center">
                     <td width="100">
                         <span class='qOrder' style="font-size: 16px; font-weight: bold;">2</span>&nbsp;&nbsp;
 		                <input type='hidden' name='qOrder'>
+		                <input type='hidden' name='qType' value="0">
                     </td>
                     <td align="left">
-                    	질문 : &nbsp;&nbsp;&nbsp;<input type='text' name='question' style='width:90%; height: 30px; margin-left: 10px;' placeholder='질문을 입력 하세요'>
+                    	질문 : &nbsp;&nbsp;&nbsp;<input type='text' name='qContent' style='width:90%; height: 30px; margin-left: 10px;' placeholder='질문을 입력 하세요'>
                     </td>
                     <td width="180">
                         <img class="btnLast" src="<%=cp%>/resource/images/downdown.png">
@@ -228,16 +233,15 @@ function removeEx(p) {
                  <tr height="55" align="center">
                  <td></td>
                  <td align="left">
-                   	<span>보기-</span><span class="exOrder">1</span> : &nbsp;&nbsp;&nbsp;<input type='text' name='ex' style='width:85%; height: 30px;' placeholder='보기를 입력 하세요'>
+                   	<span>보기-</span><span class="exOrder">1</span> : &nbsp;&nbsp;&nbsp;<input type='text' name='exContent' style='width:85%; height: 30px;' placeholder='보기를 입력 하세요'>
                    	<input type="hidden" name="exOrder">
                    	<img id="" style="width: 20px; height: 20px; margin-left: 15px; cursor: pointer; margin-top: 5px;" src="<%=cp%>/resource/images/plus2.png" onclick="addEx(this);">
                  </td>
                  </tr>
 				</table>
-			</form>
 		</div>
 	</div>
-	
+	</form>
 	
 	<div style="width:1000px; height:1px;  margin: 0 auto 0;border-bottom: 2px solid #666666;"></div>
 </div>
