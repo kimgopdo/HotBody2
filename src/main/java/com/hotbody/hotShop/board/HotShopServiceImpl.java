@@ -159,7 +159,7 @@ public class HotShopServiceImpl implements HotShopService{
 		int result = 0;
 		
 		try {
-			result = dao.selectOne("product.pdInDataCount");
+			result = dao.selectOne("qna.dataCount");
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}

@@ -82,7 +82,8 @@ public class HotShopBoardController {
 	public String shopArticle(
 			@RequestParam(value="page", defaultValue="1") int current_page,
 			@RequestParam(defaultValue="10") int rows,
-			@RequestParam int pdnum
+			@RequestParam int pdnum,
+			HttpServletRequest req
 			,Model model
 			) {
 		
@@ -124,12 +125,20 @@ public class HotShopBoardController {
 		map.put("pdnum", pdnum);
 		
 		dto=service.productArticle(map);
+		
+		String query = "rows=" + rows;
+	      String listUrl, articleUrl;
+	      String cp = req.getContextPath();
+	      listUrl = cp + "/hotShop/pQnA_list?" + query;
+	      articleUrl = cp + "/hotShop/pQnA_article?" + query + "&page=" + current_page;
+		
 		String paging = util.paging(current_page, total_page);
 		
 		model.addAttribute("paging", paging);
 		model.addAttribute("dto", dto);
 		model.addAttribute("list", list);
-		
+		model.addAttribute("listUrl", listUrl);
+		model.addAttribute("articleUrl", articleUrl);
 		return ".hotShop.shopArticle";
 	}
 	
