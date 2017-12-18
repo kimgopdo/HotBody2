@@ -26,6 +26,7 @@
 				]]>
 	</select>
 	
+	
 	<!-- 글보기 스타토 -->
 	<select id="readFB" resultType="com.hotbody.mocofb.FB" parameterType="Integer">
 		SELECT moFBNum, userId, moFBSubject, moFBContent, moFBHit, moFBCreated 
@@ -33,7 +34,7 @@
 	</select>
 	
 	<!-- 조회수 증가 스타토! -->
-	<update id="dataCount" parameterType="Integer">
+	<update id="hitCount" parameterType="Integer">
 		UPDATE MOFRBOARD3 SET moFBHit = moFBHit+1 WHERE moFBNum = #{moFBNum}
 	</update>
 	
