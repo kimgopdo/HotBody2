@@ -61,6 +61,7 @@ $(function(){
 <script type="text/javascript" src="<%=cp%>/resource/js/shopJS/btnCenterCal.js"></script>
 <script type="text/javascript" src="<%=cp%>/resource/js/shopJS/quickMenuBtn.js"></script>
 
+<script type="text/javascript" src="<%=cp%>/resource/js/shopJS/tabMove.js"></script>
 <script type="text/javascript">
 jQuery.browser = {};
 (function () {
