@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hotbody.common.FileManager;
 import com.hotbody.common.MyUtil;
+import com.hotbody.hotShop.qna.Qna;
 @Controller("hotShop.board")
 public class HotShopBoardController {
 	@Autowired
@@ -32,20 +33,23 @@ public class HotShopBoardController {
 	//main list는 따로 드래그엔 드롭으로 순서 변경 가능하게 만들꺼임.
 	@RequestMapping("/hotShop/productList")
 	public String productList(
-			@RequestParam String cl
-			,@RequestParam String name
+			@RequestParam String code
+			,@RequestParam String menuname
+			,@RequestParam String cl
 			,HttpServletRequest req
 			,HttpSession session
 			,Model model
 			) throws Exception {
 		if(req.getMethod().equalsIgnoreCase("GET")) {
-			name = URLDecoder.decode(name, "UTF-8");
+			menuname = URLDecoder.decode(menuname, "UTF-8");
 		}
 		String root=session.getServletContext().getRealPath("/");
 		String pathname=root+"uploads"+File.separator+"shopProduct";
 		List<HotShop> list=null;
 		Map<String, Object> map=new HashMap<>();
 		map.put("listOrArticle", 0);
+		map.put("cl", cl);
+		map.put("code", code);
 		list=service.productList(map);
 		
 		Iterator<HotShop> it=list.iterator();
@@ -56,7 +60,7 @@ public class HotShopBoardController {
 		}
 		
 		model.addAttribute("list", list);
-		model.addAttribute("state", name);
+		model.addAttribute("state", menuname);
 		return ".hotShop.productList";
 	}
 	
@@ -75,16 +79,56 @@ public class HotShopBoardController {
 	//상품 아티클
 	@RequestMapping(value="/hotShop/shopArticle")
 	public String shopArticle(
+			@RequestParam(value="page", defaultValue="1") int current_page,
+			@RequestParam(defaultValue="10") int rows,
 			@RequestParam int pdnum
 			,Model model
 			) {
-		System.out.println(pdnum);
-		Map<String, Object> map=new HashMap<>();
+		
+		int dataCount;
+		int total_page;
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		dataCount = service.dataCount_review(map);
+		
+		total_page = util.pageCount(rows, dataCount);
+		
+		if(total_page < current_page)
+			current_page = total_page;
+		
+		
+		int start = (current_page - 1) * rows + 1;
+		int end = current_page * rows;
+		map.put("start", start);
+		map.put("end", end);
+
+		List<Qna> list = service.productArticle_QnA(map);
+		
+		int listNum, n = 0;
+		Iterator<Qna> it = list.iterator();
+		while(it.hasNext()) {
+			Qna dto = it.next();
+			listNum = dataCount - (start + n - 1);
+			dto.setListNum(listNum);
+			n++;
+			
+			dto.setPdQCreated(dto.getPdQCreated().substring(0, 10));
+		}
+		
+		
 		HotShop dto=null;
+		
 		map.put("listOrArticle", 1);
 		map.put("pdnum", pdnum);
+		
 		dto=service.productArticle(map);
+		String paging = util.paging(current_page, total_page);
+		
+		model.addAttribute("paging", paging);
 		model.addAttribute("dto", dto);
+		model.addAttribute("list", list);
+		
 		return ".hotShop.shopArticle";
 	}
 	
@@ -111,7 +155,7 @@ public class HotShopBoardController {
 	
 	
 	//created submit
-	@RequestMapping(value="/hotShop/created.ok",  method=RequestMethod.POST)
+	@RequestMapping(value="/hotShop/created",  method=RequestMethod.POST)
 	public String createdSubmit(
 			HotShop dto
 			,@RequestParam(defaultValue="created") String mode
@@ -119,6 +163,7 @@ public class HotShopBoardController {
 			,HttpSession session
 			,Model model
 			) throws Exception {
+		System.out.println("-------------------------------------------------------------------------------------");
 		System.out.println(dto.getPdnum());
 		System.out.println(imgSaveFilename);
 		String root=session.getServletContext().getRealPath("/");
@@ -128,10 +173,10 @@ public class HotShopBoardController {
 			file.doFileDelete(imgSaveFilename, pathname);
 			service.productUpdate(dto, pathname);
 		}else {
-			service.insertProductList(dto, pathname);			
+			service.insertProductList(dto, pathname);
 		}
 		
-		return "redirect:/hotShop/productList";
+		return "redirect:/hotShop";
 	}
 	
 	@RequestMapping(value="/hotShop/schedule", method=RequestMethod.POST)

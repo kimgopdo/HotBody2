@@ -106,7 +106,7 @@ public class ReviewServiceImpl implements ReviewService {
 	
 	@Override
 	public List<Reply> listReply(Map<String, Object> map) {
-		List<Reply> list = null;
+		List<Reply> list=null;
 		
 		try {
 			list = dao.selectList("review.listReply", map);

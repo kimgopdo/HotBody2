@@ -9,58 +9,47 @@
 %>
 
 <!-- 퀵메뉴 -->
-<div align="center" id="quickMenu" style="width:100%; height:1500px; background-color: #FEF9F6; position: fixed;display: none;">
-	<div align="center" style="width: 80%; height: 60px;">
-	<ul id="quickMenu_P" class="nav navbar-nav menu" style="margin-left: 200px;">
-            <li>
-            	<a href="#">베스트</a>
-            	<div align="center" class="menuEx" style="display: none;">
+	<!-- 내비 -->
+   <div align="center" id="quickMenu" class="pull-right" style="width:100%; height:1500px; background-color: #fff; position: fixed;display: none;">
+      <nav class="navmenu center" style="background: white; height: 60px; margin-top:300px; border: none;">
+          <ul>
+            <li class="sub-menu">
+            	<a href="#" style="font-size: 16px;">베스트</a>
             	<ul>
-            		<li onclick="">조회수</li>
-            		<li onclick="">좋아요</li>
-            		<li onclick="">후기별점</li>
-            		<li onclick="">판매순</li>
-            		<li onclick="">사장추천</li>
+            		<li onclick="move('hitCount','조회수');"><a>조회수</a></li>
+            		<li onclick="move('like','좋아요');"><a>좋아요</a></li>
+            		<li onclick="move('star','후기별점');"><a>후기별점</a></li>
+            		<li onclick="move('sellOrder','판매순');"><a>판매순</a></li>
+            		<li onclick="move('recommend','사장추천');"><a>사장추천</a></li>
             	</ul>
-            	</div>
             </li>
             <li>
-            	<a href="#">신상품</a>
+            	<a href="move('newProduct');">신상품</a>
             </li>
-            <li>
-            	<a href="#">상품유형별</a>
-            	<div align="center" class="menuEx" style="display: none;">
+            <li class="sub-menu">
+            	<a href="#" style="font-size: 16px;">상품유형별</a>
 	            	<ul>
-	            		<li onclick="">음료</li>
-	            		<li onclick="">간식</li>
-	            		<li onclick="">식사</li>
-	            		<li onclick="">드레싱</li>
-	            		<li onclick="">보충제</li>
-	            		<li onclick="">건강식</li>
+	            		<li onclick="move('7','음료');"><a>음료</a></li>
+	            		<li onclick="move('8','간식');"><a>간식</a></li>
+	            		<li onclick="move('9','식사');"><a>식사</a></li>
+	            		<li onclick="move('10','드레싱');"><a>드레싱</a></li>
+	            		<li onclick="move('11','보충제');"><a>보충제</a></li>
+	            		<li onclick="move('12','건강식');"><a>건강식</a></li>
 	            	</ul>
-            	</div>
             </li>
-            <li>
-            	<a href="#">영양소별</a>
-            	<div class="menuEx" style="display: none">
+            <li class="sub-menu">
+            	<a href="#" style="font-size: 16px;">영양소별</a>
             	<ul>
-            		<li onclick="">단백질</li>
-            		<li onclick="">탄수화물</li>
-            		<li onclick="">지방</li>
-            		<li onclick="">무기질</li>
-            		<li onclick="">식이섬유</li>
+            		<li onclick="move('1','단백질');"><a>단백질</a></li>
+            		<li onclick="move('2','탄수화물');"><a>탄수화물</a></li>
+            		<li onclick="move('3','지방');"><a>지방</a></li>
+            		<li onclick="move('4','무기질');"><a>무기질</a></li>
+            		<li onclick="move('5','식이섬유');"><a>식이섬유</a></li>
             	</ul>
-            	</div>
             </li>
-            <li>
-            	<a href="#">클래스 식단</a>
-            	<div align="center" class="menuEx" style="display: none;">
-            	<ul>
-            		<li onclick="">온라인클래스</li>
-            		<li onclick="">오프라인클래스</li>
-            	</ul>
-            	</div>
+            <li class="sub-menu">
+            	<a href="javascript:location.href='<%=cp%>/hotShop/shopReviews';" style="font-size: 16px;">상품 전체 후기</a>
             </li>
           </ul>
-      </div>
-</div>
+      </nav>
+   </div>

@@ -41,31 +41,31 @@ function sendOk() {
 function addBox(date) {
 	arr[idx++]=date;
 	var max = "${max}";
-	
 	var arrMax = max.split(",");
 	
-	if(${mode=='created'})
-		var find=0;
-	if(${mode=='update'})
-		var find= arrMax[date-1]-1;
+	var find= arrMax[date-1]-1;
+	if(find<0)
+		find=0;
 	
 	for(var i=0;i<arr.length;i++){
-		if(arr[i]==date)
-			find++;
+		if(arr[i]==date){
+			find=find+1;
+		}
 	}
 	
 	var row="<tr height='55' style='padding-top:0px;'>";
 	row+="<td width='100' style='font-weight: bold;' align='center'>&nbsp;</td>";
 	row+="<td><input type='text' name='mission."+date+"."+find+"' style='width: 90%; height: 35px;' value=''>";
 	row+="<span>";
-	row+="<img style='width: 18px; height: 20px; margin-left: 19px; cursor: pointer; margin-top: 5px;' src='<%=cp%>/resource/images/minus2.png' onclick='removeBox(this)'>";
+	row+="<img style='width: 18px; height: 20px; margin-left: 19px; cursor: pointer; margin-top: 5px;' src='<%=cp%>/resource/images/minus2.png' onclick='removeBox(this,${date},${status.index})'>";
 	row+="</span></td></tr>";
-
+	
 	$("#addTr"+date).append(row);
 }
 
 function removeBox(p,day,index) {
 	location.href="<%=cp%>/mission/delete?num=${dto.classNum}&index="+index+"&day="+day;
+	alert("index="+index+"&day="+day);
 	$(p).closest("tr").remove();
 	//missday, missindex, classNum
 }
@@ -88,6 +88,7 @@ function removeBox(p,day,index) {
 		<c:if test="${date%2=='1'}">
 		<table id="addTr${date}" style="width: 1000px; background-color:rgb(241,241,241); margin: 0 auto; border-collapse: collapse; border-spacing: 0;">
 		</c:if> 
+			<%-- 
 			<c:if test="${mode=='created'}">
 			<tr id="dateTr${date}" height="70" style="margin-bottom: 20px;">
 				<td width="100" style="font-weight: bold;" align="center">${date}일차</td>
@@ -97,6 +98,7 @@ function removeBox(p,day,index) {
 				</td>
 			</tr>
 			</c:if>
+			 --%>
 			<c:if test="${mode=='update'}">
 			<c:forEach var="a" items="${list}">
 				<c:forEach var="b" items="${a}" varStatus="status" begin="0">

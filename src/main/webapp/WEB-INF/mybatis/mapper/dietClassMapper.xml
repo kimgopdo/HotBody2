@@ -168,7 +168,7 @@
 	
 	<select id="readMission" parameterType="map" resultType="com.hotbody.dietClass.Mission">
 		SELECT missionNum, missionContent, missDay
-		FROM misContent WHERE classNum=#{classNum} AND missDay=#{missDay} AND missionContent IS NOT NULL
+		FROM misContent WHERE classNum=#{classNum} AND missDay=#{missDay} AND missionContent IS NOT NULL ORDER BY missIndex
 	</select>
 	
 	<update id="updateMission" parameterType="com.hotbody.dietClass.Mission">
