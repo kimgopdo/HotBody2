@@ -6,7 +6,7 @@
 	String cp=request.getContextPath();
 %>
 <!DOCTYPE html>
-<html>
+<html>  
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -55,9 +55,9 @@ body{
 </style>
 
 <script type="text/javascript"> //스크립트에서 로케이션 리턴
-function deleteNotice(noticeCode) {
+function deleteEvent(eventCode) {
 	if(confirm("공지를 삭제하시겠습니까?")){
-		location.href="<%=cp%>/notice/delete?noticeCode=${dto.noticeCode}&page=${page}";
+		location.href="<%=cp%>/event/delete?eventCode=${dto.eventCode}&page=${page}";
 		return;
 	}
 }
@@ -110,7 +110,6 @@ $(function(){
 			b="false";
 		}
 	});
-
 });
 
 function viewNext() {
@@ -119,7 +118,7 @@ function viewNext() {
 		swal("다음글이 존재하지 않습니다.");
 		return;
 	}
-	location.href="<%=cp%>/notice/article?noticeCode=${nextReadDto.noticeCode}&page=${page}";
+	location.href="<%=cp%>/event/article?eventCode=${nextReadDto.eventCode}&page=${page}";
 }
 
 function viewPre() {
@@ -128,7 +127,7 @@ function viewPre() {
 		swal("이전글이 존재하지 않습니다.");
 		return;
 	}
-	location.href="<%=cp%>/notice/article?noticeCode=${preReadDto.noticeCode}&page=${page}";
+	location.href="<%=cp%>/event/article?eventCode=${preReadDto.eventCode}&page=${page}";
 }
 
 //댓글 등록
@@ -139,20 +138,20 @@ function sendReply() {
 		return;
 	}
 	
-	var noticeCode="${dto.noticeCode}";
+	var eventCode="${dto.eventCode}";
 	var content=$("#replyContent").val().trim();
 	if(! content) {
 		$("#replyContent").focus();
 		return;	
 	}
 	
-	var query="noticeCode="+noticeCode;
+	var query="eventCode="+eventCode;
 	query+="&content="+encodeURIComponent(content);
 	query+="&answer=0";
 	
 	$.ajax({
 		type:"post"
-		,url:"<%=cp%>/notice/createdReply"
+		,url:"<%=cp%>/event/createdReply"
 		,data:query
 		,dataType:"json"
 		,success:function(data) {
@@ -182,7 +181,7 @@ function sendReply() {
 <body>
 
 <div style="height: 50px;"></div>
-<div style="font-size: 40px; width: 700px; margin: 20px auto 0; font-weight: bold; color: #666666;">공지사항</div>
+<div style="font-size: 40px; width: 700px; margin: 20px auto 0; font-weight: bold; color: #666666;">| 이벤트</div>
 
 <table style="width: 700px; margin: 20px auto 0; border-top: 2px solid #333333; border-bottom: 2px solid #333333; border-collapse: collapse; border-spacing: 0">
 <tr height="50" style="border-bottom: 1px solid #cccccc">
@@ -206,9 +205,9 @@ function sendReply() {
 
 
 <div style="width:700px; margin: 20px auto 0;">
-<input type="button" class="btn-article" value="목록" onclick="javascript:location.href='<%=cp%>/notice/list?${query}';">
-<input type="button" class="btn-article" value="수정" onclick="javascript:location.href='<%=cp%>/notice/update?noticeCode=${dto.noticeCode}&${query}';">
-<input type="button" class="btn-article" value="삭제" onclick="deleteNotice(${dto.noticeCode});">
+<input type="button" class="btn-article" value="목록" onclick="javascript:location.href='<%=cp%>/event/list?${query}';">
+<input type="button" class="btn-article" value="수정" onclick="javascript:location.href='<%=cp%>/event/update?eventCode=${dto.eventCode}&${query}';">
+<input type="button" class="btn-article" value="삭제" onclick="deleteEvent(${dto.eventCode});">
 </div>
 
 <br><br>
@@ -230,7 +229,7 @@ function sendReply() {
 	<div>
 		<div id="fileinfo">
 		<img src="<%=cp%>/resource/images/disk.gif">${dto.originalFile} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
-		<a href="<%=cp%>/notice/download?noticeCode=${dto.noticeCode}" style="text-decoration: none; color: #666666;"> PC저장하기</a>
+		<a href="<%=cp%>/event/download?eventCode=${dto.eventCode}" style="text-decoration: none; color: #666666;"> PC저장하기</a>
 			<span onClick="closeLayer()" style="cursor:pointer; color: #cccccc; float: right;">X</span>
 		</div>
 	</div>
