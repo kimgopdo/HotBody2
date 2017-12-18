@@ -90,16 +90,16 @@ function deleteQna() {
 			<tr height="45">
 			    <td width="300" align="left">
 			       <c:if test="${sessionScope.member.userId==dto.userId}">				    
-			          <button type="button" class="btn" style="background: white; border: 1px solid #BDBDBD; border-radius: 3px; height: 30px;" onclick="updateQna();">수정</button>
+			          <button type="button" class="btn" style="background: white; border: 1px solid #BDBDBD; border-radius: 3px; height: 30px; color: black;" onclick="updateQna();">수정</button>
 			       </c:if>
 			       <c:if test="${sessionScope.member.userId==dto.userId || sessionScope.member.userId=='admin'}">				    
-			          <button type="button" class="btn" style="background: white; border: 1px solid #BDBDBD; border-radius: 3px; height: 30px;" onclick="deleteQna();">삭제</button>
+			          <button type="button" class="btn" style="background: white; border: 1px solid #BDBDBD; border-radius: 3px; height: 30px; color: black;" onclick="deleteQna();">삭제</button>
 			       </c:if>
 			    </td>
 			
 			 	<td align="right">
-			        <button type="button" class="btn" style="background: white; border: 1px solid #999999; border-radius: 3px; height: 30px;" onclick="answerQna()">답변</button>
-			        <button type="button" class="btn" style="background: white; border: 1px solid #999999; border-radius: 3px; height: 30px;" onclick="javascript:location.href='<%=cp%>/hotShop/pQnA_list?${query}';">리스트</button>
+			        <button type="button" class="btn" style="background: white; border: 1px solid #999999; border-radius: 3px; height: 30px; color: black;" onclick="answerQna()">답변</button>
+			        <button type="button" class="btn" style="background: white; border: 1px solid #999999; border-radius: 3px; height: 30px; color: black;" onclick="javascript:location.href='<%=cp%>/hotShop/pQnA_list?${query}';">리스트</button>
 			    </td>
 			</tr>
 			</table>
