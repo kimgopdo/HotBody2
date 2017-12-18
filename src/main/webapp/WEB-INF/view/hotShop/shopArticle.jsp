@@ -140,7 +140,7 @@ function check(){
 	<!-- 상품설명 -->
 	<div style="width: 100%">
 		<!-- 상품설명 탭, 사진(설명) -->
-		<div style="width: 100%; margin-bottom: 200px; min-height: 3000px;" id="div1">
+		<div style="width: 100%; margin-bottom: 200px; min-height: 100px;" id="div1">
 			<!-- 탭 -->
 			<ul style="width: 100%; height:50px; border: 0.5px solid #BDBDBD; padding: 0px; margin-bottom: 30px;">
 				<li style="list-style:none; float: left; width: 366px; height:49.5px; padding-top:13px; border-right: 0.5px solid #BDBDBD; 
@@ -242,8 +242,8 @@ function check(){
 				<table>
 					<tr>
 						<td style="width: 1050px; float: right; padding-right: 10px;" align="right">
-							<button type="button" class="btn" style="background: white; border: 1px solid #BDBDBD; border-radius: 3px; height: 30px;" onclick="javascript:location.href='<%=cp%>/hotShop/pQnA_list?${query}';">리스트</button>
-							<button style="background: white; border: 1px solid #999999; border-radius: 3px; height: 35px;" type="button" onclick="check();">Q&A 등록</button>
+							<button type="button" class="btn" style="color:black; background: white; border: 1px solid #BDBDBD; border-radius: 3px; height: 30px;" onclick="javascript:location.href='<%=cp%>/hotShop/pQnA_list?${query}';">리스트</button>
+							<button class="btn" style="color:black; background: white; border: 1px solid #BDBDBD; border-radius: 3px; height: 30px;" type="button" onclick="check();">Q&A 등록</button>
 						</td>
 					</tr>
 				</table>

@@ -126,13 +126,13 @@ public class HotShopBoardController {
 		
 		dto=service.productArticle(map);
 		
-		String query = "rows=" + rows;
+		String query = "rows=" + rows +"&pdnum="+pdnum;
 	      String listUrl, articleUrl;
 	      String cp = req.getContextPath();
-	      listUrl = cp + "/hotShop/pQnA_list?" + query;
+	      listUrl = cp + "/hotShop/shopArticle?" + query;
 	      articleUrl = cp + "/hotShop/pQnA_article?" + query + "&page=" + current_page;
 		
-		String paging = util.paging(current_page, total_page);
+		String paging = util.paging(current_page, total_page,listUrl);
 		
 		model.addAttribute("paging", paging);
 		model.addAttribute("dto", dto);
