@@ -22,10 +22,10 @@ public class MemberController {
 	// 로그인 및 로그아웃
 	@RequestMapping(value="/member/login", method=RequestMethod.GET)
 	public String loginForm() throws Exception{
-		return ".member.login";
+		return ".member.login2";
 	}
 	
-	@RequestMapping(value="/member/login")
+	@RequestMapping(value="/member/login", method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> loginSubmit(
 			@RequestParam String userId,
@@ -39,6 +39,7 @@ public class MemberController {
 		
 		if(dto == null || (! dto.getPwd().equals(pwd))) {
 			map.put("message", "아이디 또는 패스워드가 일치하지 않습니다.");
+			map.put("state", "fail");
 			return map;
 		}
 		

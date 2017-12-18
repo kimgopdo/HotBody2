@@ -15,5 +15,10 @@ public class SurveyController {
 	public String surveycreated() {
 		return ".survey.created";
 	}
+	
+	@RequestMapping(value="/survey/submit")
+	public String surveySubmit() {
+		return "";
+	}
 
 }
