@@ -11,4 +11,5 @@ public interface QnaService {
 	public int updateQna(Qna dto);
 	public int deleteQna(int pdQCode, String userId);
 	public List<Qna> listQnaArticle(Map<String, Object> map);
+	public int dataCountArticle(Map<String, Object> map);
 }

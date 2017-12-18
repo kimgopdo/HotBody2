@@ -69,6 +69,19 @@ public class QnaServiceImpl implements QnaService{
 		
 		return result;
 	}
+	
+	@Override
+	public int dataCountArticle(Map<String, Object> map) {
+		int result = 0;
+		
+		try {
+			result = dao.selectOne("qna.dataCountArticle", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		
+		return result;
+	}
 
 	@Override
 	public Qna readQna(int pdQCode) {
