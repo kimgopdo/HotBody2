@@ -159,11 +159,22 @@ public class HotShopServiceImpl implements HotShopService{
 		int result = 0;
 		
 		try {
-			result = dao.selectOne("qna.dataCount");
+			result = dao.selectOne("qna.dataCount",map);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
 		
+		return result;
+	}
+	
+	@Override
+	public int productHitCount(int pdnum) {
+		int result=0;
+		try {
+			result=dao.updateData("product.updateHitCount",pdnum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return result;
 	}
 	

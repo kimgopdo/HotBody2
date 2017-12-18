@@ -89,7 +89,7 @@ public class HotShopBoardController {
 		
 		int dataCount;
 		int total_page;
-		
+		service.productHitCount(pdnum);
 		Map<String, Object> map = new HashMap<>();
 		map.put("pdnum", pdnum);
 		dataCount = service.dataCount_review(map);

@@ -131,6 +131,10 @@
 	
 	WHERE pdnum=#{pdnum}
 	</update>
+	<update id="updateHitCount" parameterType="Integer">
+		UPDATE productList SET hitCount=hitCount+1 WHERE pdnum=#{pdnum}
+	</update>
+	
 	<select id="supplyList" resultType="com.hotbody.hotShop.board.Supply">
 		SELECT supplycode, supplyname, supplytel, supplypd
 		FROM supply
