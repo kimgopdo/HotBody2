@@ -4,9 +4,9 @@
 <mapper namespace="product">
 	<insert id="insertProductList" parameterType="com.hotbody.hotShop.board.HotShop">
 		INSERT INTO 
-		productList (pdNum,pdName,pdOrder,pdCreated,pdBoardName,pdContent,pdStCount,pdSumContent) 
+		productList (pdNum,pdName,pdOrder,pdCreated,pdBoardName,pdContent,pdStCount,pdSumContent,scicode,bclcode) 
 		values(product_seq.NEXTVAL,#{pdName},1,
-				sysdate,#{pdName},#{content},0,#{pdSumContent})
+				sysdate,#{pdName},#{content},0,#{pdSumContent},#{scicode},#{bclcode})
 	</insert>
 	<insert id="insertPmainImg" parameterType="com.hotbody.hotShop.board.HotShop">
 	INSERT INTO 
@@ -28,6 +28,14 @@
 		 values(pdin_seq.NEXTVAL,#{pdrawprice},#{pdinnum},#{pdexdate},sysdate,#{pdnum},#{supplycode})
 	</insert>
 	
+	<select id="bclSelect" resultType="com.hotbody.hotShop.main.HotBodyMenu">
+		SELECT bclcode, name bclname FROM bcl
+	</select>
+	
+	<select id="sciSelect" resultType="com.hotbody.hotShop.main.HotBodyMenu">
+		SELECT scicode, name sciname FROM sci WHERE scicode>26
+	</select>
+	
 	<select id="pdInDataCount" resultType="Integer">
 		SELECT NVL(COUNT(*),0) FROM productin
 	</select>
@@ -39,7 +47,7 @@
 	SELECT p.pdnum pdnum, imgOriginalFilename, imgSaveFilename, pdName,
 			 pdSumContent, pdPrice, pdcontent content,
 			pdNutrient, pdStMethod, pdType, pdRawName, pdArea,
-			 pdDelRule, pdCreated, pdstCount, (SELECT MIN(TO_CHAR(pdExDate,'YYYY-MM-DD')) FROM productin) pdExDate 
+			 pdDelRule, pdCreated, pdstCount, (SELECT MIN(TO_CHAR(pdExDate,'YYYY-MM-DD')) FROM productin) pdExDate
 				FROM productList p 
 				Left OUTER Join Temporary t ON p.pdnum=t.pdnum 
 				Left OUTER JOIN Temporary2 t2 ON p.pdnum=t2.pdnum 
@@ -47,6 +55,12 @@
 				<where>
 					<if test="listOrArticle!=0">
 						 p.pdnum=#{pdnum}
+					</if>
+					<if test="cl=='bcl'">
+						 bclcode=#{code}
+					</if>
+					<if test="cl=='sci'">
+						 scicode=#{code}
 					</if>
 				</where>
 				ORDER BY p.pdcreated DESC
@@ -88,11 +102,11 @@
 	
 	<update id="productListUpdate" parameterType="com.hotbody.hotShop.board.HotShop">
 	UPDATE productList 
-	SET 
+	SET  
 	pdname=#{pdName},
 	pdContent=#{content},
-	pdSumContent=#{pdSumContent}
-	
+	pdSumContent=#{pdSumContent},
+	bsl
 	 WHERE pdnum=#{pdnum}
 	</update>
 	<update id="PmainImgUpdate" parameterType="com.hotbody.hotShop.board.HotShop">

@@ -1,4 +1,4 @@
-package com.hotbody.mocoboard;
+package com.hotbody.mocobung;
 
 import java.util.List;
 import java.util.Map;
@@ -8,65 +8,56 @@ import org.springframework.stereotype.Service;
 
 import com.hotbody.common.dao.CommonDAO;
 
-@Service("mocoboard.BoardService")
-public class BoardServiceImpl implements BoardService {
-@Autowired
+@Service("mocobung.BungService")
+public class BungServiceImpl implements BungService {
+
+	@Autowired
 	private CommonDAO dao;
-	
+
 	@Override
-	public int insertBoard(Board dto) {
+	public int insertBung(Bung dto) {
 		
 		int result=0;
 		
 		try {
-			result=dao.insertData("moco.insertBoard", dto);
+			result=dao.insertData("mocobung.insertBung",dto);
 		} catch (Exception e) {
-			System.out.println(e.toString());
+			// TODO: handle exception
 		}
-		
+				
 		return result;
 	}
 
 	@Override
-	public List<Board> listBoard(Map<String, Object> map) {
-		
+	public List<Bung> listBung(Map<String, Object> map) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public int dataCount(Map<String, Object> map) {
-		
-		return 0;
-	}
-
-	@Override
-	public Board readBoard(int moFBNum) {
-		
-		return null;
-	}
-
-	@Override
-	public Board preReadBoard(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Board nextReadBoard(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int updateBoard(Board dto) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int deleteBoard(int moFBNum) {
+	public Bung readBung(int mosubNum) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int updateBung(Bung dto) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	@Override
+	public int deleteBung(int mosubNum) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	
 	
 }

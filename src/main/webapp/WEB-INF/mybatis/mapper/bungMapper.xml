@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mocobung">
+	
+	<insert id="insertBung" parameterType="com.hotbody.mocobung.Bung">
+		INSERT INTO mocojee5 (mosubNum, moSpot, mosubName, moPlace, maxPeople, moDate, moStart, moEnd, moCost )
+			VALUES(#{mosubNum}, #{moSpot}, #{mosubName}, #{moPlace}, #{maxPeople}, #{moDate}, #{moStart}, #{moEnd}, #{moCost} )
+		
+	</insert>
+	
+</mapper>

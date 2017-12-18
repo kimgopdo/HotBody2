@@ -5,6 +5,7 @@
 <%
 	String cp=request.getContextPath();
 %>
+<script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.ui.datepicker-ko.js"></script>
 <script type="text/javascript">
 $(function() {
     $("input[name=startDay]").datepicker();

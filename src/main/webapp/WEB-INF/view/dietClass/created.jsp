@@ -205,9 +205,7 @@ $(function(){
 			<textarea style="width: 98%;" rows=10; name="classGoalD">${dto.classGoalD}</textarea>
 		</td>
 	</tr>
-	<!-- 
-		프로그램 등록하는 부분 수정 필요함 
-	 -->
+	
 	<tr height="40">
 		<td width="100" valign="top">프로그램 등록</td>
 		<td>
@@ -432,7 +430,7 @@ $(function(){
 	<div style="width:1000px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
 	<div style="width: 1000px; margin: 20px auto 0;" align="center">
 		<button type="button" class="btn-default02" onclick="sendOk();">${mode=='update'?'수정완료':'등록하기'}</button>
-		<button type="button" class="btn-default02" onclick="javascript:location.href='<%=cp%>/dietClass/list?type=${dto.classType}';">${mode=='update'?'수정취소':'등록취소'}</button>
+		<button type="button" class="btn-default02" onclick="javascript:location.href='<%=cp%>/dietClass/list?type=0';">${mode=='update'?'수정취소':'등록취소'}</button>
 		<c:if test="${mode=='update'}">
 			<input type="hidden" name="classNum" value="${dto.classNum}">
 			<input type="hidden" name="classType" value="${dto.classType}">

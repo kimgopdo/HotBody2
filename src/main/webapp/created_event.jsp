@@ -136,62 +136,109 @@ fieldset[disabled] .form-control {
 function check() {
 	var f = document.boardForm;
 	
-	if(!f.pdQSubject.value){
+	if(!f.subject.value){
 		alert("제목을 입력하세요.");
-		f.pdQSubject.focus();
-		return;
+		f.subject.focus();
+		return false;
 	}
 	
+	if(!f.name.value){
+		alert("이름을 입력하세요.");
+		f.name.focus();
+		return false;
+	}
 	
 	if(!str || str=="<p>&nbsp;</p>") {
 		alert("내용을 입력하세요");
-		f.pdQContent.focus();
-		return;
+		f.content.focus();
+		return false;
 	}
 	
-	f.action="<%=cp%>/qna/${mode}";
-
-    f.submit();
+	return true;
 }
-
+function fileChange() {
+	var upload=document.getElementById("upload").value;
+	document.getElementById("fileName").value=upload.substring(0,upload.lastIndexOf("."));
+}
+function deleteFile() {
+	if(confirm("첨부파일을 삭제하시겠습니까?")){
+		location.href="<%=cp%>/notice/deleteFile?page=${page}&num=${dto.num}"
+	}
+}
 </script>
 </head>
 <body>
 <div style="height: 50px;"></div>
-<div style="font-size: 40px; width: 700px; margin: 20px auto 0; font-weight: bold; color: #666666;">질문 등록</div>
+<div style="font-size: 40px; width: 700px; margin: 20px auto 0; font-weight: bold; color: #666666;">지난 이벤트</div>
 <div style="width:700px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
 
-<form method="post" name="boardForm" enctype="multipart/form-data" onsubmit="return submitContents(this);">
+<form action="<%=cp%>/notice/${mode}" method="post" name="boardForm" enctype="multipart/form-data" onsubmit="return submitContents(this);">
 <table style="width: 700px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0">
-
-<tr height="30">
-	<td width="80">제목</td>
+<tr height="40">
+	<td width="100">제목</td>
 	<td>
-		<input type="text" name="pdQSubject" style="width: 600px; height: 25px;" value="${dto.pdQSubject}">
+		<input type="text" name="subject" style="width: 98%; height: 35px;" value="${dto.subject}">
 	</td>
 </tr>
 
-<tr height="30">
-	<td width="80">작성자</td>
-	<td style="width: 600px; height: 25px; color: black;"><p style="font-weight: bold;">${sessionScope.member.userName}</p></td>
-</tr>
+<tr height="10px;"></tr>
 
 <tr height="40">
-	<td width="80" valign="top">내용</td>
+	<td width="100" valign="top">내용</td>
 	<td>
-		<textarea style="width: 600px;" rows=10; name="pdQContent" id="pdQContent">${dto.pdQContent}</textarea>
+		<textarea style="width: 98%;" rows=10; name="content" id="content">${dto.content}</textarea>
 	</td>
 </tr>
 
+<tr height="10px;"></tr>
+
+<tr height="40">
+	<td width="100">파일등록</td>
+	<td>
+	<div class="form-group form_file">
+	  <input id="fileName" class="form-control form_point_color01" type="text" title="첨부된 파일명" readonly style="width:430px">
+	  <span class="file_load">
+	        <input type="file" id="upload" name="upload" onchange="fileChange();">
+	        <label class="btn-default" for="upload">파일첨부</label>
+	    </span>
+	</div>
+	</td>
+</tr>
+
+<tr>
+	<td></td>
+	<td style="color: #666666; font-size: 13px;">
+		(최대 10MB이하의 파일이 등록 가능합니다.)
+	</td>
+</tr>
+
+<tr height="10px;"></tr>
+
+<c:if test="${mode=='update'}">
+<tr height="40">
+	<td width="100">첨부된 파일</td>
+	<td>
+		${dto.originalFilename}
+		<c:if test="${not empty dto.saveFilename}">
+			&nbsp;<a href="javascript:deleteFile();">
+			<img src="<%=cp%>/resource/images/close_icon.png">
+			</a>
+		</c:if>
+	</td>
+</tr>
+</c:if>
 </table>
 <div style="width:700px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
 <div style="width: 700px; margin: 20px auto 0;" align="center">
 <button type="submit" class="btn-default02">등록</button>
-<button type="button" class="btn-default02" onclick="javascript:location.href='<%=cp%>/';">등록취소</button>
+<button type="button" class="btn-default02" onclick="javascript:location.href='<%=cp%>/notice/list?page=${page}';">등록취소</button>
 <c:if test="${mode=='update'}">
 	<input type="hidden" name="page" value="${page}">
-	<input type="hidden" name="pdQCode" value="${dto.pdQCode}">
+	<input type="hidden" name="num" value="${dto.num}">
 	<input type="hidden" name="query" value="${query}">
+	<input type="hidden" name="saveFilename" value="${dto.saveFilename}">
+	<input type="hidden" name="fileSize" value="${dto.fileSize}">
+	<input type="hidden" name="originalFilename" value="${dto.originalFilename}">
 </c:if>
 </div>
 
@@ -199,7 +246,7 @@ function check() {
 var oEditors = [];
 nhn.husky.EZCreator.createInIFrame({
 	oAppRef: oEditors,
-	elPlaceHolder: "pdQContent",
+	elPlaceHolder: "content",
 	sSkinURI: "<%=cp%>/resource/se/SmartEditor2Skin.html",	
 	htParams : {bUseToolbar : true,
 		fOnBeforeUnload : function(){
@@ -215,16 +262,16 @@ nhn.husky.EZCreator.createInIFrame({
 
 function pasteHTML() {
 	var sHTML = "<span style='color:#FF0000;'>이미지도 같은 방식으로 삽입합니다.<\/span>";
-	oEditors.getById["pdQContent"].exec("PASTE_HTML", [sHTML]);
+	oEditors.getById["content"].exec("PASTE_HTML", [sHTML]);
 }
 
 function showHTML() {
-	var sHTML = oEditors.getById["pdQContent"].getIR();
+	var sHTML = oEditors.getById["content"].getIR();
 	alert(sHTML);
 }
 	
 function submitContents(elClickedObj) {
-	oEditors.getById["pdQContent"].exec("UPDATE_CONTENTS_FIELD", []);	// 에디터의 내용이 textarea에 적용됩니다.
+	oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);	// 에디터의 내용이 textarea에 적용됩니다.
 	
 	// 에디터의 내용에 대한 값 검증은 이곳에서 document.getElementById("content").value를 이용해서 처리하면 됩니다.
 	
@@ -237,7 +284,7 @@ function submitContents(elClickedObj) {
 function setDefaultFont() {
 	var sDefaultFont = '돋움';
 	var nFontSize = 24;
-	oEditors.getById["pdQContent"].setDefaultFont(sDefaultFont, nFontSize);
+	oEditors.getById["content"].setDefaultFont(sDefaultFont, nFontSize);
 }
 </script>
 </form>

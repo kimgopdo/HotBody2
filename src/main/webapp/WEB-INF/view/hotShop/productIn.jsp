@@ -531,8 +531,13 @@ function call(){
 function productInList(page){
 	
 	var url="<%=cp%>/hotShop/productInInfo";
-	var data="colum="+$(':radio[name="colum"]:checked').val()+"&order="+$(':radio[name="order"]:checked').val()+"&page="+page;
-	if($('input[name="startDate"]').val()!=""||$('input[name="endDate"]').val()!=""){
+	var data=
+		"colum="+$(':radio[name="colum"]:checked').val()
+		+"&order="+$(':radio[name="order"]:checked').val()
+		+"&page="+page;
+	if($('input[name="startDate"]').val()!=""
+			||$('input[name="endDate"]').val()!=""){
+		
 		var checkDate=$('input[name="startDate"]').val();
 		if(checkDate==""){
 			alert("조회기간을 설정해주세요");
@@ -548,6 +553,7 @@ function productInList(page){
 		}
 		data+="&endDate="+checkDate;
 	}
+	alert(data);
 	$.ajax({
 		type: "post"
 		,url: url
@@ -589,7 +595,6 @@ function productInSend(f){
 </script>
 <form name="productInForm" method="post">
 <table style="width:100%; margin-top: 100px; border-collapse: collapse;">
-	<tr><td><button type="button" onclick="productInSend(this.form);">입고</button></td></tr>
 	<tr height="30px"style="border-bottom: 2px solid #373737">
 		<td width="15%">상품이미지</td>                                            
 		<td width="25%">상품이름</td>
@@ -598,7 +603,7 @@ function productInSend(f){
 		<td width="10%">총액</td>
 		<td width="10%">유통기한</td>
 		<td width="10%">입고날</td>
-		<td width="10%">업체명</td>    
+		<td width="10%">업체명</td>
 	</tr>
 	<tr class="productIn" height="70px" style="border-bottom: 2px solid #e7e7e7">
 		<td id="showImgArea">상품이미지</td>
@@ -606,7 +611,7 @@ function productInSend(f){
 		<select id="productName" name="pdnum" onchange="showImg();">
 			<option>::상품</option>
 			<c:forEach var="dto" items="${productList}">
-				<option value="${dto.pdnum}"  data-imgSaveFilename="${dto.imgSaveFilename}">${dto.pdName}</option>
+				<option value="${dto.pdnum}" data-imgSaveFilename="${dto.imgSaveFilename}">${dto.pdName}</option>
 			</c:forEach>
 		</select>
 		</td>
@@ -624,6 +629,7 @@ function productInSend(f){
 		</select>
 		</td>
 	</tr>
+	<tr><td colspan="8"><button type="button" class="btn" style="float: right;" onclick="productInSend(this.form);">입고</button></td></tr>
 </table>
 </form>
 
@@ -633,7 +639,7 @@ function productInSend(f){
 		<td colspan="8">
 		조회기간: 
 	  		<input type="text" name="startDate" id="datepicker1" disabled="disabled"> ~ <input type="text" name="endDate" id="datepicker2" disabled="disabled">
-	  		<button type="button" onclick="productInList(1);">조회</button>
+	  		<button type="button" class="btn" onclick="productInList(1);">조회</button>
 		</td>
 	</tr>
 	<tr>

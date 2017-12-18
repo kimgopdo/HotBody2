@@ -3,8 +3,8 @@ package com.hotbody.hotShop.board;
 import org.springframework.web.multipart.MultipartFile;
 
 public class HotShop {
-	private String bci;//대분류
-	private String sci;//소분류
+	private String bclcode;//대분류
+	private String scicode;//소분류
 	private int pdnum;//상품코드
 	private String pdName;//상품명
 	private String pdOrder;//게시물순서
@@ -30,6 +30,19 @@ public class HotShop {
 	private int pdInNum;
 	
 	
+	
+	public String getBclcode() {
+		return bclcode;
+	}
+	public void setBclcode(String bclcode) {
+		this.bclcode = bclcode;
+	}
+	public String getScicode() {
+		return scicode;
+	}
+	public void setScicode(String scicode) {
+		this.scicode = scicode;
+	}
 	public int getPdInNum() {
 		return pdInNum;
 	}
@@ -71,18 +84,6 @@ public class HotShop {
 	}
 	public void setContent(String content) {
 		this.content = content;
-	}
-	public String getBci() {
-		return bci;
-	}
-	public void setBci(String bci) {
-		this.bci = bci;
-	}
-	public String getSci() {
-		return sci;
-	}
-	public void setSci(String sci) {
-		this.sci = sci;
 	}
 	public int getPdnum() {
 		return pdnum;

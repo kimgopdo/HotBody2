@@ -301,13 +301,6 @@ public class DietClassController {
 		return model;
 	}
 	
-	
-	
-	@RequestMapping(value="dietClass/survey")
-	public String classSurvey() {
-		return "dietClass/surveyForm";
-	}
-	
 	/*
 	 * 클래스 프로그램 관련
 	 */
@@ -491,6 +484,13 @@ public class DietClassController {
 					int count = service.haveMission(mdto);
 					if(count==0 && mdto.getMissionContent()!="")
 						service.insertMission(mdto);
+					else if(count==0 && mdto.getMissionContent()=="") {
+						Map<String, Object> deleteMap = new HashMap<>();
+						deleteMap.put("missIndex", mdto.getMissIndex());
+						deleteMap.put("missDay", mdto.getMissDay());
+						deleteMap.put("classNum", classNum);
+						service.deleteMission(deleteMap);
+					}
 					else 
 						service.updateMission(mdto);
 				}
