@@ -36,6 +36,16 @@
 			<if test="searchValue != null and searchValue != ''">
 				<include refid="where-list"/>
 			</if>
+		</where>
+	</select>
+	
+		<!-- 상품 아티클에서 게시물 개수 -->
+	<select id="dataCountArticle" resultType="Integer" parameterType="map">
+		SELECT NVL(COUNT(*), 0) FROM pqna
+		<where>
+			<if test="searchValue != null and searchValue != ''">
+				<include refid="where-list"/>
+			</if>
 			<if test="pdnum != '1'">
 				and pdnum=#{pdnum}
 			</if>
