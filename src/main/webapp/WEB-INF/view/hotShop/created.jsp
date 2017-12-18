@@ -118,6 +118,9 @@ $(function(){
             f.pdRawName.focus();
             return false;
         }
+        if($('input:checkbox[name="showandhide"]').is(":checked")){
+        	f.showandhide.value=1;
+        }
    		f.action="<%=cp%>/hotShop/created";
         f.submit();
         
@@ -126,7 +129,8 @@ $(function(){
 </script>
 <!--  onsubmit="return submitContents(this);" -->
 <form name="boardForm" method="post" enctype="multipart/form-data">
-	<div style="min-width:1140px; margin-top: 50px;">
+	<div style="min-width:1140px; margin-top: 150px;">
+		<input type="checkbox" name="showandhide">숨김
 		<select id="bciSelect" name="bclcode" style="padding: 10px;">
 			<option selected="selected">::영양소별</option>
 		</select>

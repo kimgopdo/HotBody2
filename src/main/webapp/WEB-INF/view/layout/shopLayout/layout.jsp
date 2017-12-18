@@ -13,6 +13,8 @@
 <head>
 <meta charset="UTF-8">
 <title>HotBody COOL Body</title>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
 <link rel="stylesheet" href="<%=cp%>/resource/css/tabs.css" type="text/css">
 <link href="<%=cp%>/resource/mainboot/css/flexslider.css" rel="stylesheet" type="text/css">
 <link href="<%=cp%>/resource/mainboot/css/animate.css" rel="stylesheet" type="text/css" media="all">
@@ -25,26 +27,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
 <%-- <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.js"></script> --%>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script type="text/javascript">
-$(function(){
-	var url="<%=cp%>/hotShop/menuCall"
-	$.ajax({
-		type:"post"
-		,url:url
-		,success:function(menuData){
-			$.each(menuData.bclList,function(index, item){
-					$("#productNutrient").append("<li><a onclick='move("+item.bclcode+",\""+item.bclname+"\",\"bcl\");'>"+item.bclname+"</a></li>");
-					console.log(item.bclname);
-			});
-			$.each(menuData.sciList,function(index, item){
-					$("#productLike").append("<li><a onclick='move("+item.scicode+",\""+item.sciname+"\",\"sci\");'>"+item.sciname+"</a></li>");
-					console.log("1");
-			});
-		}
-	});
-})
-</script>
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="<%=cp%>/resource/mainboot/js/jquery.nicescroll.min.js" type="text/javascript"></script>
 <script src="<%=cp%>/resource/mainboot/js/superfish.min.js" type="text/javascript"></script>
@@ -103,8 +86,27 @@ A:hover { color:#컬러코드 ; text-decoration:none; }
 
 </head>
 
-<body>
-
+<body style="min-width: 1600px; position: relative;">
+<script type="text/javascript">
+$(function(){
+	var url="<%=cp%>/hotShop/menuCall"
+	$.ajax({
+		type:"post"
+		,url:url
+		,dataType:"json"
+		,success:function(menuData){
+			$.each(menuData.bclList,function(index, item){
+					$(".productNutrient").append("<li><a onclick='move("+item.bclcode+",\""+item.bclname+"\",\"bcl\");'>"+item.bclname+"</a></li>");
+			});
+			$.each(menuData.sciList,function(index, item){
+					$(".productLike").append("<li><a onclick='move("+item.scicode+",\""+item.sciname+"\",\"sci\");'>"+item.sciname+"</a></li>");
+			});
+			$("#productNutrient").trigger("create");
+			$("#productLike").trigger("create");
+		}
+	});
+})
+</script>
 <div class="quickMenu">
 	<tiles:insertAttribute name="quickMenu"/>
 </div>
@@ -113,7 +115,7 @@ A:hover { color:#컬러코드 ; text-decoration:none; }
     <tiles:insertAttribute name="leftSide"/>
 </div>
 	
-<div class="container">
+<div class="container" style="margin-left: auto; margin-right: auto;">
     <tiles:insertAttribute name="header"/>
     <tiles:insertAttribute name="body"/>
 </div>
@@ -121,6 +123,5 @@ A:hover { color:#컬러코드 ; text-decoration:none; }
 <div class="rightSide">
     <tiles:insertAttribute name="rightSide"/>
 </div>
-
 </body>
 </html>

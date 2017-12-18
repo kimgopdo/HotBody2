@@ -31,14 +31,14 @@ function move(code,menuname,cl){
             <li>
             	<a href="move('newProduct');">신상품</a>
             </li>
-            <li class="sub-menu">
+            <li class="sub-menu" data-role="listview">
             	<a href="#">상품유형별</a>
-	            	<ul id="productLike">
+	            	<ul id="productLike" class="productLike">
 	            	</ul>
             </li>
-            <li class="sub-menu">
+            <li class="sub-menu" data-role="listview">
             	<a href="#">영양소별</a>
-            	<ul id="productNutrient">
+            	<ul id="productNutrient" class="productNutrient">
             	</ul>
             </li>
             <li>

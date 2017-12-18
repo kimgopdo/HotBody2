@@ -4,9 +4,9 @@
 <mapper namespace="product">
 	<insert id="insertProductList" parameterType="com.hotbody.hotShop.board.HotShop">
 		INSERT INTO 
-		productList (pdNum,pdName,pdOrder,pdCreated,pdBoardName,pdContent,pdStCount,pdSumContent,scicode,bclcode) 
+		productList (pdNum,pdName,pdOrder,pdCreated,pdBoardName,pdContent,pdStCount,pdSumContent,scicode,bclcode,showandhide) 
 		values(product_seq.NEXTVAL,#{pdName},1,
-				sysdate,#{pdName},#{content},0,#{pdSumContent},#{scicode},#{bclcode})
+				sysdate,#{pdName},#{content},0,#{pdSumContent},#{scicode},#{bclcode},#{showandhide})
 	</insert>
 	<insert id="insertPmainImg" parameterType="com.hotbody.hotShop.board.HotShop">
 	INSERT INTO 
@@ -62,21 +62,23 @@
 					<if test="cl=='sci'">
 						 scicode=#{code}
 					</if>
+					 AND showandhide!=0
 				</where>
 				ORDER BY p.pdcreated DESC
 	</select>
 	<select id="readProductIn" parameterType="map" resultType="com.hotbody.hotShop.board.ProductIn">
-		SELECT * FROM (SELECT ROWNUM rnum, pdin.* FROM (SELECT pdincode,pdrawprice,pdinnum,TO_CHAR(pdexdate, 'YYYY-MM-DD') pdexdate,TO_CHAR(pdindate, 'YYYY-MM-DD') pdindate,pi.pdnum pdnum,pl.pdname pdname,pi.supplycode,supplyname
+		SELECT * FROM (SELECT ROWNUM rnum, pdin.* FROM (SELECT pdincode,pdrawprice,pdinnum,TO_CHAR(pdexdate, 'YYYY-MM-DD') pdexdate,TO_CHAR(pdindate, 'YYYY-MM-DD') pdindate,pi.pdnum pdnum,pl.pdname pdname,pi.supplycode,supplyname,imgSaveFilename
 		FROM productin pi 
 		JOIN productList pl ON pi.pdnum=pl.pdnum 
-        JOIN supply s ON pi.supplycode=s.supplycode 
+        JOIN supply s ON pi.supplycode=s.supplycode
+        LEFT OUTER JOIN pmainimg pimg ON pl.pdnum = pimg.pdnum 
         <where>
         	<if test="startDate!=''">
         	 TO_CHAR(pdindate, 'YYYY-MM-DD')&gt;=#{startDate} AND TO_CHAR(pdindate, 'YYYY-MM-DD')&lt;=#{endDate}
         	</if>
         	<if test="startDate!=''">
         		<if test="colum=='pdexdate'">
-	        	 TO_CHAR(pdindate, 'YYYY-MM-DD')&gt;=#{startDate} AND TO_CHAR(pdindate, 'YYYY-MM-DD')&lt;=#{endDate}    		
+	        	 TO_CHAR(pdexdate, 'YYYY-MM-DD')&gt;=#{startDate} AND TO_CHAR(pdexdate, 'YYYY-MM-DD')&lt;=#{endDate}    		
         		</if>
         	</if>
         </where>

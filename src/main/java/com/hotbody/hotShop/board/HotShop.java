@@ -28,9 +28,15 @@ public class HotShop {
 	private String mode;
 	private int listOrArticle;
 	private int pdInNum;
+	private int showandhide;
 	
 	
-	
+	public int getShowandhide() {
+		return showandhide;
+	}
+	public void setShowandhide(int showandhide) {
+		this.showandhide = showandhide;
+	}
 	public String getBclcode() {
 		return bclcode;
 	}
