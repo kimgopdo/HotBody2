@@ -65,7 +65,7 @@ public class HotShopServiceImpl implements HotShopService{
 		List<Qna> list = null;
 		
 		try {
-			list = dao.selectList("qna.listQna", map);
+			list = dao.selectList("qna.listQnaArticle", map);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
