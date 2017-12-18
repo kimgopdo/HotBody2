@@ -8,7 +8,7 @@
 
 <style type="text/css">
 .aspect {
-	width: 200px;
+	width: 240px;
 	height: 240px;
 }
 
@@ -141,10 +141,10 @@ function searchList() {
 <body>
 
 	<div id="container" style="width: 100%; height: 1100px;">
-		<div style="width: 100%; height: 40px; margin-top: 220px; ">
+		<div style="width: 100%; height: 40px; margin-top: 100px; ">
 			<div style="width: 50%; height: 30px; font-weight: bold;" align="left">
 					REVIEW | 전체리뷰
-					<button type="button" style="color: gray; margin-top: 3px; background: white; border: 1px solid #999999; border-radius: 3px; width: 60px; height: 30px;" onclick="javascript:location.href='<%=cp%>/hotShop/review_list';">리스트</button>
+					<%-- <button type="button" style="color: gray; margin-top: 3px; background: white; border: 1px solid #999999; border-radius: 3px; width: 60px; height: 30px;" onclick="javascript:location.href='<%=cp%>/hotShop/review_list';">리스트</button> --%>
 			</div>
 		</div>
 		<hr style="border: 0.5px solid #BDBDBD;">
@@ -204,12 +204,10 @@ function searchList() {
 									<div
 										style="float: right; width: 9%; margin-left: 15px; margin-right: 15px;">${dto.reviewCreated}</div>
 									<div style="width: 10%;">
-										<span
-											style="font-weight: bold; float: left; padding-left: 5px; padding-top: 3px;">${dto.pdName}</span>
+										<span style="font-weight: bold; float: left; padding-left: 5px; padding-top: 3px; width: 500px; text-align: left;">${dto.pdName}</span>
 									</div>
 									<div style="float: right; font-weight: bold;">${dto.userName}(${dto.userId})</div>
-									<div style="height: 100%; width: 15%; float: right;">별점
-										받아오는 곳</div>
+									<div id="starInput" style="height: 100%; width: 15%; float: right;"></div>
 								</div>
 								<div
 									style="width: 100%; height: 74%; padding-left: 5px; padding-top: 5px; padding-bottom: 5px; padding-right: 5px;">
