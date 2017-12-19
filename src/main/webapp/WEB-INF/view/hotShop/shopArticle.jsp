@@ -13,33 +13,22 @@
 <script type="text/javascript">
 // 상품 수량 변경
 var sum = ${dto.pdPrice}; // 상품 가격
-var no = 1;
 
-function add(num){
-   if(num == -1){
-      if(no == 1){
-         return;
-      }
-      no--;
-      sum = sum - sum;
-   }else if(num == 1){
-      no++;
-      sum = sum + sum;
-   }
-   var tno1 = document.getElementById("no1");
-   var tno2 = document.getElementById("no2");
-   var sumCost = document.getElementById("cost");
-   
-   tno1.value = no;
-   tno2.innerHTML = no;
-   sumCost.innerHTML = numberWithCommas(sum);
+function add(){//인자값 : 수량업 1  , 수량 다운 시 -1
+	var cnt=$("#no1").val();
+	var tot=sum*cnt;
+	tot=numberWithCommas(tot);
+	$("#cost").text(tot);
+	$("#no2").text(cnt);
 }
 
 // 숫자 천 단위 마다 콤마 찍기
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
-
+function onlyNumber(){
+       event.returnValue=false;
+}
 function check(){
 	var uid="${sessionScope.member.userId}";
 	if(! uid){
@@ -52,6 +41,10 @@ function check(){
 
 $(function(){
 	listPage(1);
+	var tot=numberWithCommas("${dto.pdPrice}");
+	var cnt = $("#no1").val();
+	$("#cost").text(tot);
+	$("#no2").text(cnt);
 });
 
 function listPage(page){
@@ -135,27 +128,25 @@ function payment(pdnum){
 					</tr>
 					<tr>
 						<th>가격</th>
-						<td><span>${dto.pdPrice}</span>원</td>
+						<td><input type="hidden" id="pdPrice" value="${dto.pdPrice}"><span>${dto.pdPrice}</span>원</td>
 					</tr>
 					
-					<tr>
+					<tr>                                                 
 						<th>수량</th>
 						<td>
-							<button type="button" onclick="add(-1)"  style="background: white; border: none; padding: 0px; outline: none;">▼&nbsp;</button>
-							<input type="text" value="1" id="no1" readonly="readonly" style="width: 25px;">
-							<button type="button" onclick="add(1)"style="background: white; border: none; padding: 0px; outline: none;">&nbsp;▲</button>
+							<input type="number" value="1" id="no1" min="1" style="width: 35px;" onkeypress="onlyNumber();" onclick="add();">
 						</td>
 					</tr>
 				</table>
 				
-				<hr style="border: solid 0.5px #BDBDBD; width: 100%">
+				<hr style="border: solid 0.5px #BDBDBD; width: 100%">                      
 				
 				<!-- total 가격, 수량 -->
 				<div style="width: 100%; height: 3%; margin-bottom: 22px;">
 					<div style=" float: left;">
 						<span style="font-weight: bold; font-size: 13px;">Total</span>
 						<span  style="font-size: 12px;">(Quantity) : </span>
-						<span style="font-weight: bold; font-size: 13px;"><span id="cost"></span>원</span>
+						<span style="font-weight: bold; font-size: 13px;" id="cost"> </span><span style="font-weight: bold; font-size: 13px;" id="cost">원</span>
 						<span style="font-size: 12px;">(<span id="no2"></span>개)</span>
 					</div>
 				</div>

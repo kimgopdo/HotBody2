@@ -9,8 +9,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -322,7 +320,6 @@ public class HotShopBoardController {
 		int dataCount=0;
 		int current_page=1;
 		int total_page=0;
-		String paging;
 		if(page!=1) {
 			current_page=page;
 		}
