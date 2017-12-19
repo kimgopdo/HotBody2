@@ -61,7 +61,7 @@ function check(){
 			<!-- article 메인이미지 -->
 			<div class="aspect" style="float: left; display: inline;">
 				<a href="#">
-					<img src="<%=cp%>/uploads/shopProduct/${dto.imgSaveFilename}" style=" width: 100%; height: 100%;">
+					<img src="<%=cp%>/uploads/shopList/${dto.imgSaveFilename}" style=" width: 100%; height: 100%;">
 				</a>
 			</div>
 			
@@ -118,7 +118,7 @@ function check(){
 				<div style="width: 100%; height: 8.5%;">
 					<div style="display: inline; float: left; margin-right: 10px;">
 						<button type="button" class="" style="width: 60px; height: 50px; background: white; outline: none; border: 1px solid black;">
-							<img src="<%=cp%>/resource/shop_images/heart.PNG" style="width: 70%; height: 70%;">
+							<img src="<%=cp%>/uploads/shopList/heart.png" style="width: 70%; height: 70%;">
 						</button>
 					</div>
 					<div style="display: inline; float: left; margin-right: 10px;">
@@ -140,7 +140,7 @@ function check(){
 	<!-- 상품설명 -->
 	<div style="width: 100%">
 		<!-- 상품설명 탭, 사진(설명) -->
-		<div style="width: 100%; margin-bottom: 200px; min-height: 3000px;" id="div1">
+		<div style="width: 100%; margin-bottom: 200px; min-height: 100px;" id="div1">
 			<!-- 탭 -->
 			<ul style="width: 100%; height:50px; border: 0.5px solid #BDBDBD; padding: 0px; margin-bottom: 30px;">
 				<li style="list-style:none; float: left; width: 366px; height:49.5px; padding-top:13px; border-right: 0.5px solid #BDBDBD; 
@@ -185,7 +185,8 @@ function check(){
 				<span style="font-weight: bold; font-size: 14px;">식품유형: &nbsp;&nbsp;</span>${dto.pdType}<br><br>
 				<span style="font-weight: bold; font-size: 14px;">생산지: &nbsp;&nbsp;</span>${dto.pdArea}<br><br>
 				<span style="font-weight: bold; font-size: 14px;">제품원재료명: &nbsp;&nbsp;</span>${dto.pdRawName}<br><br>
-			</div>                   
+				<img src="<%=cp%>/uploads/shopList/delivery_guide.PNG">
+			</div>               
 		</div>
 		
 		<!-- 상품후기 탭 -->
@@ -241,7 +242,8 @@ function check(){
 				<table>
 					<tr>
 						<td style="width: 1050px; float: right; padding-right: 10px;" align="right">
-							<button style="background: white; border: 1px solid #999999; border-radius: 3px; height: 35px;" type="button" onclick="check();">Q&A 등록</button>
+							<button type="button" class="btn" style="color:black; background: white; border: 1px solid #BDBDBD; border-radius: 3px; height: 30px;" onclick="javascript:location.href='<%=cp%>/hotShop/pQnA_list?${query}';">리스트</button>
+							<button class="btn" style="color:black; background: white; border: 1px solid #BDBDBD; border-radius: 3px; height: 30px;" type="button" onclick="check();">Q&A 등록</button>
 						</td>
 					</tr>
 				</table>

@@ -3,6 +3,7 @@ package com.hotbody.member;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,23 +23,24 @@ public class MemberController {
 	// 로그인 및 로그아웃
 	@RequestMapping(value="/member/login", method=RequestMethod.GET)
 	public String loginForm() throws Exception{
-		return ".member.login";
+		return ".member.login2";
 	}
 	
-	@RequestMapping(value="/member/login")
+	@RequestMapping(value="/member/login", method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> loginSubmit(
 			@RequestParam String userId,
 			@RequestParam String pwd,
 			Model model,
-			HttpSession session
+			HttpSession session,
+			HttpServletRequest req
 			) throws Exception {
 		Member dto = service.readMember(userId);
 		
 		Map<String, Object> map = new HashMap<>();
-		
 		if(dto == null || (! dto.getPwd().equals(pwd))) {
 			map.put("message", "아이디 또는 패스워드가 일치하지 않습니다.");
+			map.put("state", "fail");
 			return map;
 		}
 		

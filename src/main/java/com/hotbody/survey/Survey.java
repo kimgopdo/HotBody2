@@ -1,13 +1,15 @@
 package com.hotbody.survey;
 
 public class Survey {
-	private int qCode;
-	private String qContent, userId;
+	private int qCode, qOrder;
+	private String qContent, userId, qType;
 	
-	private int exNum, exScore;
+	private int exNum, exScore, exOrder;
 	private String exContent;
 	
 	private int tall, weight, bmi, bbody;
+	
+	private int qAnswer;
 
 	public int getqCode() {
 		return qCode;
@@ -87,6 +89,38 @@ public class Survey {
 
 	public void setBbody(int bbody) {
 		this.bbody = bbody;
+	}
+
+	public int getqOrder() {
+		return qOrder;
+	}
+
+	public void setqOrder(int qOrder) {
+		this.qOrder = qOrder;
+	}
+
+	public String getqType() {
+		return qType;
+	}
+
+	public void setqType(String qType) {
+		this.qType = qType;
+	}
+
+	public int getExOrder() {
+		return exOrder;
+	}
+
+	public void setExOrder(int exOrder) {
+		this.exOrder = exOrder;
+	}
+
+	public int getqAnswer() {
+		return qAnswer;
+	}
+
+	public void setqAnswer(int qAnswer) {
+		this.qAnswer = qAnswer;
 	}
 	
 }

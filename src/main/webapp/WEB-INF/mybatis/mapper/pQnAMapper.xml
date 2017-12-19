@@ -39,6 +39,19 @@
 		</where>
 	</select>
 	
+		<!-- 상품 아티클에서 게시물 개수 -->
+	<select id="dataCountArticle" resultType="Integer" parameterType="map">
+		SELECT NVL(COUNT(*), 0) FROM pqna
+		<where>
+			<if test="searchValue != null and searchValue != ''">
+				<include refid="where-list"/>
+			</if>
+			<if test="pdnum != '1'">
+				and pdnum=#{pdnum}
+			</if>
+		</where>
+	</select>
+	
 	<!-- 리스트 start - end 내림차순 정렬 -->
 	<select id="listQna" resultType="com.hotbody.hotShop.qna.Qna" parameterType="map">
 		SELECT * FROM(
@@ -48,6 +61,27 @@
         		<where>
 					<if test="searchValue != null and searchValue != ''">
 						<include refid="where-list"/>
+					</if>
+				</where>
+        		ORDER BY groupNum DESC, answerNum, pdQCode DESC
+     	<![CDATA[
+    		) tb WHERE ROWNUM <= #{end}      
+		) WHERE rnum >= #{start}
+		]]>
+	</select>
+	
+	<!-- 상품 아티클에서 리스트 -->
+	<select id="listQnaArticle" resultType="com.hotbody.hotShop.qna.Qna" parameterType="map">
+		SELECT * FROM(
+    		SELECT ROWNUM rnum, tb.* FROM(
+        		SELECT pdQCode, userName, pdQSubject, pdQCreated, answerNum, groupNum
+        		FROM pQnA
+        		<where>
+					<if test="searchValue != null and searchValue != ''">
+						<include refid="where-list"/>
+					</if>
+					<if test="pdnum != '1'">
+						and pdnum=#{pdnum}
 					</if>
 				</where>
         		ORDER BY groupNum DESC, answerNum, pdQCode DESC

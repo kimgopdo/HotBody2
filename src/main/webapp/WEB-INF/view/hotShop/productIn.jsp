@@ -441,7 +441,10 @@ establish the rules based on the calendar element width rather than the device w
 		max-width: 80em;
 		border: 1px solid #666;
 	}   
-	.aspect { width: 50px; height: 100px; }              
+	.aspect { width: 50px; height: 100px; }   
+	.check{
+		border: 1px solid #777777;
+	}           
 </style>
 <script type="text/javascript">
 $.datepicker.setDefaults({
@@ -482,10 +485,10 @@ var page=1;
 var totalPage=${total_page};
 $(function(){
 	productInList(1);
-	if ($("body").height() < $(window).height()) {
+	/* if ($("body").height() < $(window).height()) {
 		++page;
 		productInList(page);
-	}
+	} */
 })
 $(function(){
 	window.onscroll = function(ev) {
@@ -529,7 +532,8 @@ function call(){
 		}
 }
 function productInList(page){
-	
+	$("#created").removeClass("check");
+	$("#exDate").removeClass("check");
 	var url="<%=cp%>/hotShop/productInInfo";
 	var data=
 		"colum="+$(':radio[name="colum"]:checked').val()
@@ -560,9 +564,10 @@ function productInList(page){
 		,data:data
 		,success:function(a){
 			$("#productInList").html(a);
-			if ($("body").height() < $(window).height()) {
-				++page;
-				productInList(page);
+			if($(':radio[name="colum"]:checked').val()=="pdincode"){
+				$("#created").addClass("check");
+			}else if($(':radio[name="colum"]:checked').val()=="pdexdate"){
+				$("#exDate").addClass("check");
 			}
 		}
 	});
@@ -651,8 +656,8 @@ function productInSend(f){
 		<td width="10%">원가</td>
 		<td width="10%">입고수량</td>
 		<td width="10%">총액</td>
-		<td width="10%">유통기한</td>
-		<td width="10%">입고날</td>                                          
+		<td id="exDate" width="10%">유통기한</td>
+		<td id="created" width="10%">입고날</td>                                          
 		<td width="10%">업체명</td>
 	</tr>
 	<tbody id="productInList">

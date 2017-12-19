@@ -84,7 +84,7 @@ public class ReviewServiceImpl implements ReviewService {
 					fileManager.doFileDelete(dto.getImage(), pathname);
 				}
 			}
-			
+			dao.deleteData("review.deleteReply", reviewCode);
 			dao.deleteData("review.deleteReview", reviewCode);
 			result=1;
 		} catch(Exception e) {

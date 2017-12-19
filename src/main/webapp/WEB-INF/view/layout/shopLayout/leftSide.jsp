@@ -6,7 +6,7 @@
 	String cp=request.getContextPath();
 %>
       <!-- 왼쪽 사이드 바 -->
-   <div id="leftSide" class="vertical-align" style="width: 10%; height: 100%; top:0px; left: 0px; position: fixed;z-index: 10;">
+   <div id="leftSide" style="width: 10%; height: 100%; top:0px; left: 0px; position: fixed; z-index: 10;">                                    
          <a href="javascript:location.href='<%=cp%>/hotShop/created';">created페이지</a>
          <a href="javascript:location.href='<%=cp%>/hotShop/productInlist';">입고리스트 페이지</a>
          <div style="margin-top: 40px; margin-left: 30px;">
@@ -15,7 +15,7 @@
          </a>                
          </div>                     
          <div id="basketBtn">
-	         <button type="button" class="btn btn-default btn-lg basketBtn" style="background: white; border: none; outline: none;">
+	         <button type="button" class="btn btn-default btn-lg basketBtn" style="width:50px; border: none; outline: none;">
 	            <span class="glyphicon glyphicon-shopping-cart"></span>
 	         </button>
          </div>

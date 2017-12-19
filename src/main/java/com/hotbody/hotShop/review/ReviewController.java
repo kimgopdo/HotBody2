@@ -53,7 +53,7 @@ public class ReviewController {
 		dto.setUserName(info.getUserName());
 		dto.setPdName(dto.getPdName());
 		////////////////////////////////////////////////////
-		dto.setPdNum(3); // 임시로 상품번호 넣어줌(나중에 삭제)
+		dto.setPdNum(61); // 임시로 상품번호 넣어줌(나중에 삭제)
 		////////////////////////////////////////////////////
 		
 		String root=session.getServletContext().getRealPath("/");

@@ -10,7 +10,7 @@
 function sendOk() {
 	var uid="${sessionScope.member.userId}";
    	if(! uid) {
-      modalFormLogin();
+   	location.href="<%=cp%>/member/login";
       return;
    	}
 	var mode = "${mode}";

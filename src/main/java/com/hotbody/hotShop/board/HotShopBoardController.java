@@ -1,7 +1,10 @@
 package com.hotbody.hotShop.board;
 
+
+
 import java.io.File;
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -20,7 +23,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hotbody.common.FileManager;
 import com.hotbody.common.MyUtil;
-import com.hotbody.hotShop.qna.Qna;
 @Controller("hotShop.board")
 public class HotShopBoardController {
 	@Autowired
@@ -37,21 +39,25 @@ public class HotShopBoardController {
 			,@RequestParam String menuname
 			,@RequestParam String cl
 			,HttpServletRequest req
+			,@RequestParam(value="page", defaultValue="1") int page
 			,HttpSession session
 			,Model model
 			) throws Exception {
 		if(req.getMethod().equalsIgnoreCase("GET")) {
 			menuname = URLDecoder.decode(menuname, "UTF-8");
 		}
-		String root=session.getServletContext().getRealPath("/");
-		String pathname=root+"uploads"+File.separator+"shopProduct";
+		String cp=req.getServletContext().getRealPath("/");
+		String pathname=cp+"uploads"+File.separator+"shopList";
+		System.out.println(pathname);
 		List<HotShop> list=null;
 		Map<String, Object> map=new HashMap<>();
 		map.put("listOrArticle", 0);
 		map.put("cl", cl);
 		map.put("code", code);
 		list=service.productList(map);
-		
+		int row=5;
+		int dataCount=service.dataCount();
+		int total_page=dataCount/row;
 		Iterator<HotShop> it=list.iterator();
 		while(it.hasNext()) {
 			HotShop dto=it.next();
@@ -61,6 +67,9 @@ public class HotShopBoardController {
 		
 		model.addAttribute("list", list);
 		model.addAttribute("state", menuname);
+		model.addAttribute("total_page", total_page);
+		model.addAttribute("code", code);
+		model.addAttribute("cl", cl);
 		return ".hotShop.productList";
 	}
 	
@@ -81,54 +90,18 @@ public class HotShopBoardController {
 	public String shopArticle(
 			@RequestParam(value="page", defaultValue="1") int current_page,
 			@RequestParam(defaultValue="10") int rows,
-			@RequestParam int pdnum
+			@RequestParam(defaultValue="1") int pdnum,
+			HttpServletRequest req
 			,Model model
 			) {
-		
-		int dataCount;
-		int total_page;
-		
-		Map<String, Object> map = new HashMap<>();
-		
-		dataCount = service.dataCount_review(map);
-		
-		total_page = util.pageCount(rows, dataCount);
-		
-		if(total_page < current_page)
-			current_page = total_page;
-		
-		
-		int start = (current_page - 1) * rows + 1;
-		int end = current_page * rows;
-		map.put("start", start);
-		map.put("end", end);
-
-		List<Qna> list = service.productArticle_QnA(map);
-		
-		int listNum, n = 0;
-		Iterator<Qna> it = list.iterator();
-		while(it.hasNext()) {
-			Qna dto = it.next();
-			listNum = dataCount - (start + n - 1);
-			dto.setListNum(listNum);
-			n++;
-			
-			dto.setPdQCreated(dto.getPdQCreated().substring(0, 10));
-		}
-		
-		
 		HotShop dto=null;
-		
+		Map<String, Object> map = new HashMap<>();
 		map.put("listOrArticle", 1);
 		map.put("pdnum", pdnum);
 		
 		dto=service.productArticle(map);
-		String paging = util.paging(current_page, total_page);
 		
-		model.addAttribute("paging", paging);
 		model.addAttribute("dto", dto);
-		model.addAttribute("list", list);
-		
 		return ".hotShop.shopArticle";
 	}
 	
@@ -160,14 +133,14 @@ public class HotShopBoardController {
 			HotShop dto
 			,@RequestParam(defaultValue="created") String mode
 			,@RequestParam(defaultValue="") String imgSaveFilename
-			,HttpSession session
+			,HttpServletRequest req
 			,Model model
 			) throws Exception {
 		System.out.println("-------------------------------------------------------------------------------------");
 		System.out.println(dto.getPdnum());
 		System.out.println(imgSaveFilename);
-		String root=session.getServletContext().getRealPath("/");
-		String pathname=root+"uploads"+File.separator+"shopProduct";
+		String cp=req.getServletContext().getRealPath("/");
+		String pathname=cp+"uploads"+File.separator+"shopList";
 		if(mode.equalsIgnoreCase("update")) {
 			System.out.println("들어와라");
 			file.doFileDelete(imgSaveFilename, pathname);
@@ -207,11 +180,12 @@ public class HotShopBoardController {
 	public String productInInfoList(
 			@RequestParam(defaultValue="") String startDate,
 			@RequestParam(defaultValue="") String endDate,
-			@RequestParam(value="page") int page,
+			@RequestParam(value="page",defaultValue="1") int page,
 			String order,
 			String colum,
 			Model model,
-			HttpSession session
+			HttpSession session,
+			HttpServletRequest req
 			){
 		int row=5;
 		int start=0;
@@ -225,11 +199,23 @@ public class HotShopBoardController {
 		}
 		dataCount=service.dataCount();
 		total_page=dataCount/row;
+		if (total_page<0) {
+			total_page=1;
+		}
 		if(current_page>total_page)
-			current_page=total_page;
+			total_page=current_page;
 		start=current_page-1*row+1;
 		end=current_page*row;
 		
+		System.out.println("-------------------------------------");
+		System.out.println(page);
+		System.out.println(start);
+		System.out.println(end);
+		System.out.println(current_page);
+		System.out.println(total_page);
+		System.out.println(startDate);
+		System.out.println(endDate);
+		System.out.println("-------------------------------------");
 		List<ProductIn> productInList=null;
 		Map<String, Object> map=new HashMap<>();
 		map.put("start", start);
@@ -240,8 +226,8 @@ public class HotShopBoardController {
 		map.put("colum", colum);
 		map.put("order", order);
 		productInList=service.readProductIn(map);
-		String root=session.getServletContext().getRealPath("/");
-		String pathname=root+"uploads"+File.separator+"shopProduct";
+		String cp=req.getServletContext().getRealPath("/");
+		String pathname=cp+"uploads"+File.separator+"shopList";
 		map=new HashMap<>();
 		List<HotShop> productList=null;
 		map.put("listOrArticle", 0);
@@ -266,10 +252,11 @@ public class HotShopBoardController {
 	@RequestMapping(value="/hotShop/productInlist")
 	public String productInListForm(
 			Model model,
-			HttpSession session
+			HttpSession session,
+			HttpServletRequest req
 			) {
-		String root=session.getServletContext().getRealPath("/");
-		String pathname=root+"uploads"+File.separator+"shopProduct";
+		String cp=req.getServletContext().getRealPath("/");
+		String pathname=cp+"uploads"+File.separator+"shopList";
 		Map<String, Object> map=new HashMap<>();
 		List<HotShop> productList=null;
 		map.put("listOrArticle", 0);
@@ -302,5 +289,47 @@ public class HotShopBoardController {
 		Map<String, Object> map=new HashMap<>();
 		map.put("result", result);
 		return map;
+	}
+	
+	@RequestMapping(value="/hotShop/productListAjax")
+	public String productListAjax(
+			@RequestParam String code,
+			@RequestParam String cl,
+			@RequestParam(value="page",defaultValue="1") int page,
+			@RequestParam String formal,
+			Model model
+			) {
+		int row=5;
+		int start=0;
+		int end=0;
+		int dataCount=0;
+		int current_page=1;
+		int total_page=0;
+		String paging;
+		if(page!=1) {
+			current_page=page;
+		}
+		dataCount=service.dataCount();
+		total_page=dataCount/row;
+		if (total_page<0) {
+			total_page=1;
+		}
+		if(current_page>total_page)
+			total_page=current_page;
+		start=current_page-1*row+1;
+		end=current_page*row;
+		List<HotShop> list=new ArrayList<>();
+		Map<String, Object> map=new HashMap<>();
+		map.put("start", start);
+		map.put("end", end);
+		map.put("page", page);
+		map.put("listOrArticle", 0);
+		map.put("cl", cl);
+		map.put("code", code);
+		map.put("formal", formal);
+		list=service.productList(map);
+		
+		model.addAttribute("list", list);
+		return "hotShop/productListAjax";
 	}
 }
