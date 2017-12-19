@@ -4,8 +4,8 @@
 <mapper namespace="review">
 
 	<insert id="insertReview" parameterType="com.hotbody.hotShop.review.Review">
-		INSERT INTO shReviews (reviewCode, userName, reviewContent, starScore, reviewCreated, pdNum, userId)
-					 VALUES (preview_seq.NEXTVAL, #{userName}, #{reviewContent}, #{starScore}, sysdate, #{pdNum}, #{userId})
+		INSERT INTO shReviews (reviewCode, userName, reviewContent, starScore, reviewCreated, reviewSubject, pdNum, userId)
+					 VALUES (preview_seq.NEXTVAL, #{userName}, #{reviewContent}, #{starScore}, sysdate, #{reviewSubject}, #{pdNum}, #{userId})
 	</insert>
 	
 	<sql id="where-list">

@@ -241,6 +241,7 @@ public class QnaController {
 		return "redirect:/hotShop/pQnA_list?page="+page;
 	}
 	
+	@RequestMapping(value="/hotShop/listQna")
 	public String articleList(
 			@RequestParam(value="page", defaultValue="1") int current_page,
 			@RequestParam(defaultValue="10") int rows,
@@ -293,6 +294,6 @@ public class QnaController {
 	model.addAttribute("listUrl", listUrl);
 	model.addAttribute("articleUrl", articleUrl);
 	
-	return ".hotShop.listQna";
+	return "hotShop/listQna";
 	}
 }

@@ -19,14 +19,11 @@ public class ReviewServiceImpl implements ReviewService {
 	private FileManager fileManager;
 
 	@Override
-	public int insertReview(Review dto, String pathname) {
+	public int insertReview(Review dto) {
 		int result = 0;
 		
 		try {
-			 if(! dto.getUpload().isEmpty()) {
-		            String image=fileManager.doFileUpload(dto.getUpload(), pathname);
-		            dto.setImage(image);
-			 }
+
 			result = dao.insertData("review.insertReview", dto);
 		} catch (Exception e) {
 			System.out.println(e.toString());

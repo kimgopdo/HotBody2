@@ -127,7 +127,7 @@ function check() {
 <tr height="30">
 	<td width="80">제목</td>
 	<td>
-		<input type="text" name="pdQSubject" style="width: 100%; height: 25px;" value="${dto.pdQSubject}">
+		<input type="text" name="pdQSubject" style="width: 100%; font-weight: bold; height: 25px;" readonly="readonly" value="[${dto.pdName}]${dto.pdQSubject}">
 	</td>
 </tr>
 

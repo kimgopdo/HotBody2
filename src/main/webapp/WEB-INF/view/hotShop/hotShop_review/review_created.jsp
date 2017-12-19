@@ -109,7 +109,7 @@ function check() {
 		return;
 	}
 	
-	f.action="<%=cp%>/hotShop/review"+mode;
+	f.action="<%=cp%>/hotShop/review_"+mode;
 
     f.submit();
 }
@@ -118,7 +118,7 @@ function check() {
 </head>
 <body style="min-height: 950px;">
 <div style="height: 50px;"></div>
-<div style="font-size: 40px; width: 100%; margin: 20px auto 0; font-weight: bold; color: #666666;" align="left"> Q & A 등록</div>
+<div style="font-size: 40px; width: 100%; margin: 20px auto 0; font-weight: bold; color: #666666;" align="left">상품후기등록</div>
 <div style="width:100%; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
 
 <form method="post" name="boardForm" enctype="multipart/form-data" onsubmit="return submitContents(this);">
@@ -146,18 +146,8 @@ function check() {
 </table>
 <div style="width:100%; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
 <div style="width: 100%; margin: 20px auto 0;" align="center">
-<button type="button" style="background: white; border: 1px solid #999999; border-radius: 3px; height: 30px;" onclick="submitContents(this);">${mode=="created"? "등록완료":(mode=="update"?"수정완료":"답변등록")}</button>
-<button type="button" style="background: white; border: 1px solid #999999; border-radius: 3px; height: 30px;" onclick="javascript:location.href='<%=cp%>/hotShop/pQnA_list';">${mode=="created"? "등록취소":(mode=="update"?"수정취소":"답변취소")}</button>
-<c:if test="${mode=='update'}">
-	<input type="hidden" name="page" value="${page}">
-	<input type="hidden" name="reviewCode" value="${dto.reviewCode}">
-	<input type="hidden" name="query" value="${query}">
-</c:if>
-<c:if test="${mode=='answer'}">
-	<input type="hidden" name="page" value="${page}">
-	<input type="hidden" name="groupNum" value="${dto.groupNum}">
-	<input type="hidden" name="pdNum" value="${dto.pdNum}">
-</c:if>
+<button type="button" style="background: white; border: 1px solid #999999; border-radius: 3px; height: 30px;" onclick="submitContents(this);">${mode=="created"? "등록완료":"수정완료"}</button>
+<button type="button" style="background: white; border: 1px solid #999999; border-radius: 3px; height: 30px;" onclick="javascript:location.href='<%=cp%>/hotShop/review_list';">${mode=="created"? "등록취소":"수정취소"}</button>
 </div>
 
 <script type="text/javascript">
@@ -184,7 +174,7 @@ function pasteHTML() {
 }
 
 function showHTML() {
-	var sHTML = oEditors.getById["pdQContent"].getIR();
+	var sHTML = oEditors.getById["reviewContent"].getIR();
 	alert(sHTML);
 }
 	

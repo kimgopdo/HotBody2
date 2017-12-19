@@ -12,7 +12,14 @@ public class Qna {
 	private int listNum;
 	private int answerNum;
 	private int groupNum;
+	private String pdName;
 	
+	public String getPdName() {
+		return pdName;
+	}
+	public void setPdName(String pdName) {
+		this.pdName = pdName;
+	}
 	public int getAnswerNum() {
 		return answerNum;
 	}
