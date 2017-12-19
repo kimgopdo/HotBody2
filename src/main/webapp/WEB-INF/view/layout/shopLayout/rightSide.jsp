@@ -43,7 +43,7 @@
 
 	
 <!-- 오른쪽 사이드 바 -->
-   <div id="rightSide" style="width: 10%; height: 100%; float:right; top:0px; right:0; position: fixed;">
+   <div id="rightSide" style="width: 10%; height: 100%; float:right; top:0px; right:0; position: fixed; z-index: 10;">
         <ul class="btn_Side">
         	<li>
         		<button type="button" class="btn btn-default btn-lg quickMenuBtn" style="background: white; border: none; outline: none;" onclick="quickMenu();">

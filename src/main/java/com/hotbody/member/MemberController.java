@@ -22,7 +22,11 @@ public class MemberController {
 	
 	// 로그인 및 로그아웃
 	@RequestMapping(value="/member/login", method=RequestMethod.GET)
-	public String loginForm() throws Exception{
+	public String loginForm(
+			@RequestParam(defaultValue="") String prePage,
+			Model model
+			) throws Exception{
+		model.addAttribute("prePage", prePage);
 		return ".member.login2";
 	}
 	
@@ -31,6 +35,7 @@ public class MemberController {
 	public Map<String, Object> loginSubmit(
 			@RequestParam String userId,
 			@RequestParam String pwd,
+			@RequestParam(defaultValue="") String prePage,
 			Model model,
 			HttpSession session,
 			HttpServletRequest req
@@ -51,7 +56,7 @@ public class MemberController {
 		session.setAttribute("member", info);
 		
 		map.put("state", "true");
-		
+		map.put("prePage", prePage);
 		return map;
 	}
 	

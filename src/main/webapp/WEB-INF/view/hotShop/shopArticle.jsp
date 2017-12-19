@@ -78,6 +78,24 @@ function listPage(page){
 		}
 	});
 }
+function insertCookie(pdnum){
+	addCookie(pdnum);
+}
+</script>
+<script>
+function payment(pdnum){
+	addCookie(pdnum);
+	alert(getCookie("hotbodyBasket"));
+	var array=getCookie("hotbodyBasket").split(",");
+	var member="${sessionScope.member.userId}";
+	if(member!=""){
+		location.href="<%=cp%>/hotShop/payment?cookie="+array;
+		return;
+	}else{
+		location.href="<%=cp%>/member/login?prePage=hotShop";
+		return;
+	}
+}
 </script>
 
 
@@ -150,12 +168,12 @@ function listPage(page){
 						</button>
 					</div>
 					<div style="display: inline; float: left; margin-right: 10px;">
-						<button type="button" class="" style="width: 149px; height: 50px; background: white; outline: none; border: 1px solid black;">
+						<button type="button" class="" style="width: 149px; height: 50px; background: white; outline: none; border: 1px solid black;" onclick="insertCookie(${dto.pdnum});">
 							<span style="font-weight: bold; font-size: 18px;">Cart</span>
 						</button>
 					</div>
 					<div style="display: inline; float: left;">
-						<button type="button" class="" style="width: 149px; height: 50px; background: white; outline: none; border: 1px solid black;">
+						<button type="button" class="" style="width: 149px; height: 50px; background: white; outline: none; border: 1px solid black;" onclick="payment(${dto.pdnum});">
 							<span style="font-weight: bold; font-size: 18px;">Buy</span>
 						</button>
 					</div>

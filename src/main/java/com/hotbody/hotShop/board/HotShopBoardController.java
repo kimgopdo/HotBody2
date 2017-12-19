@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -81,7 +82,23 @@ public class HotShopBoardController {
 	
 	//구입 페이지
 	@RequestMapping(value="/hotShop/payment")
-	public String paymentForm() {
+	public String paymentForm(
+			@RequestParam int []cookie,
+			HttpServletRequest req,
+			Model model
+			) {
+		
+		List<HotShop> list=new ArrayList<>();
+		Map<String, Object> map=new HashMap<>();
+	    for(int n=0; n<cookie.length;n++) {
+	    	HotShop dto=new HotShop();
+	    	int pdnum=cookie[n];
+	    	map.put("listOrArticle", 1);
+	    	map.put("pdnum", pdnum);
+	    	dto=service.productArticle(map);
+	    	list.add(dto);
+	    }
+	    model.addAttribute("list", list);
 		return ".hotShop.payPage";
 	}
 	
