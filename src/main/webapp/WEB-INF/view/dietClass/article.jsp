@@ -37,7 +37,7 @@ function deleteOk(num,type) {
 function payGo(num,type) {
 	var uid="${sessionScope.member.userId}";
    	if(! uid) {
-      modalFormLogin();
+   		location.href="<%=cp%>/member/login";
       return;
    	}
    	location.href="<%=cp%>/dietClass/payment?num="+num+"&type="+type;
@@ -89,7 +89,7 @@ function payGo(num,type) {
     	<button id="paymentBtn" type="button" style="width: 45%; height: 50px; background: #1abc9c; border: 0px; color: #ffffff; font-weight: bold;" onclick="deleteOk(${dto.classNum},${dto.classType});"> 클래스 삭제 </button>
     	</c:if>
     	<c:if test="${sessionScope.member.userId!='admin'}">
-    	<button id="paymentBtn" type="button" style="width: 100%; height: 50px; background: #1abc9c; border: 0px; color: #ffffff; font-weight: bold;" onclick="payGo();">수강 신청하기</button>
+    	<button id="paymentBtn" type="button" style="width: 100%; height: 50px; background: #1abc9c; border: 0px; color: #ffffff; font-weight: bold;" onclick="payGo(${dto.classNum},${dto.classType});">수강 신청하기</button>
     	</c:if>
 	</div>
 

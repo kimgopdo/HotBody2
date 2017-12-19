@@ -43,13 +43,59 @@ function numberWithCommas(x) {
 function check(){
 	var uid="${sessionScope.member.userId}";
 	if(! uid){
-		modalFormLogin();
+		location.href="<%=cp%>/member/login";
 		return;
 	} else {
 		location.href="<%=cp%>/hotShop/pQnA_created";
 	}
 }
 
+$(function(){
+	listPage(1);
+});
+
+function listPage(page){
+	var url = "<%=cp%>/hotShop/listQna";
+	var num = "${dto.pdnum}";
+	var q = "num=" + num + "&page=" + page;
+
+	$.ajax({
+		type:"post"
+		,url:url
+		,data:q
+		,success:function(a){
+			$("#listQna").html(a);
+		}
+		,beforeSend : function(e){
+			e.setRequestHeader("AJAX", true);
+		}
+		,error:function(e){
+			if(e.status == 403) {
+				alert("실패");
+				return;
+			}
+			console.log(e.responseText);
+		}
+	});
+}
+function insertCookie(pdnum){
+	addCookie(pdnum);
+}
+</script>
+<script>
+function payment(pdnum){
+	addCookie(pdnum);
+	alert(getCookie("hotbodyBasket"));
+	var array=getCookie("hotbodyBasket").split(",");
+	var member="${sessionScope.member.userId}";
+	if(member!=""){
+		location.href="<%=cp%>/hotShop/payment?cookie="+array;
+		return;
+	}else{
+		location.href="<%=cp%>/member/login?prePage=hotShop";
+		return;
+	}
+}
 </script>
 
 
@@ -61,7 +107,7 @@ function check(){
 			<!-- article 메인이미지 -->
 			<div class="aspect" style="float: left; display: inline;">
 				<a href="#">
-					<img src="<%=cp%>/uploads/shopProduct/${dto.imgSaveFilename}" style=" width: 100%; height: 100%;">
+					<img src="<%=cp%>/uploads/shopList/${dto.imgSaveFilename}" style=" width: 100%; height: 100%;">
 				</a>
 			</div>
 			
@@ -118,16 +164,16 @@ function check(){
 				<div style="width: 100%; height: 8.5%;">
 					<div style="display: inline; float: left; margin-right: 10px;">
 						<button type="button" class="" style="width: 60px; height: 50px; background: white; outline: none; border: 1px solid black;">
-							<img src="<%=cp%>/resource/shop_images/heart.PNG" style="width: 70%; height: 70%;">
+							<img src="<%=cp%>/uploads/shopList/heart.png" style="width: 70%; height: 70%;">
 						</button>
 					</div>
 					<div style="display: inline; float: left; margin-right: 10px;">
-						<button type="button" class="" style="width: 149px; height: 50px; background: white; outline: none; border: 1px solid black;">
+						<button type="button" class="" style="width: 149px; height: 50px; background: white; outline: none; border: 1px solid black;" onclick="insertCookie(${dto.pdnum});">
 							<span style="font-weight: bold; font-size: 18px;">Cart</span>
 						</button>
 					</div>
 					<div style="display: inline; float: left;">
-						<button type="button" class="" style="width: 149px; height: 50px; background: white; outline: none; border: 1px solid black;">
+						<button type="button" class="" style="width: 149px; height: 50px; background: white; outline: none; border: 1px solid black;" onclick="payment(${dto.pdnum});">
 							<span style="font-weight: bold; font-size: 18px;">Buy</span>
 						</button>
 					</div>
@@ -140,7 +186,7 @@ function check(){
 	<!-- 상품설명 -->
 	<div style="width: 100%">
 		<!-- 상품설명 탭, 사진(설명) -->
-		<div style="width: 100%; margin-bottom: 200px; min-height: 3000px;" id="div1">
+		<div style="width: 100%; margin-bottom: 200px; min-height: 100px;" id="div1">
 			<!-- 탭 -->
 			<ul style="width: 100%; height:50px; border: 0.5px solid #BDBDBD; padding: 0px; margin-bottom: 30px;">
 				<li style="list-style:none; float: left; width: 366px; height:49.5px; padding-top:13px; border-right: 0.5px solid #BDBDBD; 
@@ -151,7 +197,7 @@ function check(){
 					<span style="font-size: 13px;">상품상세</span>
 				</li>
 				<li style="list-style:none; float: left; width: 366px; height:49.5px; padding-top:13px;" onclick="fnMove('3')">
-					<span style="font-size: 13px;">상품후기</span>
+					<span style="font-size: 13px;">Q&A 및 상품후기</span>
 				</li>
 			</ul>
 			
@@ -173,7 +219,7 @@ function check(){
 					<span style="font-size: 13px; font-weight: bold;">상품상세</span>
 				</li>
 				<li style="list-style:none; float: left; width: 366px; height:49.5px; padding-top:13px;" onclick="fnMove('3')">
-					<span style="font-size: 13px;">상품후기</span>
+					<span style="font-size: 13px;">Q&A 및 상품후기</span>
 				</li>
 			</ul>
 			
@@ -185,7 +231,8 @@ function check(){
 				<span style="font-weight: bold; font-size: 14px;">식품유형: &nbsp;&nbsp;</span>${dto.pdType}<br><br>
 				<span style="font-weight: bold; font-size: 14px;">생산지: &nbsp;&nbsp;</span>${dto.pdArea}<br><br>
 				<span style="font-weight: bold; font-size: 14px;">제품원재료명: &nbsp;&nbsp;</span>${dto.pdRawName}<br><br>
-			</div>                   
+				<img src="<%=cp%>/uploads/shopList/delivery_guide.PNG">
+			</div>               
 		</div>
 		
 		<!-- 상품후기 탭 -->
@@ -204,48 +251,9 @@ function check(){
 				</li>
 			</ul>
 			
-			<!-- 상품후기 게시판 리스트 -->
-			<div style="width: 95%;">
-				<form name="deleteListForm" method="post">
-					<table style="width: 100%; margin: 5px auto 0px; border-collapse: collapse;">
-						<tr style="border: 1px solid #F6F6F6; background: white; font-weight: bold; font-size: 13px; border-bottom: 1px solid #d5d5d5;" align="center" height="40px">
-							<!-- <td width="20"><input type="checkbox" name="chkAll" id="chkAll"></td> -->
-							<td width="60">번호</td>
-							<td width="380" style="padding-left: 20px;">제목</td>
-							<td width="80">작성자</td>
-							<td width="80">작성일</td>
-						</tr>
-						
-						<c:forEach var="dto" items="${list}">
-						<tr style="border: 1px solid #F6F6F6; background: white; font-size: 13px;" align="center" height="30px">
-							<%-- <td><input type="checkbox" name="nums" value="${dto.pdQCode}"></td> --%>
-							<td>${dto.listNum}</td>
-							<td align="left" style="padding-left: 5px; color: black;">
-							    <c:if test="${dto.answerNum!=0}">&nbsp;&nbsp;└ </c:if>
-								<a href="${articleUrl}&pdQCode=${dto.pdQCode}" style="color: gray; font-size: 13px;">${dto.pdQSubject}</a>
-							</td>
-							<td>${dto.userName}</td>
-							<td>${dto.pdQCreated}</td>
-						</tr>
-						</c:forEach>
-					</table>
-					<input type="hidden" name="page" value="${page}">
-					<input type="hidden" name="rows" value="${rows}">
-				</form>
-
-					<table style="width: 100%; margin-top: 10px; border-collapse: collapse;">
-						<tr style="font-size: 12px; border-top: 1px solid #d5d5d5;" align="center">
-							<td style="padding-top: 10px;">${paging}</td>
-						</tr>
-					</table>
-				<table>
-					<tr>
-						<td style="width: 1050px; float: right; padding-right: 10px;" align="right">
-							<button style="background: white; border: 1px solid #999999; border-radius: 3px; height: 35px;" type="button" onclick="check();">Q&A 등록</button>
-						</td>
-					</tr>
-				</table>
-			</div>
+			<!-- 상품Q&A 게시판 리스트 -->
+			<div id="listQna"></div>
+			
 		</div>
 		</div>
      </div>

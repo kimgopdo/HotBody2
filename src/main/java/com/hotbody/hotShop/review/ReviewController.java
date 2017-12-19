@@ -53,15 +53,12 @@ public class ReviewController {
 		dto.setUserName(info.getUserName());
 		dto.setPdName(dto.getPdName());
 		////////////////////////////////////////////////////
-		dto.setPdNum(3); // 임시로 상품번호 넣어줌(나중에 삭제)
+		dto.setPdNum(61); // 임시로 상품번호 넣어줌(나중에 삭제)
 		////////////////////////////////////////////////////
 		
-		String root=session.getServletContext().getRealPath("/");
-		String pathname=root+File.separator+"uploads"+File.separator+"review";
+		service.insertReview(dto);
 		
-		service.insertReview(dto, pathname);
-		
-		return "redirect:/hotShop/review_list";
+		return "redirect:/hotShop/review_created";
 	}
 	
 	@RequestMapping(value="/hotShop/review_list")
@@ -107,7 +104,6 @@ public class ReviewController {
 			dto.setListNum(listNum);
 			n++;
 			
-			dto.setReviewCreated(dto.getReviewCreated().substring(0, 10));
 		}
 		
 		String query = "rows=" + rows;

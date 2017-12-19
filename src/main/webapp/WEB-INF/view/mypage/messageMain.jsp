@@ -100,25 +100,45 @@ $(function () {
 	$("#dialog").dialog({ //이벤트 발생했을때 보여주려면 autoOpen : false로 지정해줘야 한다. 
 			autoOpen: false, //레이어팝업 넓이 
 			width: 605, //뒷배경을 disable 시키고싶다면 true 
-			modal: true, //버튼종류
-			buttons: [ { //버튼텍스트 
-				text: "Ok", //클릭이벤트발생시 동작
-				click: function() { 
-					$( this ).dialog("close"); 
-				} 
-			}, 
-			{ //버튼텍스트 
-				text: "Cancel", //클릭이벤트발생시 동작 
-				click: function() { $( this ).dialog("close"); 
-				} } ]  
+			modal: true 
 		});
 
-	
 	$("#sendingMsg").click(function () {
 		$("#dialog").dialog("open");
 		
 	});
 });
+
+function checkId() {
+	
+	var f = document.sendMessage;
+
+	var q="userId2="+f.userId2.value;
+	var url ="<%=cp%>/mypage/checkId"
+	
+		$.ajax({
+			type:"post"
+			,url:url
+			,data:q
+			,dataType:"json"
+			,success:function(data) {
+				var s=data.state;
+				if(s=="empty") {
+					alert("없는 아이디 입니다. 다시 검색해 주세요.")
+					return;
+				}
+				
+				alert("존재하는 아이디 입니다. 메세지를 입력해주세요.")
+
+			}
+		    ,error:function(e) {
+		    	console.log(e.responseText);
+		    }
+		});
+	
+
+}
+
 </script>
 
 
@@ -134,28 +154,33 @@ $(function () {
 </div>
 
         <div id="dialog" title="쪽지보내기"> 
+        <form method="post" name="sendMessage" enctype="multipart/form-data">
         <table style="border: 1px solid #eee;  width: 98%; margin: 5px auto 5px;">
 			<tr height="31">
 				<td style=" width:15%; border: 1px solid #eeeeee;margin-left: 5px; ">받는사람</td>
 				<td style="border: 1px solid #eee;">
-					<input type="text" style="width: 75%; height: 25px; margin-top: 9px;">
-					<input type="button" style="float:right; height: 25px; text-align: center;margin-top: 9px; margin-right: 20px;" value="받는사람"></td>	
+					<input type="text" name="userId2" value="" style="width: 75%; height: 25px; margin-top: 9px;">
+					<input type="button" onclick="checkId()" style="float:right; height: 25px; text-align: center;margin-top: 9px; margin-right: 20px;" value="아이디확인"></td>	
 			</tr>
 			<tr>
 			    <td style="border: 1px solid #eee; margin-left: 5px; width:15%;">제목</td>
-				<td style="border: 1px solid #eee;"><input type="text" style="width:100%; height: 25px;margin-top: 9px; "></td>	
+				<td style="border: 1px solid #eee;"><input name="subject" type="text" style="width:100%; height: 25px;margin-top: 9px; "></td>	
 			</tr>
 			<tr>
-				<td colspan="2" style="clear:both; width: 100%;"  ><textarea style="width: 100%; overflow: auto; height: 80px;"></textarea></td>
+				<td colspan="2" style="clear:both; width: 100%;" >
+				<textarea name="content" style="width: 100%; overflow: auto; height: 80px;"></textarea></td>
 			</tr>	
 		</table>
-		
+	
 		<table style="border: 1px solid #eee; width: 98%; margin: 5px auto 5px;">
 			<tr style="height: 31px; width: 100%; margin-top: 10px; margin-bottom: 10px " >
 				<td colspan="2" width="100%" background="#F2F2F2" ><img src="<%=cp%>/resource/images/647e16b7feb0fe7e0f4f3b9f5f402f5e.png" style="max-height: 18px;">파일첨부</td>
 			</tr>
 			<tr style="height: 31px; width: 100%; margin-top: 10px; margin-bottom: 10px ">
-				<td colspan="2" style="width: 100%;" ><input  type="text" style="width: 50%; height: 25px; float: left;"><input type="file" value="파일첨부" style="float: left; margin-left: 20px;" ></td>
+				<td colspan="2" style="width: 100%;" >
+				<input type="file" id="uploadFile" name="uploadFile" value="파일첨부" style="float: left; margin-left: 20px;" >
+				
+				</td>
 			</tr>
 			<tr   style="height: 31px; width: 100%; margin-top: 10px; margin-bottom: 10px ">
 				<td rowspan="2" style=" width: 90%"><input style="height: 50px"  type="text">
@@ -169,9 +194,11 @@ $(function () {
 				<td>*첨부된 파일 최대 20개, 총 용량 50M를 넘을 수 없습니다.</td>
 			</tr>	
 			<tr align="center" style="height: 31px; width: 100%; margin-top: 10px; margin-bottom: 10px ">
-				<td colspan="2"><input type="button" value="보내기"> <input type="button" value="취소"></td>
+				<td colspan="2"><button type="submit" value="보내기">보내기</button> <button type="reset" value="취소">취소</button></td>
 			</tr>
 		</table>
+			</form>
+		
          </div>
 
 <div style=" width:605px; margin: 50px auto; ">
@@ -192,10 +219,10 @@ $(function () {
 			
 			<tr style="width: 100%; border-style: none;">
 				<td  colspan="2" style="width: 100%; border: 1px solid;padding-top: 10px;">
-				<input id="userId2" name="userId2" style="background:white; width: 21%;height: 31px; cursor: pointer;" type="text" placeholder="보낸사람">
+				<input  name="userId2" style="background:white; width: 21%;height: 31px; cursor: pointer;" type="text" placeholder="보낸사람">
 				<!--  <input id="userId" name="userId" style="background:white;width: 21%;height: 31px; cursor: pointer;" type="text" placeholder="받는사람">-->
-				<input id="subject" name="subject" style="background:white;width: 21%;height: 31px; cursor: pointer;" type="text" placeholder="제목">
-				<input id="content" name="content" style="background:white;width: 21%;height: 31px; cursor: pointer; " type="text" placeholder="내용">
+				<input  name="subject" style="background:white;width: 21%;height: 31px; cursor: pointer;" type="text" placeholder="제목">
+				<input  name="content" style="background:white;width: 21%;height: 31px; cursor: pointer; " type="text" placeholder="내용">
 				<button type="submit" style="margin-left: 15px;">찾기</button></td>
 			</tr>
 			

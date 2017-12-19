@@ -91,16 +91,21 @@ fieldset[disabled] .form-control {
 function check() {
 	var f = document.boardForm;
 	var mode = "${mode}";
+	var uid = "${sessionScope.member.userId}";
+	
 	if(!f.pdQSubject.value){
 		alert("제목을 입력하세요.");
 		f.pdQSubject.focus();
-		return;
+		return false;
 	}
-	
-	
-	if(!str || str=="<p>&nbsp;</p>") {
-		alert("내용을 입력하세요");
-		f.pdQContent.focus();
+	if(! document.getElementById("pdQContent").value){
+		alert("내용을 입력하세요.");
+		f.pdQSubject.focus();
+		return false;
+	}
+	if(! uid){
+		alert("로그인 후 이용 가능합니다.")
+		location.href="<%=cp%>/member/login";
 		return;
 	}
 	
@@ -122,7 +127,7 @@ function check() {
 <tr height="30">
 	<td width="80">제목</td>
 	<td>
-		<input type="text" name="pdQSubject" style="width: 100%; height: 25px;" value="${dto.pdQSubject}">
+		<input type="text" name="pdQSubject" style="width: 100%; font-weight: bold; height: 25px;" readonly="readonly" value="[${dto.pdName}]${dto.pdQSubject}">
 	</td>
 </tr>
 
@@ -141,7 +146,7 @@ function check() {
 </table>
 <div style="width:100%; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
 <div style="width: 100%; margin: 20px auto 0;" align="center">
-<button type="submit" style="background: white; border: 1px solid #999999; border-radius: 3px; height: 30px;" onclick="check();">${mode=="created"? "등록완료":(mode=="update"?"수정완료":"답변등록")}</button>
+<button type="button" style="background: white; border: 1px solid #999999; border-radius: 3px; height: 30px;" onclick="submitContents(this);">${mode=="created"? "등록완료":(mode=="update"?"수정완료":"답변등록")}</button>
 <button type="button" style="background: white; border: 1px solid #999999; border-radius: 3px; height: 30px;" onclick="javascript:location.href='<%=cp%>/hotShop/pQnA_list';">${mode=="created"? "등록취소":(mode=="update"?"수정취소":"답변취소")}</button>
 <c:if test="${mode=='update'}">
 	<input type="hidden" name="page" value="${page}">

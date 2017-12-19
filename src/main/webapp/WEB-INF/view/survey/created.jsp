@@ -6,98 +6,156 @@
 	String cp=request.getContextPath();
 %>
 <script type="text/javascript">
+$(function() {
+	objectiveAdd();
+});
+
 function objectiveAdd() {
+	//설문번호
+	var qNum = questionReNo();
+	//보기번호 : 1
+	var exNum = exReNo();
 	
 	var out;
-	out="<div class='questionLayout'>";
-	out+="<form name='questionForm' method='post'>";
-	out+="<table style='width: 100%; margin: 10px auto 0px; border-spacing: 0px; border-collapse: collapse;'>";
-	out+="<tr style='border-bottom: 1px solid #cccccc;'>";
-	out+="<td colspan='2'>";
-	out+="<div style='float: left; padding: 5px;'>";
-	out+="  <span class='questionNo'>1</span><span>번 : 객관식 문항</span>&nbsp;&nbsp;";
-	out+="  <input type='hidden' name='questionNo'>";
-	out+="  <input type='checkbox' name='required' value='1'>&nbsp;<label>필수응답</label>";
-	out+="</div>";
-	out+="<div style='float: right; padding: 5px;'>";
-	out+="  <button type='button' class='btn-default02 btnLast'>▼</button>";
-	out+="  <button type='button' class='btn-default02 btnNext'>▽</button>";
-	out+="  <button type='button' class='btn-default02 btnPrev'>△</button>";
-	out+="  <button type='button' class='btn-default02 btnFirst'>▲</button>";
-	out+="  <button type='button' class='btn-default02' onclick='deleteQuestion(this.form)'>문항삭제</button>";
-	out+="</div>";
-	out+="</td>";
-	out+="</tr>";
-	out+="<tr height='40' style='border-bottom: 1px solid #cccccc;'>";
-	out+="<td width='100' bgcolor='#eeeeee' style='padding-left:5px;'>";
-	out+="응답방식";
-	out+="</td>";
-	out+="<td style='padding-left:5px;'>";
-	out+="<input type='radio' name='answerType' value='1' checked='checked'>&nbsp;<label>단일선택</label>&nbsp;&nbsp;";
-	out+="<input type='radio' name='answerType' value='2'>&nbsp;<label>다중선택</label>&nbsp;&nbsp;";
-	out+="</td>";
-	out+="</tr>";
-	out+="<tr height='40' style='border-bottom: 1px solid #cccccc;'>";
-	out+="<td width='100' valign='top' bgcolor='#eeeeee' style='padding-top:10px; padding-left:5px;'>";
-	out+="질문 내용";
-	out+="</td>";
-	out+="<td style='padding:5px;'>";
-	out+="<p><input type='text' name='question' class='boxTF' style='width:500px;' placeholder='질문을 입력 하세요'></p>";
-	out+="<p style='padding-top:10px; padding-left: 25px;'><input type='text' name='items' class='boxTF' style='width:300px;' placeholder='질문에 대한 항목을 입력 하세요'></p>";
-	out+="</td>";
-	out+="</tr>";
-	out+="<tr height='43'>";
-	out+="<td width='100'>&nbsp;</td>";
-	out+="<td style='padding: 5px;'>";
-	out+="<button type='button' class='btn-default02' onclick='sendQuestion(this.form)'>문항 등록</button>";
-	out+="</td>";
-	out+="</tr>";
-	out+="</table>";
-	out+="</form>";
-	out+="</div>";
+	out="<div class='questionLayout' style='border-bottom: 1px solid #dcdcdc;'>";
+	//out+="<form name='surveyForm' method='post'>";
+	out+="<table class='surveyTb' style='width: 1100px;'>";
+	out+="<tr id='' height='55' align='center'>";
+	out+="<td width='100'>";
+	out +="<span class='qOrder' style='font-size: 16px; font-weight: bold;'>3</span>&nbsp;&nbsp;";
+	out +="<input type='hidden' name='qOrder"+qNum+"'>";
+	out +="<input type='hidden' name='sOrO"+qNum+"' value='0'>";
+	out +="</td>";
+	out +="<td width='120'>";
+	out +="<select name='qType"+qNum+"' style='height: 30px;'>";
+	out +="<option value='pro'>전문성</option>";
+	out +="<option value='afford'>여유(시간)</option>";
+	out +="<option value='habits'>식습관</option>";
+	out +="<option value='will'>의지</option>";
+	out +="</select>";
+	out +="</td>";
+	out +="<td align='left'>";
+	out +="질문 : &nbsp;&nbsp;&nbsp;<input type='text' name='qContent"+qNum+"' style='width:90%; height: 30px; margin-left: 10px;' placeholder='질문을 입력 하세요'>";
+    out +="</td>";
+    out +="<td width='180'>";
+    out +="<img class='btnLast' src='<%=cp%>/resource/images/downdown.png'>";
+    out +="<img class='btnNext' src='<%=cp%>/resource/images/down.png'>";
+    out +="<img class='btnPrev' src='<%=cp%>/resource/images/up.png'>";
+    out +="<img class='btnFirst' src='<%=cp%>/resource/images/upup.png'>";
+    out +="</td>";
+    out +="<td width='60'>";
+    out +="<img src='<%=cp%>/resource/images/bin.png' onclick='deleteQuestion(this)'>";
+    out +="</td>";
+    out +="</tr>";
+    out +="<tr height='55' align='center'>";
+    out +="<td colspan='2'></td>";
+    out +="<td align='left'>";
+    out +="<span>보기-</span><span class='exOrder'>1</span> : &nbsp;&nbsp;&nbsp;<input type='text' name='exContent."+qNum+"."+exNum+"' style='width:85%; height: 30px;' placeholder='보기를 입력 하세요'>";
+    out +="<input type='hidden' name='exOrder."+qNum+"."+exNum+"' value='1'>";
+    out +="<img class='addEx' id='' style='width: 20px; height: 20px; margin-left: 15px; cursor: pointer; margin-top: 5px;' src='<%=cp%>/resource/images/plus2.png'>";
+    out +="</td>";
+    out +="<td> 점수 : ";
+    out +="<select name='exScore."+qNum+"."+exNum+"'>";
+    out +="<option value='0'>0</option>";
+    out +="<option value='5'>5</option>";
+    out +="<option value='10'>10</option>";
+    out +="<option value='15'>15</option>";
+    out +="<option value='20'>20</option>";
+    out +="</select>";
+    out +="</td>";
+    out +="</tr>";
+    out +="</table>";
+    //out +="</form>";
+    out +="</div>";
 	
 	$('#questionContainer').append(out);
+    questionReNo();
 }
 
 
 // 주관식 문제 추가
 function subjectiveAdd() {
+	//설문번호
+	var qNum = questionReNo();
 	
 	var out;
-	out="<div class='questionLayout'>";
-	out+="<form name='surveyForm' method='post'>";
-	out+="<table id='surveyTb' style='width: 1000px;'>";
+	out="<div class='questionLayout' style='border-bottom: 1px solid #dcdcdc;'>";
+	//out+="<form name='surveyForm' method='post'>";
+	out+="<table class='surveyTb' style='width: 1100px;'>";
 	out+="<tr height='55' align='center' style='padding: 20px auto 20px;'>";
 	out+="<td width='100'>";
-	out+="  <span class='questionNo' style='font-size: 16px; font-weight: bold;'>1</span>&nbsp;&nbsp;<input type='hidden' name='pCode'>";
+	out +="<span class='qOrder' style='font-size: 16px; font-weight: bold;'>3</span>&nbsp;&nbsp;";
+	out +="<input type='hidden' name='qOrder"+qNum+"'>";
+	out +="<input type='hidden' name='sOrO"+qNum+"' value='1'>";
 	out+="</td>";
+	out +="<td width='120'></td>";
 	out+="<td align='left'>";
-	out+="질문 : &nbsp;&nbsp;&nbsp;<input type='text' name='question' style='width:90%; height: 30px; margin-left: 10px;' placeholder='질문을 입력 하세요'>";
+	out+="질문 : &nbsp;&nbsp;&nbsp;<input type='text' name='qContent"+qNum+"' style='width:90%; height: 30px; margin-left: 10px;' placeholder='질문을 입력 하세요'>";
 	out+="</td>";
 	out+="<td width='180'>";
 	out+="<img class='btnLast' src='<%=cp%>/resource/images/downdown.png'>";
-	out+="<img class='btnLast' src='<%=cp%>/resource/images/down.png'>";
-	out+="<img class='btnLast' src='<%=cp%>/resource/images/up.png'>";
-	out+="<img class='btnLast' src='<%=cp%>/resource/images/upup.png'>";
+	out+="<img class='btnNext' src='<%=cp%>/resource/images/down.png'>";
+	out+="<img class='btnPrev' src='<%=cp%>/resource/images/up.png'>";
+	out+="<img class='btnFirst' src='<%=cp%>/resource/images/upup.png'>";
 	out+="</td>";
 	out+="<td width='60'>";
-	out+="<img src='<%=cp%>/resource/images/bin.png' onclick='deleteQuestion(this.form)'>";
+	out+="<img src='<%=cp%>/resource/images/bin.png' onclick='deleteQuestion(this)'>";
 	out+="</td>";
 	out+="</tr>";
 	out+="</table>";
-	out+="</form>";    	
+	//out+="</form>";    	
 	out+="</div>";
-
+	
 	$('#questionContainer').append(out);
+	questionReNo();
 }
+
 
 function questionReNo() {
 	var no=1;
-	$("#questionContainer .questionNo").each(function() {
+	$("#questionContainer .qOrder").each(function() {
+		if(no%2==0)
+			$(this).parents('.questionLayout').css('background-color', '#eeeeee');
+		else
+			$(this).parents('.questionLayout').css('background-color', '#ffffff');
 		$(this).text(no);
-		$(this).siblings("input[name=questionNo]").val(no);
+		$(this).siblings("input[name*=qOrder]").val(no);
+		$(this).siblings("input[name*=qOrder]").attr('name','qOrder'+no);
+		$(this).siblings("input[name*=sOrO]").attr('name','sOrO'+no);
+		$(this).siblings('span').text("ddd");
+		var dd= $(this).parents('.questionLayout').children().children().children().siblings("input[name*=qOrder]").val();
+		
+		
+		$(this).siblings("select[name*=qType]").prop('name','qType'+no);
+		//var dd = $(this).parents('.questionLayout').children().is("input[name*=qOrder]");
+		console.log(dd);
+		//alert(dd);
+		$(this).siblings("input[name*=qContent]").prop('name','qContentheheheh'+no);
 		no++;
 	});
+	
+	return no;
+}
+
+
+function exReNo(d,qNum){
+	var no=1;
+	//alert("ddd:"+qNum);
+	$(d).closest(".questionLayout").find(".exOrder").each(function() {
+		$(this).text(no);
+		$(this).siblings("input[name*=exOrder]").val(no);
+		//$(this).siblings("input[name*=exOrder]").attr('name','exOrder.'+qNum+"."+no);
+		//$(this).siblings("input[name*=exOrder]").val(no);
+		//$(this).siblings("input[name*=exOrder]").val(no);
+		no++;
+	});
+	//alert(no);
+	return no;
+}
+
+function findQNum(q){
+	var qNum = $(q).closest("input[name*=qOrder]").val();
+	return qNum;
 }
 
 $(function() {
@@ -109,12 +167,14 @@ $(function() {
 	});
 	
 	$("body").on("click", ".btnPrev", function() {
+		var $div = $(this).closest('.questionLayout');
 		$div.prev().before($div);
 		
 		questionReNo();
 	});
 	
 	$("body").on("click",".btnNext", function() {
+		var $div = $(this).closest('.questionLayout');
 		$div.next().after($div);
 		
 		questionReNo();
@@ -126,13 +186,47 @@ $(function() {
 		
 		questionReNo();
 	});
+	
+	$("body").on("click",".removeEx", function() {
+		var $div = $(this).closest('.questionLayout');
+		$(this).closest('tr').remove();
+		exReNo($div);
+	});
+	
+	$("body").on("click",".addEx", function() {
+		var out = "";
+		//var qNum = $(this).closest('tbody').children().is("input[name^=qOrder]");
+		var qNum = $(this).parent().parent().prev().children().children("input[name*=qOrder]").val();
+		
+		var exNum = exReNo(this,qNum);
+		
+		out += "<tr height='55' align='center'>";
+		out += "<td colspan='2'></td>";
+		out += "<td align='left'>";
+		out += "<span>보기-</span><span class='exOrder'>1</span> : &nbsp;&nbsp;&nbsp;<input type='text' name='exContent."+qNum+"."+exNum+"' style='width:85%; height: 30px;' placeholder='보기를 입력 하세요'>";
+		out += "<input type='hidden' name='exOrder."+qNum+"."+exNum+"'>";
+		out += "<img class='removeEx' style='width: 20px; height: 20px; margin-left: 18px; cursor: pointer; margin-top: 5px;' src='<%=cp%>/resource/images/minus2.png'>";
+		out += "</td>";
+		out +="<td> 점수 : ";
+	    out +="<select name='exScore."+qNum+"."+exNum+"'>";
+	    out +="<option value='0'>0</option>";
+	    out +="<option value='5'>5</option>";
+	    out +="<option value='10'>10</option>";
+	    out +="<option value='15'>15</option>";
+	    out +="<option value='20'>20</option>";
+	    out +="</select>";
+	    out +="</td>";
+		
+		$(this).closest("table").append(out);
+		exReNo(this);
+	});
 });
 
 //설문에 대한 문항(질문) 삭제
 function deleteQuestion(f) {
-	if( confirm("문항을 삭제 하시 겠습니까 ? ")){
-		$(f).parent(".questionLayout").remove();
-		
+	if(confirm("문항을 삭제 하시겠습니까 ?")){
+		$(f).closest("div").remove();
+		questionReNo();
 	}
 	
 	// 테이블에 저장되지 않은 경우
@@ -142,70 +236,63 @@ function deleteQuestion(f) {
 	
 }
 
-function addEx(t) {
-	var out = "";
-	out += "<tr height='55' align='center'>";
-	out += "<td></td>";
-	out += "<td align='left'>";
-	out += "보기-1 : &nbsp;&nbsp;&nbsp;<input type='text' name='question' style='width:85%; height: 30px;' placeholder='보기를 입력 하세요'>";
-	out += "<img id='' style='width: 20px; height: 20px; margin-left: 15px; cursor: pointer; margin-top: 5px;' src='<%=cp%>/resource/images/plus2.png' onclick='addEx(this);'>";
-	out += "</td>";
-	alert(out);
-	$(t).closest("table").append(out);
+function surveySubmit() {
+	var f = $("form[name=surveyAll]").serialize();
+	alert(f);
+	
+	var url="<%=cp%>/survey/submit";
+	
+	$.ajax({
+		type:"post"
+		,url:url
+		,data: f
+		,dataType:"json"
+		,success:function(data) {
+			if(data.state=="true"){
+				alert("설문등록완료");
+			}
+		}
+	    ,error:function(e) {
+	    	alert("설문등록실패");
+	    	console.log(e.responseText);
+	    }
+	});
 }
 </script>
-<div class="body-container" style="width: 1000px; margin: 100px auto;">
-	<div style="font-size: 40px; width: 1000px; margin: 20px auto 0; font-weight: bold; color: #666666;">설문 등록</div>
+<div class="body-container" style="width: 1100px; margin: 100px auto;">
+	<div style="font-size: 40px; width: 1100px; margin: 20px auto 0; font-weight: bold; color: #666666;">설문 등록</div>
 	<div style="float: right;">
          <button type="button" class="btn-default02" onclick="objectiveAdd();">+객관식 추가</button>
          <button type="button" class="btn-default02" onclick="subjectiveAdd();">＋주관식 추가</button>
     </div>
-	<div style="width:1000px; height:1px;  margin: 40px auto 0;border-bottom: 2px solid #666666;"></div>
-	<!-- 내용 -->
-	
-	
-	
-	<div id="questionContainer">
-    	<div class='questionLayout'>
-			<form name="surveyForm" method="post">
-				<table id="surveyTb" style="width: 1000px;">
-				<tr height="40" style="font-size: 16px; font-weight: bold; background: rgb(241,241,241); border-bottom: 1px solid #666666;" align="center">
+	<div style="width:1100px; height:1px;  margin: 40px auto 0;border-bottom: 2px solid #666666; border-collapse: collapse;"></div>
+
+	<table style="width: 1100px; border-bottom: 1px solid #666666; border-collapse: collapse;">
+				<tr height="40" style="font-size: 16px; font-weight: bold; background: rgb(241,241,241);" align="center">
 					<td width="100">번호</td>
+					<td width="120">질문유형</td>
 					<td>내용</td>
 					<td width="180">순서변경</td>
 					<td width="60">삭제</td>
 				</tr>
+	</table>
+	
+	<form action="" name="surveyAll" method="post">
+	
+	
+	<div id="questionContainer">
+	<%-- 
+    	<div class='questionLayout' style="border-bottom: 1px solid #dcdcdc;">
+				<table class="surveyTb" style="width: 1100px;">
 				<tr height="55" align="center">
-                    <td>
-                        <span class='questionNo' style="font-size: 16px; font-weight: bold;">1</span>&nbsp;&nbsp;
-                        <input type='hidden' name='pCode'>
-                    </td>
-                    <td align="left">
-                    	질문 : &nbsp;&nbsp;&nbsp;<input type='text' name='question' style='width:90%; height: 30px; margin-left: 10px;' placeholder='질문을 입력 하세요'>
-                    </td>
-                    <td>
-                        <img class="btnLast" src="<%=cp%>/resource/images/downdown.png">
-                        <img class="btnNext" src="<%=cp%>/resource/images/down.png">
-                        <img class="btnPrev" src="<%=cp%>/resource/images/up.png">
-                        <img class="btnFirst" src="<%=cp%>/resource/images/upup.png">
-                    </td>
-                    <td>
-                    <img src="<%=cp%>/resource/images/bin.png" onclick="deleteQuestion(this.form)">
-                    </td>
-                 </tr>
-				</table>
-			</form>
-		</div>
-		<div class='questionLayout'>
-			<form name="surveyForm" method="post">
-				<table id="surveyTb" style="width: 1000px;">
-				<tr id="" height="55" align="center">
                     <td width="100">
-                        <span class='questionNo' style="font-size: 16px; font-weight: bold;">2</span>&nbsp;&nbsp;
-                        <input type='hidden' name='pCode'>
+                        <span class='qOrder' style="font-size: 16px; font-weight: bold;">1</span>&nbsp;&nbsp;
+		                <input type='hidden' name='qOrder' value="1">
+		                <input type='hidden' name='sOrO' value="1">
                     </td>
+                    <td width="120"></td>
                     <td align="left">
-                    	질문 : &nbsp;&nbsp;&nbsp;<input type='text' name='question' style='width:90%; height: 30px; margin-left: 10px;' placeholder='질문을 입력 하세요'>
+                    	질문 : &nbsp;&nbsp;&nbsp;<input type='text' name='qContent' style='width:90%; height: 30px; margin-left: 10px;' placeholder='질문을 입력 하세요'>
                     </td>
                     <td width="180">
                         <img class="btnLast" src="<%=cp%>/resource/images/downdown.png">
@@ -214,20 +301,65 @@ function addEx(t) {
                         <img class="btnFirst" src="<%=cp%>/resource/images/upup.png">
                     </td>
                     <td width="60">
-                    <img src="<%=cp%>/resource/images/bin.png" onclick="deletequestion(this.form)">
+                    <img src="<%=cp%>/resource/images/bin.png" onclick="deleteQuestion(this)">
+                    </td>
+                 </tr>
+				</table>
+		</div>
+		 --%>
+		<%-- <div class='questionLayout' style="border-bottom: 1px solid #dcdcdc;">
+				<table class="surveyTb" style="width: 1100px;">
+				<tr id="" height="55" align="center">
+                    <td width="100">
+                        <span class='qOrder' style="font-size: 16px; font-weight: bold;">2</span>&nbsp;&nbsp;
+		                <input type='hidden' name='qOrder' value="2">
+		                <input type='hidden' name='sOrO' value="0">
+                    </td>
+                    <td width="120">
+                    	<select name="qType" style="height: 30px;">
+                    		<option value="pro">전문성</option>
+                    		<option value="afford">여유(시간)</option>
+                    		<option value="habits">식습관</option>
+                    		<option value="will">의지</option>
+                    	</select>
+                    </td>
+                    <td align="left">
+                    	질문 : &nbsp;&nbsp;&nbsp;<input type='text' name='qContent' style='width:90%; height: 30px; margin-left: 10px;' placeholder='질문을 입력 하세요'>
+                    </td>
+                    <td width="180">
+                        <img class="btnLast" src="<%=cp%>/resource/images/downdown.png">
+                        <img class="btnNext" src="<%=cp%>/resource/images/down.png">
+                        <img class="btnPrev" src="<%=cp%>/resource/images/up.png">
+                        <img class="btnFirst" src="<%=cp%>/resource/images/upup.png">
+                    </td>
+                    <td width="60">
+                    <img src="<%=cp%>/resource/images/bin.png" onclick="deleteQuestion(this)">
                     </td>
                  </tr>
                  <tr height="55" align="center">
-                 <td></td>
+                 <td colspan="2"></td>
                  <td align="left">
-                   	보기-1 : &nbsp;&nbsp;&nbsp;<input type='text' name='ex' style='width:85%; height: 30px;' placeholder='보기를 입력 하세요'>
+                   	<span>보기-</span><span class="exOrder">1</span> : &nbsp;&nbsp;&nbsp;<input type='text' name='exContent' style='width:85%; height: 30px;' placeholder='보기를 입력 하세요'>
+                   	<input type="hidden" name="exOrder" value="1">
                    	<img id="" style="width: 20px; height: 20px; margin-left: 15px; cursor: pointer; margin-top: 5px;" src="<%=cp%>/resource/images/plus2.png" onclick="addEx(this);">
+                 </td>
+                 <td> 점수 : 
+                 	<select name="exScore">
+                 		<option value="0">0</option>
+                 		<option value="5">5</option>
+                 		<option value="10">10</option>
+                 		<option value="15">15</option>
+                 		<option value="20">20</option>
+                 	</select>
                  </td>
                  </tr>
 				</table>
-			</form>
-		</div>
+		</div> --%>
 	</div>
+	</form>
 	
-	<div style="width:1000px; height:1px;  margin: 0 auto 0;border-bottom: 2px solid #666666;"></div>
+	<div style="width:1100px; height:1px;  margin: 0 auto 0;border-bottom: 2px solid #666666;  border-collapse: collapse;"></div>
+	<div style="width: 1100px; margin: 20px auto 0;" align="center">
+		<button type="button" class="btn-default02" onclick="surveySubmit();">${mode=='update'?'수정완료':'등록하기'}</button>
+	</div>
 </div>

@@ -6,43 +6,7 @@
 	String cp=request.getContextPath();
 %>
 <script type="text/javascript">
-function modalFormLogin() {	
-	$("#myLoginModal").modal('show');
-}
 
-function modalSendLogin() {
-	var f=document.loginForm;
-	if(!f.userId.value) {
-    	f.userId.focus();
-    	return false;
-    }	
-
-    if(!f.pwd.value) {
-    	f.pwd.focus();
-    	return false;
-    }
-    
-    var query=$('form[name=loginForm]').serialize();
-    var url="<%=cp%>/member/login";
-    $.ajax({
-		type:"post"
-		,url:url
-		,data:query
-		,dataType:"json"
-		,success:function(data) {
-			var state=data.state;
-			var msg=data.message;
-			if(state=="true") {
-				location.reload();
-			} else {
-				alert(msg);
-			}
-		}
-	  	,error:function(e) {
-	    	console.log(e.responseText);
-	    } 
-	});
-}
 </script>
 
 	<!-- 로그인 모달-->
@@ -80,8 +44,6 @@ function modalSendLogin() {
 	
 <!-- 오른쪽 사이드 바 -->
    <div id="rightSide" style="width: 10%; height: 100%; float:right; top:0px; right:0; position: fixed; z-index: 10;">
-      <div id="mainImge" style="width: 160px; height: 130px; margin-top: 100px; position: absolute;">
-        </div>
         <ul class="btn_Side">
         	<li>
         		<button type="button" class="btn btn-default btn-lg quickMenuBtn" style="background: white; border: none; outline: none;" onclick="quickMenu();">
@@ -95,7 +57,7 @@ function modalSendLogin() {
         	</li>
 			<c:if test="${empty sessionScope.member}">
 			<li>
-			     <button type="button" name="searchBtn"  class="btn btn-default btn-lg" style="background: white; border: none; outline: none;" onclick="modalFormLogin();">
+			     <button type="button" name="searchBtn"  class="btn btn-default btn-lg" style="background: white; border: none; outline: none;" onclick="javascript:location.href='<%=cp%>/member/login';">
 			        <span class="glyphicon glyphicon-log-in"></span>
 			     </button>
 			</li>

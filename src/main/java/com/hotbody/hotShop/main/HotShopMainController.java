@@ -18,6 +18,7 @@ public class HotShopMainController {
 	
 	@RequestMapping(value="/hotShop")
 	public String hotShopMain(Model model) throws Exception{
+		
 		return ".shopLayout";
 	}
 	@RequestMapping(value="/hotShop/menuCall")

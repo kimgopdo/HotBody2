@@ -15,6 +15,19 @@ public class MilelageServiceImpl implements MilelageService{
 	
 
 	@Override
+	public int checkUserId2(String userId2) {
+		int result=0;
+		try {
+			result= dao.selectOne("milelage.checkUserId2",userId2);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		
+		return result;
+	}
+
+
+	@Override
 	public Milelage selectMilelage(String userId) {
 		Milelage dto=null;
 		try {

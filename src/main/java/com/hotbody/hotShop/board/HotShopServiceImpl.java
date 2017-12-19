@@ -41,7 +41,7 @@ public class HotShopServiceImpl implements HotShopService{
 	public List<HotShop> productList(Map<String, Object> map) {
 		List<HotShop> list=null;
 		try {
-			list=dao.selectList("product.productList",map);
+				list=dao.selectList("product.productList",map);				
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -65,7 +65,7 @@ public class HotShopServiceImpl implements HotShopService{
 		List<Qna> list = null;
 		
 		try {
-			list = dao.selectList("qna.listQna", map);
+			list = dao.selectList("qna.listQnaArticle", map);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -159,11 +159,22 @@ public class HotShopServiceImpl implements HotShopService{
 		int result = 0;
 		
 		try {
-			result = dao.selectOne("product.pdInDataCount");
+			result = dao.selectOne("qna.dataCount",map);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
 		
+		return result;
+	}
+	
+	@Override
+	public int productHitCount(int pdnum) {
+		int result=0;
+		try {
+			result=dao.updateData("product.updateHitCount",pdnum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return result;
 	}
 	

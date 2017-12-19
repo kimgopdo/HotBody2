@@ -29,10 +29,11 @@ $(function(){
 		}
 	});		
 });
+
 function check(){
 	var uid="${sessionScope.member.userId}";
 	if(! uid){
-		modalFormLogin();
+		location.href="<%=cp%>/member/login";
 		return;
 	} else {
 		location.href="<%=cp%>/hotShop/pQnA_created";
@@ -86,7 +87,7 @@ function check(){
 			<td>${dto.listNum}</td>
 			<td align="left" style="padding-left: 5px; color: black;">
 			    <c:if test="${dto.answerNum!=0}">&nbsp;&nbsp;└ </c:if>
-				<a href="${articleUrl}&pdQCode=${dto.pdQCode}" style="color: gray; font-size: 13px;">${dto.pdQSubject}</a>
+				<a href="${articleUrl}&pdQCode=${dto.pdQCode}" style="color: gray; font-size: 13px;"><span style="font-weight: bold;">[${dto.pdName}]</span> ${dto.pdQSubject}</a>
 			</td>
 			<td>${dto.userName}</td>
 			<td>${dto.pdQCreated}</td>

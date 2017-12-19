@@ -12,31 +12,39 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>spring</title>
-<link rel="stylesheet" href="/hotbody/resource/css/tabs.css" type="text/css">
-<link href="/hotbody/resource/mainboot/css/flexslider.css" rel="stylesheet" type="text/css">
-<link href="/hotbody/resource/mainboot/css/animate.css" rel="stylesheet" type="text/css" media="all">
-<link href="/hotbody/resource/mainboot/css/owl.carousel.css" rel="stylesheet">
-<link href="/hotbody/resource/css/shopCss/style.css" rel="stylesheet" type="text/css">
-<link href="/hotbody/resource/mainboot/css/fileuploader.css" rel="stylesheet" type="text/css">
+<title>HotBody COOL Body</title>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<link rel="stylesheet" href="<%=cp%>/resource/css/tabs.css" type="text/css">
+<link href="<%=cp%>/resource/mainboot/css/flexslider.css" rel="stylesheet" type="text/css">
+<link href="<%=cp%>/resource/mainboot/css/animate.css" rel="stylesheet" type="text/css" media="all">
+<link href="<%=cp%>/resource/mainboot/css/owl.carousel.css" rel="stylesheet">
+<link href="<%=cp%>/resource/css/shopCss/style.css" rel="stylesheet" type="text/css">
+<link href="<%=cp%>/resource/mainboot/css/fileuploader.css" rel="stylesheet" type="text/css">
 <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 <link rel="stylesheet" href="<%=cp%>/resource/css/shopCss/shopLayout.css"/>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
 <%-- <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.js"></script> --%>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="/hotbody/resource/mainboot/js/jquery.nicescroll.min.js" type="text/javascript"></script>
-<script src="/hotbody/resource/mainboot/js/superfish.min.js" type="text/javascript"></script>
-<script src="/hotbody/resource/mainboot/js/jquery.flexslider-min.js" type="text/javascript"></script>
-<script src="/hotbody/resource/mainboot/js/owl.carousel.js"></script>
-<script src="/hotbody/resource/mainboot/js/animate.js" type="text/javascript"></script>
-<script src="/hotbody/resource/mainboot/js/myscript.js" type="text/javascript"></script>
+<script src="<%=cp%>/resource/mainboot/js/jquery.nicescroll.min.js" type="text/javascript"></script>
+<script src="<%=cp%>/resource/mainboot/js/superfish.min.js" type="text/javascript"></script>
+<script src="<%=cp%>/resource/mainboot/js/jquery.flexslider-min.js" type="text/javascript"></script>
+<script src="<%=cp%>/resource/mainboot/js/owl.carousel.js"></script>
+<script src="<%=cp%>/resource/mainboot/js/animate.js" type="text/javascript"></script>
+<script src="<%=cp%>/resource/mainboot/js/myscript.js" type="text/javascript"></script>
 <script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
-<script type="text/javascript" src="/hotbody/resource/jquery/js/jquery.form.js"></script>
+<script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.form.js"></script>
 <script type="text/javascript" src="<%=cp%>/resource/js/shopJS/json2.js"></script>
 <script type="text/javascript" src="<%=cp%>/resource/js/shopJS/monthly.js"></script>
+<script type="text/javascript" src="<%=cp%>/resource/js/shopJS/imgCut.js"></script>
+<script type="text/javascript" src="<%=cp%>/resource/js/shopJS/extMenu.js"></script>
+<script type="text/javascript" src="<%=cp%>/resource/js/shopJS/btnCenterCal.js"></script>
+<script type="text/javascript" src="<%=cp%>/resource/js/shopJS/quickMenuBtn.js"></script>
+
+<script type="text/javascript" src="<%=cp%>/resource/js/shopJS/tabMove.js"></script>
 <script type="text/javascript">
 jQuery.browser = {};
 (function () {
@@ -47,22 +55,8 @@ jQuery.browser = {};
         jQuery.browser.version = RegExp.$1;
     }
 })();
-$(function() {
-   $("html").niceScroll();
-})
 </script>
-<!-- 버튼 센터 계산 -->
-<script type="text/javascript" src="<%=cp%>/resource/js/shopJS/btnCenterCal.js"></script>
-<!-- 퀵메뉴 버튼 -->
-<script type="text/javascript" src="<%=cp%>/resource/js/shopJS/quickMenuBtn.js"></script>
-<!-- img 자르기 -->
-<script type="text/javascript" src="<%=cp%>/resource/js/shopJS/imgCut.js"></script>
-<!-- login 모달 -->
-<script type="text/javascript" src="<%=cp%>/resource/js/shopJS/loginModal.js"></script>
-<!-- tab 이동 -->
-<script type="text/javascript" src="<%=cp%>/resource/js/shopJS/tabMove.js"></script>
-<!-- searchBtn -->
-<script type="text/javascript" src="<%=cp%>/resource/js/shopJS/searchAnimate.js"></script>
+
 
 <!-- 이미지 테두리 없애기                  fsgdfgf -->
 <style type="text/css">
@@ -71,7 +65,7 @@ IMG {border: none;}
 -->
 </style>
  
-<!-- 텍스트 밑줄없애기 -->
+<!-- 텍스트 밑줄없애기-->
 <style type="text/css">
 <!--
 A:link { text-decoration:none ; }
@@ -80,7 +74,7 @@ A:active { text-decoration:none ; }
 A:hover { text-decoration:none; }
 -->
 </style>  
-<!-- 텍스트 링크속성 변경하기 -->                    
+<!-- 텍스트 링크속성 변경하기 -->
 <style type="text/css">
 <!--
 A:link { color:#컬러코드 ;text-decoration:none ; }
@@ -88,12 +82,89 @@ A:visited { color:#컬러코드 ;text-decoration:none ; }
 A:active { color:#컬러코드 ; text-decoration:none ; }
 A:hover { color:#컬러코드 ; text-decoration:none; }
 -->
-</style>
+</style> 
 
 </head>
 
-<body>
+<body style="min-width: 1600px; position: relative;">
+<script type="text/javascript">
+$(function(){
+	var url="<%=cp%>/hotShop/menuCall"
+	$.ajax({
+		type:"post"
+		,url:url
+		,dataType:"json"
+		,success:function(menuData){
+			$.each(menuData.bclList,function(index, item){
+					$(".productNutrient").append("<li><a onclick='move("+item.bclcode+",\""+item.bclname+"\",\"bcl\");'>"+item.bclname+"</a></li>");
+					$(".QproductNutrient").append("<li><a onclick='move("+item.bclcode+",\""+item.bclname+"\",\"bcl\");'>"+item.bclname+"</a></li>");
+			});
+			$.each(menuData.sciList,function(index, item){
+					$(".productLike").append("<li><a onclick='move("+item.scicode+",\""+item.sciname+"\",\"sci\");'>"+item.sciname+"</a></li>");
+					$(".QproductLike").append("<li><a onclick='move("+item.scicode+",\""+item.sciname+"\",\"sci\");'>"+item.sciname+"</a></li>");
+			});
+			$("#productNutrient").trigger("create");
+			$("#productLike").trigger("create");
+			$("#QproductNutrient").trigger("create");
+			$("#QproductLike").trigger("create");
+		}
+	});
+})
+</script>
+<!-- 쿠키사용 함수 -->
+<script type="text/javascript">
+function setCookie(cookie_name, value, days) {
+	  var exdate = new Date();
+	  exdate.setDate(exdate.getDate() + days);
+	  // 설정 일수만큼 현재시간에 만료값으로 지정
 
+	  var cookie_value = escape(value) + ((days == null) ? '' : ';    expires=' + exdate.toUTCString());
+	  document.cookie = cookie_name + '=' + cookie_value;
+	}
+function getCookie(cookie_name) {
+	  var x, y;
+	  var val = document.cookie.split(';');
+
+	  for (var i = 0; i < val.length; i++) {
+	    x = val[i].substr(0, val[i].indexOf('='));
+	    y = val[i].substr(val[i].indexOf('=') + 1);
+	    x = x.replace(/^\s+|\s+$/g, ''); // 앞과 뒤의 공백 제거하기
+	    if (x == cookie_name) {
+	      return unescape(y); // unescape로 디코딩 후 값 리턴
+	    }
+	  }
+	}
+function addCookie(id) {
+	  var items = getCookie('hotbodyBasket'); // 이미 저장된 값을 쿠키에서 가져오기
+	  var maxItemNum = 10; // 최대 저장 가능한 아이템개수
+	  var expire = 7; // 쿠키값을 저장할 기간
+	  if (items) {
+	    var itemArray = items.split(',');
+		    if (items.indexOf(id) != -1) {
+		      // 이미 존재하는 경우 종료
+		      console.log('중복된단다잉');
+		    }else{
+			    // 새로운 값 저장 및 최대 개수 유지하기
+			    itemArray.unshift(id);
+			    if (itemArray.length > maxItemNum ) itemArray.length = 10;
+			    items = itemArray.join(',');
+			    setCookie('hotbodyBasket', items, expire);
+			}
+	  }else{
+		  console.log("159");
+		  setCookie('hotbodyBasket', id, expire);
+	  }
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</script>
 <div class="quickMenu">
 	<tiles:insertAttribute name="quickMenu"/>
 </div>
@@ -102,7 +173,7 @@ A:hover { color:#컬러코드 ; text-decoration:none; }
     <tiles:insertAttribute name="leftSide"/>
 </div>
 	
-<div class="container">
+<div class="container" style="margin-left: auto; margin-right: auto;">
     <tiles:insertAttribute name="header"/>
     <tiles:insertAttribute name="body"/>
 </div>
@@ -110,6 +181,5 @@ A:hover { color:#컬러코드 ; text-decoration:none; }
 <div class="rightSide">
     <tiles:insertAttribute name="rightSide"/>
 </div>
-
 </body>
 </html>
