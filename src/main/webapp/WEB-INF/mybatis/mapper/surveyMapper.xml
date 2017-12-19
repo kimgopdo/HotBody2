@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="survey">
+	<select id="qSeq" resultType="Integer">
+		SELECT survey_seq.NEXTVAL FROM dual
+	</select>
+	
+	<select id="exSeq" resultType="Integer">
+		SELECT ex_seq.NEXTVAL FROM dual
+	</select>
+	
+	<insert id="insertSurvey" parameterType="com.hotbody.survey.Survey">
+		INSERT INTO survey(qCode, qOrder, sOrO, qType, qContent)
+		VALUES(#{qCode}, #{sOrO}, #{qOrder}, #{qType}, #{qContent})
+	</insert>
+	
+	<insert id="insertEx" parameterType="com.hotbody.survey.Survey">
+		INSERT INTO surveyEx(exNum, qCode, exOrder, exContent, exScore)
+		VALUES(#{exNum}, #{qCode}, #{exOrder}, #{exContent}, #{exScore})
+	</insert>
+</mapper>

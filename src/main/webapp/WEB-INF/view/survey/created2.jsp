@@ -9,13 +9,10 @@
 $(function() {
 	objectiveAdd();
 });
-
 function objectiveAdd() {
-	//설문번호
-	var qNum = questionReNo();
-	//보기번호 : 1
-	var exNum = exReNo();
-	
+	var q = questionReNo();
+	var no = exReNo(this,q); 
+	alert(q);
 	var out;
 	out="<div class='questionLayout' style='border-bottom: 1px solid #dcdcdc;'>";
 	//out+="<form name='surveyForm' method='post'>";
@@ -23,11 +20,11 @@ function objectiveAdd() {
 	out+="<tr id='' height='55' align='center'>";
 	out+="<td width='100'>";
 	out +="<span class='qOrder' style='font-size: 16px; font-weight: bold;'>3</span>&nbsp;&nbsp;";
-	out +="<input type='hidden' name='qOrder"+qNum+"'>";
-	out +="<input type='hidden' name='sOrO"+qNum+"' value='0'>";
+	out +="<input type='hidden' name='qOrder"+no+"'>";
+	out +="<input type='hidden' name='sOrO"+no+"' value='0'>";
 	out +="</td>";
 	out +="<td width='120'>";
-	out +="<select name='qType"+qNum+"' style='height: 30px;'>";
+	out +="<select name='qType"+no+"' style='height: 30px;'>";
 	out +="<option value='pro'>전문성</option>";
 	out +="<option value='afford'>여유(시간)</option>";
 	out +="<option value='habits'>식습관</option>";
@@ -35,7 +32,7 @@ function objectiveAdd() {
 	out +="</select>";
 	out +="</td>";
 	out +="<td align='left'>";
-	out +="질문 : &nbsp;&nbsp;&nbsp;<input type='text' name='qContent"+qNum+"' style='width:90%; height: 30px; margin-left: 10px;' placeholder='질문을 입력 하세요'>";
+	out +="질문 : &nbsp;&nbsp;&nbsp;<input type='text' name='qContent"+q+"' style='width:90%; height: 30px; margin-left: 10px;' placeholder='질문을 입력 하세요'>";
     out +="</td>";
     out +="<td width='180'>";
     out +="<img class='btnLast' src='<%=cp%>/resource/images/downdown.png'>";
@@ -50,12 +47,12 @@ function objectiveAdd() {
     out +="<tr height='55' align='center'>";
     out +="<td colspan='2'></td>";
     out +="<td align='left'>";
-    out +="<span>보기-</span><span class='exOrder'>1</span> : &nbsp;&nbsp;&nbsp;<input type='text' name='exContent."+qNum+"."+exNum+"' style='width:85%; height: 30px;' placeholder='보기를 입력 하세요'>";
-    out +="<input type='hidden' name='exOrder."+qNum+"."+exNum+"' value='1'>";
-    out +="<img class='addEx' id='' style='width: 20px; height: 20px; margin-left: 15px; cursor: pointer; margin-top: 5px;' src='<%=cp%>/resource/images/plus2.png'>";
+    out +="<span>보기-</span><span class='exOrder'>1</span> : &nbsp;&nbsp;&nbsp;<input type='text' name='exContent"+q+"."+no+"' style='width:85%; height: 30px;' placeholder='보기를 입력 하세요'>";
+    out +="<input type='hidden' name='exOrder"+q+"."+no+"' value='1'>";
+    out +="<img id='' style='width: 20px; height: 20px; margin-left: 15px; cursor: pointer; margin-top: 5px;' src='<%=cp%>/resource/images/plus2.png' onclick='addEx(this,q);'>";
     out +="</td>";
     out +="<td> 점수 : ";
-    out +="<select name='exScore."+qNum+"."+exNum+"'>";
+    out +="<select name='exScore"+no+"'>";
     out +="<option value='0'>0</option>";
     out +="<option value='5'>5</option>";
     out +="<option value='10'>10</option>";
@@ -75,9 +72,7 @@ function objectiveAdd() {
 
 // 주관식 문제 추가
 function subjectiveAdd() {
-	//설문번호
-	var qNum = questionReNo();
-	
+	var no = questionReNo();
 	var out;
 	out="<div class='questionLayout' style='border-bottom: 1px solid #dcdcdc;'>";
 	//out+="<form name='surveyForm' method='post'>";
@@ -85,12 +80,12 @@ function subjectiveAdd() {
 	out+="<tr height='55' align='center' style='padding: 20px auto 20px;'>";
 	out+="<td width='100'>";
 	out +="<span class='qOrder' style='font-size: 16px; font-weight: bold;'>3</span>&nbsp;&nbsp;";
-	out +="<input type='hidden' name='qOrder"+qNum+"'>";
-	out +="<input type='hidden' name='sOrO"+qNum+"' value='1'>";
+	out +="<input type='hidden' name='qOrder"+no+"'>";
+	out +="<input type='hidden' name='sOrO"+no+"' value='1'>";
 	out+="</td>";
 	out +="<td width='120'></td>";
 	out+="<td align='left'>";
-	out+="질문 : &nbsp;&nbsp;&nbsp;<input type='text' name='qContent"+qNum+"' style='width:90%; height: 30px; margin-left: 10px;' placeholder='질문을 입력 하세요'>";
+	out+="질문 : &nbsp;&nbsp;&nbsp;<input type='text' name='qContent"+no+"' style='width:90%; height: 30px; margin-left: 10px;' placeholder='질문을 입력 하세요'>";
 	out+="</td>";
 	out+="<td width='180'>";
 	out+="<img class='btnLast' src='<%=cp%>/resource/images/downdown.png'>";
@@ -110,7 +105,6 @@ function subjectiveAdd() {
 	questionReNo();
 }
 
-
 function questionReNo() {
 	var no=1;
 	$("#questionContainer .qOrder").each(function() {
@@ -122,40 +116,23 @@ function questionReNo() {
 		$(this).siblings("input[name*=qOrder]").val(no);
 		$(this).siblings("input[name*=qOrder]").attr('name','qOrder'+no);
 		$(this).siblings("input[name*=sOrO]").attr('name','sOrO'+no);
-		$(this).siblings('span').text("ddd");
-		var dd= $(this).parents('.questionLayout').children().children().children().siblings("input[name*=qOrder]").val();
-		
-		
-		$(this).siblings("select[name*=qType]").prop('name','qType'+no);
-		//var dd = $(this).parents('.questionLayout').children().is("input[name*=qOrder]");
-		console.log(dd);
-		//alert(dd);
-		$(this).siblings("input[name*=qContent]").prop('name','qContentheheheh'+no);
+		$(this).siblings("input[name*=qContent]").attr('name','qContent'+no);
 		no++;
 	});
-	
 	return no;
 }
-
 
 function exReNo(d,qNum){
 	var no=1;
-	//alert("ddd:"+qNum);
 	$(d).closest(".questionLayout").find(".exOrder").each(function() {
 		$(this).text(no);
 		$(this).siblings("input[name*=exOrder]").val(no);
-		//$(this).siblings("input[name*=exOrder]").attr('name','exOrder.'+qNum+"."+no);
-		//$(this).siblings("input[name*=exOrder]").val(no);
-		//$(this).siblings("input[name*=exOrder]").val(no);
+		$(this).siblings("input[name*=exOrder]").attr('name','exOrder'+qNum+"."+no);
+		$(this).siblings("input[name*=exContent]").attr('name','exContent'+qNum+"."+no);
+		$(d).find("select[name*=exScore]").attr('name','exScore'+qNum+"."+no);
 		no++;
 	});
-	//alert(no);
 	return no;
-}
-
-function findQNum(q){
-	var qNum = $(q).closest("input[name*=qOrder]").val();
-	return qNum;
 }
 
 $(function() {
@@ -192,34 +169,6 @@ $(function() {
 		$(this).closest('tr').remove();
 		exReNo($div);
 	});
-	
-	$("body").on("click",".addEx", function() {
-		var out = "";
-		//var qNum = $(this).closest('tbody').children().is("input[name^=qOrder]");
-		var qNum = $(this).parent().parent().prev().children().children("input[name*=qOrder]").val();
-		
-		var exNum = exReNo(this,qNum);
-		
-		out += "<tr height='55' align='center'>";
-		out += "<td colspan='2'></td>";
-		out += "<td align='left'>";
-		out += "<span>보기-</span><span class='exOrder'>1</span> : &nbsp;&nbsp;&nbsp;<input type='text' name='exContent."+qNum+"."+exNum+"' style='width:85%; height: 30px;' placeholder='보기를 입력 하세요'>";
-		out += "<input type='hidden' name='exOrder."+qNum+"."+exNum+"'>";
-		out += "<img class='removeEx' style='width: 20px; height: 20px; margin-left: 18px; cursor: pointer; margin-top: 5px;' src='<%=cp%>/resource/images/minus2.png'>";
-		out += "</td>";
-		out +="<td> 점수 : ";
-	    out +="<select name='exScore."+qNum+"."+exNum+"'>";
-	    out +="<option value='0'>0</option>";
-	    out +="<option value='5'>5</option>";
-	    out +="<option value='10'>10</option>";
-	    out +="<option value='15'>15</option>";
-	    out +="<option value='20'>20</option>";
-	    out +="</select>";
-	    out +="</td>";
-		
-		$(this).closest("table").append(out);
-		exReNo(this);
-	});
 });
 
 //설문에 대한 문항(질문) 삭제
@@ -234,6 +183,31 @@ function deleteQuestion(f) {
 	
 	// 해당 문항 삭제
 	
+}
+
+function addEx(p,qNum) {
+	var q = questionReNo()-1;
+	var no = exReNo(p);
+	var out = "";
+	out += "<tr height='55' align='center'>";
+	out += "<td colspan='2'></td>";
+	out += "<td align='left'>";
+	out += "<span>보기-</span><span class='exOrder'>1</span> : &nbsp;&nbsp;&nbsp;<input type='text' name='exContent"+q+"."+no+"' style='width:85%; height: 30px;' placeholder='보기를 입력 하세요'>";
+	out += "<input type='hidden' name='exOrder"+q+"."+no+"'>";
+	out += "<img class='removeEx' style='width: 20px; height: 20px; margin-left: 18px; cursor: pointer; margin-top: 5px;' src='<%=cp%>/resource/images/minus2.png'>";
+	out += "</td>";
+	out +="<td> 점수 : ";
+    out +="<select name='exScore"+no+"'>";
+    out +="<option value='0'>0</option>";
+    out +="<option value='5'>5</option>";
+    out +="<option value='10'>10</option>";
+    out +="<option value='15'>15</option>";
+    out +="<option value='20'>20</option>";
+    out +="</select>";
+    out +="</td>";
+	
+	$(p).closest("table").append(out);
+	exReNo(p);
 }
 
 function surveySubmit() {
