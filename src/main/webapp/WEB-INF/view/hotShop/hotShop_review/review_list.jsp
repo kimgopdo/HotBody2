@@ -1,252 +1,127 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%@ page trimDirectiveWhitespaces="true"%>
+<%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
-	String cp = request.getContextPath();
+	String cp=request.getContextPath();
 %>
-
-<style type="text/css">
-.aspect {
-	width: 240px;
-	height: 240px;
-}
-
-.star_rating {
-	font-size: 0;
-	letter-spacing: -4px;
-}
-
-.star_rating a {
-	font-size: 22px;
-	letter-spacing: 0;
-	display: inline-block;
-	margin-left: 5px;
-	color: #ccc;
-	text-decoration: none;
-}
-
-.star_rating a:first-child {
-	margin-left: 0;
-}
-
-.star_rating a.on {
-	color: #777;
-}
-</style>
-<script type="text/javascript">
-$(function(){
-	$( ".star_rating a" ).click(function() {
-	    $(this).parent().children("a").removeClass("on");
-	    $(this).addClass("on").prevAll("a").addClass("on");
-	    return false;
-	});
-});
-</script>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
 
 <script type="text/javascript">
-function listReply(reviewCode){
-	var url = "<%=cp%>/hotShop/review_listReply";
-	var q = "reviewCode=" + reviewCode;
-	$.ajax({
-		type:"post"
-		,url:url
-		,data:q
-		,success:function(a){
-			$("#listReply"+reviewCode).html(a);
-		}
-		,beforeSend : function(e){
-			e.setRequestHeader("AJAX", true);
-		}
-		,error:function(e){
-			if(e.status == 403) {
-				alert("로그인 후 이용 가능합니다.");
-				return;
-			}
-			console.log(e.responseText);
-		}
-	});
-}
-
-function deleteReview(reviewCode) {
-	  var uid = "${sessionScope.member.userId}";
-	  var page = "${page}";
-	  var query = "page="+page+"&reviewCode="+reviewCode;
-	  var url = "<%=cp%>/hotShop/review_delete?" + query;
-	  
-	  if(! uid){
-		  alert("게시물을 삭제할 수 없습니다.");
-		  modalFormLogin();
-	  }
-	  if(uid){
-		  alert("게시물을 삭제하시겠습니까?");
-		  location.href=url;
-	  }
-	}
-
-function sendReply(reviewCode){
-	var uid="${sessionScope.member.userId}";
-	if(! uid) {
-		modalFormLogin();
-		return;
-	}
-	
-	var content=$.trim($("#replyContent"+reviewCode).val());
-	if(! content){
-		$("#replyContent"+reviewCode).focus();
-		return;
-	}
-	
-	var q="content="+encodeURIComponent(content);
-	q+="&reviewCode="+reviewCode;
-	
-	var url="<%=cp%>/hotShop/review_insertReply";
-	$.ajax({
-		 type:"post"
-         ,url:url
-         ,data:q
-         ,dataType:"json"
-         ,success:function(data){
-        	 
-       		var uid="${sessionScope.member.userId}";
-       		if(! uid) {
-       			modalFormLogin();
-       			return;
-       		}
-            $("#replyContent"+reviewCode).val("");
-            listReply(reviewCode);
-	        }
-		,beforeSend : function(e){
-			e.setRequestHeader("AJAX", true);
-		}
-		,error:function(e){
-			if(e.status == 403) {
-			var uid="${sessionScope.member.userId}";
-			if(! uid) {
-				modalFormLogin();
-				return;
-			}
-			console.log(e.responseText);
-			}
-		}
-	});
-}
-
-function searchList() {
-	var f=document.searchForm;
+function selectList(f){
 	f.submit();
 }
+
+/* $(function(){
+	$("#chkAll").click(function(){
+		if(this.checked == true){
+			$("input[name=nums]").each(function(){
+				this.checked = true;
+			});
+		} else {
+			$("input[name=nums]").each(function(){
+				this.checked = false;
+			});
+		}
+	});		
+}); */
+
+<%-- function check(){
+	var uid="${sessionScope.member.userId}";
+	if(! uid){
+		location.href="<%=cp%>/member/login";
+		return;
+	} else {
+		location.href="<%=cp%>/hotShop/review_created";
+	}
+} --%>
+
 </script>
 
-<body>
 
-	<div id="container" style="width: 100%; height: 1100px;">
-		<div style="width: 100%; height: 40px; margin-top: 100px; ">
-			<div style="width: 50%; height: 30px; font-weight: bold;" align="left">
-					REVIEW | 전체리뷰
-					<%-- <button type="button" style="color: gray; margin-top: 3px; background: white; border: 1px solid #999999; border-radius: 3px; width: 60px; height: 30px;" onclick="javascript:location.href='<%=cp%>/hotShop/review_list';">리스트</button> --%>
-			</div>
-		</div>
-		<hr style="border: 0.5px solid #BDBDBD;">
-		<div style="width: 100%; height: 45px; border: 1px solid #BDBDBD;">
-			<div
-				style="float: left; width: 60%; border-right: 1px solid #BDBDBD; height: 100%">
-				<div
-					style="float: left; width: 20%; font-size: 13px; padding-left: 20px; padding-right: 20px; padding-top: 12px;">카테고리별
-					보기</div>
-				<select
-					style="float: left; font-size: 13px; height: 35px; width: 79%; margin-top: 4px; outline: none;">
-					<option>카테고리를 선택해 주세요.</option>
-					<option>음료</option>
-					<option>간식</option>
-					<option>식사</option>
-					<option>드레싱</option>
-					<option>보충제</option>
-					<option>건강식</option>
-				</select>
-			</div>
+</head>
+<body style="min-height: 950px;">
 
-			<div style="width: 20%; height: 100%; float: left;">
-				<select
-					style="float: left; font-size: 13px; height: 100%; width: 100%; border: none; font-size: 13px; outline: none;">
-					<option>최신순</option>
-					<option>별점순</option>
-					<option>추천순</option>
+<table style="width: 100%; margin-bottom: 30px; margin-top: 50px;">
+	<tr align="left">
+		<td style="font-weight: bold; font-size: 24px;"> 상품 후기 리스트</td>
+	</tr>
+</table>
+
+<table style="width: 100%; margin: 5px auto 0px;">
+	<tr height="25;" style="font-size: 12px;">
+		<!-- <td width="50%" align="left"><button type="button" id="btnDeleteList" style="background: white; border: 1px solid #999999; border-radius: 3px; height: 25px;">삭제</button></td> -->
+		<td width="50%" align="left"><button type="button" style="background: white; border: 1px solid #999999; border-radius: 3px; height: 25px;" onclick="javascript:location.href='<%=cp%>/hotShop/review_list';">새로고침</button></td>
+		<td width="50%" align="right">
+			<form method="post" name="selectListForm">
+				<select name="rows" id="rows" style="background: white; border: 1px solid #A6A6A6; border-radius: 3px; height: 25px;" onchange="selectList(this.form);">
+					<option value="10" ${rows==10?"selected='selected'":""}>10개씩 보기</option>
+					<option value="20" ${rows==20?"selected='selected'":""}>20개씩 보기</option>
+					<option value="30" ${rows==30?"selected='selected'":""}>30개씩 보기</option>
+					<option value="50" ${rows==50?"selected='selected'":""}>50개씩 보기</option>
 				</select>
-			</div>
-            <form name="searchForm" action="<%=cp%>/hotShop/review_list" method="post">
-			<div style="width: 20%; height: 100%; border-left: 1px solid #BDBDBD; float: left; padding-top: 1px;">
-				<div style="width: 100%" align="left">
-					<button type="button" class="glyphicon glyphicon-search" style="width:10%; padding-left: 15px; outline: none; background: none; border: none;" onclick="searchList();"></button> &nbsp;&nbsp;&nbsp; 
-					<input type="hidden" name="searchKey">
-					<input type="text" name="searchValue" style="width: 80%; height: 41px; border: none; outline: none;" placeholder=" 상품 이름 검색...">
-				</div>
-			</div>
+				<input type="hidden" name="searchKey" value="${searchKey}">
+				<input type="hidden" name="searchValue" value="${searchValue}">
 			</form>
-		</div>
+		</td>
+	</tr>
+</table>
+
+<form name="deleteListForm" method="post">
+	<table style="width: 100%; margin: 5px auto 0px; border-collapse: collapse;">
+		<tr style="border: 1px solid #F6F6F6; background: white; font-weight: bold; font-size: 13px; border-bottom: 1px solid #d5d5d5;" align="center" height="40px">
+			<!-- <td width="20"><input type="checkbox" name="chkAll" id="chkAll"></td> -->
+			<td width="60">번호</td>
+			<td width="380" style="padding-left: 20px;">제목</td>
+			<td width="80">작성자</td>
+			<td width="80">작성일</td>
+		</tr>
+		
 		<c:forEach var="dto" items="${list}">
-				<div id="content">
-					<ul id="review"
-						style="list-style: none; padding-left: 0px; width: 100%; height: 275px; border-bottom: 1px solid #BDBDBD; margin-bottom: 10px;">
-						<li
-							style="width: 100%; height: 290px; margin-top: 10px; padding-bottom: 10px;">
-							<div
-								style="float: left; width: 20%; height: 95%; margin-left: 5px; margin-right: 5px;">
-								<div class="aspect">
-									<img src="<%=cp%>/uploads/review/${dto.image}">
-								</div>
-							</div>
-							<div
-								style="width: 78%; height: 50%; border: 1px solid #BDBDBD; float: left; margin-bottom: 5px;">
-								<div
-									style="height: 20%; border-bottom: 1px solid #BDBDBD; padding-right: 5px;">
-									<div style="padding-top: 3px; float: right; width: 3%; cursor: pointer; font-size: 11px;" onclick="deleteReview(${dto.reviewCode});">삭제</div>
-									<div
-										style="float: right; width: 9%; margin-left: 15px; margin-right: 15px;">${dto.reviewCreated}</div>
-									<div style="width: 10%;">
-										<span style="font-weight: bold; float: left; padding-left: 5px; padding-top: 3px; width: 500px; text-align: left;">${dto.pdName}</span>
-									</div>
-									<div style="float: right; font-weight: bold;">${dto.userName}(${dto.userId})</div>
-									<div id="starInput" style="height: 100%; width: 15%; float: right;"></div>
-								</div>
-								<div
-									style="width: 100%; height: 74%; padding-left: 5px; padding-top: 5px; padding-bottom: 5px; padding-right: 5px;">
-									<div
-										style="vertical-align: top; text-align: left; font-size: 12px;">${dto.reviewContent}</div>
-								</div>
-							</div>
-							<c:if test="${dto.cNum==0 && sessionScope.member.userId=='admin'}">
-							<div
-								style="width: 78%; height: 16%; border: 1px solid #BDBDBD; float: left;">
-								<input type="text"
-									style="width: 90%; height: 100%; border: none; outline: none; padding-left: 10px;"
-									placeholder="댓글입력.." id="replyContent${dto.reviewCode}">
-								<button type="button"
-									style="font-weight: bold; color: #8C8C8C; margin-top: 3px; background: white; border: 1px solid #999999; border-radius: 3px; width: 70px; height: 30px; outline: none;"
-									onclick="sendReply(${dto.reviewCode});">
-									<span style="font-size: 13px;">댓글작성</span>
-								</button>
-							</div>
-							</c:if>
-							
-							<c:if test="${dto.cNum!=0}">
-							<div id="listReply${dto.reviewCode}" style="width: 78%; height: 32%; border: 1px solid #BDBDBD; float: left; margin-top: 5px; padding-top: 13px; font-size: 12px;">
-								<div style="float: left; width: 80%; text-align: left; padding-left: 10px;">${dto.replyContent}</div>
-								<div style="float: left; width: 10%; font-weight: bold; text-align: right; padding-right: 15px;">${dto.userName}</div>
-								<div style="float: left; width: 10%; text-align: right; padding-right: 15px;">${dto.replyCreated}</div>
-							</div>
-							</c:if>
-
-						</li>
-					</ul>
-				</div>
+		<tr style="border: 1px solid #F6F6F6; background: white; font-size: 13px;" align="center" height="30px">
+			<%-- <td><input type="checkbox" name="nums" value="${dto.reviewCode}"></td> --%>
+			<td>${dto.listNum}</td>
+			<td align="left" style="padding-left: 5px; color: black;">
+				<a href="${articleUrl}&reviewCode=${dto.reviewCode}" style="color: gray; font-size: 13px;"><span style="font-weight: bold;">[${dto.pdName}]</span> ${dto.reviewSubject}</a>
+			</td>
+			<td>${dto.userName}</td>
+			<td>${dto.reviewCreated}</td>
+		</tr>
 		</c:forEach>
-		<table
-			style="width: 100%; margin-top: 10px; border-collapse: collapse; margin-bottom: 100px;">
-			<tr style="font-size: 12px;" align="center">
-				<td style="padding-top: 10px;">${paging}</td>
-			</tr>
-		</table>
-	</div>
+	</table>
+	<input type="hidden" name="page" value="${page}">
+	<input type="hidden" name="rows" value="${rows}">
+</form>
 
+<table style="width: 100%; margin-top: 10px; border-collapse: collapse;">
+	<tr style="font-size: 12px; border-top: 1px solid #d5d5d5;" align="center">
+		<td style="padding-top: 10px;">${paging}</td>
+	</tr>
+</table>
+<form name=searchForm method="post">
+	<table style="width: 100%; margin: 5px auto 0px;">
+		<tr height="25">
+			<td style="float: left; margin-right: 3px;">
+					<select name="searchKey" style="height: 25px;">
+						<option value="reviewSubject">제목</option>
+						<option value="userName">작성자</option>
+						<option value="reviewContent">내용</option>
+						<option value="reviewCreated">등록일</option>
+					</select>
+			</td>
+			<td style="float: left; margin-right: 3px;">
+				<input name="searchValue" type="text" style="height: 25px; border: 1px solid #999999; border-radius: 3px; font-size: 13px;">
+				<input type="hidden" name="rows" value="${rows}">
+			</td>
+			<td style="float: left; margin-right: 3px;">
+				<button style="background: white; border: 1px solid #999999; border-radius: 3px; height: 25px;" type="button" onclick="selectList(this.form);">검색</button>
+			</td>
+		</tr>
+	</table>
+</form>
 </body>
+</html>

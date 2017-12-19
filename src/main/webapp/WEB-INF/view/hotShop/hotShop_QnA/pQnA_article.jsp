@@ -64,7 +64,7 @@ function deleteQna() {
 			<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px; border-collapse: collapse;">
 			<tr height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
 			    <td colspan="2" align="center">
-				   ${dto.pdQSubject}
+				   <span style="font-weight: bold;">[${dto.pdName}]</span> ${dto.pdQSubject}
 			    </td>
 			</tr>
 			

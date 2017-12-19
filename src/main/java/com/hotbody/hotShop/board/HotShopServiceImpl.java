@@ -41,7 +41,7 @@ public class HotShopServiceImpl implements HotShopService{
 	public List<HotShop> productList(Map<String, Object> map) {
 		List<HotShop> list=null;
 		try {
-			list=dao.selectList("product.productList",map);
+				list=dao.selectList("product.productList",map);				
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

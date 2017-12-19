@@ -45,8 +45,14 @@ function loginOk() {
 		,dataType:"json"
 		,success:function(data) {
 			var state=data.state;
+			var prePage=data.prePage;
 			var message=data.message;
-			if(state=="true") {
+			alert(prePage);
+			if(prePage!=""){
+				alert(prePage);
+				location.href="<%=cp%>/"+prePage;
+				return;
+			}else if(state=="true") {
 				location.href="<%=cp%>/";
 			}else{
 				$("#messagelayout").html("<span style='color : red;'>로그인 정보가 올바르지 않습니다.</span>");
@@ -92,11 +98,11 @@ $('.tabs .tab').click(function(){
                        <div class="submit-wrap" style="margin-top: 60px;">
                           <input type="button" value="로그인" class="submit" onclick="loginOk();">
                       </div>
+					<input type="hidden" name="prePage" value="${prePage}">
               </form>
            </div>
      </div>
    </article>
    <div class="half bg" style="overflow: hidden;"></div>
 </div>
-
 

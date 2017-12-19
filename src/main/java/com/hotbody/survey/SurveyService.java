@@ -1,5 +1,5 @@
 package com.hotbody.survey;
 
 public interface SurveyService {
-	public int insertSurvey();
+	public int insertSurvey(Survey dto);
 }

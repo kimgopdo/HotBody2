@@ -72,8 +72,27 @@ body{
 </style>
 </head>
 <body>
+================${mocoNum}
+
+	<div class="breadcumb-nav">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<nav aria-label="breadcrumb">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="<%=cp%>/mocojee/list_mocojee"><i
+									class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+							<li class="breadcrumb-item active" aria-current="page" onclick="sendOk();"> 
+							<a href="#"> <span style="font-size: 14px;"> 뒤로가기</span> </a></li>
+						</ol>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</div>
+
 <div style="height: 50px;"></div>
-<div style="font-size: 40px; width: 1000px; margin: 20px auto 0; font-weight: bold; color: #666666;">|공지사항</div>
+<div style="font-size: 40px; width: 1000px; margin: 20px auto 0; font-weight: bold; color: #666666;">|자유게시판</div>
 <table style="width: 1000px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0">
 	
 	<tr height="40">
@@ -90,29 +109,10 @@ body{
 		<th width="65">조회수</th>
 	</tr>
 	
-	<c:forEach var="dto" items="${listTop}">
-	<tr height="40" align="center" style="background: #ffffff;">
-		<td width="60"><span style="display: inline-block; background: black; color: #ffffff;">자유게시판</span></td>
-		<td align="left">
-		<a href="${articleUrl}&num=${dto.num}" style="text-decoration: none; color: black;">${dto.moFBSubject}</a>
-		</td>
-		<td width="65">${dto.userId}</td>
-		<td width="100">${dto.moFBCreated}</td>
-		<c:choose>
-			<c:when test="${dto.moFBHit>20}">	
-				<td width="65" style="font-weight: bold; color: red;"><img src="<%=cp%>/resource/images/hitCount.png" align="left">${dto.moFBHit}</td>
-			</c:when>
-			<c:otherwise>
-				<td width="65"><img src="<%=cp%>/resource/images/hitCount.png" align="left">${dto.moFBHit}</td>	
-			</c:otherwise>
-		</c:choose>
-
-	</tr>
-	</c:forEach>
 	
 	<c:forEach var="dto" items="${list}">
 	<tr height="40" align="center" class="board">
-		<td width="60">${dto.moFBNum}</td>
+		<td width="60">${dto.listNum}</td>
 		<td align="left">
 			<a href="${articleUrl}&num=${dto.moFBNum}" style="text-decoration: none; color: black;">${dto.moFBSubject}</a>
 		</td>
@@ -123,7 +123,7 @@ body{
 				<td width="65" style="font-weight: bold; color: red;"><img src="<%=cp%>/resource/images/hitCount.png" align="left">${dto.moFBHit}</td>
 			</c:when>
 			<c:otherwise>
-				<td width="65"><img src="<%=cp%>/resource/images/hitCount.png" align="left">${dto.moFBHit}</td>	
+				<td width="65">${dto.moFBHit}</td>	
 			</c:otherwise>
 		</c:choose>
 	</tr>
@@ -145,9 +145,10 @@ body{
 			<input type="text" style="display:none;">
 			
 			<button type="button" onclick="send(this.form);" class="btn-search" style="width: 60px;">검색</button>
-			<button type="button" class="btn-list" onclick="javascript:location.href='<%=cp%>/moco_board/c_free'" style="float: right; width: 80px;">글올리기</button>
-			<button type="button" class="btn-list" onclick="javascript:location.href='<%=cp%>/moco_board/list_free';" style="float: right; width: 80px; margin-right: 10px;">새로고침</button>
+			<button type="button" class="btn-list" onclick="javascript:location.href='<%=cp%>/moco_board/${mocoNum}/c_free'" style="float: right; width: 80px;">글올리기</button>
+			<button type="button" class="btn-list" onclick="javascript:location.href='<%=cp%>/moco_board/${mocoNum}/list_free';" style="float: right; width: 80px; margin-right: 10px;">새로고침</button>
 		</form>
+		
 		</td>
 	</tr>
 </table>

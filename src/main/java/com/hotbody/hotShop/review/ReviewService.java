@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface ReviewService {
-	public int insertReview(Review dto, String pathName);
+	public int insertReview(Review dto);
 	public List<Review> listReview(Map<String, Object> map);
 	public int dataCount(Map<String, Object> map);
 	public Review readReview(int reviewCode);

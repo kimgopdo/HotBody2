@@ -1,7 +1,7 @@
 package com.hotbody.survey;
 
 public class Survey {
-	private int qCode, qOrder;
+	private int qCode, qOrder, sOrO;
 	private String qContent, userId, qType;
 	
 	private int exNum, exScore, exOrder;
@@ -121,6 +121,14 @@ public class Survey {
 
 	public void setqAnswer(int qAnswer) {
 		this.qAnswer = qAnswer;
+	}
+
+	public int getsOrO() {
+		return sOrO;
+	}
+
+	public void setsOrO(int sOrO) {
+		this.sOrO = sOrO;
 	}
 	
 }

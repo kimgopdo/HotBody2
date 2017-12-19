@@ -8,7 +8,7 @@
 <style>
 .paymentPage{
 	top: 100px;
-	font-size: 16px;
+	font-size: 14px;
 	font-family: inherit;
 	margin-bottom: 200px;
 }
@@ -38,8 +38,8 @@
 </style>
 <table class="paymentPage">
 	<tr>
-		<td colspan="4" style="text-align: left; font-size:20px; font-weight: bold; vertical-align: bottom;">주문내역</td>
-		<td colspan="4" style=" vertical-align: bottom;"><button type="button" style="float: right; font-weight: bold;">선택삭제</button></td>
+		<td colspan="8" style="text-align: left; font-size:20px; font-weight: bold; vertical-align: bottom;"><img src="<%=cp%>/resource/images/shop_images/shopping-cart.png">&nbsp;&nbsp; 장바구니</td>
+		
 	</tr>
 	<tr style="height: 50px; background: #F8F2ED">
 		<td><input type="checkbox"></td>
@@ -51,21 +51,25 @@
 		<td>가격</td>
 		<td>별점</td>
 	</tr>
+	<c:forEach var="dto" items="${list}">
 	<tr style="height:150px;">
 		<td width="2%" ><input type="checkbox"></td>
-		<td width="15%" >이미지</td>
-		<td width="38%">....</td>
-		<td width="10%">19000</td>
+		<td width="15%" ><img src="<%=cp%>/uploads/shopList/${dto.imgSaveFilename}"></td>
+		<td width="38%">${dto.pdName}<br><br>${dto.pdSumContent}</td>
+		<td width="10%"><fmt:formatNumber pattern="#,###">${dto.pdPrice}</fmt:formatNumber>원</td>
 		<td width="5%">1</td>
 		<td width="5%">190</td>
 		<td width="10%">19000</td>
 		<td>****</td>
+		<c:set var="totPay" value="${totPay+dto.pdPrice}" />
 	</tr>
+	</c:forEach>
 	<tr>
-		<td colspan="8" style="text-align: right;vertical-align: text-top;">상품구매금액1900</td>
+		<td colspan="4" style=" vertical-align: top;"><button type="button" class="btn" style="float: left; font-weight: bold;">선택삭제</button></td> 
+		<td colspan="4" style="text-align: right;vertical-align: text-top;">상품구매금액&nbsp;:&nbsp;&nbsp;<fmt:formatNumber pattern="#,###"><c:out value="${totPay}"></c:out></fmt:formatNumber>원 </td>
 	</tr>
-	<tr>
-		<td colspan="4" style="text-align: left; font-size:20px; font-weight: bold; vertical-align: bottom;">주문자정보</td>
+	<tr>                       
+		<td colspan="4" style="text-align: left; font-size:20px; font-weight: bold; vertical-align: bottom;"><img src="<%=cp%>/resource/images/shop_images/phone.png">&nbsp;&nbsp; 주문자정보</td>
 		<td colspan="4" style="text-align: right; font-size:20px; font-weight: bold; vertical-align: bottom;"><span style="color: red;">*</span>필수입력사항</td>
 	</tr>
 	<tr>
@@ -97,7 +101,7 @@
 		</td>
 	</tr>
 	<tr height="60px">
-		<td colspan="8" style="text-align: left; font-size:20px; font-weight: bold; vertical-align: bottom;">배송정보</td>
+		<td colspan="8" style="text-align: left; font-size:20px; font-weight: bold; vertical-align: bottom;"><img src="<%=cp%>/resource/images/shop_images/delivery-truck.png">&nbsp;&nbsp; 배송정보</td>
 	</tr>
 	<tr>
 		<td colspan="8" style="text-align: left; "> <input type="radio">주문자 정보와 동일&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio">새로작성</td>
@@ -142,7 +146,7 @@
 		<td colspan="6" style="text-align: left;"><textarea rows="3" style="width: 300px;"></textarea> </td>
 	</tr>
 	<tr>
-		<td colspan="8" style="text-align: left; font-size:20px; font-weight: bold; vertical-align: bottom;">결제예정금액</td>
+		<td colspan="8" style="text-align: left; font-size:20px; font-weight: bold; vertical-align: bottom;"><img src="<%=cp%>/uploads/shopList/give-money.png">&nbsp;&nbsp; 결제예정금액</td>
 	</tr>
 	<tr>
 		<td colspan="2">사용할 포인트</td>
