@@ -29,10 +29,11 @@ $(function(){
 		}
 	});		
 });
+
 function check(){
 	var uid="${sessionScope.member.userId}";
 	if(! uid){
-		modalFormLogin();
+		location.href="<%=cp%>/member/login";
 		return;
 	} else {
 		location.href="<%=cp%>/hotShop/pQnA_created";

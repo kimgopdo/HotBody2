@@ -7,6 +7,7 @@ public class Review {
 	private String userName;
 	private String reviewContent;
 	private int starScore;
+	private String reviewSubject;
 	private String reviewCreated;
 	private int pdNum;
 	private String pdName;
@@ -15,6 +16,12 @@ public class Review {
 	private int listNum;
 	
 	
+	public String getReviewSubject() {
+		return reviewSubject;
+	}
+	public void setReviewSubject(String reviewSubject) {
+		this.reviewSubject = reviewSubject;
+	}
 	private int cNum;
 	private String replyUserId, replyContent, replyCreated, replyUserName;
 	

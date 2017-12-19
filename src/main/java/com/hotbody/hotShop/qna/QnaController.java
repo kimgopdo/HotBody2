@@ -18,13 +18,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.hotbody.common.MyUtil;
+import com.hotbody.hotShop.board.HotShopService;
 import com.hotbody.member.SessionInfo;
 
 @Controller("hotShop.Qna")
 public class QnaController {
 	@Autowired
 	private  QnaService service;
-	@Autowired MyUtil util;
+	@Autowired
+	private MyUtil util;
+	@Autowired
+	private HotShopService service2;
 	
 	@RequestMapping(value="/hotShop/pQnA_created", method=RequestMethod.GET)
 	public String CreatedForm(Model model) {
@@ -235,5 +239,60 @@ public class QnaController {
 		service.insertQna(dto, "answer");
 		
 		return "redirect:/hotShop/pQnA_list?page="+page;
+	}
+	
+	public String articleList(
+			@RequestParam(value="page", defaultValue="1") int current_page,
+			@RequestParam(defaultValue="10") int rows,
+			@RequestParam(defaultValue="1") int pdnum,
+			HttpServletRequest req
+			,Model model
+			) {
+	
+	int dataCount;
+    int total_page;
+
+    Map<String, Object> map = new HashMap<>();
+    map.put("pdnum", pdnum);
+    dataCount = service2.dataCount_review(map);
+    
+    total_page = util.pageCount(rows, dataCount);
+    
+    if(total_page < current_page)
+       total_page=current_page;
+    
+    
+    int start = (current_page - 1) * rows + 1;
+    int end = current_page * rows;
+    map.put("start", start);
+    map.put("end", end);
+    map.put("pdnum", pdnum);
+    List<Qna> list = service2.productArticle_QnA(map);
+    
+    int listNum, n = 0;
+    Iterator<Qna> it = list.iterator();
+    while(it.hasNext()) {
+       Qna dto = it.next();
+       listNum = dataCount - (start + n - 1);
+       dto.setListNum(listNum);
+       n++;
+       
+       dto.setPdQCreated(dto.getPdQCreated().substring(0, 10));
+    }
+	
+    String query = "rows=" + rows +"&pdnum="+pdnum;
+    String listUrl, articleUrl;
+    String cp = req.getContextPath();
+    listUrl = cp + "/hotShop/shopArticle?" + query;
+    articleUrl = cp + "/hotShop/pQnA_article?" + query + "&page=" + current_page;
+ 
+	String paging = util.paging(current_page, total_page,listUrl);
+	 
+	model.addAttribute("paging", paging);
+	model.addAttribute("list", list);
+	model.addAttribute("listUrl", listUrl);
+	model.addAttribute("articleUrl", articleUrl);
+	
+	return ".hotShop.listQna";
 	}
 }

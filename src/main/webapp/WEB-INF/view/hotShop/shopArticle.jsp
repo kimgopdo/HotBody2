@@ -50,6 +50,34 @@ function check(){
 	}
 }
 
+$(function(){
+	listPage(1);
+});
+
+function listPage(page){
+	var url = "<%=cp%>/hotShop/listQna";
+	var num = "${dto.pdnum}";
+	var q = "pdnum=" + pdnum + "&page=" + page;
+
+	$.ajax({
+		type:"post"
+		,url:url
+		,data:q
+		,success:function(a){
+			$("#listQna").html(a);
+		}
+		,beforeSend : function(e){
+			e.setRequestHeader("AJAX", true);
+		}
+		,error:function(e){
+			if(e.status == 403) {
+				alert("실패");
+				return;
+			}
+			console.log(e.responseText);
+		}
+	});
+}
 </script>
 
 
@@ -206,7 +234,7 @@ function check(){
 			</ul>
 			
 			<!-- 상품후기 게시판 리스트 -->
-			<div style="width: 95%;">
+			<div style="width: 95%;" id="listQna">
 				<form name="deleteListForm" method="post">
 					<table style="width: 100%; margin: 5px auto 0px; border-collapse: collapse;">
 						<tr style="border: 1px solid #F6F6F6; background: white; font-weight: bold; font-size: 13px; border-bottom: 1px solid #d5d5d5;" align="center" height="40px">
@@ -233,12 +261,13 @@ function check(){
 					<input type="hidden" name="page" value="${page}">
 					<input type="hidden" name="rows" value="${rows}">
 				</form>
-
+				<form action="" id="pages">
 					<table style="width: 100%; margin-top: 10px; border-collapse: collapse;">
 						<tr style="font-size: 12px; border-top: 1px solid #d5d5d5;" align="center">
 							<td style="padding-top: 10px;">${paging}</td>
 						</tr>
 					</table>
+				</form>
 				<table>
 					<tr>
 						<td style="width: 1050px; float: right; padding-right: 10px;" align="right">
@@ -246,8 +275,9 @@ function check(){
 							<button class="btn" style="color:black; background: white; border: 1px solid #BDBDBD; border-radius: 3px; height: 30px;" type="button" onclick="check();">Q&A 등록</button>
 						</td>
 					</tr>
-				</table>
+				</table>0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
 			</div>
+			
 		</div>
 		</div>
      </div>
