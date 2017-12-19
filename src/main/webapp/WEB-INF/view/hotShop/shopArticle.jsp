@@ -179,7 +179,7 @@ function listPage(page){
 					<span style="font-size: 13px;">상품상세</span>
 				</li>
 				<li style="list-style:none; float: left; width: 366px; height:49.5px; padding-top:13px;" onclick="fnMove('3')">
-					<span style="font-size: 13px;">상품후기</span>
+					<span style="font-size: 13px;">Q&A 및 상품후기</span>
 				</li>
 			</ul>
 			
@@ -201,7 +201,7 @@ function listPage(page){
 					<span style="font-size: 13px; font-weight: bold;">상품상세</span>
 				</li>
 				<li style="list-style:none; float: left; width: 366px; height:49.5px; padding-top:13px;" onclick="fnMove('3')">
-					<span style="font-size: 13px;">상품후기</span>
+					<span style="font-size: 13px;">Q&A 및 상품후기</span>
 				</li>
 			</ul>
 			
