@@ -43,7 +43,7 @@ function numberWithCommas(x) {
 function check(){
 	var uid="${sessionScope.member.userId}";
 	if(! uid){
-		modalFormLogin();
+		location.href="<%=cp%>/member/login";
 		return;
 	} else {
 		location.href="<%=cp%>/hotShop/pQnA_created";
@@ -57,7 +57,7 @@ $(function(){
 function listPage(page){
 	var url = "<%=cp%>/hotShop/listQna";
 	var num = "${dto.pdnum}";
-	var q = "pdnum=" + pdnum + "&page=" + page;
+	var q = "num=" + num + "&page=" + page;
 
 	$.ajax({
 		type:"post"
@@ -233,7 +233,7 @@ function listPage(page){
 				</li>
 			</ul>
 			
-			<!-- 상품후기 게시판 리스트 -->
+			<!-- 상품Q&A 게시판 리스트 -->
 			<div style="width: 95%;" id="listQna">
 				<form name="deleteListForm" method="post">
 					<table style="width: 100%; margin: 5px auto 0px; border-collapse: collapse;">
