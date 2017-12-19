@@ -37,4 +37,16 @@ public interface MyClassService {
 	public Information preReadInfo(Map<String, Object> map);
 	public Information nextReadInfo(Map<String, Object> map);
 	
+	
+	//오늘의운동관련 서비스
+	public int insertToday(TodayExer dto);
+	public List<TodayExer> listToday(Map<String, Object> map);
+	public int dataCount4(Map<String, Object> map);
+	//관리자는 나중에 (삭제랑 모든아이디의 운동보기등..)
+	
+
+	
+
+	
+	
 }
