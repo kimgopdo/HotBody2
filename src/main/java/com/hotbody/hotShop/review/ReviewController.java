@@ -58,14 +58,14 @@ public class ReviewController {
 		
 		service.insertReview(dto);
 		
-		return "redirect:/hotShop/review_created";
+		return "redirect:/hotShop/review_list";
 	}
 	
 	@RequestMapping(value="/hotShop/review_list")
 	public String list(
-			@RequestParam(value = "page", defaultValue="1") int current_page,
-			@RequestParam(value = "searchKey", defaultValue = "pdName") String searchKey,
-			@RequestParam(value = "searchValue", defaultValue = "") String searchValue,
+			@RequestParam(value="page", defaultValue="1") int current_page,
+			@RequestParam(defaultValue="reviewSubject") String searchKey,
+			@RequestParam(defaultValue="") String searchValue,
 			@RequestParam(defaultValue="10") int rows,
 			HttpServletRequest req,
 			HttpSession session,
@@ -94,9 +94,7 @@ public class ReviewController {
 		map.put("end", end);
 		List<Review> list = service.listReview(map);
 		
-		int n = 0;
-		int listNum = 0;
-		
+		int listNum, n = 0;
 		Iterator<Review> it = list.iterator();
 		while(it.hasNext()) {
 			Review dto = it.next();
@@ -104,21 +102,23 @@ public class ReviewController {
 			dto.setListNum(listNum);
 			n++;
 			
+			dto.setReviewCreated(dto.getReviewCreated().substring(0, 10));
 		}
 		
 		String query = "rows=" + rows;
-		String listUrl;
-			
+		String listUrl, articleUrl;
 		if(searchValue.length() != 0) {
-			query += "&searchKey=" + searchKey + "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
+			query +="&searchKey=" + searchKey
+					+"&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
 		}
-		
 		String cp = req.getContextPath();
 		listUrl = cp + "/hotShop/review_list?" + query;
+		articleUrl = cp + "/hotShop/review_article?" + query + "&page=" + current_page;
 		
 		String paging = util.paging(current_page, total_page, listUrl);
 
 		model.addAttribute("list", list);
+		model.addAttribute("articleUrl", articleUrl);
 		model.addAttribute("page", current_page);
 		model.addAttribute("total_page", total_page);
 		model.addAttribute("dateCount", dataCount);
@@ -128,6 +128,42 @@ public class ReviewController {
 		model.addAttribute("searchValue", searchValue);
 		
 		return ".hotShop.hotShop_review.review_list";
+	}
+	
+	@RequestMapping(value="/hotShop/review_article", method=RequestMethod.GET)
+	public String article(
+			@RequestParam int reviewCode,
+			@RequestParam String page,
+			@RequestParam(defaultValue="reviewSubject") String searchKey,
+			@RequestParam(defaultValue="") String searchValue,
+			@RequestParam int rows,
+			Model model
+			) throws Exception {
+		
+		String query = "page=" + page + "&rows=" + rows;
+		if(searchValue.length() != 0) {
+			query += "&searchKey=" + searchKey;
+			query += "&searchValue=" + searchValue;
+		}
+		
+		searchValue = URLEncoder.encode(searchValue, "UTF-8");
+
+		Review dto = service.readReview(reviewCode);
+		if(dto == null) {
+			return "redirect:/hotShop/review_list" + query;
+		}
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("reviewCode", reviewCode);
+		map.put("searchKey", searchKey);
+		map.put("searchValue", searchValue);
+		
+		model.addAttribute("page", page);
+		model.addAttribute("dto", dto);
+		model.addAttribute("query", query);
+		model.addAttribute("rows", rows);
+		
+		return ".hotShop.hotShop_review.review_article";
 	}
 	
 	@RequestMapping(value="/hotShop/review_delete")
@@ -145,7 +181,7 @@ public class ReviewController {
 		return "redirect:/hotShop/review_list?page="+page;
 	}
 	
-	@RequestMapping(value="/hotShop/review_insertReply", method=RequestMethod.POST)
+	@RequestMapping(value="/hotShop/insertReply", method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> insertReply(
 			Reply dto,
@@ -162,7 +198,7 @@ public class ReviewController {
 		} else {
 			dto.setUserId(info.getUserId());
 			service.insertReply(dto);
-
+			
 			state="true";
 		}
 		
@@ -172,26 +208,67 @@ public class ReviewController {
 		return model;
 	}
 	
-	@RequestMapping(value="/hotShop/review_listReply", method=RequestMethod.POST)
+	@RequestMapping(value="/hotShop/review_list", method=RequestMethod.POST)
 	public String listReply(
 			@RequestParam(value="reviewCode") int reviewCode,
+			@RequestParam(value="page") int current_page,
 			Model model
 			) {
-
+		
+		int rows = 5; // 한 화면 리스트 개수
+		int total_page = 0;
+		int dataCount = 0;
+		
 		Map<String, Object> map = new HashMap<>();
 		map.put("reviewCode", reviewCode);
-		int replyCount=service.replyDataCount(map);
-		List<Reply> listReply= service.listReply(map);
-		for(Reply dto:listReply) {
-			dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
-		}
 		
-		model.addAttribute("replyCount", replyCount);
+		dataCount = service.replyDataCount(map);
+		total_page = util.pageCount(rows, dataCount);
+		if(current_page > total_page)
+			current_page = total_page;
+		
+		int start = (current_page - 1) * rows + 1;
+		int end = current_page * rows;
+		map.put("start", start);
+		map.put("end", end);
+		
+		List<Reply> listReply = service.listReply(map);
+		
+		
+		String paging = util.paging(current_page, total_page);
+		
 		model.addAttribute("listReply", listReply);
+		model.addAttribute("paging", paging);
+		model.addAttribute("replyCount", dataCount);
+		model.addAttribute("total_page", total_page);
+		model.addAttribute("page", current_page);
 		
 		return "hotShop/hotShop_review/listReply";
 	}
 	
-
+	@RequestMapping(value="/hotShop/deleteReply", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> deleteReply(
+			@RequestParam int cNum,
+			HttpSession session
+			){
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		String state;
+		
+		if(info == null) {
+			state = "loginFail";
+		} else {
+			Map<String, Object> map = new HashMap<>();
+			map.put("cNum", cNum);
+			map.put("userId", info.getUserId());
+			service.deleteReply(map);
+			state = "true";
+		}
+		
+		Map<String, Object> model = new HashMap<>();
+		model.put("state", state);
+		return model;
+	}
 	
 }

@@ -8,9 +8,19 @@
 					 VALUES (preview_seq.NEXTVAL, #{userName}, #{reviewContent}, #{starScore}, sysdate, #{reviewSubject}, #{pdNum}, #{userId})
 	</insert>
 	
+	<!-- 검색 키 -->
 	<sql id="where-list">
-		<if test="searchKey == 'pdName'">
-			INSTR(pdName, #{searchValue}) &gt; 0
+		<if test="searchKey == 'userName' ">
+			userName = #{searchValue}
+		</if>
+		<if test="searchKey == 'reviewSubject' ">
+			INSTR(reviewSubject, #{searchValue}) &gt; 0
+		</if>
+		<if test="searchKey == 'reviewContent' ">
+			INSTR(reviewContent, #{searchValue}) &gt; 0
+		</if>
+		<if test="searchKey == 'reviewCreated' ">
+			TO_CHAR(reviewCreated, 'YYYY-MM-DD') = #{searchValue} OR TO_CHAR(reviewCreated, 'YYYYMMDD') = #{searchValue}
 		</if>
 	</sql>
 	
@@ -23,65 +33,102 @@
 		</where>
 	</select>
 	
-	<select id="readReview" resultType="com.hotbody.hotShop.review.Review" parameterType="map">
-		SELECT r.reviewCode, r.userName, r.reviewContent, r.starScore, r.reviewCreated, r.pdNum, p.pdName, r.userId, r.image 
-		FROM shReviews r
-		JOIN productList p 
-		ON r.pdNum=p.pdNum
-		WHERE reviewCode = #{reviewCode}
+	<!-- 상품 아티클에서 게시물 개수 -->
+	<select id="dataCountArticle" resultType="Integer" parameterType="map">
+		SELECT NVL(COUNT(*), 0) FROM shreviews
+		<where>
+			<if test="searchValue != null and searchValue != ''">
+				<include refid="where-list"/>
+			</if>
+			<if test="pdnum != '1'">
+				and pdnum=#{pdnum}
+			</if>
+		</where>
 	</select>
 	
+	<!-- 리스트 start - end 내림차순 정렬 -->
 	<select id="listReview" resultType="com.hotbody.hotShop.review.Review" parameterType="map">
 		SELECT * FROM(
-			SELECT ROWNUM rnum, tb.* FROM(
-       			SELECT r.reviewCode, r.userName, r.reviewContent, r.starScore, r.reviewCreated, r.pdNum, p.pdName, r.userId, r.image,
-       			       c.cNum, c.userId replyUserId, c.content replyContent, c.created replyCreated, c.userName replyUserName
-				FROM shReviews r
-				LEFT OUTER JOIN productList p ON r.pdNum=p.pdNum
-				LEFT OUTER JOIN
-				(
-				      SELECT cNum, reviewCode, rr.userId, content, TO_CHAR(rr.created, 'YYYY-MM-DD') created ,userName
-                      FROM ReComment rr 
-                      JOIN member1 m1 ON rr.userId=m1.userId
-				) c ON r.reviewCode=c.reviewCode
-				
-				<where>
+    		SELECT ROWNUM rnum, tb.* FROM(
+        		SELECT r.reviewCode, r.userName, r.reviewSubject, r.reviewCreated, p.pdName, r.pdNum
+        		FROM shreviews r
+        		LEFT OUTER JOIN productList p ON r.pdNum=p.pdNum
+        		<where>
 					<if test="searchValue != null and searchValue != ''">
-						pdName=#{searchValue}
+						<include refid="where-list"/>
 					</if>
 				</where>
-				ORDER BY reviewCode DESC
+        		ORDER BY r.reviewCode DESC
      	<![CDATA[
     		) tb WHERE ROWNUM <= #{end}      
 		) WHERE rnum >= #{start}
 		]]>
 	</select>
 	
-    <delete id="deleteReview" parameterType="Integer">
-          DELETE FROM shReviews WHERE reviewCode = #{reviewCode}
-    </delete>
+	<!-- 상품 아티클에서 리스트 -->
+	<select id="listReviewArticle" resultType="com.hotbody.hotShop.review.Review" parameterType="map">
+		SELECT * FROM(
+    		SELECT ROWNUM rnum, tb.* FROM(
+        		SELECT r.reviewCode, r.userName, r.reviewSubject, r.reviewCreated, p.pdName, r.pdNum
+        		FROM shreviews r
+        		LEFT OUTER JOIN productList p ON r.pdNum=p.pdNum
+        		<where>
+					<if test="searchValue != null and searchValue != ''">
+						<include refid="where-list"/>
+					</if>
+					<if test="pdnum != '1'">
+						and pdnum=#{pdnum}
+					</if>
+				</where>
+        		ORDER BY r.reviewCode DESC
+     	<![CDATA[
+    		) tb WHERE ROWNUM <= #{end}      
+		) WHERE rnum >= #{start}
+		]]>
+	</select>
 	
-	<insert id="insertReply" parameterType="com.hotbody.hotShop.review.Reply">
-      		INSERT INTO ReComment(cNum, reviewCode, userId, content, created, CANSWER)
-      			 VALUES(#{reviewCode}, #{reviewCode}, #{userId}, #{content}, sysdate, 0)
-      </insert>
-      
+	<select id="readReview" resultType="com.hotbody.hotShop.review.Review" parameterType="map">
+		SELECT r.reviewCode, r.userName, r.reviewSubject, r.reviewContent, r.reviewCreated, r.pdNum, p.pdName, r.userId 
+		FROM shReviews r 
+		JOIN productList p 
+		ON r.pdNum=p.pdNum 
+		WHERE reviewCode = #{reviewCode}
+	</select>
+	
+    <delete id="deleteReview" parameterType="Integer">
+        DELETE FROM shReviews WHERE reviewCode = #{reviewCode}
+    </delete>
+    
+     <insert id="insertReply" parameterType="com.hotbody.hotShop.review.Reply">
+    	INSERT INTO recomment(cNum, reviewCode, userId, content, created, cAnswer)
+      			 VALUES(recomment_seq.NEXTVAL, #{reviewCode}, #{userId}, #{content}, sysdate, #{cAnswer})
+     </insert>
+     
      <select id="replyDataCount" parameterType="map" resultType="Integer">
       		SELECT NVL(COUNT(*), 0) 
-      		FROM ReComment 
-      		WHERE reviewCode=#{reviewCode}
+      		FROM recomment 
+      		WHERE reviewCode=#{reviewCode} AND answer=0
       </select>
       
-       <select id="listReply" parameterType="map" resultType="com.hotbody.hotShop.review.Reply">
-			SELECT cNum, reviewCode, m1.userId userId, content,
-                    TO_CHAR(created, 'YYYY-MM-DD') created ,userName
-                     FROM ReComment r 
-                     JOIN member1 m1 ON r.userId=m1.userId
-                     WHERE reviewCode=#{reviewCode} AND ROWNUM=1 ORDER BY cNum DESC
-       </select>
+      <select id="listReply" parameterType="map" resultType="com.hotbody.hotShop.review.Reply">
+        SELECT * FROM (
+             SELECT ROWNUM rnum, tb.* 
+             FROM (SELECT cNum, reviewCode, m1.userId userId, content,
+                    TO_CHAR(created, 'YYYY-MM-DD') created, userName, r.answer
+                     FROM recomment r 
+                     JOIN member1 m1 ON r.userId=m1.userId 
+                     WHERE reviewCode=#{reviewCode} AND r.ANSWER=0 ORDER BY cNum DESC 
+               <![CDATA[
+                     ) tb WHERE ROWNUM <=#{end}
+                ) WHERE rnum >= #{start}
+               ]]>
+      </select>
       
-      <delete id="deleteReply" parameterType="Integer">
-      		DELETE FROM ReComment WHERE cNum=#{cNum}
+      <delete id="deleteReply" parameterType="map">
+      		DELETE FROM recomment WHERE cNum=#{cNum}
+      		<if test="userId != 'admin'">
+      			AND userId=#{userId}
+      		</if>
       </delete>
 	
 </mapper>

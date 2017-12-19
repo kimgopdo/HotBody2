@@ -12,19 +12,35 @@ public class Review {
 	private int pdNum;
 	private String pdName;
 	private String userId;
-	private String image;
 	private int listNum;
 	
+	private int cNum;
+	private String content, created, cAnswer;
 	
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
+	public String getCreated() {
+		return created;
+	}
+	public void setCreated(String created) {
+		this.created = created;
+	}
+	public String getcAnswer() {
+		return cAnswer;
+	}
+	public void setcAnswer(String cAnswer) {
+		this.cAnswer = cAnswer;
+	}
 	public String getReviewSubject() {
 		return reviewSubject;
 	}
 	public void setReviewSubject(String reviewSubject) {
 		this.reviewSubject = reviewSubject;
 	}
-	private int cNum;
-	private String replyUserId, replyContent, replyCreated, replyUserName;
-	
 	public int getListNum() {
 		return listNum;
 	}
@@ -87,40 +103,10 @@ public class Review {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-	public String getImage() {
-		return image;
-	}
-	public void setImage(String image) {
-		this.image = image;
-	}
 	public int getcNum() {
 		return cNum;
 	}
 	public void setcNum(int cNum) {
 		this.cNum = cNum;
-	}
-	public String getReplyUserId() {
-		return replyUserId;
-	}
-	public void setReplyUserId(String replyUserId) {
-		this.replyUserId = replyUserId;
-	}
-	public String getReplyContent() {
-		return replyContent;
-	}
-	public void setReplyContent(String replyContent) {
-		this.replyContent = replyContent;
-	}
-	public String getReplyCreated() {
-		return replyCreated;
-	}
-	public void setReplyCreated(String replyCreated) {
-		this.replyCreated = replyCreated;
-	}
-	public String getReplyUserName() {
-		return replyUserName;
-	}
-	public void setReplyUserName(String replyUserName) {
-		this.replyUserName = replyUserName;
 	}
 }

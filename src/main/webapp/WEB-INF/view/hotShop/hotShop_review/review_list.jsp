@@ -16,7 +16,7 @@ function selectList(f){
 	f.submit();
 }
 
-$(function(){
+/* $(function(){
 	$("#chkAll").click(function(){
 		if(this.checked == true){
 			$("input[name=nums]").each(function(){
@@ -28,17 +28,17 @@ $(function(){
 			});
 		}
 	});		
-});
+}); */
 
-function check(){
+<%-- function check(){
 	var uid="${sessionScope.member.userId}";
 	if(! uid){
 		location.href="<%=cp%>/member/login";
 		return;
 	} else {
-		location.href="<%=cp%>/hotShop/pQnA_created";
+		location.href="<%=cp%>/hotShop/review_created";
 	}
-}
+} --%>
 
 </script>
 
@@ -48,14 +48,14 @@ function check(){
 
 <table style="width: 100%; margin-bottom: 30px; margin-top: 50px;">
 	<tr align="left">
-		<td style="font-weight: bold; font-size: 24px;"> Q & A 리스트</td>
+		<td style="font-weight: bold; font-size: 24px;"> 상품 후기 리스트</td>
 	</tr>
 </table>
 
 <table style="width: 100%; margin: 5px auto 0px;">
 	<tr height="25;" style="font-size: 12px;">
 		<!-- <td width="50%" align="left"><button type="button" id="btnDeleteList" style="background: white; border: 1px solid #999999; border-radius: 3px; height: 25px;">삭제</button></td> -->
-		<td width="50%" align="left"><button type="button" style="background: white; border: 1px solid #999999; border-radius: 3px; height: 25px;" onclick="javascript:location.href='<%=cp%>/hotShop/pQnA_list';">새로고침</button></td>
+		<td width="50%" align="left"><button type="button" style="background: white; border: 1px solid #999999; border-radius: 3px; height: 25px;" onclick="javascript:location.href='<%=cp%>/hotShop/review_list';">새로고침</button></td>
 		<td width="50%" align="right">
 			<form method="post" name="selectListForm">
 				<select name="rows" id="rows" style="background: white; border: 1px solid #A6A6A6; border-radius: 3px; height: 25px;" onchange="selectList(this.form);">
@@ -83,14 +83,13 @@ function check(){
 		
 		<c:forEach var="dto" items="${list}">
 		<tr style="border: 1px solid #F6F6F6; background: white; font-size: 13px;" align="center" height="30px">
-			<%-- <td><input type="checkbox" name="nums" value="${dto.pdQCode}"></td> --%>
+			<%-- <td><input type="checkbox" name="nums" value="${dto.reviewCode}"></td> --%>
 			<td>${dto.listNum}</td>
 			<td align="left" style="padding-left: 5px; color: black;">
-			    <c:if test="${dto.answerNum!=0}">&nbsp;&nbsp;└ </c:if>
-				<a href="${articleUrl}&pdQCode=${dto.pdQCode}" style="color: gray; font-size: 13px;"><span style="font-weight: bold;">[${dto.pdName}]</span> ${dto.pdQSubject}</a>
+				<a href="${articleUrl}&reviewCode=${dto.reviewCode}" style="color: gray; font-size: 13px;"><span style="font-weight: bold;">[${dto.pdName}]</span> ${dto.reviewSubject}</a>
 			</td>
 			<td>${dto.userName}</td>
-			<td>${dto.pdQCreated}</td>
+			<td>${dto.reviewCreated}</td>
 		</tr>
 		</c:forEach>
 	</table>
@@ -108,10 +107,10 @@ function check(){
 		<tr height="25">
 			<td style="float: left; margin-right: 3px;">
 					<select name="searchKey" style="height: 25px;">
-						<option value="pdQSubject">제목</option>
+						<option value="reviewSubject">제목</option>
 						<option value="userName">작성자</option>
-						<option value="pdQContent">내용</option>
-						<option value="pdQCreated">등록일</option>
+						<option value="reviewContent">내용</option>
+						<option value="reviewCreated">등록일</option>
 					</select>
 			</td>
 			<td style="float: left; margin-right: 3px;">
