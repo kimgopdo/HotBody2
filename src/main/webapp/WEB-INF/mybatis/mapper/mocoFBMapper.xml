@@ -4,22 +4,49 @@
 <mapper namespace="fb">
 
 <insert id="insertFB" parameterType="com.hotbody.mocofb.FB">
-	INSERT INTO MOFRBOARD3 (moFBNum, moFBSubject, userId, moFBCreated, moFBContent)
-		VALUES(mocofb_seq.NEXTVAL, #{moFBSubject}, #{userId}, SYSDATE, #{moFBContent})	
+	INSERT INTO MOFRBOARD3 (moFBNum, moFBSubject, userId, moFBCreated, moFBContent,geNum)
+		VALUES(mocofb_seq.NEXTVAL, #{moFBSubject}, #{userId}, SYSDATE, #{moFBContent} ,#{geNum})	
 </insert>
+
+	<sql id="where-list">
+		<if test="searchKey=='moFBSubject'">
+			INSTR(moFBSubject, #{searchValue})&gt; 0
+		</if>
+		<if test="searchKey=='moFBContent'">
+			DBMS_LOB.INSTR(moFBContent, #{searchValue})  &gt; 0
+		</if>
+		<if test="searchKey=='moFBCreated'">
+			TO_CHAR(moFBCreated, 'YYYY-MM-DD')=#{searchValue}
+				OR TO_CHAR(moFBCreated,'YYYYMMDD')=#{searchValue}
+		</if>
+	
+	</sql>
 
 	<select id="dataCount" resultType="Integer" parameterType="map">
 		SELECT NVL(COUNT(moFBNum),0) FROM MOFRBOARD3
+		<where>
+			<if test="searchValue!= null and searchValue=''">
+				<include refid="where-list" />
+			</if>
+			AND  geNum = #{mocoNum}
+		</where>
 	</select>
+
 	
 	<!-- 리스트 스타토! -->
 	<select id="listFB" resultType="com.hotbody.mocofb.FB" parameterType="map">
 		SELECT * FROM(
 			SELECT ROWNUM rnum, tb.* FROM(
-				SELECT moFBNum, moFBSubject, userId, moFBHit, 
-				TO_CHAR(moFBCreated,'yyyy-mm-dd')as moFBCreated
-				FROM MOFRBOARD3
+				SELECT moFBNum, userId, moFBSubject, moFBHit, 
+				TO_CHAR(moFBCreated,'yyyy-mm-dd') moFBCreated
+				FROM MOFRBOARD3 
+				<where>
+					<if test="searchValue != null and searchValue !=''">
+						<include refid="where-list" />
+					</if>
+					AND  geNum = #{mocoNum}
 				ORDER BY moFBNum DESC
+				</where>
 				<![CDATA[
 					) tb WHERE ROWNUM <= #{end}
 				) WHERE rnum >= #{start}
@@ -30,13 +57,49 @@
 	<!-- 글보기 스타토 -->
 	<select id="readFB" resultType="com.hotbody.mocofb.FB" parameterType="Integer">
 		SELECT moFBNum, userId, moFBSubject, moFBContent, moFBHit, moFBCreated 
-			FROM MOFRBOARD3 WHERE moFBNum = #{moFBNum}
+			FROM MOFRBOARD3 
+			WHERE moFBNum = #{mocoNum}
 	</select>
 	
 	<!-- 조회수 증가 스타토! -->
 	<update id="hitCount" parameterType="Integer">
 		UPDATE MOFRBOARD3 SET moFBHit = moFBHit+1 WHERE moFBNum = #{moFBNum}
 	</update>
+	
+	<!-- 이전 글 -->
+	<select id="preReadFB" resultType="com.hotbody.mocofb.FB">
+		SELECT tb.* FROM (
+			SELECT moFBNum, moFBSubject 
+				FROM MOFRBOARD3 
+				<where>
+					<if test="searchValue != null and searchValue !=''">
+						<include refid="where-list" />
+					</if>
+					<![CDATA[
+						AND (moFBNum > #{moFBNum})
+					]]>	
+				</where>
+			ORDER BY moFBNum ASC
+		)tb WHERE ROWNUM = 1
+	</select>
+	
+	<!-- 다음 글 -->
+	<select id="nextReadFB" resultType="com.hotbody.mocofb.FB">
+		SELECT tb.* FROM(
+			SELECT moFBNum, moFBSubject FROM MOFRBOARD3
+			<where>
+				<if test="searchValue != null and searchValue !=''">
+						<include refid="where-list" />
+				</if>
+			
+			<![CDATA[
+				AND (geNum < #{moFBNum})
+			]]>
+		</where>
+		 ORDER BY moFBNum DESC
+		)to WHERE ROWNUM =1
+	</select>
+	
 	
 	
 </mapper>

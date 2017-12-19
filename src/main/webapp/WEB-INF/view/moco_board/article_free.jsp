@@ -54,9 +54,9 @@ body{
 
 </style>
 <script type="text/javascript">
-function deleteNotice(num) {
-	if(confirm("공지를 삭제하시겠습니까?")){
-		location.href="<%=cp%>/notice/delete?num="+num;
+function deleteNotice(moFBNum) {
+	if(confirm("내용을 삭제하시겠습니까?")){
+		location.href="<%=cp%>/mobo_board/delete?moFBNum="+moFBNum;
 	}
 }
 
@@ -70,7 +70,7 @@ $(function(){
 	/* 클릭 클릭시 클릭을 클릭한 위치 근처에 레이어가 나타난다. */
 	$("#filedown").click(function(e)
 	{
-		var fi = "${dto.saveFilename}";
+		var fi = "${dto.moFBFile}";
 		if(fi=="")
 			return;
 		
@@ -112,36 +112,37 @@ $(function(){
 });
 
 function viewNext() {
-	var next ="${nextDto}";
+	var next ="${preReadFB}";
 	if(next==""){
 		swal("다음글이 존재하지 않습니다.");
 		return;
 	}
-	location.href="<%=cp%>/notice/article?num=${nextDto.num}&page=${page}";
+	location.href="<%=cp%>/moco_board/${mocoNum}/article_free?moFBNum=${nextReadFBDto.moFBNum}&page=${page}";
 }
 
 function viewPre() {
-	var pre ="${preDto}";
+	var pre ="${preReadFB}";
 	if(pre==""){
 		swal("이전글이 존재하지 않습니다.");
 		return;
 	}
-	location.href="<%=cp%>/notice/article?num=${preDto.num}&page=${page}";
+	location.href="<%=cp%>/moco_board/${mocoNum}/article_free?moFBNum=${preReadFBDto.moFBNum}&page=${page}";
 }
 
 </script>
 </head>
-<body>
+<body style="height: 900px;">
 
 <div style="height: 50px;"></div>
 <div style="font-size: 40px; width: 700px; margin: 20px auto 0; font-weight: bold; color: #666666;">자유게시판</div>
 
 <table style="width: 700px; margin: 20px auto 0; border-top: 2px solid #333333; border-bottom: 2px solid #333333; border-collapse: collapse; border-spacing: 0">
 <tr height="50" style="border-bottom: 1px solid #cccccc">
-	<td style="width:40px; padding-left: 10px; font-weight: bold; color: #666666;">제목</td>
-	<td align="left">${dto.subject}</td>
+	<td style="width:40px; padding-left: 10px; font-weight: bold; color: #666666;">제목 </td>
+	<td align="left">${dto.moFBSubject}</td>
+
 	<td style="width:40px; margin-left: 10px; font-weight: bold; color: #666666;">날짜</td>
-	<td style="width: 160px;">${dto.created}</td>
+	<td style="width: 160px;">${dto.moFBCreated}</td>
 </tr>
 <tr height="30" style="font-size: 13px; color: gray; padding: 5px 15px;">
 	<td colspan="3"></td>
@@ -153,14 +154,14 @@ function viewPre() {
 </tr>
 
 <tr height="400" style="border-bottom: 1px solid #cccccc;">
-	<td colspan="4" valign="top" style="padding-left: 10px; word-break:break-all;">${dto.content}<br><br></td>
+	<td colspan="4" valign="top" style="padding-left: 10px; word-break:break-all;">${dto.moFBContent}<br><br></td>
 </tr>
 </table>
 
 <div style="width:700px; margin: 20px auto 0;">
-<input type="button" class="btn-article" value="목록" onclick="javascript:location.href='<%=cp%>/notice/list?${query}';">
-<input type="button" class="btn-article" value="수정" onclick="javascript:location.href='<%=cp%>/notice/update?num=${dto.num}&${query}';">
-<input type="button" class="btn-article" value="삭제" onclick="deleteNotice(${dto.num});">
+<input type="button" class="btn-article" value="목록" onclick="javascript:location.href='<%=cp%>/moco_board/${mocoNum}/free_list?${query}';">
+<input type="button" class="btn-article" value="수정" onclick="javascript:location.href='<%=cp%>/moco_board/update?num=${dto.moFBNum}&${query}';">
+<input type="button" class="btn-article" value="삭제" onclick="deleteNotice(${dto.moFBNum});">
 <%-- 
 <c:if test="${dto.userId=='admin' || dto.userId==sessionScope.member.userId}">
 <input type="button" class="btn-article" value="수정" onclick="javascript:location.href='<%=cp%>/notice/update?num=${dto.num}&${query}';">
@@ -175,8 +176,8 @@ function viewPre() {
 <div class="popupLayer" style="display: none; z-index: 9000;">
 	<div>
 		<div id="fileinfo">
-		<img src="<%=cp%>/resource/images/disk.gif">${dto.originalFilename} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
-		<a href="<%=cp%>/notice/download?num=${dto.num}" style="text-decoration: none; color: #666666;"> PC저장하기</a>
+		<img src="<%=cp%>/resource/images/disk.gif">${dto.moFBFile} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+		<a href="<%=cp%>/notice/download?num=${dto.moFBNum}" style="text-decoration: none; color: #666666;"> PC저장하기</a>
 			<span onClick="closeLayer()" style="cursor:pointer; color: #cccccc; float: right;">X</span>
 		</div>
 	</div>

@@ -77,8 +77,8 @@ $(document).ready(function(){
 	<div class="container">
 		<ul class="nav nav-tabs">
 			<li class="active"><a href="#">모임정보</a></li>
-			<li><a href="<%=cp%>/moco_board/c_notice">공지게시판</a></li>
-			<li><a href="<%=cp%>/moco_board/c_free">자유게시판</a></li>
+			<li><a href="<%=cp%>/moco_board/${mocoNum}/c_notice">공지게시판</a></li>
+			<li><a href="<%=cp%>/moco_board/${mocoNum}/list_free">자유게시판</a></li>
 		</ul>
 
 		<section class="single_blog_area section_padding_80">
@@ -270,6 +270,14 @@ $(document).ready(function(){
 			</div>
 		</section>
 	</div>
+	
+	 <script>
+	$(document).ready(function(){
+	    $(".nav-tabs a").click(function(){
+	        $(this).tab('show');
+	    });
+	});
 
+</script>
 	
 </body>

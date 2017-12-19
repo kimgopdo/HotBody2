@@ -23,14 +23,15 @@ function check() {
 		f.moFBSubject.focus();
 		return;
 	} 
+ 		
  	 
 	if(document.getElementById("moFBContent").value == "<p>&nbsp;</p>") {
 		alert("내용을 입력하세요");
 		document.getElementById("moFBContent").focus();
 		return;
 	}
-	 
-	f.action="<%=cp%>/moco_board/c_free";
+	
+	f.action="<%=cp%>/moco_board/${mocoNum}/c_free";
 	f.submit();
 }
 function fileChange() {
@@ -39,7 +40,7 @@ function fileChange() {
 }
 function deleteFile() {
 	if(confirm("첨부파일을 삭제하시겠습니까?")){
-		location.href="<%=cp%>/notice/deleteFile?page=${page}&num=${dto.moFBNum}"
+		location.href="<%=cp%>/moco_board/deleteFile?page=${page}&num=${dto.moFBNum}"
 	}
 }
 </script>
@@ -112,8 +113,8 @@ function deleteFile() {
 </table>
 <div style="width:700px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
 <div style="width: 700px; margin: 20px auto 0;" align="center">
-<button type="button" class="btn-default02" onclick="submitContents(this);">등록</button>
-<button type="button" class="btn-default02" onclick="javascript:location.href='<%=cp%>/mocojee/list_mocojee';">등록취소</button>
+ <button type="button" class="btn-default02" onclick="submitContents(this);">등록</button>
+ <button type="button" class="btn-default02" onclick="javascript:location.href='<%=cp%>/moco_board/${mocoNum}/list_free';">등록취소</button>
 <c:if test="${mode=='update'}">
 	<input type="hidden" name="moFBNum" value="${dto.moFBNum}">
 	<input type="hidden" name="moFBFile" value="${dto.moFBFile}">

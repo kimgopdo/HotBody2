@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,15 +33,18 @@ public class FBController {
 	@Autowired
 	private MyUtil myUtil;
 
-	@RequestMapping(value = "/moco_board/c_free", method = RequestMethod.GET)
-	public String createdForm(Model model) throws Exception {
+	@RequestMapping(value = "/moco_board/{mocoNum}/c_free", method = RequestMethod.GET)
+	public String createdForm(
+			@PathVariable int mocoNum,
+			Model model) throws Exception {
 		model.addAttribute("mode", "created");
-
+		model.addAttribute("mocoNum", mocoNum);
+		
 		return ".moco_board.c_free";
 	}
 
-	@RequestMapping(value = "/moco_board/c_free", method = RequestMethod.POST)
-	public String createdSubmit(HttpSession session, FB dto) throws Exception {
+	@RequestMapping(value = "/moco_board/{mocoNum}/c_free", method = RequestMethod.POST)
+	public String createdSubmit(@PathVariable int mocoNum, HttpSession session, FB dto) throws Exception {
 
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
 
@@ -48,15 +52,20 @@ public class FBController {
 		String pathname = root + File.separator + "uploads" + File.separator + "fbfile";
 
 		dto.setUserId(info.getUserId());
+		dto.setGeNum(mocoNum);
 
 		service.insertFB(dto, pathname);
-
-		return "redirect:/moco_board/article";
+		
+		return "redirect:/moco_board/"+mocoNum+"/list_free";
 
 	}
+	
 
-	@RequestMapping(value = "/moco_board/list_free")
-	public String list(HttpServletRequest req, @RequestParam(value = "page", defaultValue = "1") int current_page,
+	@RequestMapping(value = "/moco_board/{mocoNum}/list_free")
+	public String list(
+			@PathVariable int mocoNum,
+			HttpServletRequest req, 
+			@RequestParam(value = "page", defaultValue = "1") int current_page,
 			Model model) throws Exception {
 
 		String cp = req.getContextPath();
@@ -67,7 +76,7 @@ public class FBController {
 
 		// 페이지 수
 		Map<String, Object> map = new HashMap<String, Object>();
-
+		map.put("mocoNum", mocoNum);
 		dataCount = service.dataCount(map);
 		if (dataCount != 0)
 			total_page = myUtil.pageCount(rows, dataCount);
@@ -83,22 +92,21 @@ public class FBController {
 		map.put("end", end);
 
 		List<FB> list = service.listFB(map);
-
+		
 		// 리스트 번호
 		int listNum, n = 0;
 		Iterator<FB> it = list.iterator();
 		while (it.hasNext()) {
 			FB data = it.next();
 			listNum = dataCount - (start + n - 1);
-			data.setMoFBNum(listNum);
+			data.setListNum(listNum);
 			n++;
 		}
-
 		String listUrl;
 		String articleUrl;
 
-		listUrl = cp + "/moco_board/list_free";
-		articleUrl = cp + "/moco_board";
+		listUrl = cp + "/moco_board/"+mocoNum+"/list_free";
+		articleUrl = cp + "/moco_board/"+mocoNum+"/article_free?page="+current_page;
 
 		String paging = myUtil.paging(current_page, total_page, listUrl);
 
@@ -109,9 +117,68 @@ public class FBController {
 		model.addAttribute("dataCount", dataCount);
 		model.addAttribute("paging", paging);
 
-		req.setAttribute("list_free", list);
+		req.setAttribute("mocoNum", mocoNum);
 
 		return ".moco_board.list_free";
 	}
-
+	
+////mocojee main (블로그형)////
+	@RequestMapping(value="/moco_board/{mocoNum}/article_free", method=RequestMethod.GET)
+	public String FBarticle(
+			@PathVariable int mocoNum, HttpServletRequest req,  
+			@RequestParam(value="num") int moFBNum,
+			Model model) throws Exception{
+		
+		System.out.println("hello");
+		FB dto=service.readFB(moFBNum);	
+		System.out.println(moFBNum);
+		
+		if (dto==null)
+			return "redirect:/moco_board/{mocoNum}/article_free";
+		
+		model.addAttribute("dto", dto);
+		model.addAttribute("mocoNum", mocoNum);
+		model.addAttribute("moFBNum", moFBNum);
+		
+		return ".moco_board.article_free";	
+	}
+	
+//	@RequestMapping(value="/moco_board/article_free", method=RequestMethod.GET)
+//	public String article(
+//			@RequestParam (value="moFBNum") int moFBNum,
+//			@RequestParam(value="page") String page,
+//			@RequestParam(value="searchKey", defaultValue="moFBSubject") String searchKey,
+//			@RequestParam(value="searchValue", defaultValue="moFBSubject") String searchValue,
+//				Model model) throws Exception {
+//					
+//		 searchValue = URLDecoder.decode(searchValue,"utf-8");
+//		
+//		 //조회수 증가
+//		 service.hitCount(moFBNum);
+//		 
+//		 FB dto = service.readFB(moFBNum);
+//		 if(dto==null)
+//			 return "redirect:/moco_board/list?page="+page;
+//		 	 
+//		 
+//		 //이전 글 
+//		 Map<String,Object> map=new HashMap<String,Object>();
+//		 map.put("searchKey", searchKey);
+//		 map.put("searchValue", searchValue);
+//		 map.put("moFBNum", moFBNum);
+//		 
+//		 FB preReadFBDto=service.preReadFB(map);
+//		 FB nextReadFBDto=service.nextReadFB(map);
+//		 
+//		 model.addAttribute("dto",dto);
+//		 model.addAttribute("preReadFB",preReadFBDto);
+//		 model.addAttribute("nextReadFB",nextReadFBDto);
+//		 
+//		 model.addAttribute("page",page);
+//		 
+//		return ".moco_board.article_free";
+//	
+//		
+//	} 
+	
 }

@@ -68,26 +68,57 @@ public class FBServiceImpl implements FBService {
 
 	@Override
 	public FB readFB(int moFBNum) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		FB dto = null;
+		
+		try {
+			dto=dao.selectOne("fb.readFB", moFBNum);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return dto;
 	}
 
 	@Override
 	public int hitCount(int moFBNum) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		
+		try {
+			result=dao.updateData("fb.hitCount", moFBNum);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return result;
 	}
 
 	@Override
 	public FB preReadFB(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		FB dto=null;
+		
+		try {
+			dto=dao.selectOne("fb.preReadFB", map);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return dto;
 	}
 
 	@Override
 	public FB nextReadFB(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		FB dto=null;
+		
+		try {
+			dto=dao.selectOne("fb.nextReadFB", map);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return dto;
 	}
 
 	@Override

@@ -11,6 +11,7 @@ public class FB {
 	private String moFBFile;
 	private int geNum;
 	private int moFBHit;
+	private int listNum;
 	
 
 	public int getMoFBHit() {
@@ -68,6 +69,12 @@ public class FB {
 	}
 	public void setUpload(MultipartFile upload) {
 		this.upload = upload;
+	}
+	public int getListNum() {
+		return listNum;
+	}
+	public void setListNum(int listNum) {
+		this.listNum = listNum;
 	}
 	
 	
