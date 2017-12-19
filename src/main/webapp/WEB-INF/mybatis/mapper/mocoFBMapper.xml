@@ -100,6 +100,36 @@
 		)to WHERE ROWNUM =1
 	</select>
 	
+	<!-- 수정 -->
+	<update id="updateFB" parameterType="com.hotbody.mocofb.FB">
+		UPDATE MOFRBOARD3 SET moFBSubject=#{moFBSubject}, moFBContent=#{moFBContent}, moFBFile=#{moFBFile}
+		WHERE moFBNum = #{moFBNum} 
+	</update>
+	
+	<!-- 삭제 -->
+	<delete id="deleteFB" parameterType="Integer">
+		DELETE FROM MOFRBOARD3 WHERE moFBNum=#{moFBNum} 
+	</delete>
+	
+	<!-- 댓글 -->
+	<insert id="insertReply" parameterType="com.hotbody.mocofb.Reply">
+		INSERT INTO TEMPORARY6 (FRCode, moFBNum, userId, moFBReply, FRCreated )
+			VALUES (frCode_seq.NEXTVAL, #{moFBNum}, #{userId}, #{moFBReply}, SYSDATE )
+	</insert>
+	
+	<!-- 댓글 리스트 -->
+	<select id="listReply" resultType="com.hotbody.mocofb.Reply" parameterType="map">
+		SELECT * FROM (
+		    SELECT ROWNUM rnum, tb.* FROM (
+		        SELECT frCode , moFBNum, userId, moFBReply, FRCreated
+		       	 FROM TEMPORARY6 
+		       	 	WHERE moFBNum=#{moFBNum}
+		       	 		ORDER BY frCode DESC
+		       	 <![CDATA[
+		       	 	) tb WHERE ROWNUM <= #{end}
+		       	 		) WHERE rnum >= #{start} 
+		       	 ]]>
+	</select>
 	
 	
 </mapper>

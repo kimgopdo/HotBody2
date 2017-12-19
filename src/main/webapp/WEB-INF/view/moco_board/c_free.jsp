@@ -96,7 +96,7 @@ function deleteFile() {
 
 <tr height="10px;"></tr>
 
-<c:if test="${mode=='update'}">
+<c:if test="${mode=='u_free'}">
 <tr height="40">
 	<td width="100">첨부된 파일</td>
 	<td>
@@ -115,7 +115,7 @@ function deleteFile() {
 <div style="width: 700px; margin: 20px auto 0;" align="center">
  <button type="button" class="btn-default02" onclick="submitContents(this);">등록</button>
  <button type="button" class="btn-default02" onclick="javascript:location.href='<%=cp%>/moco_board/${mocoNum}/list_free';">등록취소</button>
-<c:if test="${mode=='update'}">
+<c:if test="${mode=='u_free'}">
 	<input type="hidden" name="moFBNum" value="${dto.moFBNum}">
 	<input type="hidden" name="moFBFile" value="${dto.moFBFile}">
 </c:if>

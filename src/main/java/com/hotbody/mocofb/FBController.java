@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hotbody.common.FileManager;
 import com.hotbody.common.MyUtil;
@@ -32,6 +33,7 @@ public class FBController {
 
 	@Autowired
 	private MyUtil myUtil;
+
 
 	@RequestMapping(value = "/moco_board/{mocoNum}/c_free", method = RequestMethod.GET)
 	public String createdForm(
@@ -143,42 +145,129 @@ public class FBController {
 		return ".moco_board.article_free";	
 	}
 	
-//	@RequestMapping(value="/moco_board/article_free", method=RequestMethod.GET)
-//	public String article(
-//			@RequestParam (value="moFBNum") int moFBNum,
-//			@RequestParam(value="page") String page,
-//			@RequestParam(value="searchKey", defaultValue="moFBSubject") String searchKey,
-//			@RequestParam(value="searchValue", defaultValue="moFBSubject") String searchValue,
-//				Model model) throws Exception {
-//					
-//		 searchValue = URLDecoder.decode(searchValue,"utf-8");
-//		
-//		 //조회수 증가
-//		 service.hitCount(moFBNum);
-//		 
-//		 FB dto = service.readFB(moFBNum);
-//		 if(dto==null)
-//			 return "redirect:/moco_board/list?page="+page;
-//		 	 
-//		 
-//		 //이전 글 
-//		 Map<String,Object> map=new HashMap<String,Object>();
-//		 map.put("searchKey", searchKey);
-//		 map.put("searchValue", searchValue);
-//		 map.put("moFBNum", moFBNum);
-//		 
-//		 FB preReadFBDto=service.preReadFB(map);
-//		 FB nextReadFBDto=service.nextReadFB(map);
-//		 
-//		 model.addAttribute("dto",dto);
-//		 model.addAttribute("preReadFB",preReadFBDto);
-//		 model.addAttribute("nextReadFB",nextReadFBDto);
-//		 
-//		 model.addAttribute("page",page);
-//		 
-//		return ".moco_board.article_free";
-//	
-//		
-//	} 
+	@RequestMapping(value="/moco_board/{mocoNum}/u_free", method=RequestMethod.GET)
+	public String updateForm(
+			@PathVariable int mocoNum, 
+			@RequestParam(value="num") int moFBNum,
+			HttpSession session, Model model) throws Exception{		
+		
+		SessionInfo info =(SessionInfo)session.getAttribute("member");
+			
+		FB dto=service.readFB(moFBNum);
+		if(dto==null) {
+			return "redirect:/moco_board/{mocoNum}/article_free";
+		}
+		
+		if(! info.getUserId().equals(dto.getUserId())) {
+			return "redirect:/moco_board/{mocoNum}/list_free";
+		}
+		
+		model.addAttribute("dto",dto);
+		model.addAttribute("mode","u_free");
+		
+		
+		return ".moco_board.c_free";
+			
+	}
+	
+	@RequestMapping(value="/moco_board/{mocoNum}/u_free", method=RequestMethod.POST)
+	public String updateSubmit(
+			@PathVariable int mocoNum,
+			FB dto, HttpSession session) throws Exception{	
+		
+		service.updateFB(dto);		
+		
+		return "redirect:/moco_board/{mocoNum}/list_free";
+			
+	}
+	
+	@RequestMapping(value="/moco_board/{mocoNum}/delete")
+	public String delete(
+			@PathVariable int mocoNum, 
+			@RequestParam int moFBNum, HttpSession session,
+			Model model) throws Exception{
+		
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		
+		service.deleteFB(moFBNum);
+			
+		return "redirect:/moco_board/{mocoNum}/list_free";
+				
+	}
+
+	@RequestMapping(value="/moco_board/insertReply", method=RequestMethod.POST)
+	@ResponseBody 
+	public Map<String,Object> insertReply(
+			Reply dto, 
+			HttpSession session
+			) throws Exception {
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		
+		String state="true";
+		if(info==null) {
+			state="loginFail";
+		}else {
+			dto.setUserId(info.getUserId());
+			int result=service.insertReply(dto);
+			if(result==0)
+				state="false";
+		}
+		
+		Map<String,Object> model = new HashMap<>();
+		model.put("state", state);
+		return model;
+			
+	}
+	
+	@RequestMapping(value="/moco_board/listReply")
+	public String listReply(
+			@PathVariable int mocoNum, 
+			@RequestParam(value="frCode") int frCode,
+			@RequestParam(value="pageNo", defaultValue="1") int current_page,
+			Model model) throws Exception {
+			
+		int rows=5;
+		int total_page=0;
+		int dataCount=0;
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("frCode", frCode);
+		
+		dataCount=service.replyDataCount(map);
+		total_page=myUtil.pageCount(rows, dataCount);
+		if(current_page>total_page)
+			current_page=total_page;
+		
+		//리스트에 출력
+		int start=(current_page-1)*rows+1;
+		int end=current_page*rows;
+		map.put("start", start);
+		map.put("end", end);
+		
+		List<Reply> listReply=service.listReply(map);
+		
+		for(Reply dto: listReply) {
+			dto.setMoFBReply(dto.getMoFBReply().replaceAll("\n", "<br>"));
+		}
+		
+		// 페이징 처리
+		String paging=myUtil.paging(current_page, total_page);
+		
+		//jsp로 넘길 데이터
+			model.addAttribute("listReply", listReply);
+			model.addAttribute("pageNo", current_page);
+			model.addAttribute("replyDataCount", dataCount);
+			model.addAttribute("total_page", total_page);
+			model.addAttribute("paging", paging);
+		
+		return ".moco_board.listReply";
+		
+	}
 	
 }
+
+
+	
+
+	
+

@@ -1,48 +1,40 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%@ page trimDirectiveWhitespaces="true" %>
+<%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
-	String cp=request.getContextPath();
+	String cp = request.getContextPath();
 %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet" href="<%=cp%>/resource/jquery/css/smoothness/jquery-ui.min.css" type="text/css">
-<script type="text/javascript" src="<%=cp%>/resource/js/util.js"></script>
-<script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-1.12.4.min.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <style type="text/css">
-body{
+body {
 	font-family: Verdana, sans-serif;
 	font-size: 14px;
 }
+
 .btn-article {
-    display: inline-block;
-    font-weight: normal;
-    text-align: center;
-    width : 50px;
-    height : 30px;
-    touch-action: manipulation;
-    cursor: pointer;
-    background-image: none;
-    white-space: nowrap;
-    font-size: 12px;
-    user-select: none;
-    border-width: 1px;
-    border-style: solid;
-    background-color: #ffffff;
-    border-color: #cccccc;
-    border-image: initial;
-    padding: 10px auto;
-    color: black;
+	display: inline-block;
+	font-weight: normal;
+	text-align: center;
+	width: 50px;
+	height: 30px;
+	touch-action: manipulation;
+	cursor: pointer;
+	background-image: none;
+	white-space: nowrap;
+	font-size: 12px;
+	user-select: none;
+	border-width: 1px;
+	border-style: solid;
+	background-color: #ffffff;
+	border-color: #cccccc;
+	border-image: initial;
+	padding: 10px auto;
+	color: black;
 }
 
 .popupLayer {
-	position:absolute;
+	position: absolute;
 	display: none;
 	background-color: #ffffff;
 	border: solid 1px #999999;
@@ -51,14 +43,17 @@ body{
 	min-height: 30px;
 	padding: 10px;
 }
-
 </style>
 <script type="text/javascript">
-function deleteNotice(moFBNum) {
+function deleteFB(moFBNum) {
 	if(confirm("내용을 삭제하시겠습니까?")){
-		location.href="<%=cp%>/mobo_board/delete?moFBNum="+moFBNum;
+		
+		var url="<%=cp%>/moco_board/${mocoNum}/delete?moFBNum=${dto.moFBNum}";
+		location.href=url;
+		
 	}
 }
+
 
 function closeLayer() {
 	$('.popupLayer').hide();
@@ -127,60 +122,147 @@ function viewPre() {
 		return;
 	}
 	location.href="<%=cp%>/moco_board/${mocoNum}/article_free?moFBNum=${preReadFBDto.moFBNum}&page=${page}";
+	}
+
+function sendReply(){
+	var uid="${sessionScope.member.userId}";
+	if(! uid){
+		location.href='<%=cp%>/member/login';
+		return;
+	}
+	
+	var content=$.trim($("#replyContent").val());
+	if(! content){
+		$("#replyContent").focus();
+		return;
+	}
+	
+	var query="moFBNum=${dto.moFBNum}";
+	query+="&moFBReply="+encodeURIComponent(content);
+	
+	// AJAX : JSON
+	$.ajax({
+		 type:"post" // 전송방식
+         ,url:"<%=cp%>/moco_board/insertReply"
+         ,data:query
+         ,dataType:"json"
+        ,success:function(data) {
+     		$("#replyContent").val("");
+     			
+     		var state=data.state;
+     		if(state=="true") {
+     				listPage(1);
+     		} else if(state=="false") {
+     			alert("댓글을 등록하지 못했습니다. !!!");
+     		} else if(state=="loginFail") {
+     			login();
+     		}
+     	}
+		,error:function(e) {
+			console.log(e.responseText);
+		}
+	});
 }
 
+	
 </script>
-</head>
-<body style="height: 900px;">
 
-<div style="height: 50px;"></div>
-<div style="font-size: 40px; width: 700px; margin: 20px auto 0; font-weight: bold; color: #666666;">자유게시판</div>
+<div style="min-height: 1200px;">
+	<div style="height: 50px;"></div>
+	<div
+		style="font-size: 40px; width: 700px; margin: 20px auto 0; font-weight: bold; color: #666666;">자유게시판</div>
 
-<table style="width: 700px; margin: 20px auto 0; border-top: 2px solid #333333; border-bottom: 2px solid #333333; border-collapse: collapse; border-spacing: 0">
-<tr height="50" style="border-bottom: 1px solid #cccccc">
-	<td style="width:40px; padding-left: 10px; font-weight: bold; color: #666666;">제목 </td>
-	<td align="left">${dto.moFBSubject}</td>
+	<table
+		style="width: 700px; margin: 20px auto 0; border-top: 2px solid #333333; border-bottom: 2px solid #333333; border-collapse: collapse; border-spacing: 0">
+		<tr height="50" style="border-bottom: 1px solid #cccccc">
+			<td
+				style="width: 40px; padding-left: 10px; font-weight: bold; color: #666666;">제목
+			</td>
+			<td align="left">${dto.moFBSubject}</td>
 
-	<td style="width:40px; margin-left: 10px; font-weight: bold; color: #666666;">날짜</td>
-	<td style="width: 160px;">${dto.moFBCreated}</td>
-</tr>
-<tr height="30" style="font-size: 13px; color: gray; padding: 5px 15px;">
-	<td colspan="3"></td>
-	<td align="right">
-	<p id="filedown" style="text-decoration: none; color: #666666; cursor: pointer;"> 
-	첨부파일 <span style="color: tomato; font: bold;">(개수)</span>
-	</p>
-	</td>
-</tr>
+			<td
+				style="width: 40px; margin-left: 10px; font-weight: bold; color: #666666;">날짜</td>
+			<td style="width: 160px;">${dto.moFBCreated}</td>
+		</tr>
+		<tr height="30"
+			style="font-size: 13px; color: gray; padding: 5px 15px;">
+			<td colspan="3"></td>
+			<td align="right">
+				<p id="filedown"
+					style="text-decoration: none; color: #666666; cursor: pointer;">
+					첨부파일 <span style="color: tomato; font: bold;">(개수)</span>
+				</p>
+			</td>
+		</tr>
 
-<tr height="400" style="border-bottom: 1px solid #cccccc;">
-	<td colspan="4" valign="top" style="padding-left: 10px; word-break:break-all;">${dto.moFBContent}<br><br></td>
-</tr>
-</table>
+		<tr height="400" style="border-bottom: 1px solid #cccccc;">
+			<td colspan="4" valign="top"
+				style="padding-left: 10px; word-break: break-all;">${dto.moFBContent}<br>
+			<br></td>
+		</tr>
+	</table>
 
-<div style="width:700px; margin: 20px auto 0;">
-<input type="button" class="btn-article" value="목록" onclick="javascript:location.href='<%=cp%>/moco_board/${mocoNum}/free_list?${query}';">
-<input type="button" class="btn-article" value="수정" onclick="javascript:location.href='<%=cp%>/moco_board/update?num=${dto.moFBNum}&${query}';">
-<input type="button" class="btn-article" value="삭제" onclick="deleteNotice(${dto.moFBNum});">
-<%-- 
+	<div style="width: 700px; margin: 20px auto 0;">
+		<input type="button" class="btn-article" value="목록"
+			onclick="javascript:location.href='<%=cp%>/moco_board/${mocoNum}/free_list?${query}';">
+		<c:if test="${sessionScope.member.userId==dto.userId}">
+			<input type="button" class="btn-article" value="수정"
+				onclick="javascript:location.href='<%=cp%>/moco_board/${mocoNum}/u_free?num=${dto.moFBNum}';">
+		</c:if>
+		<c:if
+			test="${sessionScope.member.userId==dto.userId || sessionScope.member.userId=='admin'}">
+			<input type="button" class="btn-article" value="삭제"
+				onclick="deleteFB();">
+		</c:if>
+		<%-- 
 <c:if test="${dto.userId=='admin' || dto.userId==sessionScope.member.userId}">
 <input type="button" class="btn-article" value="수정" onclick="javascript:location.href='<%=cp%>/notice/update?num=${dto.num}&${query}';">
 <input type="button" class="btn-article" value="삭제" onclick="deleteNotice(${dto.num});">
 </c:if>
  --%>
-<input type="button" class="btn-article" value="답글" onclick="">
-<input type="button" class="btn-article" value="다음▶ " onclick="viewNext();" style="float: right; margin-left: 5px;">
-<input type="button" class="btn-article" value="◀이전" onclick="viewPre();" style="float: right;">
-</div>
+		<input type="button" class="btn-article" value="답글" onclick="">
+		<input type="button" class="btn-article" value="다음▶ "
+			onclick="viewNext();" style="float: right; margin-left: 5px;">
+		<input type="button" class="btn-article" value="◀이전"
+			onclick="viewPre();" style="float: right;">
+	</div>
 
-<div class="popupLayer" style="display: none; z-index: 9000;">
-	<div>
-		<div id="fileinfo">
-		<img src="<%=cp%>/resource/images/disk.gif">${dto.moFBFile} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
-		<a href="<%=cp%>/notice/download?num=${dto.moFBNum}" style="text-decoration: none; color: #666666;"> PC저장하기</a>
-			<span onClick="closeLayer()" style="cursor:pointer; color: #cccccc; float: right;">X</span>
+	<div class="popupLayer" style="display: none; z-index: 9000;">
+		<div>
+			<div id="fileinfo">
+				<img src="<%=cp%>/resource/images/disk.gif">${dto.moFBFile}
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a
+					href="<%=cp%>/notice/download?num=${dto.moFBNum}"
+					style="text-decoration: none; color: #666666;"> PC저장하기</a> <span
+					onClick="closeLayer()"
+					style="cursor: pointer; color: #cccccc; float: right;">X</span>
+			</div>
 		</div>
 	</div>
-</div>
-</body>
-</html>
+	
+	<div>
+		<table style="width:700px;  margin: 15px auto 0px; border-spacing: 0;">
+			<tr height="30">
+				<td><span style="font-weight: bold;">댓글쓰기</span> <span>
+						- 타인을 비방하거나 개인정보를 유출하는 글의 게시를 삼가하여 주세요.</span></td>
+			</tr>
+
+			<tr>
+				<td style="padding: 5px 5px 0;">
+				<textarea id="replyContent"	class="boxTA" style="width: 99%; height: 70px;"></textarea>
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+					<button type="button" class="btn" style="padding: 10px 20px;"
+						onclick="sendReply();">댓글등록</button>
+				</td>
+			</tr>
+		</table>
+
+		<div id="listReply"></div>
+
+	</div>
+</div>	
+

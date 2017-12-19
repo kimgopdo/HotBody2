@@ -73,13 +73,31 @@ body{
 </head>
 <body>
 ================${mocoNum}
+
+	<div class="breadcumb-nav">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<nav aria-label="breadcrumb">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="<%=cp%>/mocojee/list_mocojee"><i
+									class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+							<li class="breadcrumb-item active" aria-current="page" onclick="sendOk();"> 
+							<a href="#"> <span style="font-size: 14px;"> 뒤로가기</span> </a></li>
+						</ol>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</div>
+
 <div style="height: 50px;"></div>
 <div style="font-size: 40px; width: 1000px; margin: 20px auto 0; font-weight: bold; color: #666666;">|자유게시판</div>
 <table style="width: 1000px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0">
 	
 	<tr height="40">
 		<td align="left" colspan="6">
-			${dataCount}개(${page}/${total_page}페이지)${articleUrl}
+			${dataCount}개(${page}/${total_page}페이지)
 		</td>
 	</tr>
 	
@@ -96,7 +114,7 @@ body{
 	<tr height="40" align="center" class="board">
 		<td width="60">${dto.listNum}</td>
 		<td align="left">
-			<a href="${articleUrl}&num=${dto.moFBNum}" style="text-decoration: none; color: black;">${dto.moFBSubject}${dto.moFBNum}</a>
+			<a href="${articleUrl}&num=${dto.moFBNum}" style="text-decoration: none; color: black;">${dto.moFBSubject}</a>
 		</td>
 		<td width="65">${dto.userId}</td>
 		<td width="100">${dto.moFBCreated}</td>

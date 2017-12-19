@@ -123,12 +123,68 @@ public class FBServiceImpl implements FBService {
 
 	@Override
 	public int updateFB(FB dto) {
+		
+		int result=0;
+		
+		try {
+			result=dao.updateData("fb.updateFB",dto);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return result;
+	}
+
+	@Override
+	public int deleteFB(int moFBNum) {
+		int result=0;
+		
+		try {
+			result=dao.deleteData("fb.deleteFB",moFBNum);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		
+		return result;
+	}
+
+	@Override
+	public int insertReply(Reply dto) {
+		
+		int result=0;
+		
+		try {
+			result=dao.insertData("fb.insertReply",dto);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return result;
+	}
+
+	@Override
+	public List<Reply> listReply(Map<String, Object> map) {
+		
+		List<Reply> list=null;
+		
+		try {
+			list=dao.selectList("fb.listReply", map);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return list;
+	}
+
+	@Override
+	public int replyDataCount(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int deleteFB(int moFBNum) {
+	public int deleteReply(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
