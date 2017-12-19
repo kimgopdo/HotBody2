@@ -9,7 +9,51 @@
 function send(f){
 	f.submit();
 }
+function lookExe(num){
+	var dlg = $("#readExer").dialog({
+		  modal: true,
+		  buttons: {
+		       " 확인 " : function() {
+		    	   $(this).dialog("close");
+		        },
+		       " 닫기 " : function() {
+		    	   $(this).dialog("close");
+		        }
+		  },
+		  height: 750,
+		  width: 750,
+		  title: "운동상세 보기",
+		  open: function(){
+			  $(this).load("<%=cp%>/myclass/exercise/readexer?num="+num);  
+		  },
+		  close: function() {
+		  }
+	});	
+}
+function lookInfo(num){
+	var dlg = $("#readInfo").dialog({
+		  modal: true,
+		  buttons: {
+		       " 확인 " : function() {
+		    	   $(this).dialog("close");
+		        },
+		       " 닫기 " : function() {
+		    	   $(this).dialog("close");
+		        }
+		  },
+		  height: 750,
+		  width: 750,
+		  title: "정보상세 보기",
+		  open: function(){
+			  $(this).load("<%=cp%>/myclass/exercise/readinfo?num="+num);
+		  },
+		  close: function() {
+		  }
+	});		
+}
 </script>
+
+
 <div class="body-container" style="width: 800px; margin: 50px auto;">
 
 <div class="body-title">
@@ -45,11 +89,10 @@ function send(f){
 		<td style="font-size: 35px; width: 100px; font-weight: bold; color: #666666;">${sessionScope.member.userName}님의 ${dto.edate} 운동  </td>
 	</tr>
 	<tr height="50">
-		<td style="font-size: 25px; width: 100px; color: #666666;">오늘의 운동 : <a href="${articleUrl}&num=${dto.exerciseNum}"> ${dto.exerciseName}</a></td>
+		<td style="font-size: 25px; width: 100px; color: #666666;">오늘의 운동 : ${dto.exerciseName}<img src="<%=cp%>/resource/images/click.png" style="height: 25px; cursor: pointer;" onclick="lookExe(${dto.exerciseNum});"></td>
 	</tr>
 	<tr height="50">
-	
-		<td style="font-size: 25px; width: 100px; color: #666666;">오늘의 건강상식 : <a href="${articleUrl}&num=${dto.exerciseNum}">${dto.subject}</a></td>
+		<td style="font-size: 25px; width: 100px; color: #666666;">오늘의 건강상식 : ${dto.subject}<img src="<%=cp%>/resource/images/click.png" style="height: 25px; cursor: pointer;" onclick="lookInfo(${dto.infoNum});"></td>	
 	</tr>
 	<tr height="35">
 		<td style="font-size: 15px; width: 50px; color: #0080FF; font-weight: bold;">오늘도 화이팅 하세요!</td>
@@ -61,6 +104,6 @@ function send(f){
 		<td>${paging}</td>
 	</tr>
 </table>
-<div></div>
-<div></div>
+<div id="readExer" style="display: none;"></div>
+<div id="readInfo" style="display: none;"></div>
 </div>

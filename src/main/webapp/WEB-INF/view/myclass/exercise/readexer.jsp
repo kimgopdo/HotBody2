@@ -5,7 +5,6 @@
 <%
 	String cp=request.getContextPath();
 %>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <style type="text/css">
 body{
 	font-family: Verdana, sans-serif;
@@ -33,7 +32,7 @@ body{
 }
 
 .popupLayer {
-	position:absolute;
+	position:absolute; /*  가장 가까운 곳에 위치한 조상 엘리먼트에 상대적으로 위치가 지정  */
 	display: none;
 	background-color: #ffffff;
 	border: solid 1px #999999;
@@ -67,12 +66,12 @@ $(function(){
 		
 		var divEl = $("#filedown");
         
-		var divX = divEl.offset().left;
-		var divY = divEl.offset().top;
+		var divX = divEl.position().left; // 상대적인 좌표위치 확인함수, position(), 절대좌표 확인 및 이동함수 : offset()
+		var divY = divEl.position().top;
 
 		// 레이어가 나타날 위치를 셋팅한다.
-		var divLeft =  divX-160;
-		var divTop =  divY+25;
+		var divLeft =  divX-100;
+		var divTop =  divY+30;
 		
 		// 레이어가 화면 크기를 벗어나면 위치를 바꾸어 배치한다.
 		if( divLeft + oWidth > sWidth ) divLeft -= oWidth;
@@ -98,13 +97,9 @@ $(function(){
 
 </script>
 
-<div class="body-container" style="width: 800px; margin: 100px auto;">
+<div class="body-container" style="width: 700px; margin: 10px auto;">
 
-<div class="body-title">
-        <h3><span style="font-family: Webdings">2</span>운동상세</h3>
-</div>
-
-<table style="width: 800px; margin: 20px auto 0; border-top: 2px solid #333333; border-bottom: 2px solid #333333; border-collapse: collapse; border-spacing: 0">
+<table style="width: 700px; margin: 20px auto 0; border-top: 2px solid #333333; border-bottom: 2px solid #333333; border-collapse: collapse; border-spacing: 0">
 
 <tr height="50" style="border-bottom: 1px solid #cccccc">
 	<td style="width:100px; padding-left: 10px; font-weight: bold; color: #666666;">운동명</td>
@@ -131,6 +126,7 @@ $(function(){
 	<td colspan="4" valign="top" style="padding-left: 10px; word-break:break-all;">${dto.pic}<br><br></td>
 </tr>
 </table>
+
 <div class="popupLayer" style="display: none; z-index: 9000;">
 	<div>
 		<div id="fileinfo">

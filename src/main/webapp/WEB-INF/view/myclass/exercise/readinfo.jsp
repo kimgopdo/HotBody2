@@ -5,7 +5,6 @@
 <%
 	String cp=request.getContextPath();
 %>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <style type="text/css">
 body{
 	font-family: Verdana, sans-serif;
@@ -44,13 +43,9 @@ body{
 }
 
 </style>
-<div class="body-container" style="width: 800px; margin: 80px auto;">
+<div class="body-container" style="width: 700px; margin: 10px auto;">
 
-<div class="body-title">
-        <h3><span style="font-family: Webdings">2</span>유용한정보</h3>
-</div>
-
-<table style="width: 800px; margin: 20px auto 0; border-top: 2px solid #333333; border-bottom: 2px solid #333333; border-collapse: collapse; border-spacing: 0">
+<table style="width: 700px; margin: 20px auto 0; border-top: 2px solid #333333; border-bottom: 2px solid #333333; border-collapse: collapse; border-spacing: 0">
 
 <tr height="50" style="border-bottom: 1px solid #cccccc">
 	<td style="width:100px; padding-left: 10px; font-weight: bold; color: #666666;">제&nbsp;&nbsp;목 :</td>

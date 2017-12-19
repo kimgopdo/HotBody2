@@ -50,6 +50,31 @@ public class MyClassController {
 	/*
 	 * 오늘의운동정보 관련
 	 */
+	
+	// 유용한정보상세보기 기능
+	@RequestMapping(value="/myclass/exercise/readinfo")
+	public String myinfoArticle(
+			@RequestParam(value="num") int num,
+			Model model) throws Exception {
+		
+		Information dto = service.readInfo(num);
+		model.addAttribute("dto", dto);
+		
+		return "myclass/exercise/readinfo";
+	}
+	
+	// 운동정보상세보기 기능
+	@RequestMapping(value="/myclass/exercise/readexer")
+	public String myexerArticle(
+			@RequestParam(value="num") int num,
+			Model model) throws Exception {
+		
+		Exercise dto = service.readExercise(num);
+		model.addAttribute("dto", dto);
+
+		return "myclass/exercise/readexer";
+	}
+	
 	@RequestMapping(value="/myclass/exercise/myexercise")
 	public String myexerciseForm(
 			HttpSession session,
@@ -571,11 +596,6 @@ public class MyClassController {
 			out.print("<script>alert('파일 다운로드가 실패했습니다.');history.back();</script>");
 		}
 	}
-	
-	
-	
-	
-	
 	
 	/*
 	 * 재료관련컨트롤러
