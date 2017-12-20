@@ -215,8 +215,8 @@ public class QnaController {
 		if(dto==null)
 			return "redirect:/hotShop/pQnA_list";
 		
-		dto.setPdQSubject("[답변]"+dto.getPdQSubject());
-		dto.setPdQContent("");
+		dto.setPdQSubject(dto.getPdQSubject()+"의 답변");
+		dto.setPdQContent("[질문내용]<br>"+dto.getPdQContent()+"<br>-----------------------------------------------------------------------------------------------------------------------------<br>[답변내용]<br>&nbsp;");
 		
 		model.addAttribute("dto", dto);
 		model.addAttribute("mode", "answer");
@@ -287,7 +287,7 @@ public class QnaController {
     listUrl = cp + "/hotShop/shopArticle?" + query;
     articleUrl = cp + "/hotShop/pQnA_article?" + query + "&page=" + current_page;
  
-	String paging = util.paging(current_page, total_page,listUrl);
+	String paging = util.paging(current_page, total_page);
 	 
 	model.addAttribute("paging", paging);
 	model.addAttribute("list", list);

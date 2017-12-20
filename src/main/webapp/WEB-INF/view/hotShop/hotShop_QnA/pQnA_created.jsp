@@ -126,9 +126,16 @@ function check() {
 
 <tr height="30">
 	<td width="80">제목</td>
+	<c:if test="${mode==created}">
 	<td>
-		<input type="text" name="pdQSubject" style="width: 100%; font-weight: bold; height: 25px;" readonly="readonly" value="[${dto.pdName}]${dto.pdQSubject}">
+		<input type="text" name="pdQSubject" style="width: 100%; font-weight: bold; height: 25px;" value="${dto.pdName}">
 	</td>
+	</c:if>
+	<c:if test="${mode!=created}">
+	<td>
+		<input type="text" name="pdQSubject" style="width: 100%; font-weight: bold; height: 25px;" value="">
+	</td>
+	</c:if>
 </tr>
 
 <tr height="30">

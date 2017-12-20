@@ -28,10 +28,8 @@ $(function(){
 
 function listPage(page){
 	var url = "<%=cp%>/hotShop/review_list";
-	var page = "${page}";
 	var num = "${dto.reviewCode}";
-	var q = "num=" + num + "&page=" + page;
-
+	var q = "reviewCode=" + num + "&page=" + page;
 	$.ajax({
 		type:"post"
 		,url:url
@@ -132,7 +130,6 @@ function deleteReply(cNum, page){
 
 	
 </script>
-</head>
 
 <div class="body-container" style="width: 100%; min-height: 950px;">
     <div class="body-title" align="left">
@@ -149,7 +146,10 @@ function deleteReply(cNum, page){
 			
 			<tr height="35" style="border-bottom: 1px solid #cccccc;">
 			    <td width="50%" align="left" style="padding-left: 5px;">
-			      	작성자 : ${dto.userName}
+			      	작성자 : ${dto.userName}(${dto.userId})
+			    </td>
+  			    <td width="50%" align="right" style="padding-right: 5px;">
+			      	작성일 : ${dto.reviewCreated}
 			    </td>
 			</tr>
 			
@@ -164,7 +164,7 @@ function deleteReply(cNum, page){
 			<tr height="45">
 			    <td width="300" align="left">
 			       <c:if test="${sessionScope.member.userId==dto.userId || sessionScope.member.userId=='admin'}">				    
-			          <button type="button" class="btn" style="background: white; border: 1px solid #BDBDBD; border-radius: 3px; height: 30px; color: black;" onclick="deleteReview();">삭제</button>
+			          <button type="button" class="btn" style="background: white; border: 1px solid #BDBDBD; border-radius: 3px; height: 30px; color: black; cursor: point;" onclick="deleteReview();">삭제</button>
 			       </c:if>
 			    </td>
 			
@@ -174,29 +174,27 @@ function deleteReply(cNum, page){
 			</tr>
 			</table>
 			
-			   <div>
+   <div>
       <table style="width:100%;  margin: 15px auto 0px; border-spacing: 0;">
          <tr height="30">
-            <td align="left" style="padding-left: 15px;"><span style="font-weight: bold;">댓글쓰기</span>
+            <td align="left" style="padding-left: 5px;"><span style="font-weight: bold;">댓글쓰기</span>
          </tr>
 
-         <tr>
-            <td style="padding: 5px 5px 0;">
-            <textarea id="content" class="boxTA" style="width: 99%; height: 70px;"></textarea>
+         <tr style="width: 100%">
+            <td style="padding: 5px 5px 0; width: 85%">
+            <input type="text" id="content" style="width: 100%; height: 23px;"></input>
             </td>
-         </tr>
-
-         <tr>
-            <td align="right" style="padding-top: 5px; padding-right: 10px;">
-               <button type="button" style="width: 80px; border: 1px solid #999999; background: white; height: 30px; color: black; border-radius: 3px;" onclick="sendReply();">댓글등록</button>
+            <td align="right" style="padding-top: 5px; padding-right: 10px; width: 5%">
+               <button type="button" style="width: 80px; border: 1px solid #999999; background: white; height: 25px; color: black; border-radius: 3px;" onclick="sendReply();">댓글등록</button>
             </td>
          </tr>
       </table>
-
-      
-
-   </div>
-			<div id="listReply"></div>
+    </div>
+		<div>
+			<c:if test="${cNum != 0}">
+			<table style="width: 100%; margin: 10px auto 30px; border-spacing: 0;" id="listReply"></table>
+			</c:if>
+		</div>
     </div>
     
 </div>

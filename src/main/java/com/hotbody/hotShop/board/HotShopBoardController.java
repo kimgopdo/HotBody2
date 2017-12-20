@@ -33,8 +33,6 @@ public class HotShopBoardController {
 	FileManager file;
 	@Autowired
 	MyUtil util;
-	@Autowired
-	MemberService memberService;
 	//상품분류에따른 list 
 	//main list는 따로 드래그엔 드롭으로 순서 변경 가능하게 만들꺼임.
 	@RequestMapping("/hotShop/productList")
@@ -44,6 +42,7 @@ public class HotShopBoardController {
 			,@RequestParam String cl
 			,HttpServletRequest req
 			,@RequestParam(value="page", defaultValue="1") int page
+			,HttpSession session
 			,Model model
 			) throws Exception {
 		if(req.getMethod().equalsIgnoreCase("GET")) {
@@ -87,7 +86,6 @@ public class HotShopBoardController {
 	public String paymentForm(
 			@RequestParam String []cookie,
 			HttpServletRequest req,
-			HttpSession session,
 			Model model
 			) {
 		int listNum=0;
@@ -276,6 +274,7 @@ public class HotShopBoardController {
 	@RequestMapping(value="/hotShop/productInlist")
 	public String productInListForm(
 			Model model,
+			HttpSession session,
 			HttpServletRequest req
 			) {
 		String cp=req.getServletContext().getRealPath("/");

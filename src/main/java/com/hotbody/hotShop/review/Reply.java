@@ -4,7 +4,6 @@ public class Reply {
 	private int cNum, reviewCode, listNum;
 	private String userId, userName;
 	private String content, created;
-	private int cAnswer;
 	
 
 	public int getListNum() {
@@ -12,12 +11,6 @@ public class Reply {
 	}
 	public void setListNum(int listNum) {
 		this.listNum = listNum;
-	}
-	public int getcAnswer() {
-		return cAnswer;
-	}
-	public void setcAnswer(int cAnswer) {
-		this.cAnswer = cAnswer;
 	}
 	public int getcNum() {
 		return cNum;

@@ -555,7 +555,7 @@ function idCheckFocus(){
 			      <td style="padding: 0 0 15px 15px;">
 			        <p style="margin-top: 1px; margin-bottom: 5px;">
 			            <input type="password" name="pwd" maxlength="15"
-			                       style="width: 30%;" placeholder="패스워드">
+			                       style="width: 40%;" placeholder="패스워드">
 			        </p>
 			        <p class="help-block">패스워드는 5~10자 이내이며, 하나 이상의 숫자나 특수문자가 포함되어야 합니다.</p>
 			      </td>
@@ -568,7 +568,7 @@ function idCheckFocus(){
 			      <td style="padding: 0 0 15px 15px;">
 			        <p style="margin-top: 1px; margin-bottom: 5px;">
 			            <input type="password" name="userPwdCheck" maxlength="15"
-			                       style="width: 30%;" placeholder="패스워드 확인">
+			                       style="width: 40%;" placeholder="패스워드 확인">
 			        </p>
 			        <p class="help-block">패스워드를 한번 더 입력해주세요.</p>
 			      </td>
