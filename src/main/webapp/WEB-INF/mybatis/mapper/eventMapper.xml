@@ -2,13 +2,13 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="event">
-	<insert id="inserEvent" parameterType="com.hotbody.event.Event">
-		INSERT INTO event (eventCode,userId,subject,content,created,hitCount,
+	<insert id="insertEvent" parameterType="com.hotbody.event.Event">
+		INSERT INTO event (eventCode, userId, subject, content, created, hitCount,
 			saveFile, originalFile, notice)
 			VALUES (event_seq.NEXTVAL, #{userId}
 			, #{subject}, #{content}
-			,SYSDATE
-			,0
+			, SYSDATE
+			, 0
 			, #{saveFile, jdbcType=VARCHAR}
 			, #{originalFile, jdbcType=VARCHAR}
 			, #{notice})	
@@ -70,7 +70,7 @@
 					saveFile
 					FROM event n
 					JOIN member1 m1 ON n.userId = m1.userId
-					WHERE event = 1
+					WHERE notice = 1
 					ORDER BY eventCode DESC
 	</select>	
 	
@@ -136,9 +136,9 @@
 	
 <!-- 댓글처리 -->
 	<insert id="insertReply" parameterType="com.hotbody.event.Reply">
-	INSERT INTO eventReply(replyNum, eventCode, userId, content, answer)
+	INSERT INTO eventReply(replyNum, eventCode, userId, content, answer, created)
 		VALUES (eventReply_seq.NextVal, #{eventCode}, #{userId},
-			 #{content}, #{answer})
+			 #{content}, #{answer}, sysdate)
 	</insert>	
 	
 	<select id="replyDataCount" resultType="Integer"
@@ -147,5 +147,45 @@
 			FROM eventReply WHERE eventCode=#{eventCode} AND answer=0			
 	</select>	
 
-	
+<!-- 리플 리스트 -->
+   <select id="listReply" parameterType="map"
+    			resultType="com.hotbody.event.Reply"  >
+      	SELECT * FROM (
+			SELECT ROWNUM rnum, tb.* FROM (
+				SELECT replyNum, eventCode, r.userId, userName, content,
+				created, r.answer
+			FROM eventReply r
+			JOIN member1 m ON r.userId = m.userId
+         
+			WHERE eventCode=#{eventCode} AND r.answer=0 
+			ORDER BY replyNum DESC
+	<![CDATA[
+			) tb WHERE ROWNUM <= #{end}
+		) WHERE rnum >= #{start}	
+	]]>  
+      </select>
+      
+<!-- 리플삭제 -->
+<delete id="deleteReply" parameterType="map">
+	DELETE eventReply WHERE
+		<if test="mode == 'eventCode'">
+			eventCode=#{eventCode}
+		</if>
+		<if test="mode=='reply'">
+			replyNum IN
+				(SELECT replyNum FROM eventReply START WITH replyNum = #{replyNum}
+					CONNECT BY PRIOR replyNum = answer)	
+		</if>
+		<if test="mode == 'answer' ">
+			replyNum=#{replyNum}
+		</if>
+</delete>
+
+
+
+
+
+
+
+
 </mapper>

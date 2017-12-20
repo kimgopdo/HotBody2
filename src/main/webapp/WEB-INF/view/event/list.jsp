@@ -5,11 +5,7 @@
 <%
 	String cp=request.getContextPath();
 %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-1.12.4.min.js"></script>
 <script>
 $(document).ready(function(){
@@ -71,10 +67,10 @@ body{
 }
 </style>
 </head>
-<body style="height: 1000px">
+<body>
 <div style="height: 50px;"></div>
-<div style="font-size: 40px; width: 1000px; margin: 20px auto 0; font-weight: bold; color: #666666;">| 이벤트</div>
-<table style="width: 1000px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0">
+<div style="font-size: 40px; width: 700px; margin: 20px auto 0; font-weight: bold; color: #666666;">| 이벤트</div>
+<table style="width: 700px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0">
 	
 	<tr height="40">
 		<td align="left" colspan="6">
@@ -83,19 +79,19 @@ body{
 	</tr>
 	
 	<tr height="40" style="background: #666666; color: #ffffff;" align="center">
-		<th width="40" >번호</th>
-		<th width="300" >제목</th>
-		<th width="70" >글쓴이</th>
-		<th width="40" >작성일</th>
-		<th width="40">조회수</th>
-		<th width="40">첨부파일</th>
+		<td width="40" align="center">번호</td>
+		<td width="300" align="center">제목</td>
+		<td width="70" align="center">글쓴이</td>
+		<td width="40" align="center">작성일</td>
+		<td width="40" align="center">조회수</td>
+		<td width="60" align="center">첨부파일</td>
 	</tr>
 	
 	<c:forEach var="dto" items="${listTop}">
 	<tr align="center" height="40"
 				style="border-bottom: 1px sild #cccccc;">
 		<td width="60" style="font-weight: bold; color: red;"><span>공지</span></td>
-		<td align="left" style="padding-left: 5px">
+		<td align="center" style="padding-left: 5px">
 			<a href="${articleUrl}&eventCode=${dto.eventCode}" style="text-decoration: none; color: black;">${dto.subject}</a>
 		</td>
 		<td width="40">${dto.userId}</td>
@@ -119,7 +115,7 @@ body{
 	<c:forEach var="dto" items="${list}">
 	<tr height="40" align="center" class="board">
 		<td width="60">${dto.listNum}</td>
-		<td align="left">
+		<td align="center">
 			<a href="${articleUrl}&eventCode=${dto.eventCode}" style="text-decoration: none; color: black;">${dto.subject}</a>
 		</td>
 		<td width="65">${dto.userId}</td>
@@ -128,16 +124,16 @@ body{
 			<c:when test="${dto.hitCount>20}">	
 				<td width="65" style="font-weight: bold; color: red;">${dto.hitCount}</td>
 			</c:when>
-		<c:otherwise>
-			<td width="65">${dto.hitCount}</td>
+			<c:otherwise>
+				<td width="65">${dto.hitCount}</td>
+			</c:otherwise>
+		</c:choose>	
 			<td>
 				<c:if test="${not empty dto.saveFile}">
-				<a href="<%=cp%>/event/download?eventCode=${dto.eventCode}"><img src="<%=cp%>/resource/images/disk.gif"></a>
-			</c:if>		
-		</td>	
-		</c:otherwise>
-		</c:choose>
-	</tr>
+					<a href="<%=cp%>/event/download?eventCode=${dto.eventCode}"><img src="<%=cp%>/resource/images/disk.gif"></a>
+				</c:if>		
+			</td>			
+		</tr>
 	</c:forEach>
 	
 	<tr height="60" align="center">

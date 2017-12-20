@@ -17,10 +17,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hotbody.common.FileManager;
 import com.hotbody.common.MyUtil;
+import com.hotbody.member.SessionInfo;
 
 @Controller("event.eventController")
 public class EventController {
@@ -126,7 +128,7 @@ public class EventController {
 	@RequestMapping(value="/event/created",
 					method=RequestMethod.POST)
 	public String createdSubmit(HttpServletRequest session, Event dto) throws Exception {
-		dto.setUserId("asd");
+		//dto.setUserId("asd");
 		
 		String root = session.getServletContext().getRealPath("/");
 		
@@ -275,14 +277,10 @@ public class EventController {
 		List<Reply> listReply=service.listReply(map);
 		
 		//엔터를 <br>
-		Iterator<Reply>  it=listReply.iterator();
-		int listNum, n=0;
+		Iterator<Reply>	it =listReply.iterator();
 		while(it.hasNext()) {
 			Reply dto=it.next();
-			listNum=dataCount-(start+n-1);
-			dto.setListNum(listNum);			
 			dto.setContent(myUtil.htmlSymbols(dto.getContent()));
-			n++;
 		}
 		
 		//페이징처리(인수2개짜리 js로 처리)
@@ -293,14 +291,68 @@ public class EventController {
 		model.addAttribute("pageNo", current_page);
 		model.addAttribute("replyCount", dataCount);
 		model.addAttribute("total_page", total_page);
-		model.addAttribute("paging", paging);
+		model.addAttribute("paging", paging); 
 			
-		return ".event.listReply";
+		return "event/listReply";
+		
+	}
+	
+	//댓글 만들기
+	@RequestMapping(value="/event/createdReply",
+			method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> createdReply(
+			Reply dto,
+			HttpSession session) throws Exception {
+		
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		
+		String state="true";
+		if(info==null) { //로그인이 안되는 경우
+			state="loginFail";			
+		}else {
+			dto.setUserId(info.getUserId());
+			int result=service.insertReply(dto);//?
+			if(result==0)
+				state="false"; //?
+		}
+		
+		Map<String, Object> model = new HashMap<>();
+		model.put("state", state);
+		return model;
 		
 	}
 	
 	//댓글 및 댓글별 답글 삭제
+	@RequestMapping(value="/event/deleteReply",
+			method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> deleteReply(
+			@RequestParam int replyNum,
+			@RequestParam String mode,
+			HttpSession session) throws Exception {
+
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
 	
-	
-	
+		String state="true";
+		if(info==null) {//로그인 되지 않는 경우
+			state="loginFail";		
+		} else {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("mode", mode);
+			map.put("replyNum", replyNum);
+			map.put("userId", info.getUserId());
+			
+			//댓글삭제
+			int result=service.deleteReply(map);
+			
+			if(result==0)
+				state="false";
+		}
+		//작업결과를 JSON으로 전송
+		Map<String, Object> model = new HashMap<>();
+		model.put("state", state);
+		return model;
+		
+	}
 }

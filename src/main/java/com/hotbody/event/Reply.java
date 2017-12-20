@@ -2,8 +2,8 @@ package com.hotbody.event;
 
 public class Reply {
 	private int replyNum, eventCode, answer;
-	private String userId, content, created;
-	private int answerCount;
+	private String userId, userName, content, created;
+//	private int answerCount;
 	
 	public int getReplyNum() {
 		return replyNum;
@@ -29,6 +29,12 @@ public class Reply {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 	public String getContent() {
 		return content;
 	}
@@ -41,15 +47,11 @@ public class Reply {
 	public void setCreated(String created) {
 		this.created = created;
 	}
-	public int getAnswerCount() {
-		return answerCount;
+/*	public int getAnswerCount() {
+	return answerCount;
 	}
 	public void setAnswerCount(int answerCount) {
 		this.answerCount = answerCount;
 	}
-	public void setListNum(int listNum) {
-		// TODO Auto-generated method stub
-	}
-	
-	
+	*/
 }

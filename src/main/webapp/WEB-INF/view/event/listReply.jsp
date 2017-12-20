@@ -23,10 +23,10 @@
         </td>
        <td width='50%' style='padding:5px 5px; border:1px solid #cccccc; border-left:none;' align='right'>
            <span>${vo.created}</span> |
-<c:if test="${sessionScope.member1.userId==vo.userId || sessionScope.member1.userId=='admin'}">		   
+<c:if test="${sessionScope.member.userId==vo.userId || sessionScope.member.userId=='admin'}">		   
           <a onclick='deleteReply("${vo.replyNum}", "${pageNo}");'>삭제</a>
 </c:if>		   
-<c:if test="${sessionScope.member1.userId!=vo.userId && sessionScope.member1.userId!='admin'}">		   
+<c:if test="${sessionScope.member.userId!=vo.userId && sessionScope.member.userId!='admin'}">		   
           <a href='#'>신고</a>
 </c:if>	
         </td>
@@ -36,33 +36,7 @@
               ${vo.content}
         </td>
     </tr>
-    
-    <tr>
-        <td style='padding:7px 5px;'>
-            <button type='button' class='btn btnReplyAnswerLayout' data-replyNum='${vo.replyNum}'>답글 <span id="answerCount${vo.replyNum}">${vo.answerCount}</span></button>
-        </td>
-        <td style='padding:7px 5px;' align='right'>
-            <button type='button' class='btn' onclick="sendLike('${vo.replyNum}', '1')">좋아요 <span id="likeCount${vo.replyNum}">${vo.likeCount}</span></button>
-            <button type='button' class='btn' onclick="sendLike('${vo.replyNum}', '0')">싫어요 <span id="disLikeCount${vo.replyNum}">${vo.disLikeCount}</span></button>
-        </td>
-    </tr>
-
-    <tr class='replyAnswer' style='display: none;'>
-        <td colspan='2'>
-            <div id='listReplyAnswer${vo.replyNum}' class='answerList' style='border-top: 1px solid #ccc;'></div>
-            <div style='clear: both; padding: 10px 10px;'>
-                <div style='float: left; width: 5%;'>└</div>
-                <div style='float: left; width:95%'>
-                    <textarea id='answerContent${vo.replyNum}' cols='72' rows='12' class='boxTA' style='width:98%; height: 70px;'></textarea>
-                 </div>
-            </div>
-             <div style='padding: 0px 13px 10px 10px; text-align: right;'>
-                <button type='button' class='btn' onclick='sendReplyAnswer(${vo.replyNum});'>답글 등록</button>
-            </div>
-        
-        </td>
-    </tr>
-    
+ 
 </c:forEach>
 
      <tr height="40">
