@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.hotbody.common.FileManager;
 import com.hotbody.common.dao.CommonDAO;
 import com.hotbody.hotShop.qna.Qna;
+import com.hotbody.hotShop.review.Review;
 
 @Service("hotShop.hotShopService")
 public class HotShopServiceImpl implements HotShopService{
@@ -155,7 +156,7 @@ public class HotShopServiceImpl implements HotShopService{
 	}
 	
 	@Override
-	public int dataCount_review(Map<String, Object> map) {
+	public int dataCount_qna(Map<String, Object> map) {
 		int result = 0;
 		
 		try {
@@ -176,6 +177,30 @@ public class HotShopServiceImpl implements HotShopService{
 			e.printStackTrace();
 		}
 		return result;
+	}
+	@Override
+	public int dataCount_review(Map<String, Object> map) {
+		int result = 0;
+		
+		try {
+			result = dao.selectOne("review.dataCount",map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		
+		return result;
+	}
+	@Override
+	public List<Review> productArticle_Review(Map<String, Object> map) {
+		List<Review> list = null;
+		
+		try {
+			list = dao.selectList("review.listReviewArticle", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		
+		return list;
 	}
 	
 	

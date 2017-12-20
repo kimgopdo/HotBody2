@@ -77,7 +77,7 @@
 						<include refid="where-list"/>
 					</if>
 					<if test="pdnum != '1'">
-						and pdnum=#{pdnum}
+						and r.pdnum=#{pdnum}
 					</if>
 				</where>
         		ORDER BY r.reviewCode DESC

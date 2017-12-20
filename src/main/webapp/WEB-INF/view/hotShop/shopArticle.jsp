@@ -73,6 +73,32 @@ function listPage(page){
 }
 
 
+function listPage(page){
+	var url = "<%=cp%>/hotShop/listReview";
+	var num = "${dto.pdnum}";
+	var q = "pdnum=" + num + "&page=" + page;
+
+	$.ajax({
+		type:"post"
+		,url:url
+		,data:q
+		,success:function(a){
+			$("#listReview").html(a);
+		}
+		,beforeSend : function(e){
+			e.setRequestHeader("AJAX", true);
+		}
+		,error:function(e){
+			if(e.status == 403) {
+				alert("실패");
+				return;
+			}
+			console.log(e.responseText);
+		}
+	});
+}
+
+
 
 function insertCookie(pdnum){
 	var no=$("#no1").val();

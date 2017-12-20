@@ -255,7 +255,7 @@ public class QnaController {
 
     Map<String, Object> map = new HashMap<>();
     map.put("pdnum", pdnum);
-    dataCount = service2.dataCount_review(map);
+    dataCount = service2.dataCount_qna(map);
     
     total_page = util.pageCount(rows, dataCount);
     
