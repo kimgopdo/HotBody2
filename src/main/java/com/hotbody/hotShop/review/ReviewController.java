@@ -211,21 +211,21 @@ public class ReviewController {
 	@RequestMapping(value="/hotShop/review_list", method=RequestMethod.POST)
 	public String listReply(
 			@RequestParam(value="reviewCode") int reviewCode,
-			@RequestParam(value="page") int current_page,
+			@RequestParam(value="page",defaultValue="1") int page,
 			Model model
 			) {
 		
 		int rows = 5; // 한 화면 리스트 개수
 		int total_page = 0;
 		int dataCount = 0;
-		
+		int current_page=page;
 		Map<String, Object> map = new HashMap<>();
 		map.put("reviewCode", reviewCode);
 		
 		dataCount = service.replyDataCount(map);
 		total_page = util.pageCount(rows, dataCount);
 		if(current_page > total_page)
-			current_page = total_page;
+			total_page = current_page;
 		
 		int start = (current_page - 1) * rows + 1;
 		int end = current_page * rows;

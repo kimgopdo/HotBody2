@@ -64,13 +64,16 @@ function deleteQna() {
 			<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px; border-collapse: collapse;">
 			<tr height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
 			    <td colspan="2" align="center">
-				   <span style="font-weight: bold;">[${dto.pdName}]</span> ${dto.pdQSubject}
+				   <span style="font-weight: bold;">[${dto.pdName}]</span>${dto.pdQSubject}
 			    </td>
 			</tr>
 			
 			<tr height="35" style="border-bottom: 1px solid #cccccc;">
 			    <td width="50%" align="left" style="padding-left: 5px;">
 			      	작성자 : ${dto.userName}
+			    </td>
+   			    <td width="50%" align="right" style="padding-right: 5px;">
+			      	작성일 : ${dto.pdQCreated}
 			    </td>
 			</tr>
 			

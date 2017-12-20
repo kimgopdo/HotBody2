@@ -4,30 +4,20 @@
 <%
    String cp=request.getContextPath();
 %>
-
-
-<c:if test="${cNum != 0}">
-	<table style="width: 100%; margin: 10px auto 30px; border-spacing: 0;">
-		<tr height="35">
-			<td colspan="2">
-				<span>[댓글 목록, ${page}/${total_page} 페이지]</span>
-			</td>
-		</tr>
-
 		<c:forEach var="dto" items="${listReply}">
-			<tr height="35" style="background: #eeeeee;">
-				<td width="50%" style="padding: 5px 5px; border: 1px solid #cccccc; border-right: none;">
-					<span><b>${dto.userName}</b></span>
+			<tr height="35" style="background: white;">
+				<td width="50%" style="padding: 5px 5px; border-bottom: 1px solid #cccccc; border-right: none;" align="left">
+					<span><b>${dto.userName}(${dto.userId})</b></span>
 				</td>
-				<td width="50%" align="right" style="padding: 5px 5px; border: 1px solid #cccccc; border-left: none;">
+				<td width="50%" align="right" style="padding: 5px 5px; border-bottom: 1px solid #cccccc; border-left: none;">
 					<span><b>${dto.created}</b></span>
 					<c:if test="${sessionScope.member.userId == dto.userId || sessionScope.member.userId == 'admin'}">
-						<a onclick="deleteReply('${dto.cNum}', '${page}')"> 삭제</a>
+						<a onclick="deleteReply('${dto.cNum}', '${page}')"> <span style="color: black;">삭제</span></a>
 					</c:if>
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2" valign="top" style="padding: 5px 5px;">
+				<td colspan="2" valign="top" style="padding:5px 5px; text-align: left;">
 					${dto.content}
 				</td>
 			</tr>
@@ -38,5 +28,3 @@
 				${paging}
 			</td>
 		</tr>
-	</table>
-</c:if>
