@@ -22,9 +22,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hotbody.common.FileManager;
 import com.hotbody.common.MyUtil;
-import com.hotbody.hotShop.qna.Qna;
-import com.hotbody.member.Member;
-import com.hotbody.member.MemberService;
 @Controller("hotShop.board")
 public class HotShopBoardController {
 	@Autowired
@@ -85,6 +82,7 @@ public class HotShopBoardController {
 	@RequestMapping(value="/hotShop/payment")
 	public String paymentForm(
 			@RequestParam String []cookie,
+			@RequestParam String userId,
 			HttpServletRequest req,
 			Model model
 			) {
@@ -103,6 +101,7 @@ public class HotShopBoardController {
 	    	dto.setListNum(listNum);
 	    	list.add(dto);
 	    }
+	    System.out.println(userId);
 	    model.addAttribute("list", list);
 		return ".hotShop.payPage";
 	}

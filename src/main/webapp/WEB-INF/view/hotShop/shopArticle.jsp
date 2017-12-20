@@ -89,7 +89,7 @@ function payment(pdnum){
 	var array=getCookie("hotbodyBasket").split(",");
 	var member="${sessionScope.member.userId}";
 	if(member!=""){
-		location.href="<%=cp%>/hotShop/payment?cookie="+array;
+		location.href="<%=cp%>/hotShop/payment?cookie="+array+"&userId="+member;
 		return;
 	}else{
 		location.href="<%=cp%>/member/login?prePage=hotShop";
