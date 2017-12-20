@@ -40,6 +40,10 @@ function check(){
 	}
 }
 
+function backPage(){
+	history.back();
+}
+
 </script>
 
 
@@ -120,6 +124,9 @@ function check(){
 			</td>
 			<td style="float: left; margin-right: 3px;">
 				<button style="background: white; border: 1px solid #999999; border-radius: 3px; height: 25px;" type="button" onclick="selectList(this.form);">검색</button>
+			</td>
+			<td style="float: right; margin-right: 3px;">
+				<button style="background: white; border: 1px solid #999999; border-radius: 3px; height: 25px;" type="button" onclick="backPage();">뒤로가기</button>
 			</td>
 		</tr>
 	</table>

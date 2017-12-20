@@ -50,7 +50,7 @@ $(function(){
 function listPage(page){
 	var url = "<%=cp%>/hotShop/listQna";
 	var num = "${dto.pdnum}";
-	var q = "num=" + num + "&page=" + page;
+	var q = "pdnum=" + num + "&page=" + page;
 
 	$.ajax({
 		type:"post"
