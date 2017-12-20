@@ -139,6 +139,42 @@ function checkId() {
 
 }
 
+$(function() {
+
+    $("#fileView").on("change","input[name=uploadFile]",function() {
+
+    	if(!$(this).val()){
+    		return;
+    	}
+    	var b=false;
+    	
+    	$("input[name=uploadFile]").each(function(){
+  			if(! $(this).val()) {
+  				b=true;
+  				return;
+  			}
+  		});
+    	
+  		if(b)
+  			return;
+    	
+  		var fileName=$(this).val()
+        	
+            $('#fileView').append(
+            		'<input style=" width: 60%" type="text" value="'+fileName+'" >'+
+            		'<tr style="height: 31px; width: 100%; margin-top: 10px; margin-bottom: 10px ">'+
+            		'<td>'+
+            		'<input type="file" name="uploadFile" value="파일첨부" style="float: left; margin-left: 20px;" >'+
+            		'</td>'+
+            		'</tr>'	
+                    
+            		); 
+
+});
+
+
+});
+
 </script>
 
 
@@ -153,8 +189,9 @@ function checkId() {
 <h3>MESSAGE</h3>
 </div>
 
-        <div id="dialog" title="쪽지보내기"> 
-        <form method="post" name="sendMessage" enctype="multipart/form-data">
+  
+       <div id="dialog" title="쪽지보내기"> 
+      <form method="post" enctype="multipart/form-data" action="<%=cp%>/mypage/sendMessage">
         <table style="border: 1px solid #eee;  width: 98%; margin: 5px auto 5px;">
 			<tr height="31">
 				<td style=" width:15%; border: 1px solid #eeeeee;margin-left: 5px; ">받는사람</td>
@@ -172,39 +209,34 @@ function checkId() {
 			</tr>	
 		</table>
 	
-		<table style="border: 1px solid #eee; width: 98%; margin: 5px auto 5px;">
+		<table  style=" width: 98%; margin: 5px auto 5px;">
 			<tr style="height: 31px; width: 100%; margin-top: 10px; margin-bottom: 10px " >
 				<td colspan="2" width="100%" background="#F2F2F2" ><img src="<%=cp%>/resource/images/647e16b7feb0fe7e0f4f3b9f5f402f5e.png" style="max-height: 18px;">파일첨부</td>
 			</tr>
+		</table>
+		<table id="fileView" style=" width: 98%; margin: 5px auto 5px;">
 			<tr style="height: 31px; width: 100%; margin-top: 10px; margin-bottom: 10px ">
 				<td colspan="2" style="width: 100%;" >
-				<input type="file" id="uploadFile" name="uploadFile" value="파일첨부" style="float: left; margin-left: 20px;" >
-				
+					<input type="file" name="uploadFile" value="파일첨부" style="float: left; margin-left: 20px;" >
 				</td>
 			</tr>
-			<tr   style="height: 31px; width: 100%; margin-top: 10px; margin-bottom: 10px ">
-				<td rowspan="2" style=" width: 90%"><input style="height: 50px"  type="text">
-				</td>
-				<td style=" width: 40%"><input type="button" value="삭제"></td>
-			</tr>	
-			<tr style=" width: 100%; margin-top: 10px; margin-bottom: 10px;">
-				<td style=" width: 40%; ">0KB/50M</td>
-			</tr>	
+		</table>
+		<table  style=" width: 98%; margin: 5px auto 5px;">
 			<tr>
 				<td>*첨부된 파일 최대 20개, 총 용량 50M를 넘을 수 없습니다.</td>
 			</tr>	
 			<tr align="center" style="height: 31px; width: 100%; margin-top: 10px; margin-bottom: 10px ">
-				<td colspan="2"><button type="submit" value="보내기">보내기</button> <button type="reset" value="취소">취소</button></td>
+				<td colspan="2"><input type="submit" value="보내기" > <input type="reset" value="취소"></td>
 			</tr>
 		</table>
-			</form>
-		
+			
+		</form>
          </div>
 
 <div style=" width:605px; margin: 50px auto; ">
 <div id="container">
     <ul class="tabs" style="border-bottom: none; margin: 0px auto;">
-        <li class="active" rel="tab1">쪽지보내기</li>
+        <li class="active" rel="tab1">전체쪽지함</li>
         <li rel="tab2">받은쪽지함</li>
         <li rel="tab3">보낸쪽지함</li>
     </ul>
@@ -219,8 +251,8 @@ function checkId() {
 			
 			<tr style="width: 100%; border-style: none;">
 				<td  colspan="2" style="width: 100%; border: 1px solid;padding-top: 10px;">
-				<input  name="userId2" style="background:white; width: 21%;height: 31px; cursor: pointer;" type="text" placeholder="보낸사람">
-				<!--  <input id="userId" name="userId" style="background:white;width: 21%;height: 31px; cursor: pointer;" type="text" placeholder="받는사람">-->
+				<input  name="sender" style="background:white; width: 21%;height: 31px; cursor: pointer;" type="text" placeholder="보낸사람">
+				<input name="taker" style="background:white;width: 21%;height: 31px; cursor: pointer;" type="text" placeholder="받는사람">
 				<input  name="subject" style="background:white;width: 21%;height: 31px; cursor: pointer;" type="text" placeholder="제목">
 				<input  name="content" style="background:white;width: 21%;height: 31px; cursor: pointer; " type="text" placeholder="내용">
 				<button type="submit" style="margin-left: 15px;">찾기</button></td>
@@ -243,7 +275,7 @@ function checkId() {
 				<input type="button" value="새로고침">
 			</tr>
 			
-			<tr style="width: 100%; border-style: none;">
+			<tr style="width: 100%; border-style: none; border-style: double; background:#eee ">
 				<td style="width: 5%; border: 1px solid; "><input type="checkbox"></td>
 				<td style="width: 10%; border: 1px solid;">상태</td>
 				<td style="width: 12%; border: 1px solid;">보낸사람</td>
@@ -257,16 +289,21 @@ function checkId() {
 			<tr style="width: 100%; border-style: none;">
 				<td style="width: 5%; border: 1px solid; "><input type="checkbox"></td>
 				<td style="width: 10%; border: 1px solid;">상태</td>
-				<td style="width: 12%; border: 1px solid;">${dto.userId2 }</td>
+				<td style="width: 12%; border: 1px solid;">${dto.userId2}</td>
 				<td style="width: 12%; border: 1px solid;">${dto.userId}</td>
-				<td style="width: 12%; border: 1px solid;">쪽지함</td>
+				<td style="width: 12%; border: 1px solid;">${dto.box}</td>
 				<td style="width: 22%; border: 1px solid;">${dto.subject}</td>
-				<td style="width: 12%; border: 1px solid;">크기(KB)</td>
+				<td style="width: 12%; border: 1px solid;">${dto.fileSize}</td>
 				<td style="width: 15%; border: 1px solid;">송/수신시간</td>
 			</tr>
 			</c:forEach>
+
         </table>
-		
+        
+			<div style="height: 100px;" align="center" >
+				<a style="margin-top:20px; position: relative; top: 10px;">${paging}</a>
+			</div>
+			
 		</div>
 		
 		
@@ -383,13 +420,7 @@ function checkId() {
     </div>
 </div>
 
-<div style="height: 100px;" align="center" >
-	<!--<img style="margin-top: 20px" src="<%=cp%>/resource/images/btn_page_first.gif">
-	<img style="margin-top: 20px" src="<%=cp%>/resource/images/btn_page_prev.gif">-->
-	 <a style="margin-top:20px; position: relative; top: 10px;">${paging}</a>
-	<!--  <img style="margin-top: 20px" src="<%=cp%>/resource/images/btn_page_next.gif">
-	<img style="margin-top: 20px" src="<%=cp%>/resource/images/btn_page_last.gif">-->
-</div>
+
 </div>
 	
 </body>
