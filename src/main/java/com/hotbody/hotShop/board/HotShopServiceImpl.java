@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.hotbody.common.FileManager;
 import com.hotbody.common.dao.CommonDAO;
 import com.hotbody.hotShop.qna.Qna;
+import com.hotbody.hotShop.review.Review;
 
 @Service("hotShop.hotShopService")
 public class HotShopServiceImpl implements HotShopService{
@@ -66,6 +67,19 @@ public class HotShopServiceImpl implements HotShopService{
 		
 		try {
 			list = dao.selectList("qna.listQnaArticle", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		
+		return list;
+	}
+	
+	@Override
+	public List<Review> productArticle_Review(Map<String, Object> map) {
+		List<Review> list = null;
+		
+		try {
+			list = dao.selectList("review.listReviewArticle", map);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -155,11 +169,24 @@ public class HotShopServiceImpl implements HotShopService{
 	}
 	
 	@Override
-	public int dataCount_review(Map<String, Object> map) {
+	public int dataCount_qna(Map<String, Object> map) {
 		int result = 0;
 		
 		try {
 			result = dao.selectOne("qna.dataCount",map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		
+		return result;
+	}
+	
+	@Override
+	public int dataCount_review(Map<String, Object> map) {
+		int result = 0;
+		
+		try {
+			result = dao.selectOne("review.dataCount",map);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -179,25 +206,7 @@ public class HotShopServiceImpl implements HotShopService{
 	}
 	@Override
 	public int insertPayment(Payment dto) {
-		int result=0;
-		try {
-			dao.insertData("product.insertPayment", dto);
-			dto.setDelOrder(dao.selectOne("product.readDelOrder", dto.getUserId()));
-			dto.setClassNum(64);
-			int []amount=dto.getAmount();
-			int []pdnum=dto.getPdnum();
-			for(int n=0;n<amount.length;n++) {
-				dto.setAmount_one(amount[n]);
-				dto.setPdnum_one(pdnum[n]);
-				dao.insertData("product.insertCartList", dto);
-			}
-			result=dao.insertData("product.insertPayInfo", dto);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return result;
+		// TODO Auto-generated method stub
+		return 0;
 	}
-	
-	
-	
 }

@@ -169,6 +169,7 @@ $(document).ready(function(){
 
 
 					<!-- ****** Blog Sidebar ****** -->
+					
 					<div class="col-12 col-sm-8 col-md-6 col-lg-4">
 						<c:if test="${sessionScope.member.userId==dto.userId}">	
 							<button type="button" class="btn btn-default"
@@ -189,78 +190,42 @@ $(document).ready(function(){
 							</div>
 						</div>
 
-						<!-- Single Widget Area -->
+						<!-- 번개 리스트 목록 -->
 						<div class="single-widget-area popular-post-widget">
 							<div class="widget-title text-center">
 								<hr>
 								<h6>번개 리스트</h6>
 							</div>
+						</div>
 							
-							<!--1번 번개 섹션-->
-							<div class="single-populer-post d-flex">
-								<img src="<%=cp%>/resource/mocozzy/img/sidebar-img/1.jpg" alt=""
-									width="">
-								<div class="post-content">
-									<a href="#"> </a>
-									<p>Tuesday, October 3, 2017</p>
-									<button type="button" class="btn btn-danger"
-										style="margin-top: 10px;">참석하기</button>
-								</div>
-							</div>
-							
-							<!--2번 번개 섹션 -->
-							<div class="single-populer-post d-flex">
-								<img src="<%=cp%>/resource/mocozzy/img/sidebar-img/2.jpg" alt="">
-								<div class="post-content">
-									<a href="#"> </a>
-									<p>Tuesday, October 3, 2017</p>
-								
-									<button type="button" class="btn btn-danger"
-										style="margin-top: 10px;">참석하기</button>
-									
-								</div>
-							</div>
-							<!-- Single Popular Post -->
-							<div class="single-populer-post d-flex">
-								<img src="<%=cp%>/resource/mocozzy/img/sidebar-img/3.jpg" alt="">
-								<div class="post-content">
-									<a href="#"> </a>
-									<p>Tuesday, October 3, 2017</p>
-									<button type="button" class="btn btn-danger"
-										style="margin-top: 10px;">참석하기</button>
-								</div>
-							</div>
-							<!-- Single Popular Post -->
-							<div class="single-populer-post d-flex">
-								<img src="<%=cp%>/resource/mocozzy/img/sidebar-img/4.jpg" alt="">
-								<div class="post-content">
-									<a href="#"> </a>
-									<p>Tuesday, October 3, 2017</p>
-									<button type="button" class="btn btn-danger"
-										style="margin-top: 10px;">참석하기</button>
-								</div>
-							</div>
-							<!-- Single Popular Post -->
-							<div class="single-populer-post d-flex">
-								<img src="<%=cp%>/resource/mocozzy/img/sidebar-img/5.jpg" alt="">
-								<div class="post-content">
-									<a href="#"> </a>
-									<p>Tuesday, October 3, 2017</p>
-									<button type="button" class="btn btn-danger"
-										style="margin-top: 10px;">참석하기</button>
-								</div>
-							</div>
-					
-					<!-- 번개등록 만들기  -->
+							<!-- 번개리스트 스타트 -->
+					<c:forEach var="dto" items="${list}">
+                        <div class="single-widget-area add-widget text-center">
+                            <div class="add-widget-area">
+                                <img src="<%=cp%>/uploads/c_mocojee/${dto.moImage}" alt="">
+                                <div class="add-text">
+                                    <div class="yummy-table">
+                                        <div class="yummy-table-cell">
+                                            <h2>${dto.mosubName}</h2>
+                                            <input type="hidden" name="mosubNum" value="mosubNum">
+                                            <p>${dto.moDate}</p>
+                                            <a href="#" class="add-btn">참석하기</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+					</c:forEach>	
+						<!-- 번개등록 만들기  -->
 						<c:if test="${sessionScope.member.userId==dto.userId}">	
-							<button type="button" class="btn btn-primary btn-block" data-toggle="modal" 
-									data-target="#modalPoll" style="margin-top: 10px;">
+							<button type="button" class="btn btn-primary btn-block" style="margin-top: 10px;" 
+													onclick="javascript:location.href='<%=cp%>/mocobung/${mocoNum}/b_created?num=${dto.geNum}';">		
 								<i class="fa fa-bolt"></i> 벙개 등록하기
 							</button>
 						</c:if>
-						
-						
-				</div>
+					<!-- 번개등록 끝 -->	
+
+			
 						<!-- Single Widget Area -->
 					</div>
 				</div>

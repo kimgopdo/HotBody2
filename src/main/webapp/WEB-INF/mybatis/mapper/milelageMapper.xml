@@ -63,10 +63,10 @@
 	
 	 SELECT * FROM (
 		SELECT ROWNUM rnum, tb.* FROM (
-      	select userId,userId2,subject,content
-        from msg
+      	select userId,userId2,subject,content,totalFileSize,screated
+        from msg 
         where  userId =#{userId} OR userId2 =#{userId} 
-		<if test="userId2 != null and userId2 != ''">
+		<if test="sender != null and sender != ''">
 				and userId2 = #{sender}  
 		</if>
 		<if test="content != null and content != ''">
@@ -91,21 +91,27 @@
 	
 	
 	
-	<select id="mCode" resultType="Integer" parameterType="String">
-		select mcode
-		from msg
-		where userId =#{userId}
+	<select id="seq" resultType="Integer" > 
+		select msg_seq.nextVal from dual 
 	</select>
 	
 	<insert id="insertMessage" parameterType="com.hotbody.milelage.Message">
-		insert into msg (mcode,content,screated,userId,userId2,subject)
-		values(msg_seq.nextVal,#{content},sysdate,#{userId},#{userId2},#{subject})
+		insert into msg (mcode,content,screated,userId,userId2,subject,totalFileSize)
+		values(#{mCode},#{content},sysdate,#{userId},#{userId2},#{subject},#{totalFileSize})
 	</insert>
 	
 	<insert id="insertFile" parameterType="com.hotbody.milelage.Message">
 		insert into msgfile(filecode,ofilename,filename,filesize,mcode)
 		values(filecode_seq.nextVal,#{originalFilename},#{saveFilename},#{fileSize},#{mCode})
 	</insert>
+	
+	<update id="updateMessage" parameterType="com.hotbody.milelage.Message">
+		update msg 
+        set totalfilesize = (select sum(filesize) totalFileSize from msgfile where mcode=#{mCode})
+        where mcode=#{mCode}
+	</update>
+
+	
 	
 	
 		<!-- 주문횟수 메세지로 이동예정-->
@@ -124,4 +130,17 @@
 		</if>
 	</select>
 
+
+	<select id="fileCount" parameterType="Integer" resultType="Integer">
+		select NVL(count(ofilename),0)
+        from msgfile
+        where mCode=#{mCode}
+	</select>
+	
+	
+	<select id="fileList" parameterType="Integer" resultType="com.hotbody.milelage.Message">
+		select ofilename,filesize 
+        from msgfile
+        where mCode=#{mCode}
+	</select>
 </mapper>

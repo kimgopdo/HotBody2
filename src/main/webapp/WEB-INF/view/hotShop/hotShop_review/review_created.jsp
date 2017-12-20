@@ -83,6 +83,17 @@ fieldset[disabled] .form-control {
     cursor: pointer;
 }
 
+.star_rating {font-size:0; letter-spacing:-4px;}
+.star_rating a {
+    font-size:22px;
+    letter-spacing:0;
+    display:inline-block;
+    margin-left:5px;
+    color:#ccc;
+    text-decoration:none;
+}
+.star_rating a:first-child {margin-left:0;}
+.star_rating a.on {color:black;}
 </style>
 
 <script type="text/javascript" src="<%=cp%>/resource/se/js/HuskyEZCreator.js" charset="utf-8"></script>
@@ -112,7 +123,23 @@ function check() {
 	f.action="<%=cp%>/hotShop/review_"+mode;
 
     f.submit();
+    
 }
+
+$(function(){
+	$( ".star_rating a" ).click(function() {
+	    $(this).parent().children("a").removeClass("on");
+	    $(this).addClass("on").prevAll("a").addClass("on");
+	    
+	    var n=0;
+	    $( ".star_rating a").each(function(){
+	    	if($(this).hasClass("on")) n++;
+	    });
+	    $("#starInput").val(n);
+	    
+	    return false;
+	});
+});
 
 </script>
 </head>
@@ -128,6 +155,20 @@ function check() {
 	<td width="80">제목</td>
 	<td>
 		<input type="text" name="reviewSubject" style="width: 100%; height: 25px;" value="${dto.reviewSubject}">
+	</td>
+</tr>
+
+<tr height="40">
+	<td width="100">별점</td>
+	<td align="left">
+		<p class="star_rating">
+		    <a href="#"><input type="hidden" value="1">★</a>
+		    <a href="#"><input type="hidden" value="2">★</a>
+		    <a href="#"><input type="hidden" value="3">★</a>
+		    <a href="#"><input type="hidden" value="4">★</a>
+		    <a href="#"><input type="hidden" value="5">★</a>
+		</p>
+		<input type="hidden" name="star" id="starInput" value="0">
 	</td>
 </tr>
 

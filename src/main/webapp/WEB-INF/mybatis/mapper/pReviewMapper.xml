@@ -50,9 +50,13 @@
 	<select id="listReview" resultType="com.hotbody.hotShop.review.Review" parameterType="map">
 		SELECT * FROM(
     		SELECT ROWNUM rnum, tb.* FROM(
-        		SELECT r.reviewCode, r.userName, r.reviewSubject, r.reviewCreated, p.pdName, r.pdNum
+        		SELECT r.reviewCode, r.userName, r.reviewSubject, r.reviewCreated, p.pdName, r.pdNum, NVL(replyCount, 0) replyCount
         		FROM shreviews r
         		LEFT OUTER JOIN productList p ON r.pdNum=p.pdNum
+        		 LEFT OUTER JOIN(
+					    SELECT reviewCode, COUNT(*) replyCount 
+					    FROM recomment GROUP BY reviewCode
+					)c ON r.reviewCode = c.reviewCode
         		<where>
 					<if test="searchValue != null and searchValue != ''">
 						<include refid="where-list"/>
@@ -77,7 +81,7 @@
 						<include refid="where-list"/>
 					</if>
 					<if test="pdnum != '1'">
-						and pdnum=#{pdnum}
+						and r.pdnum=#{pdnum}
 					</if>
 				</where>
         		ORDER BY r.reviewCode DESC
@@ -105,10 +109,10 @@
      </insert>
      
      <select id="replyDataCount" parameterType="map" resultType="Integer">
-      		SELECT NVL(COUNT(*), 0) 
+      		SELECT NVL(COUNT(*), 0) replyCount
       		FROM recomment 
       		WHERE reviewCode=#{reviewCode}
-      </select>
+     </select>
       
       <select id="listReply" parameterType="map" resultType="com.hotbody.hotShop.review.Reply">
         SELECT * FROM (
@@ -130,5 +134,5 @@
       			AND userId=#{userId}
       		</if>
       </delete>
-	
+      
 </mapper>

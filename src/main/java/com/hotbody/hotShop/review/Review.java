@@ -13,7 +13,14 @@ public class Review {
 	private String pdName;
 	private String userId;
 	private int listNum;
+	private int replyCount;
 	
+	public int getReplyCount() {
+		return replyCount;
+	}
+	public void setReplyCount(int replyCount) {
+		this.replyCount = replyCount;
+	}
 	private int cNum;
 	private String content, created, cAnswer;
 	

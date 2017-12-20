@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hotbody.common.MyUtil;
+import com.hotbody.common.MyUtil2;
+import com.hotbody.hotShop.board.HotShopService;
 import com.hotbody.member.SessionInfo;
 
 @Controller("hotShop.review")
@@ -30,6 +32,12 @@ public class ReviewController {
 	
 	@Autowired
 	private MyUtil util;
+	
+	@Autowired
+	private MyUtil2 util2;
+	
+	@Autowired
+	private HotShopService service2;
 	
 	@RequestMapping(value = "/hotShop/review_created", method = RequestMethod.GET)
 	public String createdForm(
@@ -271,4 +279,62 @@ public class ReviewController {
 		return model;
 	}
 	
+	@RequestMapping(value="/hotShop/listReview")
+	public String articleList(
+			@RequestParam(value="page", defaultValue="1") int current_page,
+			@RequestParam(defaultValue="10") int rows,
+			@RequestParam int pdnum,
+			HttpServletRequest req,
+			HttpSession session,
+			Model model
+			) throws Exception {
+		
+		int dataCount;
+		int total_page;
+		
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("pdnum", pdnum);
+		
+		dataCount = service2.dataCount_review(map);
+		total_page = util2.pageCount(rows, dataCount);
+		
+		if(total_page < current_page)
+			current_page = total_page;
+		
+		int start = (current_page - 1) * rows + 1;
+		int end = current_page * rows;
+		map.put("start", start);
+		map.put("end", end);
+		List<Review> list = service2.productArticle_Review(map);
+		
+		int listNum, n = 0;
+		Iterator<Review> it = list.iterator();
+		while(it.hasNext()) {
+			Review dto = it.next();
+			listNum = dataCount - (start + n - 1);
+			dto.setListNum(listNum);
+			n++;
+			
+			dto.setReviewCreated(dto.getReviewCreated().substring(0, 10));
+		}
+		
+		String query = "rows=" + rows;
+		String articleUrl;
+		String cp = req.getContextPath();
+
+		articleUrl = cp + "/hotShop/review_article?" + query + "&page=" + current_page;
+		
+		String paging = util2.paging(current_page, total_page);
+
+		model.addAttribute("list2", list);
+		model.addAttribute("articleUrl2", articleUrl);
+		model.addAttribute("page2", current_page);
+		model.addAttribute("total_page2", total_page);
+		model.addAttribute("replyCount", dataCount);
+		model.addAttribute("paging2", paging);
+		model.addAttribute("rows2", rows);
+		
+		return "hotShop/listReview";
+	}
 }

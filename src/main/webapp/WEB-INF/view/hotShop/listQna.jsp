@@ -5,13 +5,13 @@
 <%
 	String cp=request.getContextPath();
 %>
-			<!-- 상품후기 게시판 리스트 -->
+
 			<div style="width: 95%;" id="listQna">
 				<form name="deleteListForm" method="post">
 					<table style="width: 100%; margin: 5px auto 0px; border-collapse: collapse;">
 						<tr style="width: 100%">
 							<td align="left" colspan="2">
-								<h4 style="font-weight: bold;">상품문의</h4>
+								<h4 style="font-weight: bold;"> ■ 상품문의</h4>
 							</td>
 							<td align="right" colspan="2">
 								<button type="button" class="btn" style="color:black; background: white; border: 1px solid #BDBDBD; border-radius: 3px; height: 30px;" onclick="javascript:location.href='<%=cp%>/hotShop/pQnA_list?${query}';">전체리스트</button>
@@ -31,7 +31,7 @@
 							<td>${dto.listNum}</td>
 							<td align="left" style="padding-left: 5px; color: black;">
 							    <c:if test="${dto.answerNum!=0}">&nbsp;&nbsp;└ </c:if>
-								<a href="${articleUrl}&pdQCode=${dto.pdQCode}" style="color: gray; font-size: 13px;">${dto.pdQSubject}</a>
+								<a href="${articleUrl}&pdQCode=${dto.pdQCode}" style="color: gray; font-size: 13px;"><span style="font-weight: bold;">[${dto.pdName}]</span> ${dto.pdQSubject}</a>
 							</td>
 							<td>${dto.userName}</td>
 							<td>${dto.pdQCreated}</td>
@@ -48,7 +48,7 @@
 						</tr>
 					</table>
 				</form>
-				<table>
+				<table style="margin-bottom: 100px;">
 					<tr>
 						<td style="width: 1050px; float: right; padding-right: 10px;" align="right">
 							<button class="btn" style="color:black; background: white; border: 1px solid #BDBDBD; border-radius: 3px; height: 30px;" type="button" onclick="check();">Q&A 등록</button>
