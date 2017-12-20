@@ -17,7 +17,7 @@
    	   
 	
 <body>
-    <!-- ****** Breadcumb Area Start ****** -->
+    <!-- ****** 안쓰는거!!!!!!!!!!!! ****** -->
     <div class="breadcumb-area" style="background-image: url(<%=cp%>/resource/mocozzy/img/bg-img/breadcumb.jpg);">
         <div class="container h-100">
             <div class="row h-100 align-items-center">

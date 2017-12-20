@@ -47,9 +47,7 @@ function loginOk() {
 			var state=data.state;
 			var prePage=data.prePage;
 			var message=data.message;
-			alert(prePage);
 			if(prePage!=""){
-				alert(prePage);
 				location.href="<%=cp%>/"+prePage;
 				return;
 			}else if(state=="true") {

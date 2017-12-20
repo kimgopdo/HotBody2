@@ -215,8 +215,8 @@ public class QnaController {
 		if(dto==null)
 			return "redirect:/hotShop/pQnA_list";
 		
-		dto.setPdQSubject("[답변]"+dto.getPdQSubject());
-		dto.setPdQContent("");
+		dto.setPdQSubject(dto.getPdQSubject()+"의 답변");
+		dto.setPdQContent("[질문내용]<br>"+dto.getPdQContent()+"<br>-----------------------------------------------------------------------------------------------------------------------------<br>[답변내용]<br>&nbsp;");
 		
 		model.addAttribute("dto", dto);
 		model.addAttribute("mode", "answer");
@@ -255,7 +255,7 @@ public class QnaController {
 
     Map<String, Object> map = new HashMap<>();
     map.put("pdnum", pdnum);
-    dataCount = service2.dataCount_review(map);
+    dataCount = service2.dataCount_qna(map);
     
     total_page = util.pageCount(rows, dataCount);
     
@@ -267,7 +267,6 @@ public class QnaController {
     int end = current_page * rows;
     map.put("start", start);
     map.put("end", end);
-    map.put("pdnum", pdnum);
     List<Qna> list = service2.productArticle_QnA(map);
     
     int listNum, n = 0;
@@ -287,7 +286,7 @@ public class QnaController {
     listUrl = cp + "/hotShop/shopArticle?" + query;
     articleUrl = cp + "/hotShop/pQnA_article?" + query + "&page=" + current_page;
  
-	String paging = util.paging(current_page, total_page,listUrl);
+	String paging = util.paging(current_page, total_page);
 	 
 	model.addAttribute("paging", paging);
 	model.addAttribute("list", list);

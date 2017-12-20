@@ -124,5 +124,31 @@ public class ReviewServiceImpl implements ReviewService {
 		}
 		return result;
 	}
+
+	@Override
+	public List<Review> listReviewArticle(Map<String, Object> map) {
+		List<Review> list = null;
+		
+		try {
+			list = dao.selectList("review.listReviewArticle", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		
+		return list;
+	}
+
+	@Override
+	public int dataCountArticle(Map<String, Object> map) {
+		int result = 0;
+		
+		try {
+			result = dao.selectOne("review.dataCountArticle", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		
+		return result;
+	}
 	
 }

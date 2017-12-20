@@ -29,8 +29,24 @@ public class HotShop {
 	private int listOrArticle;
 	private int pdInNum;
 	private int showandhide;
+	private String pCnt;
+	private int listNum;
 	
 	
+	
+	
+	public int getListNum() {
+		return listNum;
+	}
+	public void setListNum(int listNum) {
+		this.listNum = listNum;
+	}
+	public String getpCnt() {
+		return pCnt;
+	}
+	public void setpCnt(String pCnt) {
+		this.pCnt = pCnt;
+	}
 	public int getShowandhide() {
 		return showandhide;
 	}

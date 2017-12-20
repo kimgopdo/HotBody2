@@ -27,7 +27,18 @@
 		INSERT INTO productIn (pdincode,pdrawprice,pdinnum,pdexdate,pdindate,pdnum,supplycode) 
 		 values(pdin_seq.NEXTVAL,#{pdrawprice},#{pdinnum},#{pdexdate},sysdate,#{pdnum},#{supplycode})
 	</insert>
-	
+	<insert id="insertPayment">
+		INSERT INTO ORDERS (delOrder,cartDate,totalPay,userId,milelagePay) 
+			VALUES(orders_seq,sysdate,#{totalPay},#{userId},#{milelagePay})
+	</insert>
+	<insert id="insertCartList">
+		INSERT INTO CARTLIST (cartOrder,delOrder,classNum,amount,pdnum) 
+			VALUES(cartList.NEXTVAL,(SELECT MAX(delOrder) FROM ORDERS WHERE userId=#{userId}),#{classNum},#{amount},#{pdnum})
+	</insert>
+	<insert id="insertPayInfo">
+		INSERT INTO PAYINFO (delOrder,takerName,zip,takerAddr1,takerAddr2,takerTel,takerPhone) 
+			VALUES((SELECT MAX(delOrder) FROM ORDERS WHERE userId=#{userId}),#{takerName},#{zip},#{takerAddr1},#{takerAddr2},#{takerTel},#{takerPhone})
+	</insert>
 	<select id="bclSelect" resultType="com.hotbody.hotShop.main.HotBodyMenu">
 		SELECT bclcode, name bclname FROM bcl
 	</select>

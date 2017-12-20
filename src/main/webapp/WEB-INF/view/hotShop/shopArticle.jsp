@@ -50,7 +50,7 @@ $(function(){
 function listPage(page){
 	var url = "<%=cp%>/hotShop/listQna";
 	var num = "${dto.pdnum}";
-	var q = "num=" + num + "&page=" + page;
+	var q = "pdnum=" + num + "&page=" + page;
 
 	$.ajax({
 		type:"post"
@@ -58,6 +58,7 @@ function listPage(page){
 		,data:q
 		,success:function(a){
 			$("#listQna").html(a);
+			listPage2(1);
 		}
 		,beforeSend : function(e){
 			e.setRequestHeader("AJAX", true);
@@ -71,18 +72,51 @@ function listPage(page){
 		}
 	});
 }
+
+
+function listPage2(page){
+	var url = "<%=cp%>/hotShop/listReview";
+	var num = "${dto.pdnum}";
+	var q = "pdnum=" + num + "&page=" + page;
+
+	$.ajax({
+		type:"post"
+		,url:url
+		,data:q
+		,success:function(a){
+			$("#listReview").html(a);
+		}
+		,beforeSend : function(e){
+			e.setRequestHeader("AJAX", true);
+		}
+		,error:function(e){
+			if(e.status == 403) {
+				alert("실패");
+				return;
+			}
+			console.log(e.responseText);
+		}
+	});
+}
+
+
+
 function insertCookie(pdnum){
-	addCookie(pdnum);
+	var no=$("#no1").val();
+	var cVal=pdnum+"-"+no;
+	addCookie(cVal);
 }
 </script>
 <script>
 function payment(pdnum){
-	addCookie(pdnum);
+	var no=$("#no1").val();
+	var cVal=pdnum+"-"+no;
+	addCookie(cVal);
 	alert(getCookie("hotbodyBasket"));
 	var array=getCookie("hotbodyBasket").split(",");
 	var member="${sessionScope.member.userId}";
 	if(member!=""){
-		location.href="<%=cp%>/hotShop/payment?cookie="+array;
+		location.href="<%=cp%>/hotShop/payment?cookie="+array+"&userId="+member;
 		return;
 	}else{
 		location.href="<%=cp%>/member/login?prePage=hotShop";
@@ -244,6 +278,8 @@ function payment(pdnum){
 			
 			<!-- 상품Q&A 게시판 리스트 -->
 			<div id="listQna"></div>
+			<br>
+			<div id="listReview"></div>
 			
 		</div>
 		</div>
