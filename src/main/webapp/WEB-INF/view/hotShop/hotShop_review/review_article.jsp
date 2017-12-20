@@ -192,10 +192,7 @@ function deleteReply(cNum, page){
     </div>
 		<div>
 			<c:if test="${cNum != 0}">
-			<table style="width: 100%; margin: 10px auto 30px; border-spacing: 0;" id="listReply">
-				
-			</table>
-			
+			<table style="width: 100%; margin: 10px auto 30px; border-spacing: 0;" id="listReply"></table>
 			</c:if>
 		</div>
     </div>

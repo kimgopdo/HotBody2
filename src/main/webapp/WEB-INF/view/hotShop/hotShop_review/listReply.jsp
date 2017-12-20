@@ -24,7 +24,7 @@
 		</c:forEach>
 		
 		<tr height="40">
-			<td colspan="2" align="center">
+			<td colspan="2" align="center" style="cursor: pointer;">
 				${paging}
 			</td>
 		</tr>

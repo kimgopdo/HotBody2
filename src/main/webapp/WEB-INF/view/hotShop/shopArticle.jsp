@@ -71,6 +71,9 @@ function listPage(page){
 		}
 	});
 }
+
+
+
 function insertCookie(pdnum){
 	var no=$("#no1").val();
 	var cVal=pdnum+"-"+no;
@@ -248,6 +251,8 @@ function payment(pdnum){
 			
 			<!-- 상품Q&A 게시판 리스트 -->
 			<div id="listQna"></div>
+			<br>
+			<div id="listReview"></div>
 			
 		</div>
 		</div>

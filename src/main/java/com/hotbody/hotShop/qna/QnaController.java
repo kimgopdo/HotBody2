@@ -287,7 +287,7 @@ public class QnaController {
     listUrl = cp + "/hotShop/shopArticle?" + query;
     articleUrl = cp + "/hotShop/pQnA_article?" + query + "&page=" + current_page;
  
-	String paging = util.paging(current_page, total_page,listUrl);
+	String paging = util.paging(current_page, total_page);
 	 
 	model.addAttribute("paging", paging);
 	model.addAttribute("list", list);
