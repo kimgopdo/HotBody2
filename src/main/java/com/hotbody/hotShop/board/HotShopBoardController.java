@@ -81,7 +81,7 @@ public class HotShopBoardController {
 	//구입 페이지
 	@RequestMapping(value="/hotShop/payment")
 	public String paymentForm(
-			@RequestParam int []cookie,
+			@RequestParam String []cookie,
 			HttpServletRequest req,
 			Model model
 			) {
@@ -90,10 +90,12 @@ public class HotShopBoardController {
 		Map<String, Object> map=new HashMap<>();
 	    for(int n=0; n<cookie.length;n++) {
 	    	HotShop dto=new HotShop();
-	    	int pdnum=cookie[n];
+	    	String cVal=cookie[n];
+	    	String []pInfo=cVal.split("-");
 	    	map.put("listOrArticle", 1);
-	    	map.put("pdnum", pdnum);
+	    	map.put("pdnum", pInfo[0]);
 	    	dto=service.productArticle(map);
+	    	dto.setpCnt(pInfo[1]);
 	    	list.add(dto);
 	    }
 	    model.addAttribute("list", list);

@@ -71,13 +71,15 @@ function listPage(page){
 		}
 	});
 }
-function insertCookie(pdnum){
-	addCookie(pdnum);
+function insertCookie(pdnum,no){
+	var cVal=pdnum+"-"+no;
+	addCookie(cVal);
 }
 </script>
 <script>
-function payment(pdnum){
-	addCookie(pdnum);
+function payment(pdnum,no){
+	var cVal=pdnum+"-"+no;
+	addCookie(cVal);
 	alert(getCookie("hotbodyBasket"));
 	var array=getCookie("hotbodyBasket").split(",");
 	var member="${sessionScope.member.userId}";

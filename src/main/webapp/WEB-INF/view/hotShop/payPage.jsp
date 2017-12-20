@@ -57,7 +57,7 @@
 		<td width="15%" ><img src="<%=cp%>/uploads/shopList/${dto.imgSaveFilename}"></td>
 		<td width="38%">${dto.pdName}<br><br>${dto.pdSumContent}</td>
 		<td width="10%"><fmt:formatNumber pattern="#,###">${dto.pdPrice}</fmt:formatNumber>원</td>
-		<td width="5%">1</td>
+		<td width="5%">${dto.pCnt}</td>
 		<td width="5%">190</td>
 		<td width="10%">19000</td>
 		<td>****</td>
