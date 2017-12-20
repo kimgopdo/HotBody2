@@ -267,7 +267,6 @@ public class QnaController {
     int end = current_page * rows;
     map.put("start", start);
     map.put("end", end);
-    map.put("pdnum", pdnum);
     List<Qna> list = service2.productArticle_QnA(map);
     
     int listNum, n = 0;

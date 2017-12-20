@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hotbody.common.MyUtil;
+import com.hotbody.common.MyUtil2;
 import com.hotbody.hotShop.board.HotShopService;
 import com.hotbody.member.SessionInfo;
 
@@ -31,6 +32,9 @@ public class ReviewController {
 	
 	@Autowired
 	private MyUtil util;
+	
+	@Autowired
+	private MyUtil2 util2;
 	
 	@Autowired
 	private HotShopService service2;
@@ -279,7 +283,7 @@ public class ReviewController {
 	public String articleList(
 			@RequestParam(value="page", defaultValue="1") int current_page,
 			@RequestParam(defaultValue="10") int rows,
-			@RequestParam(defaultValue="1") int pdNum,
+			@RequestParam int pdnum,
 			HttpServletRequest req,
 			HttpSession session,
 			Model model
@@ -290,10 +294,10 @@ public class ReviewController {
 		
 		
 		Map<String, Object> map = new HashMap<>();
-		map.put("pdNum", pdNum);
-		dataCount = service2.dataCount_review(map);
+		map.put("pdnum", pdnum);
 		
-		total_page = util.pageCount(rows, dataCount);
+		dataCount = service2.dataCount_review(map);
+		total_page = util2.pageCount(rows, dataCount);
 		
 		if(total_page < current_page)
 			current_page = total_page;
@@ -302,7 +306,6 @@ public class ReviewController {
 		int end = current_page * rows;
 		map.put("start", start);
 		map.put("end", end);
-		map.put("pdNum", pdNum);
 		List<Review> list = service2.productArticle_Review(map);
 		
 		int listNum, n = 0;
@@ -317,22 +320,21 @@ public class ReviewController {
 		}
 		
 		String query = "rows=" + rows;
-		String listUrl, articleUrl;
+		String articleUrl;
 		String cp = req.getContextPath();
-		listUrl = cp + "/hotShop/review_list?" + query;
+
 		articleUrl = cp + "/hotShop/review_article?" + query + "&page=" + current_page;
 		
-		String paging = util.paging(current_page, total_page);
+		String paging = util2.paging(current_page, total_page);
 
-		model.addAttribute("list", list);
-		model.addAttribute("listUrl", listUrl);
-		model.addAttribute("articleUrl", articleUrl);
-		model.addAttribute("page", current_page);
-		model.addAttribute("total_page", total_page);
-		model.addAttribute("dateCount", dataCount);
-		model.addAttribute("paging", paging);
-		model.addAttribute("rows", rows);
+		model.addAttribute("list2", list);
+		model.addAttribute("articleUrl2", articleUrl);
+		model.addAttribute("page2", current_page);
+		model.addAttribute("total_page2", total_page);
+		model.addAttribute("dateCount2", dataCount);
+		model.addAttribute("paging2", paging);
+		model.addAttribute("rows2", rows);
 		
-		return ".hotShop.hotShop_review.review_list";
+		return "hotShop/listReview";
 	}
 }

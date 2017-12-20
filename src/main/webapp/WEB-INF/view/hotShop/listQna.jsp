@@ -31,7 +31,7 @@
 							<td>${dto.listNum}</td>
 							<td align="left" style="padding-left: 5px; color: black;">
 							    <c:if test="${dto.answerNum!=0}">&nbsp;&nbsp;└ </c:if>
-								<a href="${articleUrl}&pdQCode=${dto.pdQCode}" style="color: gray; font-size: 13px;">${dto.pdQSubject}</a>
+								<a href="${articleUrl}&pdQCode=${dto.pdQCode}" style="color: gray; font-size: 13px;"><span style="font-weight: bold;">[${dto.pdName}]</span> ${dto.pdQSubject}</a>
 							</td>
 							<td>${dto.userName}</td>
 							<td>${dto.pdQCreated}</td>
@@ -48,7 +48,7 @@
 						</tr>
 					</table>
 				</form>
-				<table>
+				<table style="margin-bottom: 150px;">
 					<tr>
 						<td style="width: 1050px; float: right; padding-right: 10px;" align="right">
 							<button class="btn" style="color:black; background: white; border: 1px solid #BDBDBD; border-radius: 3px; height: 30px;" type="button" onclick="check();">Q&A 등록</button>

@@ -75,6 +75,19 @@ public class HotShopServiceImpl implements HotShopService{
 	}
 	
 	@Override
+	public List<Review> productArticle_Review(Map<String, Object> map) {
+		List<Review> list = null;
+		
+		try {
+			list = dao.selectList("review.listReviewArticle", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		
+		return list;
+	}
+	
+	@Override
 	public int productUpdate(HotShop dto, String pathname) {
 		int result=0;
 		
@@ -169,16 +182,6 @@ public class HotShopServiceImpl implements HotShopService{
 	}
 	
 	@Override
-	public int productHitCount(int pdnum) {
-		int result=0;
-		try {
-			result=dao.updateData("product.updateHitCount",pdnum);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
-	@Override
 	public int dataCount_review(Map<String, Object> map) {
 		int result = 0;
 		
@@ -190,19 +193,15 @@ public class HotShopServiceImpl implements HotShopService{
 		
 		return result;
 	}
+	
 	@Override
-	public List<Review> productArticle_Review(Map<String, Object> map) {
-		List<Review> list = null;
-		
+	public int productHitCount(int pdnum) {
+		int result=0;
 		try {
-			list = dao.selectList("review.listReviewArticle", map);
+			result=dao.updateData("product.updateHitCount",pdnum);
 		} catch (Exception e) {
-			System.out.println(e.toString());
+			e.printStackTrace();
 		}
-		
-		return list;
+		return result;
 	}
-	
-	
-	
 }

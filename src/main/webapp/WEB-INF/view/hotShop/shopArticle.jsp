@@ -58,6 +58,7 @@ function listPage(page){
 		,data:q
 		,success:function(a){
 			$("#listQna").html(a);
+			listPage2(1);
 		}
 		,beforeSend : function(e){
 			e.setRequestHeader("AJAX", true);
@@ -73,7 +74,7 @@ function listPage(page){
 }
 
 
-function listPage(page){
+function listPage2(page){
 	var url = "<%=cp%>/hotShop/listReview";
 	var num = "${dto.pdnum}";
 	var q = "pdnum=" + num + "&page=" + page;
