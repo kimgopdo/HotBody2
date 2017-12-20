@@ -1,42 +1,18 @@
 package com.hotbody.milelage;
 
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
+
 public class Message {
 	
-	String userId,userId2,subject,content;
-	String state,box;
-	int fileCode,fileSize,mCode;
-	String ofileName,fileName;
-
-	public int getFileCode() {
-		return fileCode;
-	}
-	public void setFileCode(int fileCode) {
-		this.fileCode = fileCode;
-	}
-	public int getFileSize() {
-		return fileSize;
-	}
-	public void setFileSize(int fileSize) {
-		this.fileSize = fileSize;
-	}
-	public int getmCode() {
-		return mCode;
-	}
-	public void setmCode(int mCode) {
-		this.mCode = mCode;
-	}
-	public String getOfileName() {
-		return ofileName;
-	}
-	public void setOfileName(String ofileName) {
-		this.ofileName = ofileName;
-	}
-	public String getFileName() {
-		return fileName;
-	}
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
+	private String userId,userId2,subject,content;
+	private String state,box;
+	private long fileSize;
+	private int fileCode,mCode;
+	private String originalFilename,saveFilename,upDir;
+	private List<MultipartFile> uploadFile;
+	
 	public String getUserId() {
 		return userId;
 	}
@@ -49,19 +25,18 @@ public class Message {
 	public void setUserId2(String userId2) {
 		this.userId2 = userId2;
 	}
-	public String getContent() {
-		return content;
-	}
-	public void setContent(String content) {
-		this.content = content;
-	}
 	public String getSubject() {
 		return subject;
 	}
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}
-
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
 	public String getState() {
 		return state;
 	}
@@ -74,7 +49,48 @@ public class Message {
 	public void setBox(String box) {
 		this.box = box;
 	}
-	
+	public long getFileSize() {
+		return fileSize;
+	}
+	public void setFileSize(long fileSize) {
+		this.fileSize = fileSize;
+	}
+	public int getFileCode() {
+		return fileCode;
+	}
+	public void setFileCode(int fileCode) {
+		this.fileCode = fileCode;
+	}
+	public int getmCode() {
+		return mCode;
+	}
+	public void setmCode(int mCode) {
+		this.mCode = mCode;
+	}
+	public String getOriginalFilename() {
+		return originalFilename;
+	}
+	public void setOriginalFilename(String originalFilename) {
+		this.originalFilename = originalFilename;
+	}
+	public String getSaveFilename() {
+		return saveFilename;
+	}
+	public void setSaveFilename(String saveFilename) {
+		this.saveFilename = saveFilename;
+	}
+	public String getUpDir() {
+		return upDir;
+	}
+	public void setUpDir(String upDir) {
+		this.upDir = upDir;
+	}
+	public List<MultipartFile> getUploadFile() {
+		return uploadFile;
+	}
+	public void setUploadFile(List<MultipartFile> uploadFile) {
+		this.uploadFile = uploadFile;
+	}
 	
 
 }

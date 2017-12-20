@@ -65,9 +65,9 @@
 		SELECT ROWNUM rnum, tb.* FROM (
       	select userId,userId2,subject,content
         from msg
-        where  userId =#{userId}
+        where  userId =#{userId} OR userId2 =#{userId} 
 		<if test="userId2 != null and userId2 != ''">
-				and userId2 = #{userId2}  
+				and userId2 = #{sender}  
 		</if>
 		<if test="content != null and content != ''">
 			and	INSTR(content, #{content}) &gt; 0
@@ -89,19 +89,39 @@
 		select NVL(count(userId),0) from member1 where userId=#{userId2}
 	</select>
 	
-	<insert id="sendMessage1" parameterType="map">
-		insert into msg 
-		(mcode,content,screated,userid,userid2,subject)
-        values
-        (MSG_SEQ.nextval,#{content},sysdate,#{userId},#{userId2},#{subject})
+	
+	
+	<select id="mCode" resultType="Integer" parameterType="String">
+		select mcode
+		from msg
+		where userId =#{userId}
+	</select>
+	
+	<insert id="insertMessage" parameterType="com.hotbody.milelage.Message">
+		insert into msg (mcode,content,screated,userId,userId2,subject)
+		values(msg_seq.nextVal,#{content},sysdate,#{userId},#{userId2},#{subject})
 	</insert>
 	
-	<insert id="sendMessage2" parameterType="map">
-		insert into msgfile 
-		(filecode,filename,filesize,mcode)
-        values
-        (filecode_SEQ.nextval,#{filename},#{filesize},#{mcode})
+	<insert id="insertFile" parameterType="com.hotbody.milelage.Message">
+		insert into msgfile(filecode,ofilename,filename,filesize,mcode)
+		values(filecode_seq.nextVal,#{originalFilename},#{saveFilename},#{fileSize},#{mCode})
 	</insert>
 	
+	
+		<!-- 주문횟수 메세지로 이동예정-->
+	<select id="mDataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0) 
+		FROM msg
+        where  userId =#{userId} OR userId2 =#{userId}
+		<if test="userId2 != null and userId2 != ''">
+				and userId2 = #{sender}  
+		</if>
+		<if test="content != null and content != ''">
+			and	INSTR(content, #{content}) &gt; 0
+		</if>
+		<if test="subject != null and subject != ''">
+			and	INSTR(subject, #{subject}) &gt; 0 
+		</if>
+	</select>
 
 </mapper>

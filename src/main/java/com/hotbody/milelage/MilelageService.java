@@ -10,4 +10,12 @@ public interface MilelageService {
 	public List<Message> listMessage(Map<String, Object> map);
 	public int dataCount(Map<String, Object> map);
 	public int checkUserId2(String userId2);
+	
+	
+	public int writeMessage(Message dto, String pathname);
+	public int insertFile(Message dto);
+	public List<Message> listFile(int num);
+	public Message readFile(int fileNum);
+	public int deleteFile(Map<String, Object> map);
+	public int mDataCount(Map<String, Object> map);
 }
