@@ -331,7 +331,7 @@ public class ReviewController {
 		model.addAttribute("articleUrl2", articleUrl);
 		model.addAttribute("page2", current_page);
 		model.addAttribute("total_page2", total_page);
-		model.addAttribute("dateCount2", dataCount);
+		model.addAttribute("replyCount", dataCount);
 		model.addAttribute("paging2", paging);
 		model.addAttribute("rows2", rows);
 		

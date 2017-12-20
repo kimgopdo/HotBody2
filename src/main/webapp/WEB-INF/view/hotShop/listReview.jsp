@@ -8,7 +8,7 @@
 			<table style="width: 95%; margin: 5px auto 0px; border-collapse: collapse;">
 				<tr style="width: 100%">
 					<td align="left" colspan="2">
-						<h4 style="font-weight: bold;">상품후기</h4>
+						<h4 style="font-weight: bold;"> ■ 상품후기</h4>
 					</td>
 					<td align="right" colspan="2">
 						<button type="button" class="btn" style="color:black; background: white; border: 1px solid #BDBDBD; border-radius: 3px; height: 30px;" onclick="javascript:location.href='<%=cp%>/hotShop/review_list?${query}';">전체리스트</button>
@@ -20,6 +20,7 @@
 					<td width="380" style="padding-left: 20px;">제목</td>
 					<td width="80">작성자</td>
 					<td width="80">작성일</td>
+					<td width="80">평점</td>
 				</tr>
 				
 				<c:forEach var="dto1" items="${list2}">
@@ -27,10 +28,11 @@
 					<%-- <td><input type="checkbox" name="nums" value="${dto.reviewCode}"></td> --%>
 					<td>${dto1.listNum}</td>
 					<td align="left" style="padding-left: 5px; color: black;">
-						<a href="${articleUrl2}&reviewCode=${dto1.reviewCode}" style="color: gray; font-size: 13px;"><span style="font-weight: bold;">[${dto1.pdName}]</span> ${dto1.reviewSubject}</a>
+						<a href="${articleUrl2}&reviewCode=${dto1.reviewCode}" style="color: gray; font-size: 13px;"><span style="font-weight: bold;">[${dto1.pdName}]</span> ${dto1.reviewSubject} (${dto1.replyCount})</a>
 					</td>
 					<td>${dto1.userName}</td>
 					<td>${dto1.reviewCreated}</td>
+					<td>${dto1.starScore}</td>
 				</tr>
 				</c:forEach>
 			</table>

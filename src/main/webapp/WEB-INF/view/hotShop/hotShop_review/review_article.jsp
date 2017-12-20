@@ -139,22 +139,25 @@ function deleteReply(cNum, page){
     <div>
 			<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px; border-collapse: collapse;">
 			<tr height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
-			    <td colspan="2" align="center">
+			    <td colspan="3" align="center">
 				   <span style="font-weight: bold;">[${dto.pdName}]</span> ${dto.reviewSubject}
 			    </td>
 			</tr>
 			
 			<tr height="35" style="border-bottom: 1px solid #cccccc;">
-			    <td width="50%" align="left" style="padding-left: 5px;">
+			    <td width="35%" align="left" style="padding-left: 5px;">
 			      	작성자 : ${dto.userName}(${dto.userId})
 			    </td>
-  			    <td width="50%" align="right" style="padding-right: 5px;">
+			    <td width="30%" align="left" style="padding-left: 5px;">
+			      	평점 : ${dto.starScore}
+			    </td>
+  			    <td width="35%" align="right" style="padding-right: 5px;">
 			      	작성일 : ${dto.reviewCreated}
 			    </td>
 			</tr>
 			
 			<tr style="border-bottom: 1px solid #cccccc;">
-			    <td colspan="2" align="left" style="padding: 10px 5px;" valign="top" height="200">
+			    <td colspan="3" align="left" style="padding: 10px 5px;" valign="top" height="200">
 			      ${dto.reviewContent}
 			    </td>
 			</tr>
