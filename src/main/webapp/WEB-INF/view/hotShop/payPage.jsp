@@ -49,6 +49,7 @@ $(function(){
 		$("#cnt"+n).text(cnt);
 	}
 	totalMoney();
+	pointCal();
 })
 
 function add(n){//인자값 : 수량업 1  , 수량 다운 시 -1
@@ -75,11 +76,32 @@ function totalMoney(){
 	console.log(totalMoney);
 	$("#totPay").text(totalMoney);
 	$("#totPay2").text(totalMoney);
+	$("#result1").text(totalMoney);
+	$("#result2").text(totalMoney);
 }
 function pointCal(){
-	var point=$("#usginPoint").val();
+	var regNumber = /^[0-9]*$/;
+	var point=$("#usingPoint").val();
+	if(! regNumber.test(point)){
+		$("#usingPoint").val("");
+		return;
+	}
 	var totPay=$("#totPay2").text();
 	totPay=uncomma(totPay);
+	if(totPay<point){
+		alert("포인트가 가격보다 많습니다.");
+		$("#usingPoint").val("");
+		$("#point1").text(0);
+		$("#point2").text(0);
+		totalMoney();
+		return;
+	}
+	totPay=totPay-point;
+	totPay=numberWithCommas(totPay);
+	$("#point1").text(point);
+	$("#point2").text(point);
+	$("#result1").text(totPay);
+	$("#result2").text(totPay);
 }
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -94,6 +116,11 @@ function onlyNumber(){
 }
 function send(f){
 	f;
+}
+function clear(){
+	alert("아");
+	$("#usingPoint").val("");
+	return;
 }
 </script>
 <form name="paymentPageForm">
@@ -183,7 +210,7 @@ function send(f){
 		<td colspan="8" style="text-align: left; font-size:20px; font-weight: bold; vertical-align: bottom;"><img src="<%=cp%>/resource/images/shop_images/delivery-truck.png">&nbsp;&nbsp; 배송정보</td>
 	</tr>
 	<tr>
-		<td colspan="8" style="text-align: left; "> <input type="radio">주문자 정보와 동일&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio">새로작성</td>
+		<td colspan="8" style="text-align: left; "> <input type="radio" name="info" onclick="">주문자 정보와 동일&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="info">새로작성</td>
 
 	</tr>
 	<tr>
@@ -229,7 +256,7 @@ function send(f){
 	</tr>
 	<tr>
 		<td colspan="2">사용할 포인트</td>
-		<td colspan="6" style="text-align: left;"> <input type="text" id="usginPoint" onkeypress="pointCal();"> </td>
+		<td colspan="6" style="text-align: left;"> <input type="number" value="0" id="usingPoint" onkeyup="clear(); pointCal();"> </td>
 	</tr>
 	
 	<tr>
@@ -244,10 +271,10 @@ function send(f){
 		<span>${dto.pdName} 수량: <span id="cnt${dto.listNum}"></span>개<br><br></span>
 		</c:forEach>
 		</td>
-		<td colspan="5" style="border-left: 2px solid #e7e7e7"><span id="totPay2"></span>원 - <span id="point2"></span>포인트 = <span id="result1"></span></td>
+		<td colspan="5" style="border-left: 2px solid #e7e7e7"><span id="totPay2"></span>원 - <span id="point2"></span>포인트 = <span id="result1"></span>원</td>
 	</tr>
 	<tr>
-		<td colspan="3"><span id="result2"></span>원</td>
+		<td colspan="3">총액 :  <span id="result2"></span>원</td>
 		<td colspan="2"><button type="button" style="width: 100%; height: 80px; padding: 0; margin: 0;" onclick="send(this.form);">주문하기</button></td>
 	</tr>
 </table>
