@@ -16,17 +16,14 @@ public class SurveyServiceImpl implements SurveyService{
 		try {
 			int qSeq = dao.selectOne("survey.qSeq");
 			dto.setqCode(qSeq);
+
 			result = dao.insertData("survey.insertSurvey", dto);
 			if(dto.getsOrO()==0) {
-				int exSeq = dao.selectOne("survey.exSeq");
-				dto.setExNum(exSeq);
 				dao.insertData("survey.insertEx", dto);
 			}
-				
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return result;
 	}
-
 }
