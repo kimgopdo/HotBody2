@@ -1,14 +1,18 @@
 package com.hotbody.mocobung;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import com.hotbody.common.MyUtil;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller("mocobung.BungController")
 public class BungController {
@@ -16,22 +20,33 @@ public class BungController {
 	@Autowired
 	private BungService service;
 	
-	@Autowired
-	private MyUtil util;
-	
-	@RequestMapping(value="mocobung/created" , method=RequestMethod.GET)
-	public String bungCreated(Model model) throws Exception {
-		model.addAttribute("mode","c_bung");
+	@RequestMapping(value="/mocobung/{mocoNum}/b_created" , method=RequestMethod.GET)
+	public String bungCreated(Model model, 
+			@PathVariable int mocoNum,
+			@RequestParam int num ) throws Exception {
+		model.addAttribute("mode","created");
+		model.addAttribute("geNum", num);
+		model.addAttribute("mocoNum", mocoNum);
 		
-		return ".mocojee.ccbung";
+		return ".mocobung.b_created";
 	}
 	
-	@RequestMapping(value="mocobung/created" , method=RequestMethod.POST)
-	public String bungSubmit(HttpServletRequest req, Bung dto) throws Exception{
+	@RequestMapping(value="/mocobung/{mocoNum}/b_created")
+	@ResponseBody
+	public Map<String,Object> b_submit (
+			@PathVariable int mocoNum,
+			Bung dto, HttpSession session){
+		System.out.println(dto.getMosubName()+"===========================");
+		
+		dto.setGeNum(mocoNum);
 		
 		service.insertBung(dto);
 		
-		return "redirect:/mocojee/list_mocojee";
+		Map<String,Object> model = new HashMap<>();
+		model.put("state", "true");
+			
+		return model;
 		
 	}
+	
 }

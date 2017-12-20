@@ -3,9 +3,11 @@
 <mapper namespace="mocobung">
 	
 	<insert id="insertBung" parameterType="com.hotbody.mocobung.Bung">
-		INSERT INTO mocojee5 (mosubNum, moSpot, mosubName, moPlace, maxPeople, moDate, moStart, moEnd, moCost )
-			VALUES(#{mosubNum}, #{moSpot}, #{mosubName}, #{moPlace}, #{maxPeople}, #{moDate}, #{moStart}, #{moEnd}, #{moCost} )
-		
+		INSERT INTO mocojee5 (mosubNum, mosubName, moSpot, moPlace1, moPlace2, maxPeople,  moCost, moStart, moEnd , moDate, geNum, moCreated )
+			VALUES( subNum_seq.NEXTVAL ,  #{mosubName}, #{moSpot},
+			 				#{moPlace1}, #{moPlace2}, #{maxPeople}, #{moCost}, #{moStart}, #{moEnd}, 
+			 		TO_DATE(#{moDate}, 'mm/dd/yyyy'), #{geNum}, SYSDATE)
+					
 	</insert>
 	
 </mapper>
