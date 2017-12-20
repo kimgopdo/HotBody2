@@ -27,18 +27,22 @@
 		INSERT INTO productIn (pdincode,pdrawprice,pdinnum,pdexdate,pdindate,pdnum,supplycode) 
 		 values(pdin_seq.NEXTVAL,#{pdrawprice},#{pdinnum},#{pdexdate},sysdate,#{pdnum},#{supplycode})
 	</insert>
-	<insert id="insertPayment">
+	<insert id="insertPayment" parameterType="com.hotbody.hotShop.board.Payment">
 		INSERT INTO ORDERS (delOrder,cartDate,totalPay,userId,milelagePay) 
-			VALUES(orders_seq,sysdate,#{totalPay},#{userId},#{milelagePay})
+			VALUES(orders_seq.NEXTVAL,sysdate,#{totalPay},#{userId},#{milelagePay})
 	</insert>
-	<insert id="insertCartList">
+	<insert id="insertCartList" parameterType="com.hotbody.hotShop.board.Payment">
 		INSERT INTO CARTLIST (cartOrder,delOrder,classNum,amount,pdnum) 
-			VALUES(cartList.NEXTVAL,(SELECT MAX(delOrder) FROM ORDERS WHERE userId=#{userId}),#{classNum},#{amount},#{pdnum})
+			VALUES(cartList_seq.NEXTVAL,#{delOrder},#{classNum, jdbcType=VARCHAR},#{amount_one},#{pdnum_one})
 	</insert>
-	<insert id="insertPayInfo">
-		INSERT INTO PAYINFO (delOrder,takerName,zip,takerAddr1,takerAddr2,takerTel,takerPhone) 
-			VALUES((SELECT MAX(delOrder) FROM ORDERS WHERE userId=#{userId}),#{takerName},#{zip},#{takerAddr1},#{takerAddr2},#{takerTel},#{takerPhone})
+	<insert id="insertPayInfo" parameterType="com.hotbody.hotShop.board.Payment">
+		INSERT INTO PAYINFO (delOrder,takerName,zip,takerAddr1,takerAddr2,takerTel,takerPhone,memo) 
+			VALUES(#{delOrder},#{takerName},#{postNum},#{takerAddr1},#{takerAddr2},#{takerTel, jdbcType=VARCHAR},#{takerPhone},#{memo, jdbcType=VARCHAR})
 	</insert>
+	<select id="readDelOrder" parameterType="String" resultType="Integer">
+	SELECT MAX(delOrder) delOrder
+		FROM ORDERS WHERE userId=#{userId}
+	</select>
 	<select id="bclSelect" resultType="com.hotbody.hotShop.main.HotBodyMenu">
 		SELECT bclcode, name bclname FROM bcl
 	</select>

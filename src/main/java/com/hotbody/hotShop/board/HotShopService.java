@@ -19,4 +19,5 @@ public interface HotShopService {
 	public int dataCount();
 	public int dataCount_review(Map<String, Object> map);
 	public int productHitCount(int pdnum);
+	public int insertPayment(Payment dto);
 }
