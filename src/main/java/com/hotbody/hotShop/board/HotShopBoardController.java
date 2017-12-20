@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hotbody.common.FileManager;
 import com.hotbody.common.MyUtil;
+import com.hotbody.hotShop.qna.Qna;
 @Controller("hotShop.board")
 public class HotShopBoardController {
 	@Autowired
@@ -85,10 +86,11 @@ public class HotShopBoardController {
 			HttpServletRequest req,
 			Model model
 			) {
-		
+		int listNum=0;
 		List<HotShop> list=new ArrayList<>();
 		Map<String, Object> map=new HashMap<>();
 	    for(int n=0; n<cookie.length;n++) {
+	    	listNum++;
 	    	HotShop dto=new HotShop();
 	    	String cVal=cookie[n];
 	    	String []pInfo=cVal.split("-");
@@ -96,6 +98,7 @@ public class HotShopBoardController {
 	    	map.put("pdnum", pInfo[0]);
 	    	dto=service.productArticle(map);
 	    	dto.setpCnt(pInfo[1]);
+	    	dto.setListNum(listNum);
 	    	list.add(dto);
 	    }
 	    model.addAttribute("list", list);

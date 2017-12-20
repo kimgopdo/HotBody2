@@ -71,13 +71,15 @@ function listPage(page){
 		}
 	});
 }
-function insertCookie(pdnum,no){
+function insertCookie(pdnum){
+	var no=$("#no1").val();
 	var cVal=pdnum+"-"+no;
 	addCookie(cVal);
 }
 </script>
 <script>
-function payment(pdnum,no){
+function payment(pdnum){
+	var no=$("#no1").val();
 	var cVal=pdnum+"-"+no;
 	addCookie(cVal);
 	alert(getCookie("hotbodyBasket"));
