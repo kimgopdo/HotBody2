@@ -92,11 +92,11 @@ $(function(){
 		
 		var divEl = $("#filedown");
         
-		var divX = divEl.offset().left;
+		var divX = divEl.offset().left;	// 상대적인 좌표위치 확인함수, position(), 절대좌표 확인 및 이동함수 : offset()
 		var divY = divEl.offset().top;
 
 		// 레이어가 나타날 위치를 셋팅한다.
-		var divLeft =  divX-160;
+		var divLeft =  divX-50;
 		var divTop =  divY+25;
 		
 		// 레이어가 화면 크기를 벗어나면 위치를 바꾸어 배치한다.

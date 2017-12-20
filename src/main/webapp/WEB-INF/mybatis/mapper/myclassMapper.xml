@@ -322,5 +322,64 @@
             WHERE infoNum = #{infoNum}
       </delete>
 	
-
+<!-- 오늘의운동관련 쿼리 -->
+	<insert id="insertToday" parameterType="com.hotbody.myclass.TodayExer">
+	INSERT INTO todayexer(edate,exerciseNum,infoNum,userid)
+          VALUES (to_char(sysdate,'yyyy-mm-dd'), 
+                 (SELECT exerciseNum FROM (SELECT ROWNUM RN, exerciseNum FROM (SELECT exerciseNum FROM exerciseInfo ORDER BY DBMS_RANDOM.random())) WHERE RN = 1),
+                 (SELECT infoNum FROM (SELECT ROWNUM RN, infoNum FROM (SELECT infoNum FROM informationd ORDER BY DBMS_RANDOM.random())) WHERE RN = 1),
+                  #{userId})
+	</insert>
+	
+	<!-- 아이디,날짜에 맞는 데이터 있는 갯수가져오기 -->
+	<select id = "countToday" parameterType="map" resultType="Integer">
+		select nvl(count(*),0)
+		from todayexer
+		where edate = #{date}
+		and   userid = #{userId}
+	</select>
+	
+	<!-- 클래스등록이 되어있는 유저 갯수가져오기 -->
+	<select id="countUser" parameterType="map" resultType="Integer">
+		select nvl(count(*),0)
+		from register
+		where userid= #{userId}
+	</select>
+	
+	<sql id="where-list4">
+	  <if test="searchKey=='edate'">
+	       INSTR(edate, #{searchValue}) &gt; 0
+	  </if>
+	</sql>
+	
+	<!-- 데이터갯수 -->
+	<select id="dataCount4" resultType="Integer" parameterType="map">
+		SELECT NVL(COUNT(*),0) FROM todayexer
+		<where>
+			<if test="searchValue != null and searchValue !=''">  
+				<include refid="where-list4"/>
+			</if>
+		</where>
+	</select>
+	
+	<!-- 오늘운동리스트 -->
+	<select id="listToday" parameterType="map"
+	            resultType="com.hotbody.myclass.TodayExer">
+		SELECT * FROM (
+		    SELECT ROWNUM rnum, tb.* FROM (
+			     SELECT t.exerciseNum, t.infoNum, edate, userId, subject, exerciseName
+			        FROM todayexer t 
+			        JOIN informationd i on t.infoNum = i.infoNum
+			        JOIN exerciseInfo e on t.exerciseNum = e.exerciseNum
+                    <where>
+                         <if test="searchValue != null and searchValue != ''">
+			                  <include refid="where-list4"/>
+		                 </if>
+	                </where>
+	                ORDER BY edate DESC
+	<![CDATA[
+	        ) tb WHERE ROWNUM <= #{end}
+	    ) WHERE rnum >= #{start}
+	]]>
+	</select>
 </mapper>

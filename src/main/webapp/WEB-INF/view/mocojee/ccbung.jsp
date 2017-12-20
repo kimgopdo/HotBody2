@@ -5,49 +5,12 @@
 <%
 	String cp = request.getContextPath();
 %>
-<!DOCTYPE html>
-<html lang="en" >
-<head>
-  <meta charset="UTF-8">
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">  
   <link rel="stylesheet" href="resource/mobung/css/style.css">  
-</head>
-
-<script type="text/javascript">
-
-function check() {
-	var f = document.boardForm;
-	
-	if(!f.subject.value){
-		alert("제목을 입력하세요.");
-		f.subject.focus();
-		return false;
-	}
-	
-	if(!str || str=="<p>&nbsp;</p>") {
-		alert("내용을 입력하세요");
-		f.content.focus();
-		return false;
-	}
-	
-	return true;
-}
-function fileChange() {
-	var upload=document.getElementById("upload").value;
-	document.getElementById("fileName").value=upload.substring(0,upload.lastIndexOf("."));
-}
-function deleteFile() {
-	if(confirm("첨부파일을 삭제하시겠습니까?")){
-		location.href="<%=cp%>/myclass/addexercise/deleteFile?page=${page}&num=${dto.exerciseNum}"
-	}
-}
-</script>
 
 
-
-<body>
-  
 <form action="<%=cp%>/moco_board/ccbung/${mode}" method="post" name="boardForm" enctype="multipart/form-data" onsubmit="return submitContents(this);">
   <h1>벙개 등록하기</h1>
   <p> 즐거운 벙개를 등록합시다! </p>
@@ -129,5 +92,4 @@ function deleteFile() {
 <script  src="resource/mobung/js/index.js"></script>
 	
 
-</body>
-</html>
+

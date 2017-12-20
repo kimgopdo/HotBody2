@@ -91,7 +91,7 @@ fieldset[disabled] .form-control {
 function check() {
 	var f = document.boardForm;
 	var mode = "${mode}";
-	
+	var uid = "${sessionScope.member.userId}";
 	
 	if(!f.pdQSubject.value){
 		alert("제목을 입력하세요.");
@@ -102,6 +102,11 @@ function check() {
 		alert("내용을 입력하세요.");
 		f.pdQSubject.focus();
 		return false;
+	}
+	if(! uid){
+		alert("로그인 후 이용 가능합니다.")
+		location.href="<%=cp%>/member/login";
+		return;
 	}
 	
 	f.action="<%=cp%>/hotShop/pQnA_"+mode;
@@ -122,7 +127,7 @@ function check() {
 <tr height="30">
 	<td width="80">제목</td>
 	<td>
-		<input type="text" name="pdQSubject" style="width: 100%; height: 25px;" value="${dto.pdQSubject}">
+		<input type="text" name="pdQSubject" style="width: 100%; font-weight: bold; height: 25px;" readonly="readonly" value="[${dto.pdName}]${dto.pdQSubject}">
 	</td>
 </tr>
 

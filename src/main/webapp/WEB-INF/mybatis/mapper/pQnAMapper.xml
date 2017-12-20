@@ -56,14 +56,15 @@
 	<select id="listQna" resultType="com.hotbody.hotShop.qna.Qna" parameterType="map">
 		SELECT * FROM(
     		SELECT ROWNUM rnum, tb.* FROM(
-        		SELECT pdQCode, userName, pdQSubject, pdQCreated, answerNum, groupNum
-        		FROM pQnA
+        		SELECT q.pdQCode, q.userName, q.pdQSubject, q.pdQCreated, q.answerNum, q.groupNum, p.pdName, q.pdNum
+        		FROM pQnA q
+        		LEFT OUTER JOIN productList p ON q.pdNum=p.pdNum
         		<where>
 					<if test="searchValue != null and searchValue != ''">
 						<include refid="where-list"/>
 					</if>
 				</where>
-        		ORDER BY groupNum DESC, answerNum, pdQCode DESC
+        		ORDER BY q.groupNum DESC, q.answerNum, q.pdQCode DESC
      	<![CDATA[
     		) tb WHERE ROWNUM <= #{end}      
 		) WHERE rnum >= #{start}
@@ -74,8 +75,9 @@
 	<select id="listQnaArticle" resultType="com.hotbody.hotShop.qna.Qna" parameterType="map">
 		SELECT * FROM(
     		SELECT ROWNUM rnum, tb.* FROM(
-        		SELECT pdQCode, userName, pdQSubject, pdQCreated, answerNum, groupNum
-        		FROM pQnA
+        		SELECT q.pdQCode, q.userName, q.pdQSubject, q.pdQCreated, q.answerNum, q.groupNum, p.pdName, q.pdNum
+        		FROM pQnA q
+        		LEFT OUTER JOIN productList p ON q.pdNum=p.pdNum
         		<where>
 					<if test="searchValue != null and searchValue != ''">
 						<include refid="where-list"/>
@@ -93,8 +95,10 @@
 
 	<!-- 게시물 번호로 게시물 가져오기 -->
 	<select id="readQna" resultType="com.hotbody.hotShop.qna.Qna" parameterType="Integer">
-		SELECT pdQCode, p.userId, p.userName, pdQSubject, pdQContent, p.pdQCreated, pdNum, answerNum, groupNum
-		FROM pqna p JOIN member1 m ON p.userId=m.userId
+		SELECT p.pdQCode, p.userId, p.userName, p.pdQSubject, p.pdQContent, p.pdQCreated, p.pdNum, p.answerNum, p.groupNum, l.pdName
+		FROM pqna p 
+		JOIN member1 m ON p.userId=m.userId
+		LEFT OUTER JOIN productList l ON p.pdNum=l.pdNum
 		WHERE pdQCode = #{pdQCode}
 	</select>
 	

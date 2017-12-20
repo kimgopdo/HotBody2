@@ -1,5 +1,7 @@
 package com.hotbody.myclass;
 
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -275,7 +277,7 @@ public class MyClassServiceImpl implements MyClassService {
 		return result;
 	}
 
-	// 운동정보 보여주기
+	// 운동타입(가슴,팔,어깨 등...) 보여주기
 	@Override
 	public List<ExerciseType> readExerciseType() {
 		List<ExerciseType> list = null;
@@ -385,5 +387,59 @@ public class MyClassServiceImpl implements MyClassService {
 		}
 		return dto;
 	}
+	
+	/*
+	 * 오늘의운동정보
+	 */	
 
+
+	@Override
+	public List<TodayExer> listToday(Map<String, Object> map) {
+		List<TodayExer> list = null;
+		try {
+			list = dao.selectList("myClass.listToday",map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return list;
+	}
+
+	@Override
+	public int dataCount4(Map<String, Object> map) {
+		int result = 0;
+		try {
+			result = dao.selectOne("myClass.dataCount4",map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+	}
+
+	@Override
+	public int insertToday(TodayExer dto) {
+		
+		int result = 0;
+		try {	
+			
+			//오늘날짜,아이디 넘겨받아서
+			Calendar cal=Calendar.getInstance();
+			String date=String.format("%tF", cal);
+			
+			Map<String, Object> map=new HashMap<>();
+			map.put("date", date);
+			map.put("userId", dto.getUserId());
+			
+			int cntUser = dao.selectOne("myClass.countUser", map);
+			if(cntUser == 0)
+				return -1;
+			
+			int cnt = dao.selectOne("myClass.countToday", map);
+			if(cnt == 0)
+				result = dao.insertData("myClass.insertToday", dto);
+			
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+	}
 }

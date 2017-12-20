@@ -72,7 +72,7 @@ th {
 </div>
 
 
-<table style="width: 800px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0">
+<table style="width: 800px; margin: 20px auto 0; margin-bottom: 100px; border-collapse: collapse; border-spacing: 0">
 
 	<tr height="40">
 		<td align="left" colspan="7">

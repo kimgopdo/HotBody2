@@ -60,7 +60,7 @@ $(function(){
 
 </script>
 
-<div class="body-container" style="width: 700px; margin: 20px auto;">
+<div class="body-container" style="width: 700px; margin: 50px auto;">
 <div  class="body-title" style="font-size: 40px; width: 700px; margin: 20px auto 0; font-weight: bold; color: #666666;">${mode=='update'?'운동수정':'운동등록'}</div>
 <div style="width:700px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
 
@@ -166,7 +166,7 @@ $(function(){
 </c:if>
 </table>
 <div style="width:700px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
-<div style="width: 700px; margin: 20px auto 0;" align="center">
+<div style="width: 700px; margin: 20px auto 0; margin-bottom: 100px;" align="center">
 <button type="submit" class="btn-default02">${mode=='update'?'수정':'등록'}</button>
 <button type="button" class="btn-default02" onclick="javascript:location.href='<%=cp%>/myclass/addexercise/list?page=${page}';">${mode=='update'?'수정취소':'등록취소'}</button>
 <c:if test="${mode=='update'}">

@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.hotbody.common.FileManager;
 import com.hotbody.common.MyUtil;
+import com.hotbody.member.SessionInfo;
 
 @Controller("myClass.myClassController")
 public class MyClassController {
@@ -45,10 +46,121 @@ public class MyClassController {
 		return "myclass/diary/inputForm";
 	}
 	
-	@RequestMapping(value="/myclass/exercise/myexercise", method=RequestMethod.GET)
-	public String myexerciseForm() throws Exception{
+	
+	/*
+	 * 오늘의운동정보 관련
+	 */
+	
+	// 유용한정보상세보기 기능
+	@RequestMapping(value="/myclass/exercise/readinfo")
+	public String myinfoArticle(
+			@RequestParam(value="num") int num,
+			Model model) throws Exception {
+		
+		Information dto = service.readInfo(num);
+		model.addAttribute("dto", dto);
+		
+		return "myclass/exercise/readinfo";
+	}
+	
+	// 운동정보상세보기 기능
+	@RequestMapping(value="/myclass/exercise/readexer")
+	public String myexerArticle(
+			@RequestParam(value="num") int num,
+			Model model) throws Exception {
+		
+		Exercise dto = service.readExercise(num);
+		model.addAttribute("dto", dto);
+
+		return "myclass/exercise/readexer";
+	}
+	
+	@RequestMapping(value="/myclass/exercise/myexercise")
+	public String myexerciseForm(
+			HttpSession session,
+			TodayExer dto,
+			@RequestParam(value="page", defaultValue="1") int current_page,
+			@RequestParam(value="searchKey", defaultValue="edate") String searchKey,
+			@RequestParam(value="searchValue", defaultValue="") String searchValue,
+			HttpServletRequest req,
+			Model model) throws Exception {
+		
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		dto.setUserId(info.getUserId());	
+		int result =service.insertToday(dto);
+		
+		if(result == -1) {
+			return "redirect:/dietClass/list?type=0";
+		}
+		
+		String cp = req.getContextPath();
+   	    
+		int rows = 5; // 한 화면에 보여주는 게시물 수
+		int total_page = 0;
+		int dataCount = 0;
+   	    
+		if(req.getMethod().equalsIgnoreCase("GET")) { // GET 방식인 경우
+			searchValue = URLDecoder.decode(searchValue, "utf-8");
+		}
+		
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("searchKey", searchKey);
+        map.put("searchValue", searchValue);
+
+        dataCount = service.dataCount4(map);
+        if(dataCount != 0)
+            total_page = myUtil.pageCount(rows, dataCount) ;
+
+        if(total_page < current_page) 
+            current_page = total_page;
+
+        // 리스트에 출력할 데이터를 가져오기
+        int start = (current_page - 1) * rows + 1;
+        int end = current_page * rows;
+        map.put("start", start);
+        map.put("end", end);
+
+        List<TodayExer> list = service.listToday(map);
+
+        // 리스트의 번호
+        int listNum, n = 0;
+        Iterator<TodayExer> it=list.iterator();
+        while(it.hasNext()) {
+        	TodayExer data = it.next();
+            listNum = dataCount - (start + n - 1);
+            data.setListNum(listNum);
+            n++;
+        }
+        
+        String query = "";
+        String listUrl = cp+"/myclass/exercise/myexercise";
+        String articleUrl = cp+"/myclass/exercise/readexer?page=" + current_page;
+        if(searchValue.length()!=0) {
+        	query = "searchKey=" +searchKey + 
+        	         "&searchValue=" + URLEncoder.encode(searchValue, "utf-8");	
+        }
+        
+        if(query.length()!=0) {
+        	listUrl = cp+"/myclass/exercise/myexercise?" + query;
+        	articleUrl = cp+"/myclass/exercise/readexer?page=" + current_page + "&"+ query;
+        }
+        
+        String paging = myUtil.paging(current_page, total_page, listUrl);
+
+        model.addAttribute("list", list);
+        model.addAttribute("articleUrl", articleUrl);
+        model.addAttribute("page", current_page);
+        model.addAttribute("dataCount", dataCount);
+        model.addAttribute("total_page", total_page);
+        model.addAttribute("paging", paging);
+		
+		
 		return ".myclass.exercise.myexercise";
 	}
+	
+	
+	
+	
 	
 	@RequestMapping(value="/myclass/message/main", method=RequestMethod.GET)
 	public String messageForm() throws Exception{
@@ -484,11 +596,6 @@ public class MyClassController {
 			out.print("<script>alert('파일 다운로드가 실패했습니다.');history.back();</script>");
 		}
 	}
-	
-	
-	
-	
-	
 	
 	/*
 	 * 재료관련컨트롤러

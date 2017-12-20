@@ -13,43 +13,82 @@
 <script type="text/javascript">
 // 상품 수량 변경
 var sum = ${dto.pdPrice}; // 상품 가격
-var no = 1;
 
-function add(num){
-   if(num == -1){
-      if(no == 1){
-         return;
-      }
-      no--;
-      sum = sum - sum;
-   }else if(num == 1){
-      no++;
-      sum = sum + sum;
-   }
-   var tno1 = document.getElementById("no1");
-   var tno2 = document.getElementById("no2");
-   var sumCost = document.getElementById("cost");
-   
-   tno1.value = no;
-   tno2.innerHTML = no;
-   sumCost.innerHTML = numberWithCommas(sum);
+function add(){//인자값 : 수량업 1  , 수량 다운 시 -1
+	var cnt=$("#no1").val();
+	var tot=sum*cnt;
+	tot=numberWithCommas(tot);
+	$("#cost").text(tot);
+	$("#no2").text(cnt);
 }
 
 // 숫자 천 단위 마다 콤마 찍기
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
-
+function onlyNumber(){
+       event.returnValue=false;
+}
 function check(){
 	var uid="${sessionScope.member.userId}";
 	if(! uid){
-		modalFormLogin();
+		location.href="<%=cp%>/member/login";
 		return;
 	} else {
 		location.href="<%=cp%>/hotShop/pQnA_created";
 	}
 }
 
+$(function(){
+	listPage(1);
+	var tot=numberWithCommas("${dto.pdPrice}");
+	var cnt = $("#no1").val();
+	$("#cost").text(tot);
+	$("#no2").text(cnt);
+});
+
+function listPage(page){
+	var url = "<%=cp%>/hotShop/listQna";
+	var num = "${dto.pdnum}";
+	var q = "num=" + num + "&page=" + page;
+
+	$.ajax({
+		type:"post"
+		,url:url
+		,data:q
+		,success:function(a){
+			$("#listQna").html(a);
+		}
+		,beforeSend : function(e){
+			e.setRequestHeader("AJAX", true);
+		}
+		,error:function(e){
+			if(e.status == 403) {
+				alert("실패");
+				return;
+			}
+			console.log(e.responseText);
+		}
+	});
+}
+function insertCookie(pdnum){
+	addCookie(pdnum);
+}
+</script>
+<script>
+function payment(pdnum){
+	addCookie(pdnum);
+	alert(getCookie("hotbodyBasket"));
+	var array=getCookie("hotbodyBasket").split(",");
+	var member="${sessionScope.member.userId}";
+	if(member!=""){
+		location.href="<%=cp%>/hotShop/payment?cookie="+array;
+		return;
+	}else{
+		location.href="<%=cp%>/member/login?prePage=hotShop";
+		return;
+	}
+}
 </script>
 
 
@@ -89,27 +128,25 @@ function check(){
 					</tr>
 					<tr>
 						<th>가격</th>
-						<td><span>${dto.pdPrice}</span>원</td>
+						<td><input type="hidden" id="pdPrice" value="${dto.pdPrice}"><span>${dto.pdPrice}</span>원</td>
 					</tr>
 					
-					<tr>
+					<tr>                                                 
 						<th>수량</th>
 						<td>
-							<button type="button" onclick="add(-1)"  style="background: white; border: none; padding: 0px; outline: none;">▼&nbsp;</button>
-							<input type="text" value="1" id="no1" readonly="readonly" style="width: 25px;">
-							<button type="button" onclick="add(1)"style="background: white; border: none; padding: 0px; outline: none;">&nbsp;▲</button>
+							<input type="number" value="1" id="no1" min="1" style="width: 35px;" onkeypress="onlyNumber();" onclick="add();">
 						</td>
 					</tr>
 				</table>
 				
-				<hr style="border: solid 0.5px #BDBDBD; width: 100%">
+				<hr style="border: solid 0.5px #BDBDBD; width: 100%">                      
 				
 				<!-- total 가격, 수량 -->
 				<div style="width: 100%; height: 3%; margin-bottom: 22px;">
 					<div style=" float: left;">
 						<span style="font-weight: bold; font-size: 13px;">Total</span>
 						<span  style="font-size: 12px;">(Quantity) : </span>
-						<span style="font-weight: bold; font-size: 13px;"><span id="cost"></span>원</span>
+						<span style="font-weight: bold; font-size: 13px;" id="cost"> </span><span style="font-weight: bold; font-size: 13px;" id="cost">원</span>
 						<span style="font-size: 12px;">(<span id="no2"></span>개)</span>
 					</div>
 				</div>
@@ -122,12 +159,12 @@ function check(){
 						</button>
 					</div>
 					<div style="display: inline; float: left; margin-right: 10px;">
-						<button type="button" class="" style="width: 149px; height: 50px; background: white; outline: none; border: 1px solid black;">
+						<button type="button" class="" style="width: 149px; height: 50px; background: white; outline: none; border: 1px solid black;" onclick="insertCookie(${dto.pdnum});">
 							<span style="font-weight: bold; font-size: 18px;">Cart</span>
 						</button>
 					</div>
 					<div style="display: inline; float: left;">
-						<button type="button" class="" style="width: 149px; height: 50px; background: white; outline: none; border: 1px solid black;">
+						<button type="button" class="" style="width: 149px; height: 50px; background: white; outline: none; border: 1px solid black;" onclick="payment(${dto.pdnum});">
 							<span style="font-weight: bold; font-size: 18px;">Buy</span>
 						</button>
 					</div>
@@ -151,7 +188,7 @@ function check(){
 					<span style="font-size: 13px;">상품상세</span>
 				</li>
 				<li style="list-style:none; float: left; width: 366px; height:49.5px; padding-top:13px;" onclick="fnMove('3')">
-					<span style="font-size: 13px;">상품후기</span>
+					<span style="font-size: 13px;">Q&A 및 상품후기</span>
 				</li>
 			</ul>
 			
@@ -173,7 +210,7 @@ function check(){
 					<span style="font-size: 13px; font-weight: bold;">상품상세</span>
 				</li>
 				<li style="list-style:none; float: left; width: 366px; height:49.5px; padding-top:13px;" onclick="fnMove('3')">
-					<span style="font-size: 13px;">상품후기</span>
+					<span style="font-size: 13px;">Q&A 및 상품후기</span>
 				</li>
 			</ul>
 			
@@ -205,49 +242,9 @@ function check(){
 				</li>
 			</ul>
 			
-			<!-- 상품후기 게시판 리스트 -->
-			<div style="width: 95%;">
-				<form name="deleteListForm" method="post">
-					<table style="width: 100%; margin: 5px auto 0px; border-collapse: collapse;">
-						<tr style="border: 1px solid #F6F6F6; background: white; font-weight: bold; font-size: 13px; border-bottom: 1px solid #d5d5d5;" align="center" height="40px">
-							<!-- <td width="20"><input type="checkbox" name="chkAll" id="chkAll"></td> -->
-							<td width="60">번호</td>
-							<td width="380" style="padding-left: 20px;">제목</td>
-							<td width="80">작성자</td>
-							<td width="80">작성일</td>
-						</tr>
-						
-						<c:forEach var="dto" items="${list}">
-						<tr style="border: 1px solid #F6F6F6; background: white; font-size: 13px;" align="center" height="30px">
-							<%-- <td><input type="checkbox" name="nums" value="${dto.pdQCode}"></td> --%>
-							<td>${dto.listNum}</td>
-							<td align="left" style="padding-left: 5px; color: black;">
-							    <c:if test="${dto.answerNum!=0}">&nbsp;&nbsp;└ </c:if>
-								<a href="${articleUrl}&pdQCode=${dto.pdQCode}" style="color: gray; font-size: 13px;">${dto.pdQSubject}</a>
-							</td>
-							<td>${dto.userName}</td>
-							<td>${dto.pdQCreated}</td>
-						</tr>
-						</c:forEach>
-					</table>
-					<input type="hidden" name="page" value="${page}">
-					<input type="hidden" name="rows" value="${rows}">
-				</form>
-
-					<table style="width: 100%; margin-top: 10px; border-collapse: collapse;">
-						<tr style="font-size: 12px; border-top: 1px solid #d5d5d5;" align="center">
-							<td style="padding-top: 10px;">${paging}</td>
-						</tr>
-					</table>
-				<table>
-					<tr>
-						<td style="width: 1050px; float: right; padding-right: 10px;" align="right">
-							<button type="button" class="btn" style="color:black; background: white; border: 1px solid #BDBDBD; border-radius: 3px; height: 30px;" onclick="javascript:location.href='<%=cp%>/hotShop/pQnA_list?${query}';">리스트</button>
-							<button class="btn" style="color:black; background: white; border: 1px solid #BDBDBD; border-radius: 3px; height: 30px;" type="button" onclick="check();">Q&A 등록</button>
-						</td>
-					</tr>
-				</table>
-			</div>
+			<!-- 상품Q&A 게시판 리스트 -->
+			<div id="listQna"></div>
+			
 		</div>
 		</div>
      </div>

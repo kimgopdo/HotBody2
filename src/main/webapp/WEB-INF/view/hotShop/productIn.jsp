@@ -458,7 +458,7 @@ $.datepicker.setDefaults({
 	 showOtherMonths: true,    /* 이전/다음 달 일수 보이기 */ 
 	 selectOtherMonths: true,    /* 이전/다음 달 일 선택하기 */ 
 	 showOn: "button", 
-	 buttonImage: "img/calendar03.gif",
+	 buttonImage: "<%=cp%>/uploads/shopList/Calendar.png",
 	 buttonImageOnly: true, 
 	 minDate: '-30y', 
 	 closeText: '닫기', 
@@ -513,10 +513,10 @@ function showImg(){
 	var imgName=$("#productName option:selected").attr('data-imgSaveFilename');
 	//alert($("#productName").val());
 
-	if(imgName=="null"){
+	if(imgName==null){
 		$("#showImgArea").text("상품이미지가 없습니다.");
 	}else{
-		$("#showImgArea").html("<img width='50' height='80' onError='<%=cp%>/uploads/shopProduct/error.png' src=<%=cp%>/uploads/shopProduct/"+imgName+">");
+		$("#showImgArea").html("<img width='50' height='80' onError='<%=cp%>/uploads/shopProduct/error.png' src=<%=cp%>/uploads/shopList/"+imgName+">");
 	}
 }
 function call(){
@@ -605,13 +605,13 @@ function productInSend(f){
 		<td width="25%">상품이름</td>
 		<td width="10%">원가</td>
 		<td width="10%">입고수량</td>
-		<td width="10%">총액</td>
-		<td width="10%">유통기한</td>
+		<td width="7%">총액</td>
+		<td width="13%">유통기한</td>
 		<td width="10%">입고날</td>
 		<td width="10%">업체명</td>
 	</tr>
 	<tr class="productIn" height="70px" style="border-bottom: 2px solid #e7e7e7">
-		<td id="showImgArea">상품이미지</td>
+		<td id="showImgArea"></td>
 		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; ">
 		<select id="productName" name="pdnum" onchange="showImg();">
 			<option>::상품</option>
@@ -641,9 +641,9 @@ function productInSend(f){
 <form name="searchDateForm" method="post">
 <table style="width:100%; margin-top: 50px; margin-bottom:100px; border-collapse: collapse;">
 	<tr>
-		<td colspan="8">
+		<td colspan="8" style="vertical-align: bottom;">
 		조회기간: 
-	  		<input type="text" name="startDate" id="datepicker1" disabled="disabled"> ~ <input type="text" name="endDate" id="datepicker2" disabled="disabled">
+	  		<input type="text" name="startDate" id="datepicker1" disabled="disabled" style="padding: 4px;"> ~ <input type="text" name="endDate" id="datepicker2" disabled="disabled" style="padding: 4px;">
 	  		<button type="button" class="btn" onclick="productInList(1);">조회</button>
 		</td>
 	</tr>

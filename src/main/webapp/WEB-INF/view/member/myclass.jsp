@@ -5,20 +5,11 @@
 <%
 	String cp=request.getContextPath();
 %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-
-
 <div style="height: 100px">
 </div>
 
 <div align="center">
-	<h3>임지훈님 MY CLASS</h3>
+	<h3> ${sessionScope.member.userName}의 MY CLASS</h3>
 </div>
 
 
@@ -41,5 +32,3 @@
 </div>
 
 	
-</body>
-</html>
