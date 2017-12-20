@@ -28,7 +28,7 @@ ul.tabs li {
     float: left;
     text-align:center;
     cursor: pointer;
-    width:201px;
+    width:301px;
     height: 31px;
     line-height: 31px;
     border: 1px solid #eee;
@@ -48,7 +48,7 @@ ul.tabs li.active {
     border-top: none;
     clear: both;
     float: left;
-    width: 603px;
+    width: 903px;
 	height: 520px;
     background: #FFFFFF;
     margin-bottom: 200px;
@@ -69,7 +69,7 @@ ul.tabs li.active {
 }
 ;
  #container {
-    width: 603px;
+    width: 903px;
     margin: 0px auto 10px;
 }
 
@@ -175,6 +175,25 @@ $(function() {
 
 });
 
+
+
+
+$(function () {
+	
+
+	$("#readMessage").dialog({ //이벤트 발생했을때 보여주려면 autoOpen : false로 지정해줘야 한다. 
+			autoOpen: false, //레이어팝업 넓이 
+			width: 605, //뒷배경을 disable 시키고싶다면 true 
+			modal: true 
+		});
+
+	$("#readingMessage").click(function () {
+		$("#readMessage").dialog("open");
+		
+	});
+});
+
+
 </script>
 
 
@@ -233,7 +252,48 @@ $(function() {
 		</form>
          </div>
 
-<div style=" width:605px; margin: 50px auto; ">
+
+	<div id="readMessage" title="쪽지보내기"> 
+      <form method="post" enctype="multipart/form-data" action="<%=cp%>/mypage/sendMessage">
+        <table style="border: 1px solid #eee;  width: 98%; margin: 5px auto 5px;">
+			<tr height="31">
+				<td style=" width:15%; border: 1px solid #eeeeee;margin-left: 5px; ">보낸사람</td>
+				<td style=" width:35%; border: 1px solid #eee;">${dto.userId2}</td>
+				<td style=" width:15%; border: 1px solid #eeeeee;margin-left: 5px; ">보낸시간</td>
+				<td style=" width:35%; border: 1px solid #eee;">${dto.sCreated}</td>
+			</tr>
+			<tr>
+			    <td style="border: 1px solid #eee; margin-left: 5px; width:15%;">제목</td>
+				<td style="border: 1px solid #eee;"><input name="subject" type="text" style="width:100%; height: 25px;margin-top: 9px; "></td>	
+			</tr>
+
+		</table>
+	
+		<table  style=" width: 98%; margin: 5px auto 5px;">
+			<tr style="height: 31px; width: 100%; margin-top: 10px; margin-bottom: 10px " >
+				<td colspan="2" width="100%" background="#F2F2F2" ><img src="<%=cp%>/resource/images/647e16b7feb0fe7e0f4f3b9f5f402f5e.png" style="max-height: 18px;">파일첨부</td>
+			</tr>
+		</table>
+		<table id="fileView" style=" width: 98%; margin: 5px auto 5px;">
+			<tr style="height: 31px; width: 100%; margin-top: 10px; margin-bottom: 10px ">
+				<td colspan="2" style="width: 100%;" >
+					<input type="file" name="uploadFile" value="파일첨부" style="float: left; margin-left: 20px;" >
+				</td>
+			</tr>
+		</table>
+		<table  style=" width: 98%; margin: 5px auto 5px;">
+			<tr>
+				<td>*첨부된 파일 최대 20개, 총 용량 50M를 넘을 수 없습니다.</td>
+			</tr>	
+			<tr align="center" style="height: 31px; width: 100%; margin-top: 10px; margin-bottom: 10px ">
+				<td colspan="2"><input type="submit" value="보내기" > <input type="reset" value="취소"></td>
+			</tr>
+		</table>
+			
+		</form>
+         </div>
+
+<div style=" width:905px; margin: 50px auto; ">
 <div id="container">
     <ul class="tabs" style="border-bottom: none; margin: 0px auto;">
         <li class="active" rel="tab1">전체쪽지함</li>
@@ -251,20 +311,22 @@ $(function() {
 			
 			<tr style="width: 100%; border-style: none;">
 				<td  colspan="2" style="width: 100%; border: 1px solid;padding-top: 10px;">
-				<input  name="sender" style="background:white; width: 21%;height: 31px; cursor: pointer;" type="text" placeholder="보낸사람">
-				<input name="taker" style="background:white;width: 21%;height: 31px; cursor: pointer;" type="text" placeholder="받는사람">
-				<input  name="subject" style="background:white;width: 21%;height: 31px; cursor: pointer;" type="text" placeholder="제목">
-				<input  name="content" style="background:white;width: 21%;height: 31px; cursor: pointer; " type="text" placeholder="내용">
+				<input  name="ssender" style="background:white; width: 21%;height: 31px; cursor: pointer;" type="text" placeholder="보낸사람">
+				<input name="staker" style="background:white;width: 21%;height: 31px; cursor: pointer;" type="text" placeholder="받는사람">
+				<input  name="ssubject" style="background:white;width: 21%;height: 31px; cursor: pointer;" type="text" placeholder="제목">
+				<input  name="scontent" style="background:white;width: 21%;height: 31px; cursor: pointer; " type="text" placeholder="내용">
 				<button type="submit" style="margin-left: 15px;">찾기</button></td>
 			</tr>
 			
         </table>
         </form>
+        <form action="<%=cp%>/mypage/readingMessage" method="post"> 
         <table style="width: 98%; margin: 10px auto 5px;">
 			<tr style="width: 100%; border-style: none; margin-bottom: 20px;">
-				<td colspan="5" style="width: 50%"><input type="button" value="삭제"></td>
-				<td colspan="3" style="width: 50%">
-				<select name="kind">
+				<td colspan="6" style="width: 90%"><input type="button" value="삭제"></td>
+				<td colspan="3" style="width: 10%">
+			    <input style="float: right" type="button" value="새로고침">
+				<select style="height:26px; float: right" name="kind" >
 				<option selected="selected">전체보기</option>
 				<option>중요표시 쪽지만</option>
 				<option>첨부파일 쪽지만</option>
@@ -272,34 +334,39 @@ $(function() {
 				<option>안읽은 쪽지만</option>
 				<option>읽은 쪽지만</option>
 				</select>
-				<input type="button" value="새로고침">
+				
 			</tr>
 			
 			<tr style="width: 100%; border-style: none; border-style: double; background:#eee ">
-				<td style="width: 5%; border: 1px solid; "><input type="checkbox"></td>
-				<td style="width: 10%; border: 1px solid;">상태</td>
+				<td style="width: 3%; border: 1px solid; "><input type="checkbox"></td>
+				<td style="width: 6%; border: 1px solid;">상태</td>
+				<td style="width: 6%; border: 1px solid; display: hidden;"></td>
 				<td style="width: 12%; border: 1px solid;">보낸사람</td>
 				<td style="width: 12%; border: 1px solid;">받는사람</td>
-				<td style="width: 12%; border: 1px solid;">쪽지함</td>
-				<td style="width: 22%; border: 1px solid;">제목</td>
-				<td style="width: 12%; border: 1px solid;">크기(KB)</td>
-				<td style="width: 15%; border: 1px solid;">송/수신시간</td>
+				<td style="width: 14%; border: 1px solid;">쪽지함</td>
+				<td style="width: 27%; border: 1px solid;">제목</td>
+				<td style="width: 10%; border: 1px solid;">크기(KB)</td>
+				<td style="width: 16%; border: 1px solid;">송/수신시간</td>
+
 			</tr>
+			
 			<c:forEach var="dto" items="${list}">
 			<tr style="width: 100%; border-style: none;">
-				<td style="width: 5%; border: 1px solid; "><input type="checkbox"></td>
-				<td style="width: 10%; border: 1px solid;">상태</td>
+				<td style="width: 3%; border: 1px solid; "><input type="checkbox"></td>
+				<td style="width: 6%; border: 1px solid;">상태</td>
+				<td style="width: 6%; border: 1px solid; display: hidden;">${dto.mCode}</td>
 				<td style="width: 12%; border: 1px solid;">${dto.userId2}</td>
 				<td style="width: 12%; border: 1px solid;">${dto.userId}</td>
-				<td style="width: 12%; border: 1px solid;">${dto.box}</td>
-				<td style="width: 22%; border: 1px solid;">${dto.subject}</td>
-				<td style="width: 12%; border: 1px solid;">${dto.fileSize}</td>
-				<td style="width: 15%; border: 1px solid;">송/수신시간</td>
+				<td style="width: 14%; border: 1px solid;">${dto.box}</td>
+				<td style="width: 27%; border: 1px solid;"><a id="readingMessage" style="cursor: pointer;" type="submit" >${dto.subject}</a></td>
+				<td style="width: 10%; border: 1px solid;">${dto.totalFileSize}</td>
+				<td style="width: 16%; border: 1px solid;">${dto.sCreated}</td>
+
 			</tr>
 			</c:forEach>
-
+			
         </table>
-        
+        </form>
 			<div style="height: 100px;" align="center" >
 				<a style="margin-top:20px; position: relative; top: 10px;">${paging}</a>
 			</div>
