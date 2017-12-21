@@ -5,11 +5,25 @@ public class Disuse {
 	private int pdDisNum; // 폐기수량
 	private String pdDisDate; // 폐기날짜
 	private String pdDisReason; // 폐기사유
-	private int pdDisAmt; // 폐기금액
 	private int pdNum; // 상품번호
 	private String pdName; // 상품명
 	private String useriId; // 아이디
+	private int pdRawPrice; // 원가
+	private int pdDisAmt = pdDisNum * pdRawPrice; // 폐기금액(소비자가)
+	private int pdStCount;
 	
+	public int getPdRawPrice() {
+		return pdRawPrice;
+	}
+	public void setPdRawPrice(int pdRawPrice) {
+		this.pdRawPrice = pdRawPrice;
+	}
+	public int getPdStCount() {
+		return pdStCount;
+	}
+	public void setPdStCount(int pdStCount) {
+		this.pdStCount = pdStCount;
+	}
 	public String getPdName() {
 		return pdName;
 	}

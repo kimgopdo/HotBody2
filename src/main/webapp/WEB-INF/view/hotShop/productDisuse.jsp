@@ -41,23 +41,26 @@
 		</tr>
 
 		<tr style="width: 100%; height: 100px; text-align: center; font-size: 12px;" align="center">
-			<td style="width: 10%;">14</td>
+			<td style="width: 10%;">${dto.pdNum}</td>
 			<td style="width: 10%;">
-				<select style="height: 35px; width: 100%; padding-left: 10px;padding-bottom: 5px;  border: 1px solid black; border-radius: 2px; outline: none; cursor: pointer;">
+				<select id="productName" name="pdnum" style="height: 35px; width: 100%; padding-left: 10px;padding-bottom: 5px;  border: 1px solid black; border-radius: 2px; outline: none; cursor: pointer;">
 					<option selected="selected">■ 상품선택</option>
+					<c:forEach var="dto" items="${productList}">
+						<option value="${dto.pdnum}">${dto.pdName}</option>
+					</c:forEach>
 				</select>
 			</td>
-			<td>30,000</td>
-			<td>40,000</td>
-			<td>13</td>
+			<td>${dto.pdRawPrice}</td>
+			<td>${dto.pdDisAmt}</td>
+			<td>${dto.pdStCount}</td>
 			<td>
 				<input type="text" name="pdDisNum" id="pdDisNum" style="width: 30%; height: 25px; border: 1px solid black; border-radius: 2px; outline: none; padding-left: 2px;">
 			</td>
-			<td style="font-weight: bold;">(주)하림</td>
-			<td>2017-12-29<br>19:55:32</td>
+			<td>업체명(일단 대기)</td>
+			<td>${dto.pdDisDate}</td>
 			<td><input type="text" name="pdDisReason" id="pdDisReason" placeholder="폐기사유 입력.." style="width: 90%; height: 25px; outline: none; border-radius: 2px; border: 1px solid black; padding-left: 2px;"></td>
 			<td>
-				<button type="button" style="width: 100px; height: 35px; border: 1px solid black; background: white; border-radius: 2px; font-size: 15px; outline: none; cursor: pointer;" onclick="check(this.form);">
+				<button type="button" style="width: 100px; height: 35px; border: 1px solid black; background: white; border-radius: 2px; font-size: 15px; outline: none; cursor: pointer;" onclick="check();">
 					<span style="font-weight: bold;">폐기완료</span>
 				</button>
 			</td>
@@ -67,7 +70,8 @@
 </body>
 
 <script type="text/javascript">
-function check(f) {
+function check() {
+	var f = document.disuseForm;
 	var uid = "${sessionScope.member.userId}";
 	
 	if(! f.pdDisNum.value){

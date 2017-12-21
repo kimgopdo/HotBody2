@@ -8,4 +8,13 @@
 						VALUES (productDis_seq.NEXTVAL, #{pdDisNum}, sysdate, #{pdDisReason}, #{pdDisAmt}, #{pdNum})
 	</insert>
 	
+	<select id="readDisuse" parameterType="map" resultType="com.hotbody.hotShop.disuse.Disuse">
+		SELECT d.pdNum, d.pdDisCode, d.pdDisNum, d.pdDisDate, d.pdDisReason, d.pdDisAmt, l.pdName, l.pdStCount, i.pdRawPrice
+		FROM productDis d
+		LEFT OUTER JOIN productList l ON d.pdNum=l.pdNum
+        LEFT OUTER JOIN productIn i ON l.pdNum=i.pdNum
+		WHERE pdName=#{pdName}
+	</select>
+	
+	
 </mapper>
