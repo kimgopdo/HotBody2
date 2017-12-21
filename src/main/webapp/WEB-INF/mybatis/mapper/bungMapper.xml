@@ -6,8 +6,21 @@
 		INSERT INTO mocojee5 (mosubNum, mosubName, moSpot, moPlace1, moPlace2, maxPeople,  moCost, moStart, moEnd , moDate, geNum, moCreated )
 			VALUES( subNum_seq.NEXTVAL ,  #{mosubName}, #{moSpot},
 			 				#{moPlace1}, #{moPlace2}, #{maxPeople}, #{moCost}, #{moStart}, #{moEnd}, 
-			 		TO_DATE(#{moDate}, 'mm/dd/yyyy'), #{geNum}, SYSDATE)
-					
+			 		TO_DATE(#{moDate}, 'mm/dd/yyyy'), #{geNum}, SYSDATE)					
 	</insert>
+	
+	<!-- 리스트 -->
+	<select id="listBung" resultType="com.hotbody.mocobung.Bung" parameterType="map">
+		SELECT * FROM (
+			SELECT rnum, tb.* FROM(
+				SELECT mosubNum, mosubName, 
+					TO_CHAR(moDate, 'mm/dd/yyyy') as moDate
+				FROM mocojee5
+				ORDER BY mosubNum DESC
+				<![CDATA[
+					) tb WHERE ROWNUM <= #{end}
+					 ) WHERE rnum >=#{start}
+				]]>
+	</select>
 	
 </mapper>

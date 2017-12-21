@@ -382,4 +382,42 @@
 	    ) WHERE rnum >= #{start}
 	]]>
 	</select>
+	
+	
+<!-- 다이어트일기 -->
+	<select id="diarySeq" resultType="Integer">
+		select diary_seq.nextval from dual
+	</select>
+	
+	<!-- 다이어트일기 추가 -->
+	<insert id="insertDietDiary" parameterType="com.hotbody.myclass.Diary">
+		insert into dietdiary(diaryNum,weight,dietdate,feedback,userid,subject,content) 
+					  values(#{diaryNum},#{weight},#{dietDate},#{feedback},#{userId},#{subject},#{content})
+	</insert>
+	
+	<!-- 식단일기 추가 -->
+	<insert id="insertDiet" parameterType="com.hotbody.myclass.Diary">
+		insert into diet(diaryNum,bldCode) 
+					  values(#{diaryNum},#{bldCode})
+	</insert>
+	
+	<!-- 식단상세 추가 -->
+	<insert id="insertDietDetails" parameterType="com.hotbody.myclass.Diary">
+		insert into dietdetails(dietNumD,ingrerdientsNum,totalUnit,diaryNum,bldCode) 
+					  values(dietd_seq.nextval,#{ingrerdientsNum},#{totalUnit},#{diaryNum},#{bldCode})
+	</insert>
+
+	<!-- 미션성공여부 추가 -->
+	<insert id="insertMisCheck" parameterType="com.hotbody.myclass.Diary">
+		insert into mischeck(missionNum,chSuccess,diaryNum) 
+					  values(#{missionNum},#{chSuccess},#{diaryNum})
+	</insert>
+
+	<!-- 운동일기 추가 -->
+	<insert id="insertDiaryExe" parameterType="com.hotbody.myclass.Diary">
+		insert into exercise(exerciseNum,exerciseTime,diaryNum) 
+					  values(#{exerciseNum},#{exerciseTime},#{diaryNum})
+	</insert>
+	
+	
 </mapper>

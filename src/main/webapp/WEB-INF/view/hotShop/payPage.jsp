@@ -37,8 +37,14 @@
 }
 </style>
 <script>
-
+var tel;
+var email;
 $(function(){
+	var userId="${sessionScope.member.userId}";
+	if(userId==""){
+		location.href="<%=cp%>/member/login";
+		return;
+	}
 	var count=$("input[name=pdPrice]");
 	for(var n=1; n<=count.length;n++){
 		var sum=$("#pdPrice"+n).val();
@@ -50,8 +56,38 @@ $(function(){
 	}
 	totalMoney();
 	pointCal();
+	tel="${memberDto.tel1}";
+	email="${memberDto.email2}"
+	if(tel){
+		var telN;
+		tel=='010'? telN=0 : tel=='011'? telN=1 : tel=='016'? telN=2 : tel=='017'? telN=2 : tel=='018'? telN=3 : telN=4
+			$("#phoneSelect option:eq("+telN+")").attr("selected", "selected");
+	}
+	if(email){
+		var emailN;
+		email=='naver.com'? emailN=0 : email=='gmail.com'? emailN=1 : email=='daum.net'? emailN=2 : emailN=3
+		$("#emailSelect option:eq("+emailN+")").attr("selected", "selected");
+	}
 })
-
+function selectInfo(n){
+	if(n==0){
+		tel=='010'? telN=0 : tel=='011'? telN=1 : tel=='016'? telN=2 : tel=='017'? telN=2 : tel=='018'? telN=3 : telN=4
+		$("#phoneSelect2 option:eq("+telN+")").attr("selected", "selected");
+		$("#tel2").val("${memberDto.tel2}");
+		$("#tel3").val("${memberDto.tel3}");
+		$("#memberName").val("${memberDto.userName}");
+		$("#zip").val("${memberDto.postNum}");
+		$("#addr1").val("${memberDto.addr1}");
+		$("#addr2").val("${memberDto.addr2}");
+	}else{
+		$("#tel2").val("");
+		$("#tel3").val("");
+		$("#memberName").val("");
+		$("#zip").val("");
+		$("#addr1").val("");
+		$("#addr2").val("");
+	}
+}
 function add(n){//인자값 : 수량업 1  , 수량 다운 시 -1
 	var sum=$("#pdPrice"+n).val();
 	sum=uncomma(sum);
@@ -78,6 +114,8 @@ function totalMoney(){
 	$("#totPay2").text(totalMoney);
 	$("#result1").text(totalMoney);
 	$("#result2").text(totalMoney);
+	totalMoney=uncomma(totalMoney);
+	$("input[name=totalPay]").val(totalMoney);
 }
 function pointCal(){
 	var regNumber = /^[0-9]*$/;
@@ -102,6 +140,8 @@ function pointCal(){
 	$("#point2").text(point);
 	$("#result1").text(totPay);
 	$("#result2").text(totPay);
+	totPay=uncomma(totPay);
+	$("input[name=totalPay]").val(totPay);
 }
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -114,8 +154,20 @@ function uncomma(str) {
 function onlyNumber(){
        event.returnValue=false;
 }
-function send(f){
-	f;
+function send(){
+	var n=$("form[name=paymentPageForm]").serializeArray();
+	console.log(n);
+	var url="<%=cp%>/hotShop/payment";
+	$.ajax({
+		type:"post"
+		,url:url
+		,data:n
+		,dataType:"json"
+		,async: false
+		,success:function(e){
+			
+		}
+	})
 }
 function clear(){
 	alert("아");
@@ -143,7 +195,7 @@ function clear(){
 	<c:forEach var="dto" items="${list}">
 	<tr style="height:150px;">
 		<td width="2%">
-			<input type="hidden" name="${dto.pdnum}">
+			<input type="hidden" name="pdnum" value="${dto.pdnum}">
 			<input type="hidden" id="pdPrice${dto.listNum}" name="pdPrice" value="${dto.pdPrice}">
 			<input type="hidden" value="${dto.listNum}">
 			${dto.listNum}
@@ -160,7 +212,7 @@ function clear(){
 			</fmt:formatNumber>원
 		</td>
 		<td width="5%">
-			<input type="number" value="${dto.pCnt}" id="no1${dto.listNum}" min="0" style="width: 35px;" onkeypress="onlyNumber();" onclick="add(${dto.listNum}); totalMoney();">
+			<input type="number" name="amount" value="${dto.pCnt}" id="no1${dto.listNum}" min="0" style="width: 35px;" onkeypress="onlyNumber();" onclick="add(${dto.listNum}); totalMoney();">
 		</td>
 		<td width="5%">
 			190
@@ -180,25 +232,25 @@ function clear(){
 	</tr>
 	<tr>
 		<td colspan="2">주문하시는분<span style="color: red;">*</span></td>
-		<td colspan="6" style="text-align: left;"><input type="text"></td>
+		<td colspan="6" style="text-align: left;"><input type="text" value="${memberDto.userName}"></td>
 	</tr>
 	<tr>
 		<td colspan="2">휴대전화<span style="color: red;">*</span></td>
 		<td colspan="6" style="text-align: left;">
-			<select>
+			<select id="phoneSelect">
 			<option value="010">010</option>
 			<option value="011">011</option>
 			<option value="016">016</option>
 			<option value="017">017</option>
 			<option value="018">018</option>
 			<option value="019">019</option>
-			</select>-<input type="text">-<input type="text"></td>
+			</select>-<input type="text" value="${memberDto.tel2}">-<input type="text" value="${memberDto.tel3}"></td>
 	</tr>
 	<tr>
 		<td colspan="2">이메일<span style="color: red;">*</span></td>
 		<td colspan="6" style="text-align: left;">
-			<input type="text">@<input type="text">
-				<select>
+			<input type="text" value="${memberDto.email1}">@<input type="text" value="${memberDto.email2}">
+				<select id="emailSelect">
 					<option value="naver.com">naver.com</option>
 					<option value="gmail.com">gmail.com</option>
 					<option value="daum.net">daum.net</option>
@@ -210,53 +262,53 @@ function clear(){
 		<td colspan="8" style="text-align: left; font-size:20px; font-weight: bold; vertical-align: bottom;"><img src="<%=cp%>/resource/images/shop_images/delivery-truck.png">&nbsp;&nbsp; 배송정보</td>
 	</tr>
 	<tr>
-		<td colspan="8" style="text-align: left; "> <input type="radio" name="info" onclick="">주문자 정보와 동일&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="info">새로작성</td>
+		<td colspan="8" style="text-align: left; "> <input type="radio" name="info" onclick="selectInfo(0)">주문자 정보와 동일&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="info" onclick="selectInfo(1)">새로작성</td>
 
 	</tr>
 	<tr>
 		<td colspan="2">받으시는분<span style="color: red;">*</span></td>
-		<td colspan="6" style="text-align: left;"><input type="text"></td>
+		<td colspan="6" style="text-align: left;"><input type="text" id="memberName" name="takerName"></td>
 	</tr>
 	<tr style="height: 100px;">
 		<td colspan="2">배송지</td>
-		<td colspan="6" style="text-align: left;"><input type="text"> <button type="button">우편번호</button><br><input type="text"><br><input type="text"> </td>
+		<td colspan="6" style="text-align: left;"><input type="text" id="zip" name="postNum"> <button type="button">우편번호</button><br><input type="text" id="addr1" name="takerAddr1"><br><input type="text" id="addr2" name="takerAddr2"> </td>
 	</tr>
 	<tr>
 		<td colspan="2">연락 가능한 번호1<span style="color: red;">*</span></td>
 		<td colspan="6" style="text-align: left;">
-			<select>
+			<select id="phoneSelect2" name="tel1_1">
 			<option value="010">010</option>
 			<option value="011">011</option>
 			<option value="016">016</option>
 			<option value="017">017</option>
 			<option value="018">018</option>
 			<option value="019">019</option>
-			</select>-<input type="text">-<input type="text">
+			</select>-<input type="text" id="tel2" name="tel1_2">-<input type="text" id="tel3" name="tel1_3">
 		</td>
 	</tr>
 	<tr>
 		<td colspan="2">연락 가능한 번호2</td>
 		<td colspan="6" style="text-align: left;">
-			<select>
+			<select name="tel2_1">
 			<option value="010">010</option>
 			<option value="011">011</option>
 			<option value="016">016</option>
 			<option value="017">017</option>
 			<option value="018">018</option>
 			<option value="019">019</option>
-			</select>-<input type="text">-<input type="text">
+			</select>-<input type="text" name="tel2_2">-<input type="text" name="tel2_3">
 		</td>
 	</tr>
 	<tr>
 		<td colspan="2">배송메세지</td>
-		<td colspan="6" style="text-align: left;"><textarea rows="3" style="width: 300px;"></textarea> </td>
+		<td colspan="6" style="text-align: left;"><textarea rows="3" style="width: 300px;" name="memo"></textarea> </td>
 	</tr>
 	<tr>
 		<td colspan="8" style="text-align: left; font-size:20px; font-weight: bold; vertical-align: bottom;"><img src="<%=cp%>/uploads/shopList/give-money.png">&nbsp;&nbsp; 결제예정금액</td>
 	</tr>
 	<tr>
 		<td colspan="2">사용할 포인트</td>
-		<td colspan="6" style="text-align: left;"> <input type="number" value="0" id="usingPoint" onkeyup="clear(); pointCal();"> </td>
+		<td colspan="6" style="text-align: left;"> <input type="number" name="milelagePay" value="0" id="usingPoint" onkeyup="clear(); pointCal();"> </td>
 	</tr>
 	
 	<tr>
@@ -271,11 +323,12 @@ function clear(){
 		<span>${dto.pdName} 수량: <span id="cnt${dto.listNum}"></span>개<br><br></span>
 		</c:forEach>
 		</td>
-		<td colspan="5" style="border-left: 2px solid #e7e7e7"><span id="totPay2"></span>원 - <span id="point2"></span>포인트 = <span id="result1"></span>원</td>
+		<td colspan="5" style="border-left: 2px solid #e7e7e7"><span id="totPay2"></span>원 - <span id="point2"></span>포인트 = <span id="result1"></span>원<input type='hidden' name='totalPay'></td>
 	</tr>
 	<tr>
 		<td colspan="3">총액 :  <span id="result2"></span>원</td>
-		<td colspan="2"><button type="button" style="width: 100%; height: 80px; padding: 0; margin: 0;" onclick="send(this.form);">주문하기</button></td>
+		<td colspan="2"><button type="button" style="width: 100%; height: 80px; padding: 0; margin: 0;" onclick="send();">주문하기</button></td>
 	</tr>
 </table>
+<input type="hidden" name="userId" value="${sessionScope.member.userId}">
 </form>

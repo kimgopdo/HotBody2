@@ -7,12 +7,34 @@ import org.springframework.web.multipart.MultipartFile;
 public class Message {
 	
 	private String userId,userId2,subject,content;
-	private String state,box;
-	private long fileSize;
-	private int fileCode,mCode;
+	private String state,box,sCreated;
+	private long fileSize,totalFileSize;
+	private int fileCode,mCode,fileCount;
+	
+	
+	public int getFileCount() {
+		return fileCount;
+	}
+	public void setFileCount(int fileCount) {
+		this.fileCount = fileCount;
+	}
 	private String originalFilename,saveFilename,upDir;
 	private List<MultipartFile> uploadFile;
 	
+	
+	
+	public String getsCreated() {
+		return sCreated;
+	}
+	public void setsCreated(String sCreated) {
+		this.sCreated = sCreated;
+	}
+	public long getTotalFileSize() {
+		return totalFileSize;
+	}
+	public void setTotalFileSize(long totalFileSize) {
+		this.totalFileSize = totalFileSize;
+	}
 	public String getUserId() {
 		return userId;
 	}

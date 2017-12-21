@@ -22,4 +22,5 @@ public interface HotShopService {
 	public int dataCount_qna(Map<String, Object> map);
 	public int dataCount_review(Map<String, Object> map);
 	public int productHitCount(int pdnum);
+	public int insertPayment(Payment dto);
 }

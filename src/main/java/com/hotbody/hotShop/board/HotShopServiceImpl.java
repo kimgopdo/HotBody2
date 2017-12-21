@@ -204,4 +204,24 @@ public class HotShopServiceImpl implements HotShopService{
 		}
 		return result;
 	}
+	@Override
+	public int insertPayment(Payment dto) {
+		int result=0;
+		try {
+			dao.insertData("product.insertPayment", dto);
+			dto.setDelOrder(dao.selectOne("product.readDelOrder", dto.getUserId()));
+			dto.setClassNum(64);
+			int []amount=dto.getAmount();
+			int []pdnum=dto.getPdnum();
+			for(int n=0;n<amount.length;n++) {
+				dto.setAmount_one(amount[n]);
+				dto.setPdnum_one(pdnum[n]);
+				dao.insertData("product.insertCartList", dto);
+			}
+			result=dao.insertData("product.insertPayInfo", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 }

@@ -12,6 +12,16 @@ public class Bung {
 	private int moCost;
 	private String moCreated;
 	private int geNum;
+	
+	private int listNum;
+		
+	
+	public int getListNum() {
+		return listNum;
+	}
+	public void setListNum(int listNum) {
+		this.listNum = listNum;
+	}
 	public int getMosubNum() {
 		return mosubNum;
 	}

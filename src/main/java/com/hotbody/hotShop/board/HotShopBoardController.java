@@ -22,14 +22,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hotbody.common.FileManager;
 import com.hotbody.common.MyUtil;
+import com.hotbody.member.Member;
+import com.hotbody.member.MemberService;
 @Controller("hotShop.board")
 public class HotShopBoardController {
 	@Autowired
 	private HotShopService service;
 	@Autowired
-	FileManager file;
+	private FileManager file;
 	@Autowired
-	MyUtil util;
+	private MyUtil util;
+	@Autowired
+	private MemberService mService;
 	//상품분류에따른 list 
 	//main list는 따로 드래그엔 드롭으로 순서 변경 가능하게 만들꺼임.
 	@RequestMapping("/hotShop/productList")
@@ -101,11 +105,30 @@ public class HotShopBoardController {
 	    	dto.setListNum(listNum);
 	    	list.add(dto);
 	    }
-	    System.out.println(userId);
+	    Member memberDto=mService.readMember(userId);
+	    String tel=memberDto.getTel();
+	    String email=memberDto.getEmail();
+	    String []emailSplit=email.split("@");
+	    String []telSplit=tel.split("-");
+	    memberDto.setTel1(telSplit[0]);
+	    memberDto.setTel2(telSplit[1]);
+	    memberDto.setTel3(telSplit[2]);
+	    memberDto.setEmail1(emailSplit[0]);
+	    memberDto.setEmail2(emailSplit[1]);
+	    model.addAttribute("memberDto", memberDto);
 	    model.addAttribute("list", list);
 		return ".hotShop.payPage";
 	}
-	
+	@RequestMapping(value="/hotShop/payment" ,method=RequestMethod.POST)
+	@ResponseBody
+	public String paymentSubmit(
+			Payment dto
+			) {
+		dto.setTakerTel(dto.getTel1_1()+dto.getTel1_2()+dto.getTel1_3());
+		dto.setTakerPhone(dto.getTel2_1()+dto.getTel2_2()+dto.getTel2_3());
+		service.insertPayment(dto);
+		return "success";
+	}
 	//상품 아티클
 	@RequestMapping(value="/hotShop/shopArticle")
 	public String shopArticle(
