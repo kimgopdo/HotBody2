@@ -6,17 +6,51 @@
 		SELECT survey_seq.NEXTVAL FROM dual
 	</select>
 	
-	<select id="exSeq" resultType="Integer">
-		SELECT ex_seq.NEXTVAL FROM dual
-	</select>
-	
 	<insert id="insertSurvey" parameterType="com.hotbody.survey.Survey">
-		INSERT INTO survey(qCode, qOrder, sOrO, qType, qContent)
-		VALUES(#{qCode}, #{qOrder}, #{sOrO}, #{qType, jdbcType=VARCHAR}, #{qContent})
+		INSERT INTO survey(questionCode, questionOrder, sOrO, questionType, questionContent)
+		VALUES(#{questionCode}, #{questionOrder}, #{soro}, #{questionType, jdbcType=VARCHAR}, #{questionContent})
 	</insert>
 	
 	<insert id="insertEx" parameterType="com.hotbody.survey.Survey">
-		INSERT INTO surveyEx(exNum, qCode, exOrder, exContent, exScore)
-		VALUES(ex_seq.NEXTVAL, #{qCode}, #{exOrder}, #{exContent}, #{exScore})
+		INSERT INTO surveyEx(questionCode, exOrder, exContent, exScore)
+		VALUES(#{questionCode}, #{exOrder}, #{exContent}, #{exScore})
 	</insert>
+	
+	<select id="listSurvey" resultType="com.hotbody.survey.Survey">
+		SELECT questionCode, questionContent, questionOrder, questionType, sOrO
+		FROM survey
+		ORDER BY questionOrder
+	</select>
+
+	<update id="updateOrder" parameterType="map">
+		UPDATE survey SET questionOrder=#{questionOrder} WHERE questionCode=#{questionCode}
+	</update>
+	
+	<select id="readEx" resultType="com.hotbody.survey.Survey">
+		SELECT questionCode, exOrder, exContent, exScore
+		FROM surveyEx
+		ORDER BY exOrder
+	</select>
+	
+	<select id="surveyCount" resultType="Integer">
+		SELECT COUNT(*) FROM survey
+	</select>
+	
+	<select id="readSurvey" parameterType="Integer" resultType="com.hotbody.survey.Survey">
+		SELECT questionCode, questionContent, questionOrder, questionType, soro
+		FROM survey 
+	    WHERE questionOrder IN (#{questionOrder})	
+	</select>
+	
+	<delete id="deleteSurvey" parameterType="Integer">
+		DELETE survey WHERE questionCode = #{questionCode}
+	</delete>
+	
+	<delete id="deleteEx" parameterType="Integer">
+		DELETE surveyEx WHERE questionCode = #{questionCode}
+	</delete>
+	
+	<delete id="deleteSurveyResult" parameterType="Integer">
+		DELETE surveyDetails WHERE questionCode = #{questionCode}
+	</delete>
 </mapper>
