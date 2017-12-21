@@ -128,6 +128,9 @@ function deleteReply(cNum, page){
 	});
 }
 
+function backPage(){
+	history.back();
+}
 	
 </script>
 
@@ -148,9 +151,22 @@ function deleteReply(cNum, page){
 			    <td width="35%" align="left" style="padding-left: 5px;">
 			      	작성자 : ${dto.userName}(${dto.userId})
 			    </td>
-			    <td width="30%" align="left" style="padding-left: 5px;">
-			      	평점 : ${dto.starScore}
-			    </td>
+    			<c:if test="${dto.starScore=='1'}">
+				<td><img src="<%=cp%>/uploads/shopStar/star_1.PNG" style="width: 120px; height: 30px;"></td>
+				</c:if>
+				<c:if test="${dto.starScore=='2'}">
+				<td><img src="<%=cp%>/uploads/shopStar/star_2.PNG" style="width: 120px; height: 30px;"></td>
+				</c:if>
+				<c:if test="${dto.starScore=='3'}">
+				<td><img src="<%=cp%>/uploads/shopStar/star_3.PNG" style="width: 120px; height: 30px;"></td>
+				</c:if>
+				<c:if test="${dto.starScore=='4'}">
+				<td><img src="<%=cp%>/uploads/shopStar/star_4.PNG" style="width: 120px; height: 30px;"></td>
+				</c:if>
+				<c:if test="${dto.starScore=='5'}">
+				<td><img src="<%=cp%>/uploads/shopStar/star_5.PNG" style="width: 120px; height: 30px;"></td>
+				</c:if>
+
   			    <td width="35%" align="right" style="padding-right: 5px;">
 			      	작성일 : ${dto.reviewCreated}
 			    </td>
@@ -170,8 +186,8 @@ function deleteReply(cNum, page){
 			          <button type="button" class="btn" style="background: white; border: 1px solid #BDBDBD; border-radius: 3px; height: 30px; color: black; cursor: point;" onclick="deleteReview();">삭제</button>
 			       </c:if>
 			    </td>
-			
 			 	<td align="right">
+			 		<button type="button" class="btn" style="background: white; border: 1px solid #999999; border-radius: 3px; height: 30px; color: black;" onclick="backPage();">뒤로가기</button>
 			        <button type="button" class="btn" style="background: white; border: 1px solid #999999; border-radius: 3px; height: 30px; color: black;" onclick="javascript:location.href='<%=cp%>/hotShop/review_list?${query}';">리스트</button>
 			    </td>
 			</tr>

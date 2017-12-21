@@ -11,16 +11,19 @@
 	
 	<!-- 리스트 -->
 	<select id="listBung" resultType="com.hotbody.mocobung.Bung" parameterType="map">
-		SELECT * FROM (
-			SELECT rnum, tb.* FROM(
 				SELECT mosubNum, mosubName, 
 					TO_CHAR(moDate, 'mm/dd/yyyy') as moDate
 				FROM mocojee5
-				ORDER BY mosubNum DESC
-				<![CDATA[
-					) tb WHERE ROWNUM <= #{end}
-					 ) WHERE rnum >=#{start}
-				]]>
+				WHERE geNum=#{mocoNum}
+				ORDER BY mosubNum DESC 
 	</select>
+	
+	<!-- 글 보기 -->
+	<select id="readBung" resultType="com.hotbody.mocobung.Bung" parameterType="Integer">
+		SELECT mosubNum, mosubName, moSpot, moPlace1, moPlace2, maxPeople,  moCost, moStart, moEnd , moDate
+		FROM mocojee5 
+		WHERE mosubNum=#{geNum}
+	</select>
+	
 	
 </mapper>
