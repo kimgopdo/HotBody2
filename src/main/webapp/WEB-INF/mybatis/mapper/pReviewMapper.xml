@@ -50,9 +50,13 @@
 	<select id="listReview" resultType="com.hotbody.hotShop.review.Review" parameterType="map">
 		SELECT * FROM(
     		SELECT ROWNUM rnum, tb.* FROM(
-        		SELECT r.reviewCode, r.userName, r.reviewSubject, r.reviewCreated, p.pdName, r.pdNum
+        		SELECT r.reviewCode, r.userName, r.reviewSubject, r.reviewCreated, p.pdName, r.pdNum, NVL(replyCount, 0) replyCount
         		FROM shreviews r
         		LEFT OUTER JOIN productList p ON r.pdNum=p.pdNum
+        		 LEFT OUTER JOIN(
+					    SELECT reviewCode, COUNT(*) replyCount 
+					    FROM recomment GROUP BY reviewCode
+					)c ON r.reviewCode = c.reviewCode
         		<where>
 					<if test="searchValue != null and searchValue != ''">
 						<include refid="where-list"/>
@@ -77,7 +81,7 @@
 						<include refid="where-list"/>
 					</if>
 					<if test="pdnum != '1'">
-						and pdnum=#{pdnum}
+						and r.pdnum=#{pdnum}
 					</if>
 				</where>
         		ORDER BY r.reviewCode DESC
@@ -100,24 +104,24 @@
     </delete>
     
      <insert id="insertReply" parameterType="com.hotbody.hotShop.review.Reply">
-    	INSERT INTO recomment(cNum, reviewCode, userId, content, created, cAnswer)
-      			 VALUES(recomment_seq.NEXTVAL, #{reviewCode}, #{userId}, #{content}, sysdate, #{cAnswer})
+    	INSERT INTO recomment(cNum, reviewCode, userId, content, created)
+      			 VALUES(recomment_seq.NEXTVAL, #{reviewCode}, #{userId}, #{content}, sysdate)
      </insert>
      
      <select id="replyDataCount" parameterType="map" resultType="Integer">
-      		SELECT NVL(COUNT(*), 0) 
+      		SELECT NVL(COUNT(*), 0) replyCount
       		FROM recomment 
-      		WHERE reviewCode=#{reviewCode} AND answer=0
-      </select>
+      		WHERE reviewCode=#{reviewCode}
+     </select>
       
       <select id="listReply" parameterType="map" resultType="com.hotbody.hotShop.review.Reply">
         SELECT * FROM (
              SELECT ROWNUM rnum, tb.* 
              FROM (SELECT cNum, reviewCode, m1.userId userId, content,
-                    TO_CHAR(created, 'YYYY-MM-DD') created, userName, r.answer
+                    TO_CHAR(created, 'YYYY-MM-DD') created, userName
                      FROM recomment r 
                      JOIN member1 m1 ON r.userId=m1.userId 
-                     WHERE reviewCode=#{reviewCode} AND r.ANSWER=0 ORDER BY cNum DESC 
+                     WHERE reviewCode=#{reviewCode} ORDER BY cNum DESC 
                <![CDATA[
                      ) tb WHERE ROWNUM <=#{end}
                 ) WHERE rnum >= #{start}
@@ -130,5 +134,5 @@
       			AND userId=#{userId}
       		</if>
       </delete>
-	
+      
 </mapper>

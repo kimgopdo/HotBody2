@@ -4,7 +4,7 @@ public class Bung {
 	private int mosubNum;
 	private String moSpot;
 	private String mosubName;
-	private String moPlace;
+	private String moPlace1,moPlace2;
 	private int maxPeople;
 	private String moDate;
 	private String moStart;
@@ -13,7 +13,15 @@ public class Bung {
 	private String moCreated;
 	private int geNum;
 	
+	private int listNum;
+		
 	
+	public int getListNum() {
+		return listNum;
+	}
+	public void setListNum(int listNum) {
+		this.listNum = listNum;
+	}
 	public int getMosubNum() {
 		return mosubNum;
 	}
@@ -32,11 +40,17 @@ public class Bung {
 	public void setMosubName(String mosubName) {
 		this.mosubName = mosubName;
 	}
-	public String getMoPlace() {
-		return moPlace;
+	public String getMoPlace1() {
+		return moPlace1;
 	}
-	public void setMoPlace(String moPlace) {
-		this.moPlace = moPlace;
+	public void setMoPlace1(String moPlace1) {
+		this.moPlace1 = moPlace1;
+	}
+	public String getMoPlace2() {
+		return moPlace2;
+	}
+	public void setMoPlace2(String moPlace2) {
+		this.moPlace2 = moPlace2;
 	}
 	public int getMaxPeople() {
 		return maxPeople;
@@ -80,5 +94,7 @@ public class Bung {
 	public void setGeNum(int geNum) {
 		this.geNum = geNum;
 	}
+
+	
 	
 }

@@ -12,11 +12,11 @@
 	
 	<insert id="insertSurvey" parameterType="com.hotbody.survey.Survey">
 		INSERT INTO survey(qCode, qOrder, sOrO, qType, qContent)
-		VALUES(#{qCode}, #{sOrO}, #{qOrder}, #{qType}, #{qContent})
+		VALUES(#{qCode}, #{qOrder}, #{sOrO}, #{qType, jdbcType=VARCHAR}, #{qContent})
 	</insert>
 	
 	<insert id="insertEx" parameterType="com.hotbody.survey.Survey">
 		INSERT INTO surveyEx(exNum, qCode, exOrder, exContent, exScore)
-		VALUES(#{exNum}, #{qCode}, #{exOrder}, #{exContent}, #{exScore})
+		VALUES(ex_seq.NEXTVAL, #{qCode}, #{exOrder}, #{exContent}, #{exScore})
 	</insert>
 </mapper>

@@ -15,6 +15,9 @@
 function selectList(f){
 	f.submit();
 }
+function backPage(){
+	history.back();
+}
 
 /* $(function(){
 	$("#chkAll").click(function(){
@@ -79,6 +82,7 @@ function selectList(f){
 			<td width="380" style="padding-left: 20px;">제목</td>
 			<td width="80">작성자</td>
 			<td width="80">작성일</td>
+			<td width="80">평점</td>
 		</tr>
 		
 		<c:forEach var="dto" items="${list}">
@@ -86,10 +90,11 @@ function selectList(f){
 			<%-- <td><input type="checkbox" name="nums" value="${dto.reviewCode}"></td> --%>
 			<td>${dto.listNum}</td>
 			<td align="left" style="padding-left: 5px; color: black;">
-				<a href="${articleUrl}&reviewCode=${dto.reviewCode}" style="color: gray; font-size: 13px;"><span style="font-weight: bold;">[${dto.pdName}]</span> ${dto.reviewSubject}</a>
+				<a href="${articleUrl}&reviewCode=${dto.reviewCode}" style="color: gray; font-size: 13px;"><span style="font-weight: bold;">[${dto.pdName}]</span> ${dto.reviewSubject} (${dto.replyCount})</a>
 			</td>
 			<td>${dto.userName}</td>
 			<td>${dto.reviewCreated}</td>
+			<td>${dto.starScore}</td>
 		</tr>
 		</c:forEach>
 	</table>
@@ -119,6 +124,9 @@ function selectList(f){
 			</td>
 			<td style="float: left; margin-right: 3px;">
 				<button style="background: white; border: 1px solid #999999; border-radius: 3px; height: 25px;" type="button" onclick="selectList(this.form);">검색</button>
+			</td>
+			<td style="float: right; margin-right: 3px;">
+				<button style="background: white; border: 1px solid #999999; border-radius: 3px; height: 25px;" type="button" onclick="backPage();">뒤로가기</button>
 			</td>
 		</tr>
 	</table>

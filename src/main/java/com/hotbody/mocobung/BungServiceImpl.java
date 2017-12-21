@@ -30,14 +30,30 @@ public class BungServiceImpl implements BungService {
 
 	@Override
 	public List<Bung> listBung(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		List<Bung> list=null;
+		
+		try {
+			list=dao.selectList("mocobung.listBung",map);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		
+		return list;
 	}
 
 	@Override
 	public int dataCount(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		
+		try {
+			result=dao.selectOne("mocobung.dataCount",map);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return result;
 	}
 
 	@Override

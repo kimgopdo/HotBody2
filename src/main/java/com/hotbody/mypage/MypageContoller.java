@@ -439,15 +439,15 @@ public class MypageContoller {
 		
 		while(it.hasNext()) {
 			
-	         	Message data = (Message)it.next();
+	         	Message data = it.next();
 
-				 if(data.getUserId()==info.getUserId()) {
-					 data.setBox("보낸쪽지");
-					}else if(data.getUserId2()==info.getUserId()) {
-						data.setBox("받은쪽지");
-					}else if(data.getUserId()==data.getUserId2()) {
-						data.setBox("내게보낸쪽지");
-					}
+	         	if(data.getUserId().equals(data.getUserId2())) {
+					data.setBox("내게보낸쪽지");
+	         	}else if(data.getUserId().equals(info.getUserId())) {
+					 data.setBox("받은쪽지");
+				}else if(data.getUserId2().equals(info.getUserId())) {
+						data.setBox("보낸쪽지");
+				} 
 		}
         
         
@@ -456,10 +456,7 @@ public class MypageContoller {
 		model.addAttribute("page", current_page);
 		model.addAttribute("dataCount", dataCount);
 		model.addAttribute("paging", paging);
-		
-		
 
-		
 		
 		return ".mypage.messageMain";
 	}
@@ -485,7 +482,7 @@ public class MypageContoller {
 		dto.setUserId(info.getUserId());
 		mservice.writeMessage(dto, pathname);
 		
-		return ".mypage.messageMain";
+		return "redirect:/mypage/messageMain";
 	}
 	
 	
@@ -513,7 +510,31 @@ public class MypageContoller {
 		return map;
 	}
 	
+	@RequestMapping(value="/mypage/readingMessage", method=RequestMethod.POST)
+	public String readingMessage(
+			@RequestParam(value="mCode") int mCode,
+			Model model,
+			Message dto,
+			HttpSession session
+			) throws Exception{
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		map.put("mCode", mCode);
+        
+		// 파일
+		List<Message> listFile=mservice.listFile(mCode);
+		int fileCount = mservice.fileCount(mCode);
+		
 	
+		model.addAttribute("dto", dto);
+		model.addAttribute("listFile", listFile);
+		model.addAttribute("fileCount", fileCount);
+		
+		dto=mservice.readingMessage(mCode);
+		
+		return ".mypage.messageMain";
+	}
 	
 	
 }

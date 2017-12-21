@@ -83,10 +83,10 @@
 						<include refid="where-list"/>
 					</if>
 					<if test="pdnum != '1'">
-						and pdnum=#{pdnum}
+						and q.pdnum=#{pdnum}
 					</if>
 				</where>
-        		ORDER BY groupNum DESC, answerNum, pdQCode DESC
+        		ORDER BY q.groupNum DESC, q.answerNum, q.pdQCode DESC
      	<![CDATA[
     		) tb WHERE ROWNUM <= #{end}      
 		) WHERE rnum >= #{start}

@@ -138,9 +138,10 @@ function addCookie(id) {
 	  var items = getCookie('hotbodyBasket'); // 이미 저장된 값을 쿠키에서 가져오기
 	  var maxItemNum = 10; // 최대 저장 가능한 아이템개수
 	  var expire = 7; // 쿠키값을 저장할 기간
+	  var idArray=id.split("-");
 	  if (items) {
 	    var itemArray = items.split(',');
-		    if (items.indexOf(id) != -1) {
+		    if (items.indexOf(idArray[0]) != -1) {
 		      // 이미 존재하는 경우 종료
 		      console.log('중복된단다잉');
 		    }else{

@@ -22,15 +22,26 @@ public class MilelageServiceImpl implements MilelageService{
 
 
 
+	@Override
+	public Message readingMessage(int mCode) {
+		Message dto=null;
+		
+		try {
+			dto=dao.selectOne("milelage.mDataCount",mCode);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return dto;
+	}
 
 	@Override
 	public int writeMessage(Message dto, String pathname) {
 		int result=0;
-		String userId=dto.getUserId();
-		try {
-			int mCode=dao.selectOne("milelage.mCode",userId);
-			dto.setmCode(mCode);
 
+		try {
+			int seq=dao.selectOne("milelage.seq");
+			dto.setmCode(seq);
+			
 			result=dao.insertData("milelage.insertMessage", dto);
 			
 			// 파일 업로드
@@ -52,6 +63,10 @@ public class MilelageServiceImpl implements MilelageService{
 					}
 				}
 			}
+			
+			result=dao.updateData("milelage.updateMessage", dto);
+			
+			
 			
 		} catch (Exception e) {
 			System.out.println(e.toString());
@@ -82,11 +97,29 @@ public class MilelageServiceImpl implements MilelageService{
 	}
 
 	@Override
-	public List<Message> listFile(int num) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Message> listFile(int mCode) {
+		List<Message> listFile =null;
+		try {
+			listFile=dao.selectList("milelage.listFile", mCode);
+
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return listFile;
 	}
 
+
+	@Override
+	public int fileCount(int mCode) {
+		int result=0;
+		try {
+			result=dao.selectOne("milelage.fileCount",mCode);
+			
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+	}
 
 	@Override
 	public Message readFile(int fileNum) {
