@@ -190,32 +190,42 @@ $(document).ready(function(){
 							</div>
 						</div>
 
-						<!-- 번개 리스트 목록 -->
-						<div class="single-widget-area popular-post-widget">
-							<div class="widget-title text-center">
-								<hr>
-								<h6>번개 리스트</h6>
-							</div>
-						</div>
-							
-							<!-- 번개리스트 스타트 -->
-					<c:forEach var="dto" items="${list}">
-                        <div class="single-widget-area add-widget text-center">
-                            <div class="add-widget-area">
-                                <img src="<%=cp%>/uploads/c_mocojee/${dto.moImage}" alt="">
-                                <div class="add-text">
-                                    <div class="yummy-table">
-                                        <div class="yummy-table-cell">
-                                            <h2>${dto.mosubName}</h2>
-                                            <input type="hidden" name="mosubNum" value="mosubNum">
-                                            <p>${dto.moDate}</p>
-                                            <a href="#" class="add-btn">참석하기</a>
-                                        </div>
-                                    </div>
+						<!-- Single Widget Area -->
+                        <div class="single-widget-area popular-post-widget">
+                            <div class="widget-title text-center">
+                                <hr>
+                                <h6>번개 리스트</h6>
+                            </div>
+                            
+                            <!-- 번개 리스트 start -->
+                           <c:forEach var="vo" items="${list}">
+                            <div class="single-populer-post d-flex">
+                            	
+                                 <img src="<%=cp%>/uploads/c_mocojee/${dto.moImage}">
+                                <div class="post-content">
+                                    <a href="#">
+                                    </a>
+                                    <p>${vo.moDate}</p>
+                                    <p>${vo.mosubName}</p>
+                                    <button type="button" class="btn btn-danger" style="margin-top: 10px;">참석하기</button>
+                                    
+                                    <c:if test="${sessionScope.member.userId==dto.userId}">
+                                   	 <button type="button" class="btn btn-info" style="margin-top: 10px;" 
+                                   	 	onclick="javascript:location.href='<%=cp%>/mocojee/u_mocojee?geNum=${dto.geNum}';">수정</button>
+                                    </c:if>
+                                    
+                                    <button type="button" class="btn btn-link btn-sm" style="margin-top: 10px;" 
+                                    onclick="javascript:location.href='<%=cp%>/mocobung/${mocoNum}/b_article?num=${vo.mosubNum}';">자세히보기</button> 
                                 </div>
                             </div>
+                           </c:forEach>
+        
                         </div>
-					</c:forEach>	
+                        <!-- Single Widget Area -->
+     
+ 		
+					
+
 						<!-- 번개등록 만들기  -->
 						<c:if test="${sessionScope.member.userId==dto.userId}">	
 							<button type="button" class="btn btn-primary btn-block" style="margin-top: 10px;" 
@@ -223,6 +233,8 @@ $(document).ready(function(){
 								<i class="fa fa-bolt"></i> 벙개 등록하기
 							</button>
 						</c:if>
+						
+						
 					<!-- 번개등록 끝 -->	
 
 			

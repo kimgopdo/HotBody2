@@ -24,7 +24,7 @@
 }
 
 body {
-    font-family: 'Poppins', sans-serif, 맑은 고딕;
+    font-family: 'Poppins', sans-serif, 留묒� 怨좊뵓;
     position: relative;
     z-index: auto;
 }
@@ -35,7 +35,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: 'Quicksand', sans-serif, 맑은 고딕;
+    font-family: 'Quicksand', sans-serif, 留묒� 怨좊뵓;
     font-weight: 700;
     color: #232d37;
     line-height: 1.25;
@@ -870,7 +870,7 @@ li {
 /* About me */
 
 .single-widget-area {
-    margin-bottom: 50px;
+    margin-bottom: 30px;
 }
 
 .widget-title > h6 {
@@ -950,6 +950,9 @@ li {
     margin-bottom: 0;
 }
 
+
+
+
 /* Add Widget */
 
 .add-widget .add-widget-area {
@@ -968,7 +971,66 @@ li {
     left: 0;
     top: 0;
     content: '';
-    background-color: rgba(30, 29, 29, 0.8);
+    background-color: rgba(254, 78, 108, 0.85);
+    z-index: 1;
+    border-radius: 30px
+}
+
+.add-widget .add-text {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 5;
+}
+
+.add-widget .add-text h2,
+.add-widget .add-text p {
+    color: #fff;
+}
+
+.add-widget .add-text p {
+    font-size: 14px;
+}
+
+.add-widget .add-text a {
+    min-width: 100px;
+    height: 40px;
+    border: 1px solid #fc6c3f;
+    color: #fc6c3f;
+    font-size: 12px;
+    display: inline-block;
+    text-transform: uppercase;
+    border-radius: 30px;
+    line-height: 40px;
+}
+
+.add-widget .add-text a:hover {
+    border: 1px solid #fc6c3f;
+    color: #fff;
+    background-color: #fc6c3f;
+}
+
+/* Add Widget 똑같은거 */
+
+.add-widget .add-widget-area {
+    position: relative;
+    z-index: 1;
+}
+
+.add-widget .add-widget-area img {
+    border-radius: 30px;
+}
+
+.add-widget .add-widget-area:before {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    content: '';
+    background-color: rgba(254, 78, 108, 0.85);
     z-index: 1;
     border-radius: 30px
 }
