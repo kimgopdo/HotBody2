@@ -12,7 +12,7 @@ $(function() {
     $("input[name=endDay]").datepicker();
 });
 
-
+ 
 function lookIng(){
 	var dlg = $("#ing").dialog({
 		  modal: true,
