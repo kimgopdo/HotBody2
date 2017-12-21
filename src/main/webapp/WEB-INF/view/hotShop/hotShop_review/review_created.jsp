@@ -159,16 +159,16 @@ $(function(){
 </tr>
 
 <tr height="40">
-	<td width="100">별점</td>
+	<td width="100">별점주기</td>
 	<td align="left">
-		<p class="star_rating">
-		    <a href="#"><input type="hidden" value="1">★</a>
-		    <a href="#"><input type="hidden" value="2">★</a>
-		    <a href="#"><input type="hidden" value="3">★</a>
-		    <a href="#"><input type="hidden" value="4">★</a>
-		    <a href="#"><input type="hidden" value="5">★</a>
-		</p>
-		<input type="hidden" name="star" id="starInput" value="0">
+		<select id="starScore" name="starScore">
+			<option value="1" selected="selected">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
+		</select>
+		<input type="hidden" id="starScore" name="starScore">${dto.starScore}
 	</td>
 </tr>
 

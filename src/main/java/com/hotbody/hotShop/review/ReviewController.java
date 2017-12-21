@@ -60,6 +60,7 @@ public class ReviewController {
 		dto.setUserId(info.getUserId());
 		dto.setUserName(info.getUserName());
 		dto.setPdName(dto.getPdName());
+		dto.setStarScore(dto.getStarScore());
 		////////////////////////////////////////////////////
 		dto.setPdNum(61); // 임시로 상품번호 넣어줌(나중에 삭제)
 		////////////////////////////////////////////////////
@@ -129,7 +130,7 @@ public class ReviewController {
 		model.addAttribute("articleUrl", articleUrl);
 		model.addAttribute("page", current_page);
 		model.addAttribute("total_page", total_page);
-		model.addAttribute("dateCount", dataCount);
+		model.addAttribute("dataCount", dataCount);
 		model.addAttribute("paging", paging);
 		model.addAttribute("rows", rows);
 		model.addAttribute("searchKey", searchKey);
@@ -331,7 +332,7 @@ public class ReviewController {
 		model.addAttribute("articleUrl2", articleUrl);
 		model.addAttribute("page2", current_page);
 		model.addAttribute("total_page2", total_page);
-		model.addAttribute("replyCount", dataCount);
+		model.addAttribute("dataCount", dataCount);
 		model.addAttribute("paging2", paging);
 		model.addAttribute("rows2", rows);
 		

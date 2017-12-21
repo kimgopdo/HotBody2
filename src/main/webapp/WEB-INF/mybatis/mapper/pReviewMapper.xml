@@ -50,10 +50,10 @@
 	<select id="listReview" resultType="com.hotbody.hotShop.review.Review" parameterType="map">
 		SELECT * FROM(
     		SELECT ROWNUM rnum, tb.* FROM(
-        		SELECT r.reviewCode, r.userName, r.reviewSubject, r.reviewCreated, p.pdName, r.pdNum, NVL(replyCount, 0) replyCount
+        		SELECT r.reviewCode, r.userName, r.reviewSubject, r.reviewCreated, r.starsCore, p.pdName, r.pdNum, NVL(replyCount, 0) replyCount
         		FROM shreviews r
         		LEFT OUTER JOIN productList p ON r.pdNum=p.pdNum
-        		 LEFT OUTER JOIN(
+        		LEFT OUTER JOIN(
 					    SELECT reviewCode, COUNT(*) replyCount 
 					    FROM recomment GROUP BY reviewCode
 					)c ON r.reviewCode = c.reviewCode
@@ -73,9 +73,13 @@
 	<select id="listReviewArticle" resultType="com.hotbody.hotShop.review.Review" parameterType="map">
 		SELECT * FROM(
     		SELECT ROWNUM rnum, tb.* FROM(
-        		SELECT r.reviewCode, r.userName, r.reviewSubject, r.reviewCreated, p.pdName, r.pdNum
+        		SELECT r.reviewCode, r.userName, r.reviewSubject, r.reviewCreated, r.starsCore, p.pdName, r.pdNum, NVL(replyCount, 0) replyCount
         		FROM shreviews r
         		LEFT OUTER JOIN productList p ON r.pdNum=p.pdNum
+		        LEFT OUTER JOIN(
+					    SELECT reviewCode, COUNT(*) replyCount 
+					    FROM recomment GROUP BY reviewCode
+					)c ON r.reviewCode = c.reviewCode
         		<where>
 					<if test="searchValue != null and searchValue != ''">
 						<include refid="where-list"/>
@@ -92,7 +96,7 @@
 	</select>
 	
 	<select id="readReview" resultType="com.hotbody.hotShop.review.Review" parameterType="map">
-		SELECT r.reviewCode, r.userName, r.reviewSubject, r.reviewContent, r.reviewCreated, r.pdNum, p.pdName, r.userId 
+		SELECT r.reviewCode, r.userName, r.reviewSubject, r.reviewContent, r.starsCore, r.reviewCreated, r.pdNum, p.pdName, r.userId 
 		FROM shReviews r 
 		JOIN productList p 
 		ON r.pdNum=p.pdNum 
