@@ -6,130 +6,6 @@
 	String cp=request.getContextPath();
 %>
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<style type="text/css">
-body{
-	font-family: "맑은 고딕";
-	font-size: 14px;
-}
-* {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box
-}
-
-:after,
-:before {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box
-}
-
-.form-group {
-    display: inline-block;
-    margin-bottom: 0;
-    vertical-align: middle;
-}
-
-.form-control {
-    display: inline-block;
-    width: 100%;
-    height: 30px;
-    font-size: 12px;
-    line-height: 1.42857;
-    color: rgb(85, 85, 85);
-    background-color: rgb(255, 255, 255);
-    background-image: none;
-    box-shadow: rgba(0, 0, 0, 0.0745098) 0 1px 1px inset;
-    padding: 6px 9px;
-    border-width: 1px;
-    border-style: solid;
-    border-color: rgb(204, 204, 204);
-    border-image: initial;
-    border-radius: 2px;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
-
-.form-control[readonly],
-fieldset[disabled] .form-control {
-    background-color: #ffffff;
-    opacity: 1;
-}
-
-.form_file .file_load {
-    display: inline-block;
-    position: relative;
-    width: 95px;
-    height: 31px;
-    cursor: pointer;
-}
-
-.form_file .file_load [type="file"] {
-    display: inline-block;
-    position: absolute;
-    width: inherit;
-    height: inherit;
-    z-index: 1;
-    opacity: 0;
-}
-
-.form_file .file_load label {
-    position: relative;
-    z-index: 5;
-    cursor: pointer;
-}
-
-.btn-default {
-    display: inline-block;
-    margin-bottom: 0;
-    font-weight: normal;
-    text-align: center;
-    width : 150px;
-    vertical-align: middle;
-    touch-action: manipulation;
-    cursor: pointer;
-    background-image: none;
-    white-space: nowrap;
-    font-size: 12px;
-    user-select: none;
-    border-width: 1px;
-    border-style: solid;
-    background-color: #666666;
-    border-color: #333333;
-    border-image: initial;
-    padding: 6px 9px;
-    border-radius: 2px;
-    color: #ffffff;
-}
-
-.btn-default02 {
-    display: inline-block;
-    margin-bottom: 0;
-    font-weight: normal;
-    text-align: center;
-    width : 100px;
-    vertical-align: middle;
-    touch-action: manipulation;
-    cursor: pointer;
-    background-image: none;
-    white-space: nowrap;
-    font-size: 12px;
-    user-select: none;
-    border-width: 1px;
-    border-style: solid;
-    background-color: #999999;
-    border-color: #cccccc;
-    border-image: initial;
-    padding: 6px 9px;
-    border-radius: 2px;
-    color: #ffffff;
-}
-</style>
-
 <script type="text/javascript" src="<%=cp%>/resource/se/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">
 
@@ -139,12 +15,6 @@ function check() {
 	if(!f.subject.value){
 		alert("제목을 입력하세요.");
 		f.subject.focus();
-		return false;
-	}
-	
-	if(!f.name.value){
-		alert("이름을 입력하세요.");
-		f.name.focus();
 		return false;
 	}
 	
@@ -162,17 +32,18 @@ function fileChange() {
 }
 function deleteFile() {
 	if(confirm("첨부파일을 삭제하시겠습니까?")){
-		location.href="<%=cp%>/notice/deleteFile?page=${page}&num=${dto.num}"
+		location.href="<%=cp%>/qna2/deleteFile?page=${page}&qna2Code=${dto.qna2Code}"
 	}
 }
+
 </script>
 </head>
-<body>
+<body style="height: 1000px">
 <div style="height: 50px;"></div>
-<div style="font-size: 40px; width: 700px; margin: 20px auto 0; font-weight: bold; color: #666666;">지난 이벤트</div>
+<div style="font-size: 40px; width: 700px; margin: 20px auto 0; font-weight: bold; color: #666666;">| 자주묻는 질문</div>
 <div style="width:700px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
 
-<form action="<%=cp%>/notice/${mode}" method="post" name="boardForm" enctype="multipart/form-data" onsubmit="return submitContents(this);">
+<form action="<%=cp%>/qna2/${mode}" method="post" name="boardForm" enctype="multipart/form-data" onsubmit="return submitContents(this);">
 <table style="width: 700px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0">
 <tr height="40">
 	<td width="100">제목</td>
@@ -181,15 +52,12 @@ function deleteFile() {
 	</td>
 </tr>
 
-<tr height="10px;"></tr>
-
 <tr height="40">
 	<td width="100" valign="top">내용</td>
 	<td>
 		<textarea style="width: 98%;" rows=10; name="content" id="content">${dto.content}</textarea>
 	</td>
 </tr>
-
 <tr height="10px;"></tr>
 
 <tr height="40">
@@ -211,15 +79,14 @@ function deleteFile() {
 		(최대 10MB이하의 파일이 등록 가능합니다.)
 	</td>
 </tr>
-
 <tr height="10px;"></tr>
 
 <c:if test="${mode=='update'}">
 <tr height="40">
 	<td width="100">첨부된 파일</td>
 	<td>
-		${dto.originalFilename}
-		<c:if test="${not empty dto.saveFilename}">
+		${dto.originalFile}
+		<c:if test="${not empty dto.saveFile}">
 			&nbsp;<a href="javascript:deleteFile();">
 			<img src="<%=cp%>/resource/images/close_icon.png">
 			</a>
@@ -231,14 +98,11 @@ function deleteFile() {
 <div style="width:700px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
 <div style="width: 700px; margin: 20px auto 0;" align="center">
 <button type="submit" class="btn-default02">등록</button>
-<button type="button" class="btn-default02" onclick="javascript:location.href='<%=cp%>/notice/list?page=${page}';">등록취소</button>
+<button type="button" class="btn-default02" onclick="javascript:location.href='<%=cp%>/qna2/list?page=${page}';">등록취소</button>
 <c:if test="${mode=='update'}">
 	<input type="hidden" name="page" value="${page}">
-	<input type="hidden" name="num" value="${dto.num}">
+	<input type="hidden" name="qna2Code" value="${dto.qna2Code}">
 	<input type="hidden" name="query" value="${query}">
-	<input type="hidden" name="saveFilename" value="${dto.saveFilename}">
-	<input type="hidden" name="fileSize" value="${dto.fileSize}">
-	<input type="hidden" name="originalFilename" value="${dto.originalFilename}">
 </c:if>
 </div>
 
