@@ -617,9 +617,6 @@ function productInSend(f){
 			<option>::상품</option>
 			<c:forEach var="dto" items="${productList}">
 				<option value="${dto.pdnum}" data-imgSaveFilename="${dto.imgSaveFilename}">${dto.pdName}</option>
-				<c:forEach var="dto" items="${productList}">
-				<option value="${dto.pdNum}">${dto.pdName}</option>
-				</c:forEach>
 			</c:forEach>
 		</select>
 		</td>
