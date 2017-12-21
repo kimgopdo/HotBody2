@@ -47,11 +47,15 @@ public class MyClassController {
 	
 	@RequestMapping(value="/myclass/diary/mydiary", method=RequestMethod.GET)
 	public String mydiaryForm(HttpSession session, HttpServletResponse resp) throws Exception{
-		Map<String, Object> map=new HashMap<>();
-		
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
-		map.put("userId", info.getUserId());
 		
+		if (info == null) {
+			return "redirect:/member/login";
+		}
+			
+		Map<String, Object> map=new HashMap<>();
+		map.put("userId", info.getUserId());
+
 		int cntUser = dao.selectOne("myClass.countUser", map);
 		if(cntUser == 0) {
 			return "redirect:/dietClass/list?type=0";
@@ -107,6 +111,12 @@ public class MyClassController {
 			Model model) throws Exception {
 		
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		
+		//로그인 안되있으면 로그인창
+		if (info == null) {
+			return "redirect:/member/login";
+		}
+		
 		dto.setUserId(info.getUserId());	
 		int result = service.insertToday(dto);
 		
