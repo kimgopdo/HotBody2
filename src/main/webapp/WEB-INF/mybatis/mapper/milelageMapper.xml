@@ -63,7 +63,7 @@
 	
 	 SELECT * FROM (
 		SELECT ROWNUM rnum, tb.* FROM (
-      	select userId,userId2,subject,content,totalFileSize,screated
+      	select userId,userId2,subject,content,totalFileSize,screated,mCode
         from msg 
         where  userId =#{userId} OR userId2 =#{userId} 
 		<if test="sender != null and sender != ''">
@@ -85,6 +85,18 @@
 	
 	</select>
 	
+	
+	
+	<select id="readingMessage" parameterType="Integer" resultType="com.hotbody.milelage.Message">
+	
+
+      	select userId,userId2,subject,content,screated,mCode
+        from msg 
+        where  mCode =#{mCode} 
+	
+	
+	</select>
+	
 	<select id="checkUserId2" resultType="Integer" parameterType="String">
 		select NVL(count(userId),0) from member1 where userId=#{userId2}
 	</select>
@@ -102,7 +114,7 @@
 	
 	<insert id="insertFile" parameterType="com.hotbody.milelage.Message">
 		insert into msgfile(filecode,ofilename,filename,filesize,mcode)
-		values(filecode_seq.nextVal,#{originalFilename},#{saveFilename},#{fileSize},#{mCode})
+		values(filecode_seq.nextVal,#{oFileName},#{fileName},#{fileSize},#{mCode})
 	</insert>
 	
 	<update id="updateMessage" parameterType="com.hotbody.milelage.Message">

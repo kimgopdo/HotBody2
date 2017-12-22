@@ -18,7 +18,7 @@ public class Message {
 	public void setFileCount(int fileCount) {
 		this.fileCount = fileCount;
 	}
-	private String originalFilename,saveFilename,upDir;
+	private String oFileName,fileName,upDir;
 	private List<MultipartFile> uploadFile;
 	
 	
@@ -89,17 +89,18 @@ public class Message {
 	public void setmCode(int mCode) {
 		this.mCode = mCode;
 	}
-	public String getOriginalFilename() {
-		return originalFilename;
+	
+	public String getoFileName() {
+		return oFileName;
 	}
-	public void setOriginalFilename(String originalFilename) {
-		this.originalFilename = originalFilename;
+	public void setoFileName(String oFileName) {
+		this.oFileName = oFileName;
 	}
-	public String getSaveFilename() {
-		return saveFilename;
+	public String getFileName() {
+		return fileName;
 	}
-	public void setSaveFilename(String saveFilename) {
-		this.saveFilename = saveFilename;
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 	public String getUpDir() {
 		return upDir;
