@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.hotbody.common.FileManager;
 import com.hotbody.common.dao.CommonDAO;
+import com.hotbody.mocobung.Bung;
 
 @Service("mocojee.MocojeeService")
 public class MocojeeServiceImpl implements MocojeeService {
@@ -126,5 +127,21 @@ public class MocojeeServiceImpl implements MocojeeService {
 		
 		return result;
 	}
+
+	@Override
+	public List<Bung> listBung(Map<String, Object> map) {
+		
+		List<Bung> list=null;
+		
+		try {
+			list=dao.selectList("mocobung.listBung",map);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return list;
+	}
 }
+
+	
 

@@ -451,6 +451,7 @@ public class DietClassController {
 			System.out.println(a+":"+max);
 			list.add(list2);
 		}
+		
 		model.addAttribute("max", max);
 		model.addAttribute("list", list);
 		model.addAttribute("day", day);

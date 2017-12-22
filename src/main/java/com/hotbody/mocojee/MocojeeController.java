@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.hotbody.common.FileManager;
 import com.hotbody.common.MyUtil;
 import com.hotbody.member.SessionInfo;
+import com.hotbody.mocobung.Bung;
+
 
 @Controller("mocojee.MocojeeController")
 public class MocojeeController {
@@ -209,20 +211,33 @@ public class MocojeeController {
 	////mocojee main (블로그형)////
 	@RequestMapping(value="/mocojee/{mocoNum}/main")
 	public String mocojeeMain(
-			@PathVariable int mocoNum, Model model) throws Exception{
+			@PathVariable int mocoNum, 
+			Model model) throws Exception{
 			
 		Mocojee dto=service.readMocojee(mocoNum);
+		
 		if (dto==null)
 			return "redirect:/mocojee/list_mocojee";
 		
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("mocoNum", mocoNum);		
+		
+		List<Bung> list=service.listBung(map);
+		
+		model.addAttribute("list",list);
+		
 		model.addAttribute("dto", dto);
 		model.addAttribute("mocoNum", mocoNum);
+		
+		
 		return ".mocojee.article";	
 	}
 	
-	
-	
+		
 }
+	
+
+
 	
 
 

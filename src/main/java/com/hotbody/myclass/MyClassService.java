@@ -44,9 +44,14 @@ public interface MyClassService {
 	public int dataCount4(Map<String, Object> map);
 	//관리자는 나중에 (삭제랑 모든아이디의 운동보기등..)
 	
-
 	
-
+	//다이어트일기 서비스
+	public int insertDiet(Diary dto);
+	public List<Diary> listDiet(Map<String, Object> map);
+	public Diary readDiet(int num);
+	public int updateDiet(Diary dto);
+	public int deleteDiet(int num);
 	
 	
+		
 }

@@ -14,7 +14,14 @@ public class Review {
 	private String userId;
 	private int listNum;
 	private int replyCount;
+	private int rNum;
 	
+	public int getrNum() {
+		return rNum;
+	}
+	public void setrNum(int rNum) {
+		this.rNum = rNum;
+	}
 	public int getReplyCount() {
 		return replyCount;
 	}

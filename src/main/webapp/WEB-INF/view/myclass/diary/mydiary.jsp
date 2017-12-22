@@ -304,8 +304,8 @@ function insertForm(start, end) {
 		    	   $(this).dialog("close");
 		        }
 		  },
-		  height: 480,
-		  width: 550,
+		  height: 720,
+		  width: 800,
 		  title: "일정 추가",
 		  close: function(event, ui) {
 		  }

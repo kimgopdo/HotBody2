@@ -1,30 +1,44 @@
 package com.hotbody.survey;
 
 public class Survey {
-	private int qCode, qOrder, sOrO;
-	private String qContent, userId, qType;
+	private int questionCode, questionOrder, soro;
+	private String questionContent, userId, questionType;
 	
 	private int exNum, exScore, exOrder;
 	private String exContent;
 	
 	private int tall, weight, bmi, bbody;
-	
-	private int qAnswer;
 
-	public int getqCode() {
-		return qCode;
+	public int getQuestionCode() {
+		return questionCode;
 	}
 
-	public void setqCode(int qCode) {
-		this.qCode = qCode;
+	public void setQuestionCode(int questionCode) {
+		this.questionCode = questionCode;
 	}
 
-	public String getqContent() {
-		return qContent;
+	public int getQuestionOrder() {
+		return questionOrder;
 	}
 
-	public void setqContent(String qContent) {
-		this.qContent = qContent;
+	public void setQuestionOrder(int questionOrder) {
+		this.questionOrder = questionOrder;
+	}
+
+	public int getSoro() {
+		return soro;
+	}
+
+	public void setSoro(int soro) {
+		this.soro = soro;
+	}
+
+	public String getQuestionContent() {
+		return questionContent;
+	}
+
+	public void setQuestionContent(String questionContent) {
+		this.questionContent = questionContent;
 	}
 
 	public String getUserId() {
@@ -33,6 +47,14 @@ public class Survey {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	public String getQuestionType() {
+		return questionType;
+	}
+
+	public void setQuestionType(String questionType) {
+		this.questionType = questionType;
 	}
 
 	public int getExNum() {
@@ -49,6 +71,14 @@ public class Survey {
 
 	public void setExScore(int exScore) {
 		this.exScore = exScore;
+	}
+
+	public int getExOrder() {
+		return exOrder;
+	}
+
+	public void setExOrder(int exOrder) {
+		this.exOrder = exOrder;
 	}
 
 	public String getExContent() {
@@ -89,46 +119,6 @@ public class Survey {
 
 	public void setBbody(int bbody) {
 		this.bbody = bbody;
-	}
-
-	public int getqOrder() {
-		return qOrder;
-	}
-
-	public void setqOrder(int qOrder) {
-		this.qOrder = qOrder;
-	}
-
-	public String getqType() {
-		return qType;
-	}
-
-	public void setqType(String qType) {
-		this.qType = qType;
-	}
-
-	public int getExOrder() {
-		return exOrder;
-	}
-
-	public void setExOrder(int exOrder) {
-		this.exOrder = exOrder;
-	}
-
-	public int getqAnswer() {
-		return qAnswer;
-	}
-
-	public void setqAnswer(int qAnswer) {
-		this.qAnswer = qAnswer;
-	}
-
-	public int getsOrO() {
-		return sOrO;
-	}
-
-	public void setsOrO(int sOrO) {
-		this.sOrO = sOrO;
 	}
 	
 }

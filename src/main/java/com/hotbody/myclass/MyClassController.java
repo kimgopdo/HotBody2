@@ -22,10 +22,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.hotbody.common.FileManager;
 import com.hotbody.common.MyUtil;
+import com.hotbody.common.dao.CommonDAO;
 import com.hotbody.member.SessionInfo;
 
 @Controller("myClass.myClassController")
 public class MyClassController {
+	
+	@Autowired
+	private CommonDAO  dao;
 	
 	@Autowired
 	private MyClassService service;
@@ -36,8 +40,28 @@ public class MyClassController {
 	@Autowired
 	private FileManager fileManager;
 	
+	
+	/*
+	 * 다이어트일기 관련
+	 */
+	
 	@RequestMapping(value="/myclass/diary/mydiary", method=RequestMethod.GET)
-	public String mydiaryForm() throws Exception{
+	public String mydiaryForm(HttpSession session, HttpServletResponse resp) throws Exception{
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		
+		if (info == null) {
+			return "redirect:/member/login";
+		}
+			
+		Map<String, Object> map=new HashMap<>();
+		map.put("userId", info.getUserId());
+
+		int cntUser = dao.selectOne("myClass.countUser", map);
+		if(cntUser == 0) {
+			return "redirect:/dietClass/list?type=0";
+		}
+			
+
 		return ".myclass.diary.mydiary";
 	}
 	
@@ -79,6 +103,7 @@ public class MyClassController {
 	public String myexerciseForm(
 			HttpSession session,
 			TodayExer dto,
+			HttpServletResponse resp,
 			@RequestParam(value="page", defaultValue="1") int current_page,
 			@RequestParam(value="searchKey", defaultValue="edate") String searchKey,
 			@RequestParam(value="searchValue", defaultValue="") String searchValue,
@@ -86,8 +111,14 @@ public class MyClassController {
 			Model model) throws Exception {
 		
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		
+		//로그인 안되있으면 로그인창
+		if (info == null) {
+			return "redirect:/member/login";
+		}
+		
 		dto.setUserId(info.getUserId());	
-		int result =service.insertToday(dto);
+		int result = service.insertToday(dto);
 		
 		if(result == -1) {
 			return "redirect:/dietClass/list?type=0";

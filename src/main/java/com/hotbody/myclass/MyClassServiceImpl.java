@@ -23,6 +23,7 @@ public class MyClassServiceImpl implements MyClassService {
 	
 	
 	
+/******************************************************************/	
 	/*
 	 * 재료관련
 	 */
@@ -152,6 +153,7 @@ public class MyClassServiceImpl implements MyClassService {
 	}
 	
 	
+/******************************************************************/	
 	/*
 	 * 운동관련 서비스
 	 */
@@ -291,6 +293,7 @@ public class MyClassServiceImpl implements MyClassService {
 	}
 	
 	
+/******************************************************************/	
 	/*
 	 * 유용한정보관련
 	 */
@@ -388,6 +391,8 @@ public class MyClassServiceImpl implements MyClassService {
 		return dto;
 	}
 	
+	
+/******************************************************************/	
 	/*
 	 * 오늘의운동정보
 	 */	
@@ -419,11 +424,13 @@ public class MyClassServiceImpl implements MyClassService {
 	public int insertToday(TodayExer dto) {
 		
 		int result = 0;
-		try {	
-			
+		try {			
 			//오늘날짜,아이디 넘겨받아서
 			Calendar cal=Calendar.getInstance();
 			String date=String.format("%tF", cal);
+			//date는 yyyy-mm-dd 형식으로 나옴
+			//디비처럼 yy/mm/dd로 하고싶으면 	format("%tD", cal); 하면됨.
+			
 			
 			Map<String, Object> map=new HashMap<>();
 			map.put("date", date);
@@ -442,4 +449,56 @@ public class MyClassServiceImpl implements MyClassService {
 		}
 		return result;
 	}
+
+
+/******************************************************************/	
+	/*
+	 * 다이어트 일기
+	 */	
+	
+	@Override
+	public int insertDiet(Diary dto) {
+		int result = 0;
+		try {
+			int seq = dao.selectOne("myClass.diarySeq");
+			dto.setDiaryNum(seq);
+			
+			
+			
+			dao.insertData("", "");
+			dao.insertData("", "");
+			dao.insertData("", "");
+			dao.insertData("", "");
+			dao.insertData("", "");
+			
+			result = 1;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+	}
+
+	@Override
+	public List<Diary> listDiet(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Diary readDiet(int num) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int updateDiet(Diary dto) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int deleteDiet(int num) {
+		// TODO Auto-generated method stub
+		return 0;
+	}	
 }

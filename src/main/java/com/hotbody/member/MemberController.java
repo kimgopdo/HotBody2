@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+
 @Controller
 public class MemberController {
 	
@@ -71,7 +72,13 @@ public class MemberController {
 
 	
 	@RequestMapping(value="/member/myclass", method=RequestMethod.GET)
-	public String myclassForm() throws Exception{
+	public String myclassForm(HttpSession session) throws Exception{
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+
+		if (info == null) {
+			return "redirect:/member/login";
+		}
+		
 		return ".member.myclass";
 	}
 	

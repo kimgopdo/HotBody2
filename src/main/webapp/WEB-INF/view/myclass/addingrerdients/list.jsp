@@ -91,7 +91,7 @@ th {
 	</tr>
 	
 	<c:forEach var="dto" items="${list}">
-	<tr height="100" align="left" class="board">
+	<tr height="100" align="center" class="board">
 		<td width="40">${dto.listNum}</td>
 		<td width="80"><a href="${articleUrl}&num=${dto.ingrerdientsNum}"><img src="<%=cp%>/uploads/myClass/${dto.image}" style="height: 80px; width: 80px;" ></a></td>
 		<td width="80">${dto.ingredientsName}</td>
