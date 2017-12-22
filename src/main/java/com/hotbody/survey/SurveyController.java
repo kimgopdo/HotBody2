@@ -4,12 +4,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.hotbody.member.SessionInfo;
 
 @Controller("survey.surveyController")
 public class SurveyController {
@@ -18,8 +22,48 @@ public class SurveyController {
 	private SurveyService service;
 	
 	@RequestMapping(value="/survey/surveyForm")
-	public String surveyForm() {
+	public String surveyForm(
+					@RequestParam(value="num", defaultValue="1") int qorder,
+					Model model) {
+		List<Survey> list = service.listSurvey();
+		List<Survey> exList = service.readEx();
+		int count = service.surveyCount();
+		
+		model.addAttribute("count", count);
+		model.addAttribute("list", list);
+		model.addAttribute("exList", exList);
 		return ".survey.surveyForm";
+	}
+	
+	@RequestMapping(value="/survey/submit")
+	@ResponseBody
+	public Map<String, Object> surveySubmit(@RequestParam Map<String, String> dataMap,
+									HttpSession session) {
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		String userId = info.getUserId();
+		
+		int count = service.surveyCount();
+		
+		for(int a=1;a<=count;a++) {
+			for(Map.Entry<String, String> entry : dataMap.entrySet()) {
+				if(entry.getKey().contains("questionAnswer."+a+".")) {
+					Survey dto = service.readSurvey(a);
+					dto.setQuestionCode(dto.getQuestionCode());
+					dto.setQuestionAnswer(entry.getValue());
+					dto.setUserId(userId);
+					service.insertResult(dto);
+				}
+			}
+		}
+		
+		Map<String, Object> model = new HashMap<>();
+		model.put("state", "true");
+		return model;
+	}
+	
+	@RequestMapping(value="survey/result")
+	public String surveyResult() {
+		return "";
 	}
 	
 	@RequestMapping(value="/survey/created")
@@ -27,16 +71,28 @@ public class SurveyController {
 		int count = service.surveyCount();
 		List<Survey> list = service.listSurvey();
 		List<Survey> exList = service.readEx();
-				
+		
+		for(Survey dto : list) {
+			if(dto.getQuestionType()!=null) {
+				if(dto.getQuestionType().equals("pro"))
+					dto.setQuestionType("전문성");
+				else if(dto.getQuestionType().equals("afford"))
+					dto.setQuestionType("시간적여유");
+				else if(dto.getQuestionType().equals("habits"))
+					dto.setQuestionType("식습관");
+				else if(dto.getQuestionType().equals("will"))
+					dto.setQuestionType("의지");
+			}
+		}
 		model.addAttribute("surveyList", list);
 		model.addAttribute("count", count+1);
 		model.addAttribute("exList", exList);
 		return ".survey.created";
 	}
 	
-	@RequestMapping(value="/survey/submit")
+	@RequestMapping(value="/survey/createdSubmit")
 	@ResponseBody
-	public Map<String, Object> surveySubmit(Survey dto,
+	public Map<String, Object> surveyCreatedSubmit(Survey dto,
 											String[] exContent,
 											int[] exOrder,
 											int[] exScore) {

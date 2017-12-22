@@ -6,9 +6,10 @@ public class Survey {
 	
 	private int exNum, exScore, exOrder;
 	private String exContent;
+	private String questionAnswer;
 	
 	private int tall, weight, bmi, bbody;
-
+	
 	public int getQuestionCode() {
 		return questionCode;
 	}
@@ -120,5 +121,13 @@ public class Survey {
 	public void setBbody(int bbody) {
 		this.bbody = bbody;
 	}
-	
+
+	public String getQuestionAnswer() {
+		return questionAnswer;
+	}
+
+	public void setQuestionAnswer(String questionAnswer) {
+		this.questionAnswer = questionAnswer;
+	}
+
 }

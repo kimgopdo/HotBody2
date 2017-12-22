@@ -192,7 +192,7 @@ function surveySubmit() {
 	document.getElementById("questionOrder").value=count;
 	
 	var f = $("form[name=surveyform]").serialize();
-	var url="<%=cp%>/survey/submit";
+	var url="<%=cp%>/survey/createdSubmit";
 	
 	alert(f);
 	
@@ -297,7 +297,7 @@ function surveySubmit() {
                 <c:if test="${exdto.questionCode==dto.questionCode}">
 	                <tr height="55" align="center" style="font-size: 13px;">
 	                <td align="left" colspan="3">
-                   	<input type="radio" name="ch${exdto.questionCode}">&nbsp;${exdto.exContent}
+                   	<input type="radio" name="ch${exdto.questionCode}">&nbsp;${exdto.exContent}&nbsp;&nbsp;&nbsp;(${exdto.exScore})
                     </td>
 	                </tr>
 	            </c:if>

@@ -53,4 +53,10 @@
 	<delete id="deleteSurveyResult" parameterType="Integer">
 		DELETE surveyDetails WHERE questionCode = #{questionCode}
 	</delete>
+	
+	<insert id="insertResult" parameterType="com.hotbody.survey.Survey">
+		INSERT INTO surveyDetails(questionCode, questionAnswer, userId)
+		VALUES(#{questionCode}, #{questionAnswer}, #{userId})
+	</insert>
+	
 </mapper>

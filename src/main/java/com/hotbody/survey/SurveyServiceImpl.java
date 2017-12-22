@@ -114,5 +114,16 @@ public class SurveyServiceImpl implements SurveyService{
 		return result;
 	}
 
+	@Override
+	public int insertResult(Survey dto) {
+		int result=0;
+		try {
+			result = dao.insertData("survey.insertResult", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
 	
 }
