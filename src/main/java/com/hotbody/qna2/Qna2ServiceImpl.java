@@ -66,7 +66,7 @@ public class Qna2ServiceImpl implements Qna2Service{
 	}
 
 	@Override
-	public int updateHitCount(int qna2Code) {
+	public int updatehitCount(int qna2Code) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

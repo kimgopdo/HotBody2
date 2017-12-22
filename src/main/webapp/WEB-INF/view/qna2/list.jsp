@@ -99,14 +99,7 @@ body{
 			<c:when test="${dto.hitCount>20}">	
 				<td width="65" style="font-weight: bold; color: red;">${dto.hitCount}</td>
 			</c:when>
-		<c:otherwise>
-			<td width="65">${dto.hitCount}</td>
-			<td>
-				<c:if test="${not empty dto.saveFile}">
-					<a href="<%=cp%>/qna2/download?qna2Code=${dto.qna2Code}"><img src="<%=cp%>/resource/images/disk.gif"></a>
-				</c:if>		
-		</td>	
-		</c:otherwise>
+	
 		</c:choose>
 	</tr>
 	</c:forEach>
@@ -126,12 +119,7 @@ body{
 			<c:otherwise>
 				<td width="65">${dto.hitCount}</td>
 			</c:otherwise>
-		</c:choose>	
-			<td>
-				<c:if test="${not empty dto.saveFile}">
-					<a href="<%=cp%>/qna2/download?qna2Code=${dto.qna2Code}"><img src="<%=cp%>/resource/images/disk.gif"></a>
-				</c:if>		
-			</td>			
+		</c:choose>						
 		</tr>
 	</c:forEach>
 	

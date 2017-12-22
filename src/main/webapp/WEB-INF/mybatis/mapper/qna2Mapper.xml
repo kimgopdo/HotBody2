@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="qna2">
+
+<!-- 새 글 및 답변 글 저장하기 -->
+<insert id="insertQna2" parameterType="com.hotbody.qna2.Qna2">
+	INSERT INTO qna2
+		(qna2Code, userId, subject, content,
+		 groupNum, orderNo, depth, parent, created, hitCount) 
+		 VALUES(qna2_seq.NEXTVAL, #{userId}, #{subject},
+		 #{content}, #{groupNum}, #{orderNo}, #{depth}, 
+		 #{parent}
+		 ,SYSDATE
+		 ,0)
+</insert>
+
+<!-- sql태그: 반복작업에 유용 -->
+<sql id="where-list">
+   <if test="searchKey=='userId' ">
+        userId=#{searchValue}
+   </if>
+   <if test="searchKey=='subject' ">
+       INSTR(subject, #{searchValue}) &gt; 0
+   </if>
+   <if test="searchKey=='content' ">
+        DBMS_LOB.INSTR(content, #{searchValue}) &gt; 0
+   </if>
+   <if test="searchKey=='created' ">
+        TO_CHAR(created, 'YYYY-MM-DD')=#{searchValue}
+			OR TO_CHAR(created, 'YYYYMMDD')=#{searchValue}
+   </if>
+</sql>
+
+<!--글개수-->
+<select id="dataCount" resultType="Integer" parameterType="map">
+	SELECT NVL(COUNT(*), 0) FROM qna2
+	<where>
+			<if test="searchValue != null and searchValue !=''">
+				<include refid="where-list"/>
+			</if>
+		</where>
+</select>
+
+<!-- 글 리스트 -->
+<select id="listQna2" resultType="com.hotbody.qna2.Qna2"
+	parameterType="map">
+	
+	SELECT * FROM (
+		SELECT ROWNUM rnum, tb.* FROM (
+			SELECT qna2Code, q.userId, subject, groupNum,
+			depth, orderNo, hitCount,
+			TO_CHAR(created, 'YYYY-MM-DD') created
+			FROM qna2 q
+			JOIN member1 m1 ON q.userId = m1.userId
+	<where>
+		<if test="searchValue !=null and searchValue!=''">
+			<include refid="where-list"/>
+		</if>
+	</where>
+	ORDER BY qna2Code DESC
+<![CDATA[		
+			) tb WHERE ROWNUM <= #{end}
+		) WHERE rnum >=#{start}
+]]>
+
+	</select>
+
+
+
+
+
+
+
+
+</mapper>

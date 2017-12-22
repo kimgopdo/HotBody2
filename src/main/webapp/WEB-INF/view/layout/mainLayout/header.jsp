@@ -41,7 +41,7 @@
 								<li><a href="<%=cp%>/notice/list">공지사항</a></li>
 								<li><a href="<%=cp%>/event/list">이벤트</a></li>
 							</ul></li>
-						<li class="scroll_btn last"><a href="#contacts">자주묻는질문</a></li>
+						<li class="scroll_btn last"><a href="<%=cp%>/qna2/list">자주묻는질문</a></li>
 						
 						<c:if test="${empty sessionScope.member}">
 						<li class="scroll_btn last">

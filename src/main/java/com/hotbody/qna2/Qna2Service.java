@@ -13,7 +13,7 @@ public interface Qna2Service {
 	public Qna2 preReadQna2(Map<String, Object> map);
 	public Qna2 nextReadQna2(Map<String, Object> map);
 	
-	public int updateHitCount(int qna2Code);
+	public int updatehitCount(int qna2Code);
 	
 	public int updateQna2(Qna2 dto);
 	public int deleteQna2(int qna2Code);

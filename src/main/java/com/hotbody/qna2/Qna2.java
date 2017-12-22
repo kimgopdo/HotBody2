@@ -2,13 +2,19 @@ package com.hotbody.qna2;
 
 	public class Qna2 {
 		private int listNum, qna2Code;
-		private int groupNum, depth, orderNo, parent, hitcount;
+		private int groupNum, depth, orderNo, parent, hitCount;
 		private String userId, subject, content, created;
 //		private String saveFile, originalFile;
 //		private long fileSize;
 		
 		public int getListNum() {
 			return listNum;
+		}
+		public int getHitCount() {
+			return hitCount;
+		}
+		public void setHitCount(int hitCount) {
+			this.hitCount = hitCount;
 		}
 		public void setListNum(int listNum) {
 			this.listNum = listNum;
@@ -43,12 +49,7 @@ package com.hotbody.qna2;
 		public void setParent(int parent) {
 			this.parent = parent;
 		}
-		public int getHitcount() {
-			return hitcount;
-		}
-		public void setHitcount(int hitcount) {
-			this.hitcount = hitcount;
-		}
+		
 		public String getUserId() {
 			return userId;
 		}
