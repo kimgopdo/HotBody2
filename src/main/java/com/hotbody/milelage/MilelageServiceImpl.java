@@ -27,7 +27,7 @@ public class MilelageServiceImpl implements MilelageService{
 		Message dto=null;
 		
 		try {
-			dto=dao.selectOne("milelage.mDataCount",mCode);
+			dto=dao.selectOne("milelage.readingMessage",mCode);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -50,13 +50,13 @@ public class MilelageServiceImpl implements MilelageService{
 					if(mf.isEmpty())
 						continue;
 					
-					String saveFilename=fileManager.doFileUpload(mf, pathname);
-					if(saveFilename!=null) {
-						String originalFilename=mf.getOriginalFilename();
+					String fileName=fileManager.doFileUpload(mf, pathname);
+					if(fileName!=null) {
+						String oFileName=mf.getOriginalFilename();
 						long fileSize=mf.getSize();
 						
-						dto.setOriginalFilename(originalFilename);
-						dto.setSaveFilename(saveFilename);
+						dto.setoFileName(oFileName);
+						dto.setFileName(fileName);
 						dto.setFileSize(fileSize);
 						
 						insertFile(dto);
@@ -73,6 +73,7 @@ public class MilelageServiceImpl implements MilelageService{
 		}
 		return result;
 	}
+
 
 	@Override
 	public int mDataCount(Map<String, Object> map) {
@@ -100,7 +101,7 @@ public class MilelageServiceImpl implements MilelageService{
 	public List<Message> listFile(int mCode) {
 		List<Message> listFile =null;
 		try {
-			listFile=dao.selectList("milelage.listFile", mCode);
+			listFile=dao.selectList("milelage.fileList", mCode);
 
 		} catch (Exception e) {
 			System.out.println(e.toString());
@@ -134,6 +135,11 @@ public class MilelageServiceImpl implements MilelageService{
 		return 0;
 	}
 
+	@Override
+	public int deleteMessage(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
 	@Override
 	public int checkUserId2(String userId2) {

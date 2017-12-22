@@ -46,14 +46,19 @@ $(function(){
 		return;
 	}
 	var count=$("input[name=pdPrice]");
+	var totMilelage=0;
 	for(var n=1; n<=count.length;n++){
 		var sum=$("#pdPrice"+n).val();
 		var cnt=$("#no1"+n).val();
+		totMilelage=totMilelage+parseInt($("#milelage"+n).val());
 		var tot=sum*cnt;
 		tot=numberWithCommas(tot);
 		$("#cost"+n).text(tot);
 		$("#cnt"+n).text(cnt);
 	}
+		$("input[name=milelage]").val(totMilelage);
+		totMilelage=numberWithCommas(totMilelage);
+		$("#saveMilelage").text(totMilelage);
 	totalMoney();
 	pointCal();
 	tel="${memberDto.tel1}";
@@ -126,8 +131,16 @@ function pointCal(){
 	}
 	var totPay=$("#totPay2").text();
 	totPay=uncomma(totPay);
+	haveM=${milelageDto.useableMilelage};
 	if(totPay<point){
 		alert("포인트가 가격보다 많습니다.");
+		$("#usingPoint").val("");
+		$("#point1").text(0);
+		$("#point2").text(0);
+		totalMoney();
+		return;
+	}else if(haveM<point){
+		alert("소지 포인트보다 많습니다.");
 		$("#usingPoint").val("");
 		$("#point1").text(0);
 		$("#point2").text(0);
@@ -165,7 +178,15 @@ function send(){
 		,dataType:"json"
 		,async: false
 		,success:function(e){
-			
+			if(e.state=="paySeccess"){
+				removePayCookie(e.paymentDto.pdnum,e.paymentDto.amount);
+				location.href="<%=cp%>/hotShop";
+				return;
+			}else{
+				alert("결제오류!!");
+				location.href="<%=cp%>/hotShop";
+				return;
+			}
 		}
 	})
 }
@@ -197,6 +218,7 @@ function clear(){
 		<td width="2%">
 			<input type="hidden" name="pdnum" value="${dto.pdnum}">
 			<input type="hidden" id="pdPrice${dto.listNum}" name="pdPrice" value="${dto.pdPrice}">
+			<input type="hidden" id="milelage${dto.listNum}" value="${dto.milelage}">
 			<input type="hidden" value="${dto.listNum}">
 			${dto.listNum}
 		</td>
@@ -215,7 +237,7 @@ function clear(){
 			<input type="number" name="amount" value="${dto.pCnt}" id="no1${dto.listNum}" min="0" style="width: 35px;" onkeypress="onlyNumber();" onclick="add(${dto.listNum}); totalMoney();">
 		</td>
 		<td width="5%">
-			190
+			${dto.milelage}
 		</td>
 		<td width="10%">
 			<span id="cost${dto.listNum}"></span>원
@@ -308,7 +330,7 @@ function clear(){
 	</tr>
 	<tr>
 		<td colspan="2">사용할 포인트</td>
-		<td colspan="6" style="text-align: left;"> <input type="number" name="milelagePay" value="0" id="usingPoint" onkeyup="clear(); pointCal();"> </td>
+		<td colspan="6" style="text-align: left;"> <input type="number" name="milelagePay" value="0" id="usingPoint" onkeyup="clear(); pointCal();"> 현재 소지 포인트 : ${milelageDto.useableMilelage} </td>
 	</tr>
 	
 	<tr>
@@ -323,7 +345,7 @@ function clear(){
 		<span>${dto.pdName} 수량: <span id="cnt${dto.listNum}"></span>개<br><br></span>
 		</c:forEach>
 		</td>
-		<td colspan="5" style="border-left: 2px solid #e7e7e7"><span id="totPay2"></span>원 - <span id="point2"></span>포인트 = <span id="result1"></span>원<input type='hidden' name='totalPay'></td>
+		<td colspan="5" style="border-left: 2px solid #e7e7e7"><span id="totPay2"></span>원 - <span id="point2"></span>포인트 = <span id="result1"></span>원<input type='hidden' name='totalPay'><input type="hidden" name="milelage"><br>적립 포인트: <span id="saveMilelage"></span> </td>
 	</tr>
 	<tr>
 		<td colspan="3">총액 :  <span id="result2"></span>원</td>

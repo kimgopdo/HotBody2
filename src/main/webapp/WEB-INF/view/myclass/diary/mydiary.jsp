@@ -304,8 +304,8 @@ function insertForm(start, end) {
 		    	   $(this).dialog("close");
 		        }
 		  },
-		  height: 480,
-		  width: 550,
+		  height: 720,
+		  width: 800,
 		  title: "일정 추가",
 		  close: function(event, ui) {
 		  }
@@ -698,6 +698,204 @@ $(function(){
 		}
 	});
 });
+
+
+
+//------------------------------------------------------------
+ 
+function lookIng(){
+	var dlg = $("#ing").dialog({
+		  modal: true,
+		  buttons: {
+		       " 선택 " : function() {
+		    	   selectIng();
+		        },
+		       " 닫기 " : function() {
+		    	   $(this).dialog("close");
+		        }
+		  },
+          position:{
+              my:"left top",
+              at:"center center"
+          },
+		  height: 700,
+		  width: 700,
+		  title: "식단찾기",
+		  open: function(){
+			  $(this).load("<%=cp%>/myclass/diary/ing");  
+		  },
+		  close: function() {
+		  }
+	});	
+}
+function selectIng(){
+	alert("식단가져오기");
+	var chk =document.getElementsByName("exerChk");
+	var check = chk.checked;
+	alert(check);
+}
+function lookExercise(){
+	var dlg = $("#exercise").dialog({
+		  modal: true,
+		  buttons: {
+		       " 선택 " : function() {
+		    	   	selectExercise();
+		        },
+		       " 닫기 " : function() {
+		    	   $(this).dialog("close");
+		        }
+		  },
+          position:{
+              my:"left top",
+              at:"center center"
+          },
+		  height: 720,
+		  width: 700,
+		  title: "운동찾기",
+		  open: function(){
+			  $(this).load("<%=cp%>/myclass/diary/exercise");
+		  },
+		  close: function() {
+		  }
+	});		
+}
+function selectExercise(){
+	alert("운동가져오기");
+}
+
+function add1(){
+ 	var add = "<div>";
+ 		add+= "<input name='weight' type='text' class='boxTF' style='width:53%;' placeholder='재료선택(클릭)' onclick='lookIng()'>";
+		add+= "<input name='weight' type='text' class='boxTF' style='width:26%;' placeholder='량'>";
+    	add+= "<span>";
+    	add+= "<img src='<%=cp%>/resource/images/minus.png' style='height: 15px; width: 15px; margin-top: 5px; cursor: pointer;' onclick='remove1(this)'>";
+    	add+= "</span>";
+    	add+= "<input type='hidden' name='num' value='0'>";
+    	add+= "<div>";
+    	
+    	$("#add1").append(add);
+}
+function remove1(td){
+	$(td).closest("div").remove();	
+}
+
+function add2(){
+ 	var add = "<div>";
+ 		add+= "<input name='weight' type='text' class='boxTF' style='width:53%;' placeholder='재료선택(클릭)' onclick='lookIng()'>";
+		add+= "<input name='weight' type='text' class='boxTF' style='width:26%;' placeholder='량'>";
+		add+= "<span>";
+		add+= "<img src='<%=cp%>/resource/images/minus.png' style='height: 15px; width: 15px; margin-top: 5px; cursor: pointer;' onclick='remove2(this)'>";
+		add+= "</span>";
+		add+= "<input type='hidden' name='num' value='0'>";
+		add+= "</div>";
+	
+	$("#add2").append(add);	
+
+}
+function remove2(td){
+	$(td).closest("div").remove();	
+}
+
+function add3(){
+ 	var add = "<div>";
+ 		add+= "<input name='weight' type='text' class='boxTF' style='width:53%;' placeholder='재료선택(클릭)' onclick='lookIng()'>";
+		add+= "<input name='weight' type='text' class='boxTF' style='width:26%;' placeholder='량'>";
+		add+= "<span>";
+		add+= "<img src='<%=cp%>/resource/images/minus.png' style='height: 15px; width: 15px; margin-top: 5px; cursor: pointer;' onclick='remove3(this)'>";
+		add+= "</span>";
+		add+= "<input type='hidden' name='num' value='0'>";
+		add+= "</div>";
+	
+	$("#add3").append(add);	
+
+}
+function remove3(td){
+	$(td).closest("div").remove();	
+}
+
+
+function mySearchExercise(c) {
+	var f=document.mySearchList;
+	if(c=="reload") {
+		f.searchKey.value="exerciseName";
+		f.searchValue.value="";
+	}
+	
+	var query = $("form[name=mySearchList]").serialize();
+	var url="<%=cp%>/myclass/diary/exercise";
+	
+	$.ajax({
+         type:"POST"
+         ,url:url
+		 ,data:query
+		 ,success:function(data) {
+			 $("#exercise").html(data);
+		 } ,error:function(e) {
+              console.log(e.responseText);
+         }
+	});
+}
+
+function mySearchIng(c) {
+	var f=document.mySearchList2;
+	if(c=="reload") {
+		f.searchKey.value="ingredientsName";
+		f.searchValue.value="";
+	}
+	
+	var query = $("form[name=mySearchList2]").serialize();
+	var url="<%=cp%>/myclass/diary/ing";
+	
+	$.ajax({
+         type:"POST"
+         ,url:url
+		 ,data:query
+		 ,success:function(data) {
+			 $("#ing").html(data);
+		 } ,error:function(e) {
+              console.log(e.responseText);
+         }
+	});
+}
+
+function listExercise(page) {
+	var f=document.mySearchList;
+	f.pageNo.value = page;
+	
+	var query = $("form[name=mySearchList]").serialize();
+	var url="<%=cp%>/myclass/diary/exercise";
+	
+	$.ajax({
+         type:"POST"
+         ,url:url
+		 ,data:query
+		 ,success:function(data) {
+			 $("#exercise").html(data);
+		 } ,error:function(e) {
+              console.log(e.responseText);
+         }
+	});
+}
+
+function listIng(page) {
+	var f=document.mySearchList2;
+	f.pageNo.value = page;
+	
+	var query = $("form[name=mySearchList2]").serialize();
+	var url="<%=cp%>/myclass/diary/ing";
+	
+	$.ajax({
+         type:"POST"
+         ,url:url
+		 ,data:query
+		 ,success:function(data) {
+			 $("#exercise").html(data);
+		 } ,error:function(e) {
+              console.log(e.responseText);
+         }
+	});
+}
+
 </script>
 
 <div class="body-container" style="width: 1100px; margin: 100px auto;">

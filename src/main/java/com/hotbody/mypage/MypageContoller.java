@@ -510,30 +510,45 @@ public class MypageContoller {
 		return map;
 	}
 	
-	@RequestMapping(value="/mypage/readingMessage", method=RequestMethod.POST)
+	@RequestMapping(value="/mypage/readingMessage")
 	public String readingMessage(
 			@RequestParam(value="mCode") int mCode,
 			Model model,
-			Message dto,
 			HttpSession session
 			) throws Exception{
-		
-		Map<String, Object> map = new HashMap<String, Object>();
 
-		map.put("mCode", mCode);
         
 		// 파일
 		List<Message> listFile=mservice.listFile(mCode);
 		int fileCount = mservice.fileCount(mCode);
+		Message dto=mservice.readingMessage(mCode);
+
 		
-	
+		model.addAttribute("mCode", mCode);
 		model.addAttribute("dto", dto);
 		model.addAttribute("listFile", listFile);
 		model.addAttribute("fileCount", fileCount);
+	
 		
-		dto=mservice.readingMessage(mCode);
+		return "mypage/messageRecevie";
+	}
+	
+	
+	@RequestMapping(value="/mypage/deleteMessage")
+	public String deleteMessage(
+			@RequestParam(value="mCode") int[] mCode,
+			Model model,
+			HttpSession session
+			) throws Exception{
+
+        for(int s:mCode) {System.out.println(s);}
 		
-		return ".mypage.messageMain";
+		// 파일
+		//int result =mservice.deleteMessage(map);
+		//int result2 = mservice.deleteFile(map);
+	
+		
+		return "redirect:/mypage/messageMain";
 	}
 	
 	

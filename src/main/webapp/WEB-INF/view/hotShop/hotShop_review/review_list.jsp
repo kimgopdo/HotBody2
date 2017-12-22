@@ -2,6 +2,7 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%
 	String cp=request.getContextPath();
 %>
@@ -11,38 +12,25 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
+<style type="text/css">
+
+</style>
+
 <script type="text/javascript">
 function selectList(f){
 	f.submit();
 }
 function backPage(){
-	history.back();
+	location.href="<%=cp%>/hotShop";
 }
 
-/* $(function(){
-	$("#chkAll").click(function(){
-		if(this.checked == true){
-			$("input[name=nums]").each(function(){
-				this.checked = true;
-			});
-		} else {
-			$("input[name=nums]").each(function(){
-				this.checked = false;
-			});
-		}
-	});		
-}); */
-
-<%-- function check(){
-	var uid="${sessionScope.member.userId}";
-	if(! uid){
-		location.href="<%=cp%>/member/login";
-		return;
-	} else {
-		location.href="<%=cp%>/hotShop/review_created";
-	}
-} --%>
-
+$("#reviewBoard").ready(function(){ 
+	   var listLength=${fn:length(list)};
+	   for(var n=1; n<=listLength; n++){
+	      if(n%2==0)
+	      $("#color"+n).css("background-color","#f9f9f9");      
+	   }
+	})
 </script>
 
 
@@ -55,7 +43,7 @@ function backPage(){
 	</tr>
 </table>
 
-<table style="width: 100%; margin: 5px auto 0px;">
+<table style="width: 100%; margin: 5px auto 0px;" id="reviewBoard">
 	<tr height="25;" style="font-size: 12px;">
 		<!-- <td width="50%" align="left"><button type="button" id="btnDeleteList" style="background: white; border: 1px solid #999999; border-radius: 3px; height: 25px;">삭제</button></td> -->
 		<td width="50%" align="left"><button type="button" style="background: white; border: 1px solid #999999; border-radius: 3px; height: 25px;" onclick="javascript:location.href='<%=cp%>/hotShop/review_list';">새로고침</button></td>
@@ -82,11 +70,11 @@ function backPage(){
 			<td width="380" style="padding-left: 20px;">제목</td>
 			<td width="80">작성자</td>
 			<td width="80">작성일</td>
-			<td width="80">평점</td>
+			<td width="80">별점</td>
 		</tr>
-		
+	
 		<c:forEach var="dto" items="${list}">
-		<tr style="border: 1px solid #F6F6F6; background: white; font-size: 13px;" align="center" height="30px">
+		<tr style="border: 1px solid #F6F6F6; background: white; font-size: 13px;" align="center" height="30px" id="color${dto.rNum}">
 			<%-- <td><input type="checkbox" name="nums" value="${dto.reviewCode}"></td> --%>
 			<td>${dto.listNum}</td>
 			<td align="left" style="padding-left: 5px; color: black;">
@@ -94,7 +82,21 @@ function backPage(){
 			</td>
 			<td>${dto.userName}</td>
 			<td>${dto.reviewCreated}</td>
-			<td>${dto.starScore}</td>
+			<c:if test="${dto.starScore=='1'}">
+			<td><img src="<%=cp%>/uploads/shopStar/star_1.PNG" style="width: 120px; height: 30px;"></td>
+			</c:if>
+			<c:if test="${dto.starScore=='2'}">
+			<td><img src="<%=cp%>/uploads/shopStar/star_2.PNG" style="width: 120px; height: 30px;"></td>
+			</c:if>
+			<c:if test="${dto.starScore=='3'}">
+			<td><img src="<%=cp%>/uploads/shopStar/star_3.PNG" style="width: 120px; height: 30px;"></td>
+			</c:if>
+			<c:if test="${dto.starScore=='4'}">
+			<td><img src="<%=cp%>/uploads/shopStar/star_4.PNG" style="width: 120px; height: 30px;"></td>
+			</c:if>
+			<c:if test="${dto.starScore=='5'}">
+			<td><img src="<%=cp%>/uploads/shopStar/star_5.PNG" style="width: 120px; height: 30px;"></td>
+			</c:if>
 		</tr>
 		</c:forEach>
 	</table>
@@ -126,7 +128,7 @@ function backPage(){
 				<button style="background: white; border: 1px solid #999999; border-radius: 3px; height: 25px;" type="button" onclick="selectList(this.form);">검색</button>
 			</td>
 			<td style="float: right; margin-right: 3px;">
-				<button style="background: white; border: 1px solid #999999; border-radius: 3px; height: 25px;" type="button" onclick="backPage();">뒤로가기</button>
+				<button style="background: white; border: 1px solid #999999; border-radius: 3px; height: 25px;" type="button" onclick="backPage();">쇼핑몰</button>
 			</td>
 		</tr>
 	</table>

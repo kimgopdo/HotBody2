@@ -31,10 +31,16 @@ public class HotShop {
 	private int showandhide;
 	private String pCnt;
 	private int listNum;
+	private int milelage;
 	
 	
 	
-	
+	public int getMilelage() {
+		return milelage;
+	}
+	public void setMilelage(int milelage) {
+		this.milelage = milelage;
+	}
 	public int getListNum() {
 		return listNum;
 	}

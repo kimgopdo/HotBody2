@@ -18,6 +18,9 @@ function send(f){
 }
 </script>
 <style type="text/css">
+th {
+    text-align: center;
+}
 .btn-list {
     display: inline-block;
     margin-bottom: 0;

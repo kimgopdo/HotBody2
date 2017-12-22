@@ -20,4 +20,5 @@ public interface MilelageService {
 	public int deleteFile(Map<String, Object> map);
 	public int mDataCount(Map<String, Object> map);
 	public int fileCount(int mCode);
+	public int deleteMessage(Map<String, Object> map);
 }

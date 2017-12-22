@@ -139,6 +139,10 @@ function checkId() {
 
 }
 
+
+
+
+
 $(function() {
 
     $("#fileView").on("change","input[name=uploadFile]",function() {
@@ -176,23 +180,45 @@ $(function() {
 });
 
 
-
-
-$(function () {
-	
-
-	$("#readMessage").dialog({ //이벤트 발생했을때 보여주려면 autoOpen : false로 지정해줘야 한다. 
-			autoOpen: false, //레이어팝업 넓이 
-			width: 605, //뒷배경을 disable 시키고싶다면 true 
-			modal: true 
-		});
-
-	$("#readingMessage").click(function () {
-		$("#readMessage").dialog("open");
-		
+function Article(mCode){
+	$("#readMessage").dialog({
+		width: 605, //뒷배경을 disable 시키고싶다면 true 
+		modal: true,
+		open:function(e){
+			var q="mCode="+mCode;
+			var url ="<%=cp%>/mypage/readingMessage?"+q;
+			$(this).load(url); //load는 get 방식 AJAX
+		}
 	});
-});
+}
 
+$(function(){ 
+	//전체선택 체크박스 클릭 
+	$("#allCheck").click(function(){ 
+		//만약 전체 선택 체크박스가 체크된상태일경우 
+		if($("#allCheck").prop("checked")) { 
+			//해당화면에 전체 checkbox들을 체크해준다 
+			$("input[type=checkbox]").prop("checked",true); 
+			// 전체선택 체크박스가 해제된 경우 
+			} 
+		else { //해당화면에 모든 checkbox들의 체크를해제시킨다.
+			$("input[type=checkbox]").prop("checked",false);
+		} 
+		}) ;
+		
+}); 
+
+
+
+function deleteMessage() {
+	
+	var f = document.deleteMessage;
+	var mCode=f.getElementsByName("mCode");
+	
+	f.action="<%=cp%>/mypage/deleteMessage";
+	f.submit();
+	
+}
 
 </script>
 
@@ -210,7 +236,7 @@ $(function () {
 
   
        <div id="dialog" title="쪽지보내기"> 
-      <form method="post" enctype="multipart/form-data" action="<%=cp%>/mypage/sendMessage">
+      <form name="sendMessage" method="post" enctype="multipart/form-data" action="<%=cp%>/mypage/sendMessage">
         <table style="border: 1px solid #eee;  width: 98%; margin: 5px auto 5px;">
 			<tr height="31">
 				<td style=" width:15%; border: 1px solid #eeeeee;margin-left: 5px; ">받는사람</td>
@@ -253,45 +279,7 @@ $(function () {
          </div>
 
 
-	<div id="readMessage" title="쪽지보내기"> 
-      <form method="post" enctype="multipart/form-data" action="<%=cp%>/mypage/sendMessage">
-        <table style="border: 1px solid #eee;  width: 98%; margin: 5px auto 5px;">
-			<tr height="31">
-				<td style=" width:15%; border: 1px solid #eeeeee;margin-left: 5px; ">보낸사람</td>
-				<td style=" width:35%; border: 1px solid #eee;">${dto.userId2}</td>
-				<td style=" width:15%; border: 1px solid #eeeeee;margin-left: 5px; ">보낸시간</td>
-				<td style=" width:35%; border: 1px solid #eee;">${dto.sCreated}</td>
-			</tr>
-			<tr>
-			    <td style="border: 1px solid #eee; margin-left: 5px; width:15%;">제목</td>
-				<td style="border: 1px solid #eee;"><input name="subject" type="text" style="width:100%; height: 25px;margin-top: 9px; "></td>	
-			</tr>
-
-		</table>
-	
-		<table  style=" width: 98%; margin: 5px auto 5px;">
-			<tr style="height: 31px; width: 100%; margin-top: 10px; margin-bottom: 10px " >
-				<td colspan="2" width="100%" background="#F2F2F2" ><img src="<%=cp%>/resource/images/647e16b7feb0fe7e0f4f3b9f5f402f5e.png" style="max-height: 18px;">파일첨부</td>
-			</tr>
-		</table>
-		<table id="fileView" style=" width: 98%; margin: 5px auto 5px;">
-			<tr style="height: 31px; width: 100%; margin-top: 10px; margin-bottom: 10px ">
-				<td colspan="2" style="width: 100%;" >
-					<input type="file" name="uploadFile" value="파일첨부" style="float: left; margin-left: 20px;" >
-				</td>
-			</tr>
-		</table>
-		<table  style=" width: 98%; margin: 5px auto 5px;">
-			<tr>
-				<td>*첨부된 파일 최대 20개, 총 용량 50M를 넘을 수 없습니다.</td>
-			</tr>	
-			<tr align="center" style="height: 31px; width: 100%; margin-top: 10px; margin-bottom: 10px ">
-				<td colspan="2"><input type="submit" value="보내기" > <input type="reset" value="취소"></td>
-			</tr>
-		</table>
-			
-		</form>
-         </div>
+	<div id="readMessage" title="쪽지보기"></div>
 
 <div style=" width:905px; margin: 50px auto; ">
 <div id="container">
@@ -320,12 +308,12 @@ $(function () {
 			
         </table>
         </form>
-        <form action="<%=cp%>/mypage/readingMessage" method="post"> 
+        <form name="deleteMessage" method="post"> 
         <table style="width: 98%; margin: 10px auto 5px;">
 			<tr style="width: 100%; border-style: none; margin-bottom: 20px;">
-				<td colspan="6" style="width: 90%"><input type="button" value="삭제"></td>
-				<td colspan="3" style="width: 10%">
-			    <input style="float: right" type="button" value="새로고침">
+				<td colspan="6" style="width: 90%"><input type="submit" value="삭제" onclick="deleteMessage()"></td>
+				<td colspan="2" style="width: 10%">
+
 				<select style="height:26px; float: right" name="kind" >
 				<option selected="selected">전체보기</option>
 				<option>중요표시 쪽지만</option>
@@ -334,13 +322,14 @@ $(function () {
 				<option>안읽은 쪽지만</option>
 				<option>읽은 쪽지만</option>
 				</select>
-				
+				</td>
 			</tr>
 			
 			<tr style="width: 100%; border-style: none; border-style: double; background:#eee ">
-				<td style="width: 3%; border: 1px solid; "><input type="checkbox"></td>
+
+				<td style="width: 3%; border: 1px solid; "><input id="allCheck" type="checkbox" ></td>
 				<td style="width: 6%; border: 1px solid;">상태</td>
-				<td style="width: 6%; border: 1px solid; display: hidden;"></td>
+	
 				<td style="width: 12%; border: 1px solid;">보낸사람</td>
 				<td style="width: 12%; border: 1px solid;">받는사람</td>
 				<td style="width: 14%; border: 1px solid;">쪽지함</td>
@@ -349,20 +338,23 @@ $(function () {
 				<td style="width: 16%; border: 1px solid;">송/수신시간</td>
 
 			</tr>
+			<tr></tr>
 			
 			<c:forEach var="dto" items="${list}">
 			<tr style="width: 100%; border-style: none;">
-				<td style="width: 3%; border: 1px solid; "><input type="checkbox"></td>
+
+				<td style="width: 3%; border: 1px solid; "><input name="mCode" type="checkbox" value="${dto.mCode}"></td>
 				<td style="width: 6%; border: 1px solid;">상태</td>
-				<td style="width: 6%; border: 1px solid; display: hidden;">${dto.mCode}</td>
+
 				<td style="width: 12%; border: 1px solid;">${dto.userId2}</td>
 				<td style="width: 12%; border: 1px solid;">${dto.userId}</td>
 				<td style="width: 14%; border: 1px solid;">${dto.box}</td>
-				<td style="width: 27%; border: 1px solid;"><a id="readingMessage" style="cursor: pointer;" type="submit" >${dto.subject}</a></td>
+				<td style="width: 27%; border: 1px solid;"><a class="readingMessage" style="cursor: pointer; " onclick="Article('${dto.mCode}')" >${dto.subject}</a></td>
 				<td style="width: 10%; border: 1px solid;">${dto.totalFileSize}</td>
 				<td style="width: 16%; border: 1px solid;">${dto.sCreated}</td>
 
 			</tr>
+			
 			</c:forEach>
 			
         </table>

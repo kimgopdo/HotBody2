@@ -58,8 +58,16 @@ public class BungServiceImpl implements BungService {
 
 	@Override
 	public Bung readBung(int mosubNum) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		Bung dto=null;
+		
+		try {
+			dto=dao.selectOne("mocobung.readBung",mosubNum);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return dto;
 	}
 
 	@Override

@@ -12,6 +12,8 @@ public class Mocojee {
 	private String userId;
 	private int listNum;
 	
+	
+	
 	private MultipartFile upload;
 	
 
