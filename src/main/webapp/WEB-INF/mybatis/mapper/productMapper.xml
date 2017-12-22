@@ -4,9 +4,9 @@
 <mapper namespace="product">
 	<insert id="insertProductList" parameterType="com.hotbody.hotShop.board.HotShop">
 		INSERT INTO 
-		productList (pdNum,pdName,pdOrder,pdCreated,pdBoardName,pdContent,pdStCount,pdSumContent,scicode,bclcode,showandhide) 
+		productList (pdNum,pdName,pdOrder,pdCreated,pdBoardName,pdContent,pdStCount,pdSumContent,scicode,bclcode,showandhide,milelage) 
 		values(product_seq.NEXTVAL,#{pdName},1,
-				sysdate,#{pdName},#{content},0,#{pdSumContent},#{scicode},#{bclcode},#{showandhide})
+				sysdate,#{pdName},#{content},0,#{pdSumContent},#{scicode},#{bclcode},#{showandhide},#{milelage})
 	</insert>
 	<insert id="insertPmainImg" parameterType="com.hotbody.hotShop.board.HotShop">
 	INSERT INTO 
@@ -39,9 +39,19 @@
 		INSERT INTO PAYINFO (delOrder,takerName,zip,takerAddr1,takerAddr2,takerTel,takerPhone,memo) 
 			VALUES(#{delOrder},#{takerName},#{postNum},#{takerAddr1},#{takerAddr2},#{takerTel, jdbcType=VARCHAR},#{takerPhone},#{memo, jdbcType=VARCHAR})
 	</insert>
+	<insert id="isnertTotalOrdList" parameterType="com.hotbody.hotShop.board.Payment">
+		INSERT INTO TotalOrdList (delorder,paydate) VALUES (#{delOrder},sysdate)
+	</insert>
 	<select id="readDelOrder" parameterType="String" resultType="Integer">
 	SELECT MAX(delOrder) delOrder
 		FROM ORDERS WHERE userId=#{userId}
+	</select>
+	<select id="readDelOrderProduct" parameterType="Integer" resultType="com.hotbody.hotShop.board.Payment">
+	SELECT amount amount_one, cl.pdnum pdnum_one, pdname, pdPrice, imgSaveFilename, rownum FROM cartList cl 
+    JOIN productList pl ON cl.pdnum=pl.pdnum 
+    JOIN Temporary t ON cl.pdnum=t.pdnum
+    JOIN pmainimg pm ON cl.pdnum=pm.pdnum
+    WHERE delOrder=#{delOrder}
 	</select>
 	<select id="bclSelect" resultType="com.hotbody.hotShop.main.HotBodyMenu">
 		SELECT bclcode, name bclname FROM bcl
@@ -72,7 +82,7 @@
 	<select id="productList" parameterType="map" resultType="com.hotbody.hotShop.board.HotShop">
 	SELECT p.pdnum pdnum, imgOriginalFilename, imgSaveFilename, pdName,
 			 pdSumContent, pdPrice, pdcontent content,
-			pdNutrient, pdStMethod, pdType, pdRawName, pdArea,
+			pdNutrient, pdStMethod, pdType, pdRawName, pdArea,milelage,
 			 pdDelRule, pdCreated, pdstCount, (SELECT MIN(TO_CHAR(pdExDate,'YYYY-MM-DD')) FROM productin) pdExDate
 				FROM productList p 
 				Left OUTER Join Temporary t ON p.pdnum=t.pdnum 
@@ -115,7 +125,7 @@
         </choose>
 	</select>
 	<select id="readProductIn" parameterType="map" resultType="com.hotbody.hotShop.board.ProductIn">
-		SELECT * FROM (SELECT ROWNUM rnum, pdin.* FROM (SELECT pdincode,pdrawprice,pdinnum,TO_CHAR(pdexdate, 'YYYY-MM-DD') pdexdate,TO_CHAR(pdindate, 'YYYY-MM-DD') pdindate,pi.pdnum pdnum,pl.pdname pdname,pi.supplycode,supplyname,imgSaveFilename
+		SELECT * FROM (SELECT ROWNUM rnum, pdin.* FROM (SELECT pdincode,pdrawprice,pdinnum,TO_CHAR(pdexdate, 'YYYY-MM-DD') pdexdate,TO_CHAR(pdindate, 'YYYY-MM-DD') pdindate,pi.pdnum pdnum,pl.pdname pdname,pi.supplycode,supplyname,imgSaveFilename,milelage
 		FROM productin pi 
 		JOIN productList pl ON pi.pdnum=pl.pdnum 
         JOIN supply s ON pi.supplycode=s.supplycode
@@ -156,7 +166,14 @@
 	pdname=#{pdName},
 	pdContent=#{content},
 	pdSumContent=#{pdSumContent},
-	bsl
+	bslcode=#{bclcode},
+	scicode=#{scicode}
+	 WHERE pdnum=#{pdnum}
+	</update>
+	<update id="productInStCount" parameterType="com.hotbody.hotShop.board.ProductIn">
+	UPDATE productList 
+	SET  
+	pdStCount=pdStCount+#{pdinnum}
 	 WHERE pdnum=#{pdnum}
 	</update>
 	<update id="PmainImgUpdate" parameterType="com.hotbody.hotShop.board.HotShop">
@@ -176,13 +193,14 @@
 	pdStMethod=#{pdStMethod},
 	pdType=#{pdType},
 	pdRawName=#{pdRawName}
-	
 	WHERE pdnum=#{pdnum}
 	</update>
 	<update id="updateHitCount" parameterType="Integer">
 		UPDATE productList SET hitCount=hitCount+1 WHERE pdnum=#{pdnum}
 	</update>
-	
+	<insert id="insertMilelage" parameterType="com.hotbody.hotShop.board.Payment">
+	INSERT INTO milelage(milelage,userId,delOrder)VALUES(#{milelage},#{userId},#{delOrder})
+	</insert>
 	<select id="supplyList" resultType="com.hotbody.hotShop.board.Supply">
 		SELECT supplycode, supplyname, supplytel, supplypd
 		FROM supply

@@ -193,7 +193,7 @@ function payment(pdnum){
 						</button>
 					</div>
 					<div style="display: inline; float: left; margin-right: 10px;">
-						<button type="button" class="" style="width: 149px; height: 50px; background: white; outline: none; border: 1px solid black;" onclick="insertCookie(${dto.pdnum});">
+						<button type="button" class="" style="width: 149px; height: 50px; background: white; outline: none; border: 1px solid black;" onclick="insertCookie(${dto.pdnum}); runEffect();">
 							<span style="font-weight: bold; font-size: 18px;">Cart</span>
 						</button>
 					</div>

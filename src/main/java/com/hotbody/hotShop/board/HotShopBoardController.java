@@ -24,6 +24,9 @@ import com.hotbody.common.FileManager;
 import com.hotbody.common.MyUtil;
 import com.hotbody.member.Member;
 import com.hotbody.member.MemberService;
+import com.hotbody.member.SessionInfo;
+import com.hotbody.milelage.Milelage;
+import com.hotbody.milelage.MilelageService;
 @Controller("hotShop.board")
 public class HotShopBoardController {
 	@Autowired
@@ -34,6 +37,8 @@ public class HotShopBoardController {
 	private MyUtil util;
 	@Autowired
 	private MemberService mService;
+	@Autowired
+	private MilelageService mileService;
 	//상품분류에따른 list 
 	//main list는 따로 드래그엔 드롭으로 순서 변경 가능하게 만들꺼임.
 	@RequestMapping("/hotShop/productList")
@@ -115,19 +120,91 @@ public class HotShopBoardController {
 	    memberDto.setTel3(telSplit[2]);
 	    memberDto.setEmail1(emailSplit[0]);
 	    memberDto.setEmail2(emailSplit[1]);
+	    Milelage milelageDto=mileService.selectMilelage(userId);
+	    model.addAttribute("milelageDto", milelageDto);
 	    model.addAttribute("memberDto", memberDto);
 	    model.addAttribute("list", list);
 		return ".hotShop.payPage";
 	}
+	@RequestMapping(value="/hotShop/basketList")
+	public String basketList(
+			String []cookie,
+			String cookie1,
+			HttpSession session,
+			Model model
+			) {
+		SessionInfo info=(SessionInfo) session.getAttribute("member");
+		String userId=info.getUserId();
+		if(userId==null) {
+			return "redirect:/member/login";
+		}
+		int listNum=0;
+		List<HotShop> list=new ArrayList<>();
+		Map<String, Object> map=new HashMap<>();
+		if(cookie1==null) {
+		    for(int n=0; n<cookie.length;n++) {
+		    	listNum++;
+		    	HotShop dto=new HotShop();
+		    	String cVal=cookie[n];
+		    	String []pInfo=cVal.split("-");
+		    	map.put("listOrArticle", 1);
+		    	map.put("pdnum", pInfo[0]);
+		    	dto=service.productArticle(map);
+		    	dto.setpCnt(pInfo[1]);
+		    	dto.setListNum(listNum);
+		    	list.add(dto);
+		    }
+		}else {
+			HotShop dto=new HotShop();
+	    	String cVal=cookie1;
+	    	String []pInfo=cVal.split("-");
+	    	map.put("listOrArticle", 1);
+	    	map.put("pdnum", pInfo[0]);
+	    	dto=service.productArticle(map);
+	    	dto.setpCnt(pInfo[1]);
+	    	dto.setListNum(1);
+	    	list.add(dto);
+		}
+	    map=new HashMap<>();
+	    Milelage milelageDto=mileService.selectMilelage(userId);
+	    map.put("milelageDto", milelageDto);
+	    map.put("list", list);
+		return "hotShop/cookieList";
+	}
 	@RequestMapping(value="/hotShop/payment" ,method=RequestMethod.POST)
 	@ResponseBody
-	public String paymentSubmit(
-			Payment dto
+	public Map<String, Object> paymentSubmit(
+			Payment dto,
+			HttpSession session
 			) {
 		dto.setTakerTel(dto.getTel1_1()+dto.getTel1_2()+dto.getTel1_3());
 		dto.setTakerPhone(dto.getTel2_1()+dto.getTel2_2()+dto.getTel2_3());
-		service.insertPayment(dto);
-		return "success";
+		int result=service.insertPayment(dto);
+		Map<String, Object> map=new HashMap<>();
+		String state;
+		if(result!=1) {
+			state="payFail";
+			map.put("state", state);
+			return map;
+		}
+		state="paySeccess";
+		map.put("state", state);
+		map.put("paymentDto", dto);
+		return map;
+	}
+	@RequestMapping(value="/hotShop/paySeccess")
+	public String paySeccess(
+			HttpSession session,
+			Model model
+			) {
+		SessionInfo info=(SessionInfo) session.getAttribute("member");
+		if(info==null) {
+			return "redirect:/member/login";
+		}
+		int orderNum=service.readDelOrder(info.getUserId());
+		List<Payment> list=service.readDelOrderProduct(orderNum);
+		model.addAttribute("list", list);
+		return ".hotShop.paySeccess";
 	}
 	//상품 아티클
 	@RequestMapping(value="/hotShop/shopArticle")
