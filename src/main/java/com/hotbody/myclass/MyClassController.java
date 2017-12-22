@@ -45,6 +45,121 @@ public class MyClassController {
 	 * 다이어트일기 관련
 	 */
 	
+	// 다이어트일기(운동리스트)
+	@RequestMapping(value="/myclass/diary/exercise")
+	public String diaryExer(@RequestParam(value="pageNo", defaultValue="1") int current_page,
+							@RequestParam(value="searchKey", defaultValue="exerciseName") String searchKey,
+							@RequestParam(value="searchValue", defaultValue="") String searchValue,
+							HttpServletRequest req,
+							Model model) throws Exception {
+		
+		int rows = 10; // 한 화면에 보여주는 게시물 수
+		int total_page = 0;
+		int dataCount = 0;
+   	    
+        // 전체 페이지 수
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("searchKey", searchKey);
+        map.put("searchValue", searchValue);
+
+        dataCount = service.dataCount2(map);
+        if(dataCount != 0)
+            total_page = myUtil.pageCount(rows, dataCount) ;
+
+        
+        // 다른 사람이 자료를 삭제하여 전체 페이지수가 변화 된 경우
+        if(total_page < current_page) 
+            current_page = total_page;
+
+        // 리스트에 출력할 데이터를 가져오기
+        int start = (current_page - 1) * rows + 1;
+        int end = current_page * rows;
+        map.put("start", start);
+        map.put("end", end);
+
+        // 글 리스트
+        List<Exercise> list = service.listExercise(map);
+
+        // 리스트의 번호
+        int listNum, n = 0;
+        Iterator<Exercise> it=list.iterator();
+        while(it.hasNext()) {
+        	Exercise data = it.next();
+            listNum = dataCount - (start + n - 1);
+            data.setListNum(listNum);
+            n++;
+        }
+        
+        String paging = myUtil.pagingMethod(current_page, total_page, "listExercise");
+
+        model.addAttribute("list", list);
+        model.addAttribute("pageNo", current_page);
+        model.addAttribute("dataCount", dataCount);
+        model.addAttribute("total_page", total_page);
+        model.addAttribute("paging", paging);
+		
+		
+		return "myclass/diary/exercise";
+	}
+	
+	
+	// 다이어트 일기 (재료 리스트)
+	@RequestMapping(value="/myclass/diary/ing")
+	public String diaryIng(@RequestParam(value="page", defaultValue="1") int current_page,
+						   @RequestParam(value="searchKey", defaultValue="ingredientsName") String searchKey,
+						   @RequestParam(value="searchValue", defaultValue="") String searchValue,
+						   HttpServletRequest req,
+						   Model model) throws Exception {
+  	    
+		int rows = 10; // 한 화면에 보여주는 게시물 수
+		int total_page = 0;
+		int dataCount = 0;
+		
+        // 전체 페이지 수
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("searchKey", searchKey);
+        map.put("searchValue", searchValue);
+
+        dataCount = service.dataCount(map);
+        if(dataCount != 0)
+            total_page = myUtil.pageCount(rows, dataCount) ;
+
+        
+        // 다른 사람이 자료를 삭제하여 전체 페이지수가 변화 된 경우
+        if(total_page < current_page) 
+            current_page = total_page;
+
+        // 리스트에 출력할 데이터를 가져오기
+        int start = (current_page - 1) * rows + 1;
+        int end = current_page * rows;
+        map.put("start", start);
+        map.put("end", end);
+
+        // 글 리스트
+        List<Ing> list = service.listIng(map);
+
+        // 리스트의 번호
+        int listNum, n = 0;
+        Iterator<Ing> it=list.iterator();
+        while(it.hasNext()) {
+        	Ing data = it.next();
+            listNum = dataCount - (start + n - 1);
+            data.setListNum(listNum);
+            n++;
+        }
+             
+        //String paging = myUtil.paging(current_page, total_page, listUrl);
+        String paging = myUtil.pagingMethod(current_page, total_page, "listIng");
+        model.addAttribute("list", list);
+        model.addAttribute("pageNo", current_page);
+        model.addAttribute("dataCount", dataCount);
+        model.addAttribute("total_page", total_page);
+        model.addAttribute("paging", paging);
+		
+		return "myclass/diary/ing";
+	}
+	
+	
 	@RequestMapping(value="/myclass/diary/mydiary", method=RequestMethod.GET)
 	public String mydiaryForm(HttpSession session, HttpServletResponse resp) throws Exception{
 		SessionInfo info = (SessionInfo) session.getAttribute("member");

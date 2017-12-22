@@ -12,103 +12,6 @@ $(function() {
     $("input[name=endDay]").datepicker();
 });
 
- 
-function lookIng(){
-	var dlg = $("#ing").dialog({
-		  modal: true,
-		  buttons: {
-		       " 선택 " : function() {
-		    	   $(this).dialog("close");
-		        },
-		       " 닫기 " : function() {
-		    	   $(this).dialog("close");
-		        }
-		  },
-          position:{
-              my:"left top",
-              at:"center center"
-          },
-		  height: 700,
-		  width: 700,
-		  title: "식단찾기",
-		  open: function(){
-			  $(this).load("<%=cp%>/myclass/diary/ing");  
-		  },
-		  close: function() {
-		  }
-	});	
-}
-function lookExercise(){
-	var dlg = $("#exercise").dialog({
-		  modal: true,
-		  buttons: {
-		       " 선택 " : function() {
-		    	   $(this).dialog("close");
-		        },
-		       " 닫기 " : function() {
-		    	   $(this).dialog("close");
-		        }
-		  },
-          position:{
-              my:"left top",
-              at:"center center"
-          },
-		  height: 700,
-		  width: 700,
-		  title: "운동찾기",
-		  open: function(){
-			  $(this).load("<%=cp%>/myclass/diary/exercise");
-		  },
-		  close: function() {
-		  }
-	});		
-}
-
-function add1(){
- 	var add = "<input name='weight' type='text' class='boxTF' style='width:53%;' placeholder='재료선택(클릭)' onclick='lookIng()'>";
-		add+= "<input name='weight' type='text' class='boxTF' style='width:26%;' placeholder='량'>";
-    	add+= "<span>";
-    	add+= "<img src='<%=cp%>/resource/images/minus.png' style='height: 15px; width: 15px; margin-top: 5px; cursor: pointer;' onclick='remove1()'>";
-    	add+= "</span>";
-    	add+= "<input type='hidden' name='num' value='0'>";
-    	
-    	$("#add1").append(add);
-}
-function remove1(){
-	alert("삭제1");
-	
-}
-
-function add2(){
- 	var add = "<input name='weight' type='text' class='boxTF' style='width:53%;' placeholder='재료선택(클릭)' onclick='lookIng()'>";
-		add+= "<input name='weight' type='text' class='boxTF' style='width:26%;' placeholder='량'>";
-		add+= "<span>";
-		add+= "<img src='<%=cp%>/resource/images/minus.png' style='height: 15px; width: 15px; margin-top: 5px; cursor: pointer;' onclick='remove2()'>";
-		add+= "</span>";
-		add+= "<input type='hidden' name='num' value='0'>";
-	
-	$("#add2").append(add);	
-
-}
-function remove2(){
-	alert("삭제2");
-}
-
-function add3(){
- 	var add = "<input name='weight' type='text' class='boxTF' style='width:53%;' placeholder='재료선택(클릭)' onclick='lookIng()'>";
-		add+= "<input name='weight' type='text' class='boxTF' style='width:26%;' placeholder='량'>";
-		add+= "<span>";
-		add+= "<img src='<%=cp%>/resource/images/minus.png' style='height: 15px; width: 15px; margin-top: 5px; cursor: pointer;' onclick='remove3()'>";
-		add+= "</span>";
-		add+= "<input type='hidden' name='num' value='0'>";
-	
-	$("#add3").append(add);	
-
-}
-function remove3(){
-	alert("삭제3");
-}
-
 
 
 </script>
@@ -178,9 +81,11 @@ function remove3(){
 	  <tr> 
 		      <td width="100" style="font-weight:600; padding-right:15px; padding-top:5px; text-align: right;" valign="top">식&nbsp;&nbsp;단</td>
 		      <td valign="top" style="padding:5px 0px 10px 0px;" id ="add1"> 
+		      	<div>
 		           <input name='weight' type='text' class='boxTF' style="width:53%;" placeholder='재료선택(클릭)' onclick='lookIng()'>
 		           <input name='weight' type='text' class='boxTF' style="width:26%;" placeholder='량'>          
-		           <input type="hidden" name="num" value="0">    
+		           <input type="hidden" name="num" value="0">
+		        </div>    
 		      </td>
 	  </tr>
 	</table>
@@ -201,9 +106,11 @@ function remove3(){
 		
 	  <tr> 
 		      <td valign="top" style="padding:5px 0px 5px 12px;" id ="add2"> 
+		      	<div>
 		           <input name='weight' type='text' class='boxTF' style="width:55%;" placeholder='재료선택(클릭)' onclick="lookIng()" >
 		           <input name='weight' type='text' class='boxTF' style="width:25%;" placeholder='량'>
 		           <input type="hidden" name="num" value="0">
+		        </div>
 		      </td>
 	  </tr>
 	</table>
@@ -223,9 +130,11 @@ function remove3(){
 		
 	  <tr> 
 		      <td valign="top" style="padding:5px 0px 5px 12px;" id ="add3"> <!-- 시계방향으로 위,오른쪽,아래,왼쪽 -->
+		      	<div>
 		           <input name='weight' type='text' class='boxTF' style="width:55%;" placeholder='재료선택(클릭)' onclick="lookIng()">
 		           <input name='weight' type='text' class='boxTF' style="width:25%;" placeholder='량'>  
 		           <input type="hidden" name="num" value="0">
+		      	</div>
 		      </td>
 		      
 	  </tr>
@@ -249,7 +158,7 @@ function remove3(){
 		      <td> 
                      <input name='title' type='text' class='boxTF' style="width:98%;">
               </td>
-	  		  <td>&nbsp;&nbsp;<input type="checkbox" class="checkbox" id="allDayChk"  name="allDay" value="true"></td>
+	  		  <td>&nbsp;&nbsp;<input type="checkbox" class="checkbox" id="msChk"  name="msChk" value="true"></td>
 	  </tr>
 	  
 	  <tr height="40"> 
