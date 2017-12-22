@@ -110,4 +110,102 @@ public class Qna2Controller {
 				
 				return "qna2/list";
 	}
+	
+	@RequestMapping(value="/qna2/article")
+	public String article(
+			@RequestParam int qna2Code,
+			@RequestParam String page,
+			@RequestParam (defaultValue="subject") String searchKey,
+			@RequestParam (defaultValue="") String searchValue,
+			@RequestParam int rows,
+			Model model
+			) throws Exception{
+		
+		//이전,다음등 사용할 파라미터
+		String query="page="+page+"&rows="+rows;
+		if(searchValue.length()!=0) {
+			query+="&searchKey="+searchKey;
+			query+="&searchValue="+searchValue;
+			
+		}
+		
+		searchValue=URLDecoder.decode(searchValue, "UTF-8");
+		
+		//조회수
+		service.updatehitCount(qna2Code);
+		
+		//게시물 가져오기
+		Qna2 dto=service.readQna2(qna2Code);
+		if(dto==null) {
+			return "redirect:/qna2/list?"+query;	
+		}
+		
+		//엔터를 <br>로 변경
+		//찾아보기: 엔터를 <br>로 바꾸지 않고 css로 가능
+		dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
+		
+		//이전글, 다음글
+		Map<String, Object> map=new HashMap<>();
+		map.put("qna2Code", qna2Code);
+		map.put("searchKey", searchKey);
+		map.put("searchValue", searchValue);
+		
+		Qna2 preReadDto=service.preReadQna2(map);
+		Qna2 nextReadDto=service.nextReadQna2(map);
+		
+		//포워딩할 jsp에 넘길 데이터
+		model.addAttribute("dto", dto);
+		model.addAttribute("page", page);
+		model.addAttribute("query", query);
+		model.addAttribute("rows", rows);
+		
+		model.addAttribute("preReadDto", preReadDto);
+		model.addAttribute("nextReadDto", nextReadDto);
+		
+		return "qna2/article";
+		
+	}
+	
+	@RequestMapping(value="/qna2/update",
+			method=RequestMethod.GET)
+	public String updateForm(
+			@RequestParam int qna2Code,
+			@RequestParam String page,
+			@RequestParam int rows,
+			Model model) {
+		Qna2 dto=service.readQna2(qna2Code);
+		if(dto==null) {
+				return "redirect:/qna2/list?page="+page+"&rows="+rows;
+			}
+			
+			model.addAttribute("dto",dto);
+			model.addAttribute("mode","update");
+			model.addAttribute("page", page);
+			model.addAttribute("rows", rows);
+			
+					
+		
+			return "qna2/created";
+	}
+	@RequestMapping(value="/qna2/update",
+			method=RequestMethod.POST)
+		public String updateSubmit(
+			Qna2 dto,
+			@RequestParam String page,
+			@RequestParam int rows,
+			HttpServletRequest req
+			){
+			service.updateQna2(dto);
+	
+			return "redirect:/qna2/list?page="+page+"&rows="+rows;
+}
+		
+		
+		
+		
+		
+		
+		
+		
+	
 }

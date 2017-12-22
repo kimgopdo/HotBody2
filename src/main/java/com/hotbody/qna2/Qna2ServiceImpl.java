@@ -49,32 +49,58 @@ public class Qna2ServiceImpl implements Qna2Service{
 
 	@Override
 	public Qna2 readQna2(int qna2Code) {
-		// TODO Auto-generated method stub
-		return null;
+		Qna2 dto=null;
+		try {
+			dto=dao.selectOne("qna2.readQna2", qna2Code);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return dto;
 	}
 
 	@Override
 	public Qna2 preReadQna2(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		Qna2 dto=null;
+		try {
+			dto=dao.selectOne("qna2.preReadQna2", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return dto;
 	}
 
 	@Override
 	public Qna2 nextReadQna2(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		Qna2 dto = null;
+		try {
+			dto=dao.selectOne("qna2.nextReadQna2", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return dto;
 	}
 
 	@Override
 	public int updatehitCount(int qna2Code) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		try {
+			result=dao.updateData("qna2.updatehitCount",qna2Code);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
 	}
 
 	@Override
 	public int updateQna2(Qna2 dto) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		try {
+			result=dao.updateData("qna2.updateQna2", dto);
+			
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
 	}
 
 	@Override

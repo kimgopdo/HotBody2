@@ -66,9 +66,64 @@
 
 	</select>
 
+<!-- 글보기 -->
+<select id="readQna2" resultType="com.hotbody.qna2.Qna2"
+		parameterType="Integer">
+	SELECT qna2Code, userId, subject, content,
+		 groupNum, orderNo, depth, parent, created, hitCount FROM qna2
+		 WHERE qna2Code =#{qna2Code}
+</select>
 
+<!-- 조회수 증가 -->
+<update id="updateHitCount" parameterType="Integer">
+	UPDATE qna2Code SET hitCount=hitCount+1
+	WHERE qna2Code =#{qna2Code}
+</update>
 
+<!-- 이전글-->
+<select id="preReadQna2" resultType="com.hotbody.qna2.Qna2"
+		parameterType="map">
+	SELECT tb.*FROM (
+		SELECT qna2Code, subject FROM qna2
+	<where>
+		<if test="searchValue != null and searchValue !=''">
+			<include refid="where-list"/>
+		</if>
+		<![CDATA[
+		AND (( groupNum = #{groupNum}
+			AND orderNo < #{orderNo})
+			OR (groupNum > #{groupNum}))
+		]]>
+	</where>	
+		ORDER BY groupNum ASC, orderNo DESC
+		) tb WHERE ROWNUM=1		
+</select>
 
+<!-- 다음글 -->
+<select id="nextReadQna2" resultType="com.hotbody.qna2.Qna2"
+		parameterType="map">
+	SELECT tb.*FROM (
+		SELECT qna2Code, subject FROM qna2
+	<where>
+		<if test="searchValue != null and searchValue !=''">
+			<include refid="where-list"/>
+		</if>
+		<![CDATA[
+		AND (( groupNum = #{groupNum}
+			AND orderNo > #{orderNo})
+			OR (groupNum < #{groupNum} ))		
+		]]>
+	</where>
+	ORDER BY groupNum DESC, orderNo ASC
+	) tb WHERE ROWNUM=1
+</select>
+
+<!-- 글수정 -->
+<update id="updateQna2" parameterType="com.hotbody.qna2.Qna2">
+	UPDATE qna2 SET subject=#{subject},
+	content=#{content}
+	WHERE qna2Code=#{qna2Code}
+</update>
 
 
 
