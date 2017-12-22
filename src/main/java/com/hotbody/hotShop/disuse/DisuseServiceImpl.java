@@ -47,5 +47,16 @@ public class DisuseServiceImpl implements DisuseService{
 		}
 		return list;
 	}
+	
+	@Override
+	public int dataCount() {
+		int result=0;
+		try {
+			result=dao.selectOne("product.pdInDataCount");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 
 }

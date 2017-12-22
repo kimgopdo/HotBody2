@@ -5,13 +5,18 @@
 <%
 	String cp=request.getContextPath();
 %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
 
-</body>
-</html>
+
+<table style="border-collapse: collapse;">
+	<tr style="width: 100%; height: 80px; text-align: center; font-size: 13px;">
+		<td>55</td>
+		<td>닭찌찌 샐러드</td>
+		<td>45,000</td>
+		<td>35,000</td>
+		<td>34개</td>
+		<td>KH테크</td>
+		<td>2017-12-29</td>
+		<td>2017-12-01 ~ 2017-12-15</td>
+		<td> </td>
+	</tr>
+</table>
