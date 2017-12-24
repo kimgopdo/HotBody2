@@ -116,6 +116,7 @@ function removeBox(p,day,index) {
 		</table>
 	</c:forEach>
 	<div style="width:1000px; height:1px; border-bottom: 2px solid #666666;"></div>
+	<div style="width: 1000px; margin: 20px auto 0;" align="center">${paging}</div>
 	<div style="width: 1000px; margin: 20px auto 0;" align="center">
 	<button type="button" class="btn-default02" onclick="sendOk();">미션등록</button>
 	

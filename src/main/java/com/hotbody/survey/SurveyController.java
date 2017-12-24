@@ -39,14 +39,41 @@ public class SurveyController {
 	@ResponseBody
 	public Map<String, Object> surveySubmit(@RequestParam Map<String, String> dataMap,
 									HttpSession session) {
+		int age=0;
+		double tall=0, weight = 0, bbody=0, fat=0;
+		double bmi=0, standard = 0;
+		String gender = null;
+		
+		Map<String, Object> model = new HashMap<>();
+		
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
-		String userId = info.getUserId();
+		String userId = null;
+		
+		if(info==null) {
+			model.put("state", "loginFail");
+			return model;
+		} else {
+			userId = info.getUserId();
+		}
 		
 		int count = service.surveyCount();
 		
 		for(int a=1;a<=count;a++) {
 			for(Map.Entry<String, String> entry : dataMap.entrySet()) {
 				if(entry.getKey().contains("questionAnswer."+a+".")) {
+					if(a==1) {
+						tall = Integer.parseInt(entry.getValue());
+					} else if(a==2) {
+						weight = Integer.parseInt(entry.getValue());
+					} else if(a==3) {
+						if(entry.getValue().equals("1")) {
+							gender = "female";
+						} else {
+							gender = "male";
+						}
+					} else if(a==4) {
+						age = Integer.parseInt(entry.getValue());
+					}
 					Survey dto = service.readSurvey(a);
 					dto.setQuestionCode(dto.getQuestionCode());
 					dto.setQuestionAnswer(entry.getValue());
@@ -56,14 +83,28 @@ public class SurveyController {
 			}
 		}
 		
-		Map<String, Object> model = new HashMap<>();
+		//////////////////////////////////////////////////////////////
+		//BMI지수 :  몸무게(kg) ÷ (신장(m) x 신장(m))
+		bmi = weight/(tall*tall*0.0001);
+		//표준체중 : 표준체중 =  남자 : 키(m)×키(m)×22
+						//여자 : 키(m)×키(m)×21
+		if(gender.equals("male"))
+			standard = (tall*tall*0.0001)*22;
+		else if(gender.equals("female"))
+			standard = (tall*tall*0.0001)*21;
+		//비만도 : {실제체중(kg) - 표준체중(kg) / 실제체중(kg) } * 100 
+		fat = ((weight - standard)/weight)*100;
+		//기초대사량 : 655 + {9.6*체중(kg)} + {1.8*신장(cm)} - (4.7*나이) 
+		bbody = 655 + (9.6*weight)+(1.8*tall)-(4.7*age);
+		//////////////////////////////////////////////////////////////
+
 		model.put("state", "true");
 		return model;
 	}
 	
 	@RequestMapping(value="survey/result")
 	public String surveyResult() {
-		return "";
+		return ".survey.surveyResult";
 	}
 	
 	@RequestMapping(value="/survey/created")

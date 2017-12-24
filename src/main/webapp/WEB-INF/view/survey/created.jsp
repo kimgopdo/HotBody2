@@ -10,6 +10,8 @@ var count = "${count}";
 
 $(function() {
 	objectiveAdd();
+	
+	
 });
 
 function objectiveAdd() {
@@ -27,6 +29,7 @@ function objectiveAdd() {
 	out +="<input type='hidden' name='soro' value='0'>";
 	out +="<td width='120'>";
 	out +="<select name='questionType' style='height: 30px;'>";
+	out +="<option value='0'>없음</option>";
 	out +="<option value='pro'>전문성</option>";
 	out +="<option value='afford'>여유(시간)</option>";
 	out +="<option value='habits'>식습관</option>";
@@ -244,9 +247,9 @@ function surveySubmit() {
 		<button type="button" class="btn-default02" onclick="surveySubmit();">${mode=='update'?'수정완료':'등록하기'}</button>
 	</div>
 	
+	
 	<div id="questionRContainer" style="margin-top: 50px;">
 		<c:forEach var="dto" items="${surveyList}">
-		
 		
 			<c:if test="${dto.soro==1}">
 			<div style="border: 1px solid; padding: 10px; border-radius: 4px; margin-top: 20px;">
@@ -264,8 +267,8 @@ function surveySubmit() {
 	                    </td>
 				</tr>
 				<tr height="55" align="center" style="font-size: 15px; font-weight: bold;">
-                    <td align="left" colspan="3">
-                    	${dto.questionContent}
+                    <td class="updateQ" align="left" colspan="3">
+                    	<input class="updateContent" style="border: none; width: 40%; height: 35px;" value="${dto.questionContent}">
                     </td>
                  </tr>
 			</table>
