@@ -2,6 +2,21 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="product">
+<sql id="where-list">
+   <if test="searchKey=='userId' ">
+        userId=#{searchValue}
+   </if>
+   <if test="searchKey=='subject' ">
+       INSTR(pdname, #{searchValue}) &gt; 0
+   </if>
+   <if test="searchKey=='content' ">
+        INSTR(pdsumcontent, #{searchValue}) &gt; 0
+   </if>
+   <if test="searchKey=='created' ">
+        TO_CHAR(pdcreated, 'YYYY-MM-DD')=#{searchValue}
+			OR TO_CHAR(pdcreated, 'YYYYMMDD')=#{searchValue}
+   </if>
+</sql>
 	<insert id="insertProductList" parameterType="com.hotbody.hotShop.board.HotShop">
 		INSERT INTO 
 		productList (pdNum,pdName,pdOrder,pdCreated,pdBoardName,pdContent,pdStCount,pdSumContent,scicode,bclcode,showandhide,milelage) 
@@ -42,6 +57,12 @@
 	<insert id="isnertTotalOrdList" parameterType="com.hotbody.hotShop.board.Payment">
 		INSERT INTO TotalOrdList (delorder,paydate) VALUES (#{delOrder},sysdate)
 	</insert>
+	<insert id="insertBcl" parameterType="map">
+		INSERT INTO bcl (bclcode,name) values (bcl_seq.NEXTVAL,#{bci})
+	</insert>
+	<insert id="insertSci" parameterType="map">
+		INSERT INTO sci (scicode,name) values(sci_seq.NEXTVAL,#{scl})
+	</insert>
 	<select id="readDelOrder" parameterType="String" resultType="Integer">
 	SELECT MAX(delOrder) delOrder
 		FROM ORDERS WHERE userId=#{userId}
@@ -73,6 +94,9 @@
 			<if test="cl=='sci'">
 				scicode=#{code}
 			</if>
+			<if test="searchValue != null and searchValue !=''">
+				<include refid="where-list"/>
+			</if>
 				AND showandhide!=0
 		</where>
 	</select>
@@ -98,8 +122,17 @@
 					<if test="cl=='sci'">
 						 scicode=#{code}
 					</if>
+					<if test="searchValue != null and searchValue !=''">
+						<include refid="where-list"/>
+					</if>
+					<choose>
+						<when test="newProduct=='newProduct'">
+							 pdcreated>pdcreated-30
+						</when>
+					</choose>
 					 AND showandhide!=0
 				</where>
+				
 				ORDER BY 
 		<choose>
         	<when test="formal=='created'">
@@ -205,4 +238,10 @@
 		SELECT supplycode, supplyname, supplytel, supplypd
 		FROM supply
 	</select>
+	<delete id="deleteBciMenu" parameterType="Integer">
+		DELETE FROM bcl WHERE bclcode=#{code}
+	</delete>
+	<delete id="deleteSclMenu" parameterType="Integer">
+		DELETE FROM sci WHERE scicode=#{code}
+	</delete>
 </mapper>

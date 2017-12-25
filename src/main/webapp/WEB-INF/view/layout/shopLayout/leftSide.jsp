@@ -6,10 +6,40 @@
 <%
 	String cp=request.getContextPath();
 %>
+<style>
+.paymentPage{
+	top: 100px;
+	font-size: 14px;
+	font-family: inherit;
+	margin-bottom: 200px;
+}
+.paymentPage button{
+	border: 1px solid #000000;
+	background: #ffffff;
+	font-size: 14px;
+	font-weight:bolder;
+}
+.paymentPage tr{
+	border-bottom: 2px solid #e7e7e7;
+	height: 80px;
+}
+.paymentPage input[type=text]{
+	margin-left: 5px;
+	margin-right: 5px;
+	padding: 2px;
+	border-radius: 2px;
+	border: 1px solid #e7e7e7;
+	outline: none;
+}
+.paymentPage select{
+	padding: 3px;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+</style>
 <script type="text/javascript">
 $(function(){
 	showBasketList();
-	BasketList();
 })
 function showBasketList() {
 	 
@@ -36,7 +66,7 @@ function hideBasket(){
 	},"fast")
 }
 function BasketList(){
-	var cookie=getCookie("hotbodyBasket");
+	var cookie=getCookie("hotbodyBasket").split(",");
 	var uid="${sessionScope.member.userId}";
 	var q;
 	console.log(cookie);
@@ -44,21 +74,13 @@ function BasketList(){
 		location.href="<%=cp%>/member/login";
 		return;
 	}else  --%>if(cookie){
-		if(cookie.indexOf(",") == -1){
-			cookie=cookie.split(",");
-			q="cookie="+cookie;
-		}else{
-			q="cookie="+cookie1;
-		}
-		var url="<%=cp%>/hotShop/basketList";
-		console.log(q);
+		var url="<%=cp%>/hotShop/basketList?cookie="+cookie;
 		$.ajax({
-			type:"post"
-			,data:q
+			type:"get"
 			,url:url
-			,seccess:function(e){
+			,success:function(e){
 				console.log(e);
-				$("#BasketList").html(e);
+				$("#BList").html(e);
 			}
 			,errer:function(e){
 				console.log(e);
@@ -67,22 +89,68 @@ function BasketList(){
 	} 
 }
 </script>
+<script>
+  $( function() {
+    $( "#basketList" ).dialog({
+      autoOpen: false,
+      width : "800px",
+      show: {
+        effect: "blind",
+        duration: 1000
+      },
+      hide: {
+        effect: "explode",
+        duration: 1000
+      }
+    });
+ 
+    $( "#basket" ).on( "click", function() {
+      $( "#basketList" ).dialog( "open" );
+    });
+  } );
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  </script>
+  	<div id="basketList" title="장바구니" style="display: none;">
+	  	<table id="BList" style="width:800px;">
+	  		
+		</table>
+	</div>
       <!-- 왼쪽 사이드 바 -->
-   <div id="leftSide" style="width: 10%; height: 100%; top:0px; left: 0px; position: fixed; z-index: 10;">                                    
-         <a href="javascript:location.href='<%=cp%>/hotShop/created';">created페이지</a>
-         <a href="javascript:location.href='<%=cp%>/hotShop/productInlist';">입고리스트 페이지</a>
+   <div id="leftSide" style="width: 10%; height: 1000px; top:0px; left: 0px;z-index: 10;">
          <div style="margin-top: 40px; margin-left: 30px;">
          <a href="<%=cp%>/" style="color: black;height: 60px; padding: 1px; position: absolute;">
             <img src="<%=cp%>/resource/images/shop_images/HOTBODY_Logo.png"/>
          </a>                
-         </div>
-		<table id="BasketList">
-			
-		</table>                    
+         </div>               
          <div id="basketBtn">
          	<ul>
          		<li style="position: absolute;">
-	         		<button type="button" class="btn btn-default btn-lg basketBtn" style="width:50px; border: none; outline: none; position: relative;">
+	         		<button type="button" id="basket" class="btn btn-default btn-lg basketBtn" style="width:50px; border: none; outline: none; position: relative; margin-left:2%; z-index: 11;" onclick="BasketList();">
 		            	<span class="glyphicon glyphicon-shopping-cart"></span>
 		         	</button>
 	         	</li>

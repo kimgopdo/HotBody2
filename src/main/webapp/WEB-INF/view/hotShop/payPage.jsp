@@ -5,37 +5,6 @@
 <%
 	String cp=request.getContextPath();
 %>
-<style>
-.paymentPage{
-	top: 100px;
-	font-size: 14px;
-	font-family: inherit;
-	margin-bottom: 200px;
-}
-.paymentPage button{
-	border: 1px solid #000000;
-	background: #ffffff;
-	font-size: 14px;
-	font-weight:bolder;
-}
-.paymentPage tr{
-	border-bottom: 2px solid #e7e7e7;
-	height: 80px;
-}
-.paymentPage input[type=text]{
-	margin-left: 5px;
-	margin-right: 5px;
-	padding: 2px;
-	border-radius: 2px;
-	border: 1px solid #e7e7e7;
-	outline: none;
-}
-.paymentPage select{
-	padding: 3px;
-	margin-left: 5px;
-	margin-right: 5px;
-}
-</style>
 <script>
 var tel;
 var email;
@@ -197,7 +166,7 @@ function clear(){
 }
 </script>
 <form name="paymentPageForm">
-<table class="paymentPage">
+<table class="paymentPage" style="width:100%; margin-top: 100px;">
 	<tr>
 		<td colspan="8" style="text-align: left; font-size:20px; font-weight: bold; vertical-align: bottom;"><img src="<%=cp%>/resource/images/shop_images/shopping-cart.png">&nbsp;&nbsp; 장바구니</td>
 		

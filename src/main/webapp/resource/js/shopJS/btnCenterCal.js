@@ -10,7 +10,7 @@ $(window).on("load",function(){
 	$(".basketBtn2").css("margin-top",left_top_length);
 	$(".basketBtn2").css("margin-left",left_left_length+50);
 	$(".quickMenuBtn").css("margin-top",left_top_length);
-	$(".quickMenuBtn").css("margin-right",left_left_length);
+	//$(".quickMenuBtn").css("margin-right",left_left_length);
 	$("#quickMenu_P").css("margin-top",left_top_length);
 	runEffect();
 	});
@@ -26,6 +26,6 @@ $(window).resize(function(){
 	$(".basketBtn2").css("margin-top",left_top_length);
 	$(".basketBtn2").css("margin-left",left_left_length+50);
 	$(".quickMenuBtn").css("margin-top",left_top_length);
-	$(".quickMenuBtn").css("margin-right",left_left_length);
+	//$(".quickMenuBtn").css("margin-right",left_left_length);
 	$("#quickMenu_P").css("margin-top",left_top_length);
 	});

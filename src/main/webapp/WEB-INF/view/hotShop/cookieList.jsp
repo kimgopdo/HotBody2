@@ -5,7 +5,17 @@
 <%
 	String cp=request.getContextPath();
 %>
-			<c:forEach var="dto" items="${list}">
+	<tr style="height: 50px; background: #F8F2ED">
+			<td>no</td>
+			<td>이미지</td>
+			<td>상품정보</td>
+			<td>판매가</td>
+			<td>수량</td>
+			<td>적립포인트</td>
+			<td>가격</td>
+			<td>별점</td>
+			</tr>
+			<c:forEach var="dto" items="${list2}">
 			<tr style="height:150px;">
 			<td width="2%">
 				<input type="hidden" name="pdnum" value="${dto.pdnum}">

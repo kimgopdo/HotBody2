@@ -43,9 +43,10 @@ public class HotShopBoardController {
 	//main list는 따로 드래그엔 드롭으로 순서 변경 가능하게 만들꺼임.
 	@RequestMapping("/hotShop/productList")
 	public String productList(
-			@RequestParam String code
-			,@RequestParam String menuname
-			,@RequestParam String cl
+			@RequestParam(defaultValue="") String code
+			,@RequestParam(defaultValue="") String menuname
+			,@RequestParam(defaultValue="") String cl
+			,@RequestParam(defaultValue="") String created
 			,HttpServletRequest req
 			,@RequestParam(value="page", defaultValue="1") int page
 			,HttpSession session
@@ -59,13 +60,17 @@ public class HotShopBoardController {
 		System.out.println(pathname);
 		List<HotShop> list=null;
 		Map<String, Object> map=new HashMap<>();
-		map.put("listOrArticle", 0);
-		map.put("cl", cl);
-		map.put("code", code);
-		list=service.productList(map);
+		int total_page=0;
+		int dataCount=0;
 		int row=5;
-		int dataCount=service.dataCount();
-		int total_page=dataCount/row;
+		map.put("newProduct", created);
+			map.put("listOrArticle", 0);
+			map.put("cl", cl);
+			map.put("code", code);
+			list=service.productList(map);
+			
+			dataCount=service.dataCount();
+			total_page=dataCount/row;
 		Iterator<HotShop> it=list.iterator();
 		while(it.hasNext()) {
 			HotShop dto=it.next();
@@ -83,7 +88,57 @@ public class HotShopBoardController {
 	
 	//쇼핑몰 전체후기 리스트
 	@RequestMapping("/hotShop/shopReviews")
-	public String shopReviewList() throws Exception {
+	public String shopReviewList(
+			@RequestParam(value="page",defaultValue="1") int page,
+			@RequestParam(defaultValue="subject") String searchKey,
+			@RequestParam(defaultValue="") String searchValue,
+			HttpServletRequest req,
+			Model model
+			) throws Exception {
+		System.out.println(searchKey);
+		System.out.println(searchValue);
+		int row=5;
+		int start=0;
+		int end=0;
+		int dataCount=0;
+		int current_page=1;
+		int total_page=0;
+		String paging;
+		if(page!=1) {
+			current_page=page;
+		}
+		Map<String, Object> map=new HashMap<>();
+		map.put("searchKey", searchKey);
+		map.put("searchValue", searchValue);
+		dataCount=service.productDataCount(map);
+		total_page=dataCount/row;
+		if (total_page<0) {
+			total_page=1;
+		}
+		if(current_page>total_page)
+			total_page=current_page;
+		start=current_page-1*row+1;
+		end=current_page*row;
+		
+		List<HotShop> productList=null;
+		
+		map.put("start", start);
+		map.put("end", end);
+		map.put("listOrArticle", 0);
+		productList=service.productList(map);
+		String cp=req.getServletContext().getRealPath("/");
+		String pathname=cp+"uploads"+File.separator+"shopList";
+		map=new HashMap<>();
+		Iterator<HotShop> it=productList.iterator();
+		while(it.hasNext()) {
+			HotShop dto=it.next();
+			dto.setImgPath(pathname+File.separator+dto.getImgSaveFilename());
+		}
+		paging=util.paging(current_page, total_page);
+		model.addAttribute("list", productList);
+		model.addAttribute("paging", paging);
+		model.addAttribute("current_page", current_page);
+		model.addAttribute("total_page", total_page);
 		return ".hotShop.shopReviewList";
 	}
 	
@@ -129,46 +184,26 @@ public class HotShopBoardController {
 	@RequestMapping(value="/hotShop/basketList")
 	public String basketList(
 			String []cookie,
-			String cookie1,
 			HttpSession session,
 			Model model
 			) {
-		SessionInfo info=(SessionInfo) session.getAttribute("member");
-		String userId=info.getUserId();
-		if(userId==null) {
-			return "redirect:/member/login";
-		}
 		int listNum=0;
+		System.out.println(cookie[0]);
 		List<HotShop> list=new ArrayList<>();
 		Map<String, Object> map=new HashMap<>();
-		if(cookie1==null) {
-		    for(int n=0; n<cookie.length;n++) {
-		    	listNum++;
-		    	HotShop dto=new HotShop();
-		    	String cVal=cookie[n];
-		    	String []pInfo=cVal.split("-");
-		    	map.put("listOrArticle", 1);
-		    	map.put("pdnum", pInfo[0]);
-		    	dto=service.productArticle(map);
-		    	dto.setpCnt(pInfo[1]);
-		    	dto.setListNum(listNum);
-		    	list.add(dto);
-		    }
-		}else {
-			HotShop dto=new HotShop();
-	    	String cVal=cookie1;
+	    for(int n=0; n<cookie.length;n++) {
+	    	listNum++;
+	    	HotShop dto=new HotShop();
+	    	String cVal=cookie[n];
 	    	String []pInfo=cVal.split("-");
 	    	map.put("listOrArticle", 1);
 	    	map.put("pdnum", pInfo[0]);
 	    	dto=service.productArticle(map);
 	    	dto.setpCnt(pInfo[1]);
-	    	dto.setListNum(1);
+	    	dto.setListNum(listNum);
 	    	list.add(dto);
-		}
-	    map=new HashMap<>();
-	    Milelage milelageDto=mileService.selectMilelage(userId);
-	    map.put("milelageDto", milelageDto);
-	    map.put("list", list);
+	    }
+	    model.addAttribute("list2", list);
 		return "hotShop/cookieList";
 	}
 	@RequestMapping(value="/hotShop/payment" ,method=RequestMethod.POST)
@@ -451,5 +486,40 @@ public class HotShopBoardController {
 		
 		model.addAttribute("list", list);
 		return "hotShop/productListAjax";
+	}
+	@RequestMapping(value="/hotShop/menuAppend")
+	@ResponseBody
+	public int menuAppend(
+			@RequestParam(defaultValue="")String bci,
+			@RequestParam(defaultValue="")String scl
+			) {
+		Map<String, Object> map=new HashMap<>();
+		int result=0;
+		System.out.println("bci---------------"+bci);
+		System.out.println("scl---------------"+scl);
+		if(! bci.equals("")) {
+			map.put("bci", bci);
+			result=service.insertBcl(map);
+		}
+		if(! scl.equals("")) {
+			map.put("scl", scl);
+			result=service.insertSci(map);			
+		}
+		return result;
+	}
+	
+	@RequestMapping(value="/hotShop/menuDeleteBci")
+	public String menuDeleteBci(
+			@RequestParam int code
+			) {
+		service.deleteBcl(code);
+		return "redirect:/hotShop";
+	}
+	@RequestMapping(value="/hotShop/menuDeleteScl")
+	public String menuDeleteScl(
+			@RequestParam int code
+			) {
+		service.deleteSci(code);
+		return "redirect:/hotShop";
 	}
 }

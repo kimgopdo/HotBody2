@@ -25,4 +25,9 @@ public interface HotShopService {
 	public int insertPayment(Payment dto);
 	int readDelOrder(String userId);
 	List<Payment> readDelOrderProduct(int oderNum);
+	int insertBcl(Map<String, Object> map);
+	int insertSci(Map<String, Object> map);
+	int deleteBcl(int code);
+	int deleteSci(int code);
+	int productDataCount(Map<String, Object> map);
 }
