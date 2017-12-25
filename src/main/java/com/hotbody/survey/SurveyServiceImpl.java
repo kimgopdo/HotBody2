@@ -125,5 +125,38 @@ public class SurveyServiceImpl implements SurveyService{
 		return result;
 	}
 
+	@Override
+	public List<Survey> readResult(String userId) {
+		List<Survey> list = null;
+		try {
+			list = dao.selectList("survey.readResult", userId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public int matchEx(Map<String, Object> map) {
+		int result=0;
+		try {
+			result = dao.selectOne("survey.matchEx", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public int deleteResult(String userId) {
+		int result = 0;
+		try {
+			result = dao.deleteData("survey.deleteResult", userId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
 	
 }

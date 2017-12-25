@@ -29,7 +29,7 @@ function objectiveAdd() {
 	out +="<input type='hidden' name='soro' value='0'>";
 	out +="<td width='120'>";
 	out +="<select name='questionType' style='height: 30px;'>";
-	out +="<option value='0'>없음</option>";
+	out +="<option value='gender'>성별</option>";
 	out +="<option value='pro'>전문성</option>";
 	out +="<option value='afford'>여유(시간)</option>";
 	out +="<option value='habits'>식습관</option>";
@@ -76,7 +76,14 @@ function subjectiveAdd() {
 	out+="<tr height='55' align='center' style='padding: 20px auto 20px;'>";
 	out +="<input type='hidden' name='questionOrder' id='questionOrder' value=''>";
 	out +="<input type='hidden' name='soro' value='1'>";
-	out +="<td width='120'></td>";
+	out +="<td width='120'>";
+	out +="<select name='questionType' style='height: 30px;'>";
+	out +="<option value='0'>없음</option>";
+	out +="<option value='tall'>키</option>";
+	out +="<option value='weight'>몸무게</option>";
+	out +="<option value='age'>나이</option>";
+	out +="</select>";
+	out +="</td>";
 	out+="<td align='left'>";
 	out+="질문 : &nbsp;&nbsp;&nbsp;<input type='text' name='questionContent' style='width:90%; height: 30px; margin-left: 10px;' placeholder='질문을 입력 하세요'>";
 	out+="</td>";
@@ -268,7 +275,7 @@ function surveySubmit() {
 				</tr>
 				<tr height="55" align="center" style="font-size: 15px; font-weight: bold;">
                     <td class="updateQ" align="left" colspan="3">
-                    	<input class="updateContent" style="border: none; width: 40%; height: 35px;" value="${dto.questionContent}">
+                    	${dto.questionContent}&nbsp;&nbsp;&nbsp;(${dto.questionType})
                     </td>
                  </tr>
 			</table>

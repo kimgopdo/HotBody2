@@ -83,7 +83,14 @@ function arrange() {
 function nextView(cur) {
 	var f = document.surveyForm;
 	
-	//대답 입력 여부 확인해야한다!!!
+	var answer = $(".inAns"+cur).val();
+	var radio = $('.inAns'+cur).is(':checked');
+
+	if(answer=='' && radio==false){
+		alert("필수 입력값입니다.");
+		return;
+	}
+	//라디오버튼 체크여부확인해야한다.
 	
 	$('#survey'+cur).hide();
 	$('#survey'+(cur+1)).show();
@@ -139,7 +146,7 @@ function surveySubmit(type) {
 				<p style="font-weight: bold; font-size: 20px;">Q. ${dto.questionOrder}</p>
 				<p>${dto.questionContent}</p>
 				<c:if test="${dto.soro==1}">
-					<input class="inAns" name="questionAnswer.${dto.questionOrder}." type="text" style="outline: none; font-size: 20px;">
+					<input class="inAns${dto.questionOrder}" name="questionAnswer.${dto.questionOrder}." type="text" style="outline: none; font-size: 20px;">
 					<input type="hidden" name="questionOrder${dto.questionOrder}" value="${dto.questionOrder}">
 				</c:if>
 				<c:if test="${dto.soro==0}">
@@ -147,7 +154,7 @@ function surveySubmit(type) {
 	                	<c:if test="${exdto.questionCode==dto.questionCode}">
 			                <tr height="55" align="center" style="font-size: 13px;">
 			                <td align="left" colspan="3">
-		                   		<input class="inAns" type="radio" name="questionAnswer.${dto.questionOrder}." value="${exdto.exOrder}">&nbsp;${exdto.exContent}<br><br>
+		                   		<input class="inAns${dto.questionOrder}" type="radio" name="questionAnswer.${dto.questionOrder}." value="${exdto.exOrder}">&nbsp;${exdto.exContent}<br><br>
 		                    </td>
 			                </tr>
 		            	</c:if>

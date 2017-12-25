@@ -14,4 +14,7 @@ public interface SurveyService {
 	public int updateOrder(Map<String, Object> map);
 	public int deleteSurvey(int questionCode);
 	public int insertResult(Survey dto);
+	public List<Survey> readResult(String userId);
+	public int matchEx(Map<String, Object> map);
+	public int deleteResult(String userId);
 }

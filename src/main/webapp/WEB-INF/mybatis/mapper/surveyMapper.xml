@@ -55,8 +55,37 @@
 	</delete>
 	
 	<insert id="insertResult" parameterType="com.hotbody.survey.Survey">
-		INSERT INTO surveyDetails(questionCode, questionAnswer, userId)
-		VALUES(#{questionCode}, #{questionAnswer}, #{userId})
+		INSERT INTO surveyDetails(resultNum, questionCode, questionAnswer, userId)
+		VALUES(surveyResult_seq.NEXTVAL, #{questionCode}, #{questionAnswer}, #{userId, jdbcType=VARCHAR})
 	</insert>
+	
+	<select id="readResult" resultType="com.hotbody.survey.Survey" parameterType="String">
+		SELECT s.questionCode, questionanswer, userId, questiontype, soro
+		FROM survey s JOIN surveydetails d 
+		ON s.questioncode=d.questioncode
+		<if test="userId = null">
+			WHERE userId IS NULL
+		</if>
+		<if test="userId != null">
+			WHERE userId=#{userID}
+		</if>
+	</select>
+	
+	<select id="matchEx" resultType="Integer" parameterType="map">
+	SELECT exscore
+	FROM survey s
+	LEFT OUTER JOIN surveyEx e ON s.questioncode=e.questioncode
+	WHERE s.questioncode=#{questioncode} AND exOrder=#{exOrder}
+	</select>
+	
+	<delete id="deleteResult" parameterType="String">
+		DELETE surveyDetails
+		<if test="userId = null">
+			WHERE userId IS NULL
+		</if>
+		<if test="userId != null">
+			WHERE userId=#{userID}
+		</if>
+	</delete>
 	
 </mapper>
