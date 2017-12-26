@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hotbody.member.SessionInfo;
+
 @Controller("mocobung.BungController")
 public class BungController {
 	
@@ -95,5 +97,43 @@ public class BungController {
 		
 		return ".mocobung.b_article";	
 	}
+	
+	//수정	
+	@RequestMapping(value="/mocobung/{mocoNum}/u_bung", method=RequestMethod.GET)
+	public String updateFom(
+			@PathVariable int mocoNum, 
+			@RequestParam (value="num") int mosubNum,
+			HttpSession session, Model model) throws Exception {
+		
+		SessionInfo info=(SessionInfo) session.getAttribute("member");
+		
+		Bung dto=service.readBung(mosubNum);
+		if(dto==null) {
+			return "redirect:/mocobung/{mocoNum}/b_created";
+		}
+		
+		if(! info.getUserId().equals(dto.getUserId())) {
+			return "redirect:/mocojee/{mocoNum}/main";
+		}
+		
+		model.addAttribute("dto", dto);
+		model.addAttribute("mode","u_bung");
+		
+		return ".mocobung.b_created";
+			
+	}
+	
+	@RequestMapping(value="/mocobung/{mocoNum}/u_bung", 
+			method=RequestMethod.POST)
+	public String updateSubmit(
+			@PathVariable int mocoNum,
+			Bung dto, HttpSession session) throws Exception {
+		
+		service.updateBung(dto);
+		
+		return "redirect:/mocojee/{mocoNum}/main";
+
+	}
+	
 	
 }

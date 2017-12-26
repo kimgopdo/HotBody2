@@ -34,6 +34,12 @@ $(document).ready(function(){
     });
 });
 
+
+function enterOk() {
+    alert("모임에 참석 하시겠습니까?");
+}
+
+
 </script>
 
 
@@ -77,7 +83,6 @@ $(document).ready(function(){
 	<div class="container">
 		<ul class="nav nav-tabs">
 			<li class="active"><a href="#">모임정보</a></li>
-			<li><a href="<%=cp%>/moco_board/${mocoNum}/c_notice">공지게시판</a></li>
 			<li><a href="<%=cp%>/moco_board/${mocoNum}/list_free">자유게시판</a></li>
 		</ul>
 
@@ -106,33 +111,7 @@ $(document).ready(function(){
 											<!-- Post Comment & Share Area -->
 										</div>
 
-										<h3 style="font-weight: bold; color: #d9534f;">벙개 정보</h3>
-
-										<div class="info">
-											<table class="table"
-												style="border-style: solid; border-color: #ffc107; border-width: 1px;">
-												<thead>
-													<tr>
-														<th>모임장소</th>
-														<th>참석자수</th>
-														<th>모임일시</th>
-														<th>시작시간</th>
-														<th>종료시간</th>
-														<th>회비</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr>
-														<td>장소</td>
-														<td>인원</td>
-														<td>일시</td>
-														<td>시작시간</td>
-														<td>종료시간</td>
-														<td>회비</td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
+										
 
 										<div>
 											<h3 style="font-weight: bold; color: #d9534f;">모꼬지 소개</h3>
@@ -207,11 +186,11 @@ $(document).ready(function(){
                                     </a>
                                     <p>${vo.moDate}</p>
                                     <p>${vo.mosubName}</p>
-                                    <button type="button" class="btn btn-danger" style="margin-top: 10px;">참석하기</button>
+                                    <button type="button" class="btn btn-danger" style="margin-top: 10px;" onclick="enterOk();">참석하기</button>
                                     
                                     <c:if test="${sessionScope.member.userId==dto.userId}">
                                    	 <button type="button" class="btn btn-info" style="margin-top: 10px;" 
-                                   	 	onclick="javascript:location.href='<%=cp%>/mocojee/u_mocojee?geNum=${dto.geNum}';">수정</button>
+                                   	 	onclick="javascript:location.href='<%=cp%>/mocobung/${mocoNum}/u_bung?num=${vo.mosubNum}';">수정</button>
                                     </c:if>
                                     
                                     <button type="button" class="btn btn-link btn-sm" style="margin-top: 10px;" 

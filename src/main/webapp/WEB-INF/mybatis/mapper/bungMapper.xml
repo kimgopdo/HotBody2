@@ -25,5 +25,11 @@
 		WHERE mosubNum=#{geNum}
 	</select>
 	
+	<!-- 수정 -->
+	<update id="updateBung" parameterType="com.hotbody.mocobung.Bung">
+		UPDATE mocojee5 SET mosubName=#{mosubName}, moSpot=#{moSpot}, moPlace1=#{moPlace1}, moPlace2=#{moPlace2}, 
+					maxPeople=#{maxPeople}, moCost=#{moCost}, moStart=#{moStart}, moEnd=#{moEnd} , moDate=#{moDate}
+			WHERE mosubNum=#{mosubNum}
+	</update>
 	
 </mapper>

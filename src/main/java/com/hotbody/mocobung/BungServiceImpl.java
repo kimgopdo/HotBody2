@@ -72,8 +72,17 @@ public class BungServiceImpl implements BungService {
 
 	@Override
 	public int updateBung(Bung dto) {
-		// TODO Auto-generated method stub
-		return 0;
+			
+		int result=0;
+		
+		try {
+			result=dao.updateData("mocobung.updateBung", dto);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		
+		return result;
 	}
 
 	@Override
