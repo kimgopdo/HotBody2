@@ -58,7 +58,7 @@
 		INSERT INTO TotalOrdList (delorder,paydate) VALUES (#{delOrder},sysdate)
 	</insert>
 	<insert id="insertBcl" parameterType="map">
-		INSERT INTO bcl (bclcode,name) values (bcl_seq.NEXTVAL,#{bci})
+		INSERT INTO bcl (bclcode,name) values (bci_seq.NEXTVAL,#{bci})
 	</insert>
 	<insert id="insertSci" parameterType="map">
 		INSERT INTO sci (scicode,name) values(sci_seq.NEXTVAL,#{scl})

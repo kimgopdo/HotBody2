@@ -7,6 +7,17 @@
 %>
 <script type="text/javascript">
 
+$(function(){
+	$("#searchButton").click(function(){
+		$("#searchInput").toggle(function(){
+			$("#searchInput").css("border-bottom", "2px solid black");
+			$("#searchInput").animate({
+				"width": "150px"
+			},"slow");
+		});
+	});
+	
+});
 </script>
 
 	<!-- 로그인 모달-->
@@ -51,7 +62,7 @@
             	</button>
         	</li>
         	<li>
-	        	<button type="button" class="btn btn-default btn-lg" style="width:50px; border: none; outline: none; position: relative; z-index: 11;">
+	        	<button type="button" id="searchButton" class="btn btn-default btn-lg" style="width:50px; border: none; outline: none; position: relative; z-index: 11;" onclick="search();">
 	               <span class="glyphicon glyphicon-search"></span>
 	            </button>
         	</li>
@@ -81,3 +92,8 @@
         	</li>
         </ul>
    </div>
+        <div id="quickSearchBtn">
+        	<form action="<%=cp%>/hotShop/shopReviews" method="get">
+        		<input id='searchInput' name="searchValue" type='text' style='width:0px; float:right; border-top: none; border-left: none; border-right: none; border-bottom:2px solid white; margin-right: 48px;'>
+        	</form>
+        </div>

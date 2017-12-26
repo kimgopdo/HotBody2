@@ -17,8 +17,9 @@
 		            <span style=" text-align: left;">상품명: <a href="javascript:location.href='<%=cp%>/hotShop/shopArticle?pdnum=${dto.pdnum}';">${dto.pdName}</a></span><img src=""><br>
 		            <span style=" text-align: left;">가격 : ${dto.pdPrice}</span>
 		            <!-- if로 막아야함 -->
-		            <a href="" style="color:black; font-weight:bold; float: right;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;입고</a>
+		            <c:if test="${sessionScope.member.userId=='admin'}">
 		            <a href="javascript:location.href='<%=cp%>/hotShop/created?pdnum=${dto.pdnum}&mode=update';" style="color:black; font-weight:bold; float: right;">수정</a>
+		         	</c:if>
 		         </div>
 		    </li>
 </c:forEach>

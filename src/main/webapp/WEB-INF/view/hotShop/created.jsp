@@ -130,7 +130,7 @@ $(function(){
 <!--  onsubmit="return submitContents(this);" -->
 <form name="boardForm" method="post" enctype="multipart/form-data">
 	<div style="min-width:1140px; margin-top: 150px;">
-		<input type="checkbox" name="showandhide">숨김
+		<input type="checkbox" name="showandhide" value="0">숨김
 		<select id="bciSelect" name="bclcode" style="padding: 10px;">
 			<option selected="selected">::영양소별</option>
 		</select>
@@ -148,12 +148,19 @@ $(function(){
 		<input name="mode" type="hidden" value="update">
 		</c:if>
 		<div style="width:40%; float: right;">
-		<span style="font-weight: bold;">상&nbsp;&nbsp;&nbsp;품&nbsp;&nbsp;&nbsp;명&nbsp;&nbsp;&nbsp;</span><br><input type="text" name="pdName" style="width: 100%; border: 1px solid #BDBDBD; outline: none;" value="${dto.pdName}"><br>
-		<span style="font-weight: bold;">상품내용&nbsp;&nbsp;</span><textarea name="pdSumContent" style="width: 100%; height:300px; border: 1px solid #BDBDBD; outline: none;">${mode=="update"?dto.pdSumContent:""}</textarea><br>
-		<span style="font-weight: bold;">가&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;격&nbsp;&nbsp;</span><input type="text" name="pdPrice" style="width: 80%; border: 1px solid #BDBDBD; outline: none;" value="${dto.pdPrice}"><br>
+		<table style="width: 100%;">
+		<tr>
+			<td>
+				<span style="font-weight: bold;">상&nbsp;&nbsp;&nbsp;품&nbsp;&nbsp;&nbsp;명&nbsp;&nbsp;&nbsp;</span><br><input type="text" name="pdName" style="width: 100%; border: 1px solid #BDBDBD; outline: none;" value="${dto.pdName}"><br>
+				<span style="font-weight: bold;">상품내용&nbsp;&nbsp;</span><textarea name="pdSumContent" style="width: 100%; height:300px; border: 1px solid #BDBDBD; outline: none;">${mode=="update"?dto.pdSumContent:""}</textarea><br>
+				<span style="font-weight: bold;">가&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;격&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><input type="text" name="pdPrice" style="width: 80%; border: 1px solid #BDBDBD; outline: none;" value="${dto.pdPrice}"><br>
+				<span style="font-weight: bold;">마&nbsp;&nbsp;일&nbsp;&nbsp;리&nbsp;지&nbsp;&nbsp;</span><input type="text" name="milelage" style="width: 80%; border: 1px solid #BDBDBD; outline: none;" value="${dto.mailelage}"><br>			
+				<span style="float:left; font-weight: bold;">${mode=="update"?dto.imgOriginalFilename:"메인이미지등록"}</span>                                                                                                                                   
+				<input name="upload" type="file" style="width:80px; float: left;">
+			</td>
+		</tr>
+		</table>
 		</div>
-		<span style="float:left; font-weight: bold;">${mode=="update"?dto.imgOriginalFilename:"메인이미지등록"}</span>               
-		<input name="upload" type="file" style="width:80px;">
 		<textarea name="content" id="content" style="width: 95%; height: 400px;">${dto.content}</textarea> <br>
 		<span style="font-weight: bold;">영양성분표시&nbsp;</span><input type="text" name="pdNutrient" style="width: 20%; border: 1px solid #BDBDBD; outline: none;" value="${dto.pdNutrient}"><br>
 		<span style="font-weight: bold;">생&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;산&nbsp;&nbsp;&nbsp;&nbsp;지&nbsp;&nbsp;</span><input type="text" name="pdArea" style="width: 20%; border: 1px solid #BDBDBD; outline: none;" value="${dto.pdArea}"><br>

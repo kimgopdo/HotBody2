@@ -29,7 +29,6 @@ public class HotShopServiceImpl implements HotShopService{
 				dto.setImgSaveFilename(saveFilename);
 				dto.setImgOriginalFilename(dto.getUpload().getOriginalFilename());
 			}
-			dto.setMilelage(500);
 			result=dao.insertData("product.insertProductList", dto);
 			dto.setPdnum(dao.selectOne("product.readProductNum", dto.getPdName()));
 			result=dao.insertData("product.insertPmainImg", dto);
