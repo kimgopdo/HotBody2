@@ -30,6 +30,9 @@
 			<if test="searchValue != null and searchValue != ''">
 				<include refid="where-list"/>
 			</if>
+			<if test="pdnum != '1'">
+				and p.pdnum=#{pdnum}
+			</if>
 		</where>
 	</select>
 	

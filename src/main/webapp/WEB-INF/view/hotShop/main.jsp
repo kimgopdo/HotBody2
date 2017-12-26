@@ -16,7 +16,7 @@
 		/* background: rgba(0,0,0,0.2); */
    /*  box-shadow: 0 0 20px rgba(0,0,0,0.6);
   box-sizing:border-box; */
-  z-index: 88;
+  z-index: 8;
 }
 
 #slideshow > div { 

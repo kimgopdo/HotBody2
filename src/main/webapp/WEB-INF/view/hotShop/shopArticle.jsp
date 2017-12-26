@@ -29,18 +29,20 @@ function numberWithCommas(x) {
 function onlyNumber(){
        event.returnValue=false;
 }
-function check(){
+function check(n){
 	var uid="${sessionScope.member.userId}";
 	if(! uid){
 		location.href="<%=cp%>/member/login";
 		return;
 	} else {
-		location.href="<%=cp%>/hotShop/pQnA_created";
+		location.href="<%=cp%>/hotShop/pQnA_created?pdNum="+n;
+		return;
 	}
 }
 
 $(function(){
 	listPage(1);
+	listPage2(1);
 	var tot=numberWithCommas("${dto.pdPrice}");
 	var cnt = $("#no1").val();
 	$("#cost").text(tot);
@@ -162,10 +164,9 @@ function payment(pdnum){
 					</tr>
 					<tr>
 						<th>가격</th>
-						<td><input type="hidden" id="pdPrice" value="${dto.pdPrice}"><span>${dto.pdPrice}</span>원</td>
+						<td><input type="hidden" id="pdPrice" value="${dto.pdPrice}"><fmt:formatNumber>${dto.pdPrice}</fmt:formatNumber>원</td>
 					</tr>
-					
-					<tr>                                                 
+					<tr>
 						<th>수량</th>
 						<td>
 							<input type="number" value="1" id="no1" min="1" style="width: 35px;" onkeypress="onlyNumber();" onclick="add();">
@@ -188,16 +189,11 @@ function payment(pdnum){
 				<!-- 버튼 -->
 				<div style="width: 100%; height: 8.5%;">
 					<div style="display: inline; float: left; margin-right: 10px;">
-						<button type="button" class="" style="width: 60px; height: 50px; background: white; outline: none; border: 1px solid black;">
-							<img src="<%=cp%>/uploads/shopList/heart.png" style="width: 70%; height: 70%;">
-						</button>
-					</div>
-					<div style="display: inline; float: left; margin-right: 10px;">
 						<button type="button" class="" style="width: 149px; height: 50px; background: white; outline: none; border: 1px solid black;" onclick="insertCookie(${dto.pdnum}); runEffect();">
 							<span style="font-weight: bold; font-size: 18px;">Cart</span>
 						</button>
 					</div>
-					<div style="display: inline; float: left;">
+					<div style="display: inline; float: right;">
 						<button type="button" class="" style="width: 149px; height: 50px; background: white; outline: none; border: 1px solid black;" onclick="payment(${dto.pdnum});">
 							<span style="font-weight: bold; font-size: 18px;">Buy</span>
 						</button>

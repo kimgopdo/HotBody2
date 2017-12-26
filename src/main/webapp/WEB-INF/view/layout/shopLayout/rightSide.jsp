@@ -81,7 +81,7 @@ $(function(){
 			</li>
 			</c:if>
         	<li>
-        		<button type="button" class="btn btn-default btn-lg" style="width:50px; border: none; outline: none; position: relative; z-index: 11;">
+        		<button type="button" class="btn btn-default btn-lg" style="width:50px; border: none; outline: none; position: relative; z-index: 11;" onclick="javascript:location.href='<%=cp%>/mypage/mypage'">
             		<span class="glyphicon glyphicon-user"></span>
          		</button>
         	</li>
