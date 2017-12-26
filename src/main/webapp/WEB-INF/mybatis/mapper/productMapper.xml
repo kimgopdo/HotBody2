@@ -159,6 +159,9 @@
         	</otherwise>
         </choose>
 	</select>
+	<select id="readPdStarScore" parameterType="Integer" resultType="Integer">
+		 SELECT ROUND(AVG(starscore), 0) starScore FROM shreviews WHERE pdnum=#{pdnum} GROUP BY pdnum
+	</select>
 	<select id="readProductIn" parameterType="map" resultType="com.hotbody.hotShop.board.ProductIn">
 		SELECT * FROM (SELECT ROWNUM rnum, pdin.* FROM (SELECT pdincode,pdrawprice,pdinnum,TO_CHAR(pdexdate, 'YYYY-MM-DD') pdexdate,TO_CHAR(pdindate, 'YYYY-MM-DD') pdindate,pi.pdnum pdnum,pl.pdname pdname,pi.supplycode,supplyname,imgSaveFilename,milelage
 		FROM productin pi 

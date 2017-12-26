@@ -42,7 +42,15 @@ public class HotShopServiceImpl implements HotShopService{
 	public List<HotShop> productList(Map<String, Object> map) {
 		List<HotShop> list=null;
 		try {
-				list=dao.selectList("product.productList",map);				
+				list=dao.selectList("product.productList",map);
+					for(HotShop dto:list) {
+						int pdnum=dto.getPdnum();
+						Integer starScore=dao.selectOne("product.readPdStarScore",pdnum);
+						if(starScore==null) {
+							starScore=0;
+						}
+						dto.setStarScore(starScore);
+					}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -55,6 +63,12 @@ public class HotShopServiceImpl implements HotShopService{
 		HotShop dto=null;
 		try {
 			dto=dao.selectOne("product.productList", map);
+			int pdnum=dto.getPdnum();
+			Integer starScore=dao.selectOne("product.readPdStarScore",pdnum);
+			if(starScore==null) {
+				starScore=0;
+			}
+			dto.setStarScore(starScore);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

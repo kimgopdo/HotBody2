@@ -32,6 +32,22 @@
 			<td width="10%">
 				${dto.milelage}
 			</td>
-			<td>****</td>
+			<td>
+				<c:if test="${dto.starScore==0 || dto.starScore==1}">
+					<img src="<%=cp%>/uploads/shopStar/star_1.PNG">
+				</c:if>
+				<c:if test="${dto.starScore==2}">
+					<img src="<%=cp%>/uploads/shopStar/star_2.PNG">
+				</c:if>
+				<c:if test="${dto.starScore==3}">
+					<img src="<%=cp%>/uploads/shopStar/star_3.PNG">
+				</c:if>
+				<c:if test="${dto.starScore==4}">
+					<img src="<%=cp%>/uploads/shopStar/star_4.PNG">
+				</c:if>
+				<c:if test="${dto.starScore==5}">
+					<img src="<%=cp%>/uploads/shopStar/star_5.PNG">
+				</c:if>
+			</td>
 			</tr>
 			</c:forEach>
