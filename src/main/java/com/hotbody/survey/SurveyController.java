@@ -64,7 +64,6 @@ public class SurveyController {
 		} else {
 			userId = info.getUserId();
 		}
-		
 		int count = service.surveyCount();
 		
 		for(int a=1;a<=count;a++) {
