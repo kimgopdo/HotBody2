@@ -86,9 +86,9 @@ function articleGo(num) {
 	<div class="graph" id="graph" style="width:450px; height:450px; margin-top: 20px;"></div>
 	<div id="recommand" style="width: 1100px; margin-top: 100px;">
 		<c:forEach var="dto" items="${recommandList}">
-    	<table id="ct${dto.classNum}" onmouseover="on(${dto.classNum});" style="width: 1000px; height:210px; border-spacing: 0; border-collapse: collapse; border-bottom: 1px solid #cccccc; border-top: 1px solid #cccccc; margin: 20px 0;">
+    	<table id="ct${dto.classNum}" onmouseover="on(${dto.classNum});" style="width: 1000px; height:420px; border-spacing: 0; border-collapse: collapse; border-bottom: 1px solid #cccccc; border-top: 1px solid #cccccc; margin: 20px 0;">
     	<tr>
-    	<td style="height: 260px; width: 280px; overflow: hidden;">
+    	<td style="height: 425px; width: 280px; overflow: hidden;">
     	<img align="right" style="height: 100%; width: 335px;" src="<%=cp%>/uploads/dietClass/${dto.saveFileName}">
     	</td>
     	<td valign="top" style="padding: 35px 20px;" width="300px;">
@@ -100,7 +100,7 @@ function articleGo(num) {
     	</div>
     	</td>
     	<td style="background: #e3e3e3; width: 250px; color: black;" align="center">
-	    	<div align="center" style="height: 170px;">
+	    	<div align="center" style="height: 340px;">
 	    		<table style="width: 90%; margin: 35px 15px; line-height: 2em; resize: none;">
 		    		<tr>
 		    			<td>

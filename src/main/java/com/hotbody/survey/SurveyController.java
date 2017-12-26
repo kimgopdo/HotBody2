@@ -322,14 +322,25 @@ public class SurveyController {
 		int last = service.surveyCount();
 		Map<String, Object> updateMap = new HashMap<>();
 		
+		System.out.println(dto.getQuestionCode());
 		service.deleteSurvey(dto.getQuestionCode());
 		
-		for(int a=last;a>questionOrder;a--) {
-			Survey sdto = service.readSurvey(a);
-			updateMap.put("questionCode", sdto.getQuestionCode());
-			updateMap.put("questionOrder", a-1);
-			service.updateOrder(updateMap);
+		if(questionOrder==1) {
+			for(int a=2;a<=last;a++) {
+				Survey sdto = service.readSurvey(a);
+				updateMap.put("questionCode", sdto.getQuestionCode());
+				updateMap.put("questionOrder", a-1);
+				service.updateOrder(updateMap);
+			}
+		} else {
+			for(int a=last;a>questionOrder;a--) {
+				Survey sdto = service.readSurvey(a);
+				updateMap.put("questionCode", sdto.getQuestionCode());
+				updateMap.put("questionOrder", a-1);
+				service.updateOrder(updateMap);
+			}
 		}
+		
 		
 		Map<String, Object> model = new HashMap<>();
 		
