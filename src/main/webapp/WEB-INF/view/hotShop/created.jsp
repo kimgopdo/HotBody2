@@ -139,7 +139,7 @@ $(function(){
 		</select><br>
 		<div id="holder" class="aspect" style="float: left;">
 			<c:if test="${mode=='update'}">
-				<img src="<%=cp%>/uploads/shopProduct/${dto.imgSaveFilename}">
+				<img src="<%=cp%>/uploads/shopList/${dto.imgSaveFilename}">
 			</c:if>
 		</div>
 		<c:if test="${mode=='update'}">
@@ -154,7 +154,7 @@ $(function(){
 				<span style="font-weight: bold;">상&nbsp;&nbsp;&nbsp;품&nbsp;&nbsp;&nbsp;명&nbsp;&nbsp;&nbsp;</span><br><input type="text" name="pdName" style="width: 100%; border: 1px solid #BDBDBD; outline: none;" value="${dto.pdName}"><br>
 				<span style="font-weight: bold;">상품내용&nbsp;&nbsp;</span><textarea name="pdSumContent" style="width: 100%; height:300px; border: 1px solid #BDBDBD; outline: none;">${mode=="update"?dto.pdSumContent:""}</textarea><br>
 				<span style="font-weight: bold;">가&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;격&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><input type="text" name="pdPrice" style="width: 80%; border: 1px solid #BDBDBD; outline: none;" value="${dto.pdPrice}"><br>
-				<span style="font-weight: bold;">마&nbsp;&nbsp;일&nbsp;&nbsp;리&nbsp;지&nbsp;&nbsp;</span><input type="text" name="milelage" style="width: 80%; border: 1px solid #BDBDBD; outline: none;" value="${dto.mailelage}"><br>			
+				<span style="font-weight: bold;">마&nbsp;&nbsp;일&nbsp;&nbsp;리&nbsp;지&nbsp;&nbsp;</span><input type="text" name="milelage" style="width: 80%; border: 1px solid #BDBDBD; outline: none;" value="${dto.milelage}"><br>			
 				<span style="float:left; font-weight: bold;">${mode=="update"?dto.imgOriginalFilename:"메인이미지등록"}</span>                                                                                                                                   
 				<input name="upload" type="file" style="width:80px; float: left;">
 			</td>

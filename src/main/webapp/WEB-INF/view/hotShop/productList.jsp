@@ -20,7 +20,6 @@ $(function(){
 function productList(page){
 	var url="<%=cp%>/hotShop/productListAjax";
 	var data=$("#hiddenForm").serialize()+"&page="+page+"&formal="+$(':radio[name="formal"]:checked').val();
-	alert(data);
 	$.ajax({
 		type:"post"
 		,url:url

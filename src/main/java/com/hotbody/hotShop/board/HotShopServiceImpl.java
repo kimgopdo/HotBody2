@@ -297,5 +297,25 @@ public class HotShopServiceImpl implements HotShopService{
 		}
 		return result;
 	}
+	@Override
+	public int hide(int code) {
+		int result=0;
+		try {
+			result=dao.updateData("product.hideUpdate", code);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	@Override
+	public int show(int code) {
+		int result=0;
+		try {
+			result=dao.updateData("product.showUpdate", code);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 	
 }

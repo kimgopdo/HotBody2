@@ -557,7 +557,6 @@ function productInList(page){
 		}
 		data+="&endDate="+checkDate;
 	}
-	alert(data);
 	$.ajax({
 		type: "post"
 		,url: url

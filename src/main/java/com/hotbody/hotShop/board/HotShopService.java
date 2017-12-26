@@ -30,4 +30,6 @@ public interface HotShopService {
 	int deleteBcl(int code);
 	int deleteSci(int code);
 	int productDataCount(Map<String, Object> map);
+	int hide(int code);
+	int show(int code);
 }

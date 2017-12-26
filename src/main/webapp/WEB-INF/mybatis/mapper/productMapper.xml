@@ -107,7 +107,7 @@
 	SELECT p.pdnum pdnum, imgOriginalFilename, imgSaveFilename, pdName,
 			 pdSumContent, pdPrice, pdcontent content,
 			pdNutrient, pdStMethod, pdType, pdRawName, pdArea,milelage,
-			 pdDelRule, pdCreated, pdstCount, (SELECT MIN(TO_CHAR(pdExDate,'YYYY-MM-DD')) FROM productin) pdExDate
+			 pdDelRule, pdCreated, pdstCount, (SELECT MIN(TO_CHAR(pdExDate,'YYYY-MM-DD')) FROM productin) pdExDate, showandhide
 				FROM productList p 
 				Left OUTER Join Temporary t ON p.pdnum=t.pdnum 
 				Left OUTER JOIN Temporary2 t2 ON p.pdnum=t2.pdnum 
@@ -127,10 +127,12 @@
 					</if>
 					<choose>
 						<when test="newProduct=='newProduct'">
-							 pdcreated>pdcreated-30
+							And pdcreated>pdcreated-30
 						</when>
 					</choose>
-					 AND showandhide!=0
+					<if test="userId != 'admin'">
+					 And showandhide!=0
+					</if>
 				</where>
 				
 				ORDER BY 
@@ -230,6 +232,12 @@
 	</update>
 	<update id="updateHitCount" parameterType="Integer">
 		UPDATE productList SET hitCount=hitCount+1 WHERE pdnum=#{pdnum}
+	</update>
+	<update id="showUpdate" parameterType="Integer">
+		UPDATE productList SET showAndHide=1 WHERE pdnum=#{code}
+	</update>
+	<update id="hideUpdate" parameterType="Integer">
+		UPDATE productList SET showAndHide=0 WHERE pdnum=#{code}
 	</update>
 	<insert id="insertMilelage" parameterType="com.hotbody.hotShop.board.Payment">
 	INSERT INTO milelage(milelage,userId,delOrder)VALUES(#{milelage},#{userId},#{delOrder})

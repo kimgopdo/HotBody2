@@ -33,7 +33,6 @@ function sclAppend(){
 function bciSend(){
 	var bci=$("#bci").val();
 	bci = encodeURI(bci);
-	alert(bci);
 	var q="bci="+bci;
 	var url="<%=cp%>/hotShop/menuAppend"
 	$.ajax({
@@ -52,7 +51,6 @@ function bciSend(){
 function sclSend(){
 	var scl=$("#scl").val();
 	scl = encodeURI(scl);
-	alert(scl);
 	var q="scl="+scl;
 	var url="<%=cp%>/hotShop/menuAppend"
 	$.ajax({
