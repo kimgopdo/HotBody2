@@ -17,8 +17,8 @@ public interface MilelageService {
 	public List<Message> listFile(int num);
 	public Message readFile(int fileNum);
 	public Message readingMessage(int mCode);
-	public int deleteFile(Map<String, Object> map);
+	public int deleteFile(List<Integer> list);
 	public int mDataCount(Map<String, Object> map);
 	public int fileCount(int mCode);
-	public int deleteMessage(Map<String, Object> map);
+	public int deleteMessage(List<Integer> list);
 }

@@ -151,8 +151,32 @@
 	
 	
 	<select id="fileList" parameterType="Integer" resultType="com.hotbody.milelage.Message">
-		select ofilename,filesize 
+		select ofilename,filesize ,fileCode,fileName
         from msgfile
         where mCode=#{mCode}
 	</select>
+		<select id="readFile" parameterType="Integer"
+	              resultType="com.hotbody.milelage.Message">
+			SELECT  fileCode, mCode, fileName, 
+	    oFileName, fileSize
+	    FROM msgfile
+
+
+	    WHERE fileCode=#{fileCode}       
+	</select>
+	
+	<delete id="deleteFile" parameterType="java.util.List">
+	DELETE FROM msgfile 
+	WHERE fileCode = #{fileCode} 
+	and mCode=#{mCode}
+	and userId =#{userId}
+	</delete>
+	
+	<delete id="deleteMessage" parameterType="java.util.List">
+	DELETE FROM msg 
+	WHERE mCode=#{mCode} 
+	and userId =#{userId}
+	
+	</delete>
+	
 </mapper>

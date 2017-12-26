@@ -2,32 +2,31 @@ package com.hotbody.mypage;
 
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+
 import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
+
 
 import com.hotbody.common.FileManager;
 import com.hotbody.common.MyUtil;
@@ -497,7 +496,6 @@ public class MypageContoller {
 		
 		int result = mservice.checkUserId2(userId2);
 
-		System.out.println(result);
 		
 		if(result!=0) {
 			state="full";
@@ -536,19 +534,49 @@ public class MypageContoller {
 	
 	@RequestMapping(value="/mypage/deleteMessage")
 	public String deleteMessage(
-			@RequestParam(value="mCode") int[] mCode,
+			@RequestParam(value="mCode") Integer[] mCode,
 			Model model,
 			HttpSession session
-			) throws Exception{
+			) throws Exception{	
 
-        for(int s:mCode) {System.out.println(s);}
-		
-		// 파일
-		//int result =mservice.deleteMessage(map);
-		//int result2 = mservice.deleteFile(map);
+		List<Integer> list=Arrays.asList(mCode);
+			
+		//파일
+        mservice.deleteFile(list);
+		mservice.deleteMessage(list);
 	
 		
 		return "redirect:/mypage/messageMain";
+	}
+	
+	
+	
+	@RequestMapping(value="/mypage/download")
+	public void download(
+			@RequestParam int fileCode,
+			HttpServletResponse resp,
+			HttpSession session) throws Exception {
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root + File.separator + "uploads" + File.separator + "message";
+		System.out.println(pathname);
+		boolean b = false;
+		
+		Message dto = mservice.readFile(fileCode);
+		if(dto!=null) {
+			String fileName = dto.getFileName();
+			String oFileName = dto.getoFileName();
+			
+			b = fileManager.doFileDownload(fileName, oFileName, pathname, resp);
+		}
+		
+		if (!b) {
+			try {
+				resp.setContentType("text/html; charset=utf-8");
+				PrintWriter out = resp.getWriter();
+				out.println("<script>alert('파일 다운로드가 불가능 합니다 !!!');history.back();</script>");
+			} catch (Exception e) {
+			}
+		}
 	}
 	
 	

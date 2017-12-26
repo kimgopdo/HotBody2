@@ -209,16 +209,23 @@ $(function(){
 }); 
 
 
+$(function(){ 
+	
+	$("#deleteMessage").click(function(){ 
+		var url="<%=cp%>/mypage/deleteMessage";
+		var f =document.deleteMess;
+		
+		f.action=url;
+		f.submit();
 
-function deleteMessage() {
-	
-	var f = document.deleteMessage;
-	var mCode=f.getElementsByName("mCode");
-	
-	f.action="<%=cp%>/mypage/deleteMessage";
-	f.submit();
-	
-}
+	});
+}); 
+
+
+
+
+
+
 
 </script>
 
@@ -308,13 +315,13 @@ function deleteMessage() {
 			
         </table>
         </form>
-        <form name="deleteMessage" method="post"> 
+        <form name="deleteMess" method="post"> 
         <table style="width: 98%; margin: 10px auto 5px;">
 			<tr style="width: 100%; border-style: none; margin-bottom: 20px;">
-				<td colspan="6" style="width: 90%"><input type="submit" value="삭제" onclick="deleteMessage()"></td>
+				<td colspan="5" style="width: 90%"><input id="deleteMessage" type="submit" value="삭제" ></td>
 				<td colspan="2" style="width: 10%">
 
-				<select style="height:26px; float: right" name="kind" >
+				<select style="height:26px; float: right" >
 				<option selected="selected">전체보기</option>
 				<option>중요표시 쪽지만</option>
 				<option>첨부파일 쪽지만</option>
@@ -328,12 +335,11 @@ function deleteMessage() {
 			<tr style="width: 100%; border-style: none; border-style: double; background:#eee ">
 
 				<td style="width: 3%; border: 1px solid; "><input id="allCheck" type="checkbox" ></td>
-				<td style="width: 6%; border: 1px solid;">상태</td>
-	
+
 				<td style="width: 12%; border: 1px solid;">보낸사람</td>
 				<td style="width: 12%; border: 1px solid;">받는사람</td>
 				<td style="width: 14%; border: 1px solid;">쪽지함</td>
-				<td style="width: 27%; border: 1px solid;">제목</td>
+				<td style="width: 33%; border: 1px solid;">제목</td>
 				<td style="width: 10%; border: 1px solid;">크기(KB)</td>
 				<td style="width: 16%; border: 1px solid;">송/수신시간</td>
 
@@ -344,12 +350,11 @@ function deleteMessage() {
 			<tr style="width: 100%; border-style: none;">
 
 				<td style="width: 3%; border: 1px solid; "><input name="mCode" type="checkbox" value="${dto.mCode}"></td>
-				<td style="width: 6%; border: 1px solid;">상태</td>
 
 				<td style="width: 12%; border: 1px solid;">${dto.userId2}</td>
 				<td style="width: 12%; border: 1px solid;">${dto.userId}</td>
 				<td style="width: 14%; border: 1px solid;">${dto.box}</td>
-				<td style="width: 27%; border: 1px solid;"><a class="readingMessage" style="cursor: pointer; " onclick="Article('${dto.mCode}')" >${dto.subject}</a></td>
+				<td style="width: 33%; border: 1px solid;"><a class="readingMessage" style="cursor: pointer; " onclick="Article('${dto.mCode}')" >${dto.subject}</a></td>
 				<td style="width: 10%; border: 1px solid;">${dto.totalFileSize}</td>
 				<td style="width: 16%; border: 1px solid;">${dto.sCreated}</td>
 

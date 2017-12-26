@@ -123,22 +123,43 @@ public class MilelageServiceImpl implements MilelageService{
 	}
 
 	@Override
-	public Message readFile(int fileNum) {
-		// TODO Auto-generated method stub
-		return null;
+	public Message readFile(int fileCode) {
+		Message dto=null;
+		
+		try {
+			dto=dao.selectOne("milelage.readFile", fileCode);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		
+		return dto;
 	}
 
 
 	@Override
-	public int deleteFile(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteFile(List<Integer> list) {
+		int result=0;
+		
+		try {
+			result=dao.deleteData("milelage.deleteFile", list);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		
+		return result;
 	}
 
 	@Override
-	public int deleteMessage(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteMessage(List<Integer> list) {
+		int result=0;
+		
+		try {
+			result=dao.deleteData("milelage.deleteMessage", list);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		
+		return result;
 	}
 
 	@Override

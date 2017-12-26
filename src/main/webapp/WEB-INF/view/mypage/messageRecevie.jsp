@@ -6,6 +6,28 @@
 	String cp=request.getContextPath();
 %>
 
+<script type="text/javascript">
+
+
+
+
+
+$(function(){ 
+	
+	$("#deleteMessage2").click(function(){ 
+		var url="<%=cp%>/mypage/deleteMessage";
+		var f =document.deleteMess2;
+		
+		f.action=url;
+		f.submit();
+
+	});
+}); 
+
+
+</script>
+
+		<form name="deleteMess2" method="post" >
         <table style="border: 1px solid #eee;  width: 98%; margin: 5px auto 5px;">
 			<tr height="31">
 				<td style=" width:15%; border: 1px solid #eeeeee;margin-left: 5px; background:#F2F2F2; ">보낸사람</td>
@@ -34,7 +56,7 @@
 			<tr style=" width: 100%; height: 70px" >
 				<td  width="100%">
 					<c:forEach var="vo" items="${listFile}">
-					<a>${vo.oFileName}</a>(${vo.fileSize}KB)<br>
+					<a href="<%=cp%>/mypage/download?fileCode=${vo.fileCode}">${vo.oFileName}</a>(${vo.fileSize}KB)<br>
 					</c:forEach>
 				</td>
 			</tr>
@@ -45,10 +67,11 @@
 		<table style=" width: 98%; margin: 5px auto 5px;">
 			<tr style="height: 31px; width: 100%; margin-top: 10px; margin-bottom: 10px;text-align: center;">
 				<td  style="width: 100%;">
-					<img src="<%=cp%>/resource/images/btn_reply.png">
-					<img src="<%=cp%>/resource/images/btn_forward.png">
-					<img src="<%=cp%>/resource/images/btn_del02.png">
-					<img src="<%=cp%>/resource/images/btn_ok02.png">
+					<input type="image" src="<%=cp%>/resource/images/btn_reply.png">
+					<input type="image" src="<%=cp%>/resource/images/btn_forward.png">
+					<input id="deleteMessage2" type="image" src="<%=cp%>/resource/images/btn_del02.png"  style="cursor: pointer;" >
+					<input type="image" src="<%=cp%>/resource/images/btn_ok02.png">
 				</td>
 			</tr>
 		</table>
+	</form>
