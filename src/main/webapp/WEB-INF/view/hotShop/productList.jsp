@@ -41,7 +41,6 @@ function productList(page){
 <tr>
 	<td style="text-align: left;">
 		<input type="radio" name="formal" value="hitCount">조회순 &nbsp;&nbsp;
-		<input type="radio" name="formal" value="star">별점순 &nbsp;&nbsp;
 		<input type="radio" name="formal" value="created" checked="checked">등록순 &nbsp;&nbsp;
 	</td>
 </tr>
