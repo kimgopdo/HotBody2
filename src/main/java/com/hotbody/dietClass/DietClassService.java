@@ -9,6 +9,7 @@ public interface DietClassService {
 	public DietClass readClass(Map<String, Object> map);
 	public int updateClass(DietClass dto, String pathname);
 	public int deleteClass(Map<String, Object> map, String pathname);
+	public List<DietClass> listByLevel(int cllevel);
 	
 	/*
 	 * 클래스 프로그램 관련

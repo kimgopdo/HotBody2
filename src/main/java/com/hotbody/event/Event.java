@@ -8,8 +8,7 @@ public class Event {
 	private long fileSize;
 	private String userId, userName, subject, content, created;
 	private String saveFile, originalFile;
-	private int replyCount;
-	
+	private int replyCount, notice;
 	
 	public int getReplyCount() {
 		return replyCount;
@@ -123,6 +122,14 @@ public class Event {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public int getNotice() {
+		return notice;
+	}
+
+	public void setNotice(int notice) {
+		this.notice = notice;
 	}
 	
 	

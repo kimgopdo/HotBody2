@@ -9,4 +9,5 @@ public interface DisuseService {
 	public int insertDisuse(Disuse dto);
 	public Disuse readDisuse(String pdName);
 	public List<HotShop> productList(Map<String, Object> map);
+	public int dataCount();
 }

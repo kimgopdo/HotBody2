@@ -25,7 +25,45 @@ public class Payment {
 	private int pdnum_one;
 	private int delOrder;
 	private String memo;
+	private String pdname;
+	private int pdPrice;
+	private String imgSaveFilename;
+	private int rownum;
+	private int milelage;
 	
+	
+	
+	
+	public int getMilelage() {
+		return milelage;
+	}
+	public void setMilelage(int milelage) {
+		this.milelage = milelage;
+	}
+	public int getRownum() {
+		return rownum;
+	}
+	public void setRownum(int rownum) {
+		this.rownum = rownum;
+	}
+	public String getImgSaveFilename() {
+		return imgSaveFilename;
+	}
+	public void setImgSaveFilename(String imgSaveFilename) {
+		this.imgSaveFilename = imgSaveFilename;
+	}
+	public int getPdPrice() {
+		return pdPrice;
+	}
+	public void setPdPrice(int pdPrice) {
+		this.pdPrice = pdPrice;
+	}
+	public String getPdname() {
+		return pdname;
+	}
+	public void setPdname(String pdname) {
+		this.pdname = pdname;
+	}
 	public String getMemo() {
 		return memo;
 	}

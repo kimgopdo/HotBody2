@@ -43,39 +43,39 @@
 
 	
 <!-- 오른쪽 사이드 바 -->
-   <div id="rightSide" style="width: 10%; height: 100%; float:right; top:0px; right:0; position: fixed; z-index: 10;">
+   <div id="rightSide" style="height: 1000px; top:0px;float:right; position: fixed; z-index: 11;">
         <ul class="btn_Side">
         	<li>
-        		<button type="button" class="btn btn-default btn-lg quickMenuBtn" style="background: white; border: none; outline: none;" onclick="quickMenu();">
+        		<button type="button" class="btn btn-default btn-lg quickMenuBtn" style="width:50px; border: none; outline: none; position: relative; z-index: 11;" onclick="quickMenu();">
                		<span class="glyphicon glyphicon-align-justify"></span>
             	</button>
         	</li>
         	<li>
-	        	<button type="button" class="btn btn-default btn-lg" style="background: white; border: none; outline: none;">
+	        	<button type="button" class="btn btn-default btn-lg" style="width:50px; border: none; outline: none; position: relative; z-index: 11;">
 	               <span class="glyphicon glyphicon-search"></span>
 	            </button>
         	</li>
 			<c:if test="${empty sessionScope.member}">
 			<li>
-			     <button type="button" name="searchBtn"  class="btn btn-default btn-lg" style="background: white; border: none; outline: none;" onclick="javascript:location.href='<%=cp%>/member/login';">
+			     <button type="button" name="searchBtn"  class="btn btn-default btn-lg" style="width:50px; border: none; outline: none; position: relative; z-index: 11;" onclick="javascript:location.href='<%=cp%>/member/login';">
 			        <span class="glyphicon glyphicon-log-in"></span>
 			     </button>
 			</li>
 			</c:if>
 			<c:if test="${not empty sessionScope.member}">
 			<li>
-			     <button type="button" class="btn btn-default btn-lg" style="background: white; border: none; outline: none;"onclick="javascript:location.href='<%=cp%>/member/logout';">
+			     <button type="button" class="btn btn-default btn-lg" style="width:50px; border: none; outline: none; position: relative; z-index: 11;"onclick="javascript:location.href='<%=cp%>/member/logout';">
 			         <span class="glyphicon glyphicon-log-out"></span>
 			     </button>
 			</li>
 			</c:if>
         	<li>
-        		<button type="button" class="btn btn-default btn-lg" style="background: white; border: none; outline: none;">
+        		<button type="button" class="btn btn-default btn-lg" style="width:50px; border: none; outline: none; position: relative; z-index: 11;">
             		<span class="glyphicon glyphicon-user"></span>
          		</button>
         	</li>
         	<li>
-        		<button type="button" class="btn btn-default btn-lg" style="background: white; border: none; outline: none;" onclick="fnMove('4')">
+        		<button type="button" class="btn btn-default btn-lg" style="width:50px; border: none; outline: none; position: relative; z-index: 11;" onclick="fnMove('4')">
             	<span class="glyphicon glyphicon-circle-arrow-up"></span>
          	</button>
         	</li>

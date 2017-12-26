@@ -5,7 +5,7 @@ public class Disuse {
 	private int pdDisNum; // 폐기수량
 	private String pdDisDate; // 폐기날짜
 	private String pdDisReason; // 폐기사유
-	private int pdNum; // 상품번호
+	private int pdnum; // 상품번호
 	private String pdName; // 상품명
 	private String useriId; // 아이디
 	private int pdRawPrice; // 원가
@@ -66,10 +66,10 @@ public class Disuse {
 	public void setPdDisAmt(int pdDisAmt) {
 		this.pdDisAmt = pdDisAmt;
 	}
-	public int getPdNum() {
-		return pdNum;
+	public int getPdnum() {
+		return pdnum;
 	}
-	public void setPdNum(int pdNum) {
-		this.pdNum = pdNum;
+	public void setPdnum(int pdnum) {
+		this.pdnum = pdnum;
 	}
 }

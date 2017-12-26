@@ -46,6 +46,14 @@
 
 <script type="text/javascript" src="<%=cp%>/resource/js/shopJS/tabMove.js"></script>
 <script type="text/javascript">
+$(document).ready(function(){ 
+    $('selector').css('width', $(window).width()); 
+    $('selector').css('height', $(window).height()); 
+    $(window).resize(function() { 
+        $('selector').css('width', $(window).width()); 
+        $('selector').css('height', $(window).height()); 
+    }); 
+});
 jQuery.browser = {};
 (function () {
     jQuery.browser.msie = false;
@@ -86,30 +94,33 @@ A:hover { color:#컬러코드 ; text-decoration:none; }
 
 </head>
 
-<body style="min-width: 1600px; position: relative;">
+<body style="min-width: 100%;">
 <script type="text/javascript">
 $(function(){
-	var url="<%=cp%>/hotShop/menuCall"
-	$.ajax({
-		type:"post"
-		,url:url
-		,dataType:"json"
-		,success:function(menuData){
-			$.each(menuData.bclList,function(index, item){
-					$(".productNutrient").append("<li><a onclick='move("+item.bclcode+",\""+item.bclname+"\",\"bcl\");'>"+item.bclname+"</a></li>");
-					$(".QproductNutrient").append("<li><a onclick='move("+item.bclcode+",\""+item.bclname+"\",\"bcl\");'>"+item.bclname+"</a></li>");
-			});
-			$.each(menuData.sciList,function(index, item){
-					$(".productLike").append("<li><a onclick='move("+item.scicode+",\""+item.sciname+"\",\"sci\");'>"+item.sciname+"</a></li>");
-					$(".QproductLike").append("<li><a onclick='move("+item.scicode+",\""+item.sciname+"\",\"sci\");'>"+item.sciname+"</a></li>");
-			});
-			$("#productNutrient").trigger("create");
-			$("#productLike").trigger("create");
-			$("#QproductNutrient").trigger("create");
-			$("#QproductLike").trigger("create");
-		}
-	});
+	menuCall();
 })
+function menuCall(){
+	var url="<%=cp%>/hotShop/menuCall"
+		$.ajax({
+			type:"post"
+			,url:url
+			,dataType:"json"
+			,success:function(menuData){
+				$.each(menuData.bclList,function(index, item){
+						$(".productLike").append("<li><a onclick='move("+item.bclcode+",\""+item.bclname+"\",\"bcl\");'>"+item.bclname+"</a><button type='button' class='btn' style='width:100%;' onclick='bciDelete("+item.bclcode+");'>"+item.bclname+"(삭제)</button></li>");
+						$(".QproductNutrient").append("<li><a onclick='move("+item.bclcode+",\""+item.bclname+"\",\"bcl\");'>"+item.bclname+"</a></li>");
+				});
+				$.each(menuData.sciList,function(index, item){
+						$(".productNutrient").append("<li><a onclick='move("+item.scicode+",\""+item.sciname+"\",\"sci\");'>"+item.sciname+"</a><button type='button' class='btn' style='width:100%;' onclick='sclDelete("+item.scicode+");'>"+item.sciname+"(삭제)</button></li>");
+						$(".QproductLike").append("<li><a onclick='move("+item.scicode+",\""+item.sciname+"\",\"sci\");'>"+item.sciname+"</a></li>");
+				});
+				$("#productNutrient").trigger("create");
+				$("#productLike").trigger("create");
+				$("#QproductNutrient").trigger("create");
+				$("#QproductLike").trigger("create");
+			}
+		});
+}
 </script>
 <!-- 쿠키사용 함수 -->
 <script type="text/javascript">
@@ -134,6 +145,22 @@ function getCookie(cookie_name) {
 	    }
 	  }
 	}
+function removePayCookie(id,amount){
+	 var items = getCookie('hotbodyBasket'); // 이미 저장된 값을 쿠키에서 가져오기
+	  var maxItemNum = 10; // 최대 저장 가능한 아이템개수
+	  var expire = 0; // 쿠키값을 저장할 기간
+	  console.log(id);
+	  console.log(amount);
+	  if (items) {
+		 var itemArray = items.split(',');
+		 for(var n=0; n<id.length;n++){
+			 if (items.indexOf(id[n]) != -1) {
+				 item=id[n]+"-"+amount[n];
+				 setCookie('hotbodyBasket', item, expire);
+			    }
+		 }
+	  }
+}
 function addCookie(id) {
 	  var items = getCookie('hotbodyBasket'); // 이미 저장된 값을 쿠키에서 가져오기
 	  var maxItemNum = 10; // 최대 저장 가능한 아이템개수
@@ -157,29 +184,38 @@ function addCookie(id) {
 	  }
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
+function runEffect() {
+    // get effect type from
+	var items = getCookie('hotbodyBasket');
+    if(items){
+	    var item=items.split(",");
+	    var n=item.length;
+	    if(n!=0){
+	    	showBasket();
+		    var options = {percent: 10};
+		    // Run the effect
+		    $( "#bubble" ).toggle( "shake", options, 40 );
+		    $( "#totC" ).text(n);
+	    }else{
+	    	hideBasket();
+	    }
+    }
+  };
 </script>
-<div class="quickMenu">
+<div class="quickMenu" style="position: absolute;">
 	<tiles:insertAttribute name="quickMenu"/>
 </div>
 
-<div class="leftSide">
+<div class="leftSide" style=" float: left; padding: 10px; width: 10%; position: fixed; z-index: 10;">
     <tiles:insertAttribute name="leftSide"/>
 </div>
 	
-<div class="container" style="margin-left: auto; margin-right: auto;">
+<div class="container" style="float: left; padding: 10px; width: 80%; padding: 0; margin-left: 10%; margin-right: 10%;">
     <tiles:insertAttribute name="header"/>
     <tiles:insertAttribute name="body"/>
 </div>
 
-<div class="rightSide">
+<div class="rightSide" style="right:0; padding: 10px; width: 10%; position: fixed; z-index: 10;">
     <tiles:insertAttribute name="rightSide"/>
 </div>
 </body>

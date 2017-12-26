@@ -10,6 +10,8 @@ var count = "${count}";
 
 $(function() {
 	objectiveAdd();
+	
+	
 });
 
 function objectiveAdd() {
@@ -27,6 +29,7 @@ function objectiveAdd() {
 	out +="<input type='hidden' name='soro' value='0'>";
 	out +="<td width='120'>";
 	out +="<select name='questionType' style='height: 30px;'>";
+	out +="<option value='gender'>성별</option>";
 	out +="<option value='pro'>전문성</option>";
 	out +="<option value='afford'>여유(시간)</option>";
 	out +="<option value='habits'>식습관</option>";
@@ -73,7 +76,14 @@ function subjectiveAdd() {
 	out+="<tr height='55' align='center' style='padding: 20px auto 20px;'>";
 	out +="<input type='hidden' name='questionOrder' id='questionOrder' value=''>";
 	out +="<input type='hidden' name='soro' value='1'>";
-	out +="<td width='120'></td>";
+	out +="<td width='120'>";
+	out +="<select name='questionType' style='height: 30px;'>";
+	out +="<option value='0'>없음</option>";
+	out +="<option value='tall'>키</option>";
+	out +="<option value='weight'>몸무게</option>";
+	out +="<option value='age'>나이</option>";
+	out +="</select>";
+	out +="</td>";
 	out+="<td align='left'>";
 	out+="질문 : &nbsp;&nbsp;&nbsp;<input type='text' name='questionContent' style='width:90%; height: 30px; margin-left: 10px;' placeholder='질문을 입력 하세요'>";
 	out+="</td>";
@@ -192,7 +202,7 @@ function surveySubmit() {
 	document.getElementById("questionOrder").value=count;
 	
 	var f = $("form[name=surveyform]").serialize();
-	var url="<%=cp%>/survey/submit";
+	var url="<%=cp%>/survey/createdSubmit";
 	
 	alert(f);
 	
@@ -244,9 +254,9 @@ function surveySubmit() {
 		<button type="button" class="btn-default02" onclick="surveySubmit();">${mode=='update'?'수정완료':'등록하기'}</button>
 	</div>
 	
+	
 	<div id="questionRContainer" style="margin-top: 50px;">
 		<c:forEach var="dto" items="${surveyList}">
-		
 		
 			<c:if test="${dto.soro==1}">
 			<div style="border: 1px solid; padding: 10px; border-radius: 4px; margin-top: 20px;">
@@ -264,8 +274,8 @@ function surveySubmit() {
 	                    </td>
 				</tr>
 				<tr height="55" align="center" style="font-size: 15px; font-weight: bold;">
-                    <td align="left" colspan="3">
-                    	${dto.questionContent}
+                    <td class="updateQ" align="left" colspan="3">
+                    	${dto.questionContent}&nbsp;&nbsp;&nbsp;(${dto.questionType})
                     </td>
                  </tr>
 			</table>
@@ -297,7 +307,7 @@ function surveySubmit() {
                 <c:if test="${exdto.questionCode==dto.questionCode}">
 	                <tr height="55" align="center" style="font-size: 13px;">
 	                <td align="left" colspan="3">
-                   	<input type="radio" name="ch${exdto.questionCode}">&nbsp;${exdto.exContent}
+                   	<input type="radio" name="ch${exdto.questionCode}">&nbsp;${exdto.exContent}&nbsp;&nbsp;&nbsp;(${exdto.exScore})
                     </td>
 	                </tr>
 	            </c:if>

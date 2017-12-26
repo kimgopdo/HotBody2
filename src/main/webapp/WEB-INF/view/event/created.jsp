@@ -6,11 +6,6 @@
 	String cp=request.getContextPath();
 %>
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
 <style type="text/css">
 body{
 	font-family: "맑은 고딕";
@@ -159,85 +154,78 @@ function deleteFile() {
 		location.href="<%=cp%>/event/deleteFile?page=${page}&eventCode=${dto.eventCode}"
 	}
 }
-
 </script>
-</head>
-<body>
-<div style="height: 50px;"></div>
+
 <div style="font-size: 40px; width: 700px; margin: 20px auto 0; font-weight: bold; color: #666666;">| 이벤트</div>
 <div style="width:700px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
 
-<form action="<%=cp%>/event/${mode}" method="post" name="boardForm" enctype="multipart/form-data" onsubmit="return submitContents(this);">
-<table style="width: 700px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0">
-<tr height="40">
-	<td width="100">제목</td>
-	<td>
-		<input type="text" name="subject" style="width: 98%; height: 35px;" value="${dto.subject}">
-	</td>
-</tr>
-
-<tr>
-	<td width="100"></td>
-	<td>
-		<input type="checkbox" name="event" id="event" value="1" ${dto.event=="1"?"checked='checked'":""}>
-		<label for="event">공지여부</label>
-	</td>
-</tr>
-
-<tr height="40">
-	<td width="100" valign="top">내용</td>
-	<td>
-		<textarea style="width: 98%;" rows=10; name="content" id="content">${dto.content}</textarea>
-	</td>
-</tr>
-<tr height="10px;"></tr>
-
-<tr height="40">
-	<td width="100">파일등록</td>
-	<td>
-	<div class="form-group form_file">
-	  <input id="fileName" class="form-control form_point_color01" type="text" title="첨부된 파일명" readonly style="width:430px">
-	  <span class="file_load">
-	        <input type="file" id="upload" name="upload" onchange="fileChange();">
-	        <label class="btn-default" for="upload">파일첨부</label>
-	    </span>
+<div style="width: 700px; min-height: 650px; margin: 20px auto 0;">
+	<form action="<%=cp%>/event/${mode}" method="post" name="boardForm" enctype="multipart/form-data" onsubmit="return submitContents(this);">
+	<table style="width: 700px; border-collapse: collapse; border-spacing: 0">
+	
+	<tr height="40">
+		<td width="100">제목</td>
+		<td>
+			<input type="text" name="subject" style="width: 100%; height: 35px;" value="${dto.subject}">
+		</td>
+	</tr>
+	
+	<tr height="40">
+		<td height="50" width="100" valign="top">내용</td>
+		<td>
+			<textarea style="width: 98%;" rows=10; name="content" id="content">${dto.content}</textarea>
+		</td>
+	</tr>
+	<tr height="10px;"></tr>
+	
+	<tr height="40">
+		<td width="100">파일등록</td>
+		<td>
+		<div class="form-group form_file">
+		  <input id="fileName" class="form-control form_point_color01" type="text" title="첨부된 파일명" readonly style="width:430px">
+		  <span class="file_load">
+		        <input type="file" id="upload" name="upload" onchange="fileChange();">
+		        <label class="btn-default" for="upload">파일첨부</label>
+		    </span>
+		</div>
+		</td>
+	</tr>
+	
+	<tr>
+		<td></td>
+		<td style="color: #666666; font-size: 13px;">
+			(최대 10MB이하의 파일이 등록 가능합니다.)
+		</td>
+	</tr>
+	<tr height="10px;"></tr>
+	
+	<c:if test="${mode=='update'}">
+	<tr height="40">
+		<td width="100">첨부된 파일</td>
+		<td>
+			${dto.originalFile}
+			<c:if test="${not empty dto.saveFile}">
+				&nbsp;<a href="javascript:deleteFile();">
+				<img src="<%=cp%>/resource/images/close_icon.png">
+				</a>
+			</c:if>
+		</td>
+	</tr>
+	</c:if>
+	</table>
+	<div style="width:700px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
+	<div style="width: 700px; margin: 20px auto 0;" align="center">
+	<button type="submit" class="btn-default02">등록</button>
+	<button type="button" class="btn-default02" onclick="javascript:location.href='<%=cp%>/event/list?page=${page}';">등록취소</button>
+	<c:if test="${mode=='update'}">
+		<input type="hidden" name="page" value="${page}">
+		<input type="hidden" name="eventCode" value="${dto.eventCode}">
+		<input type="hidden" name="query" value="${query}">
+		<input type="hidden" name="saveFile" value="${dto.saveFile}">
+		<input type="hidden" name="originalFile" value="${dto.originalFile}">
+	</c:if>
 	</div>
-	</td>
-</tr>
-
-<tr>
-	<td></td>
-	<td style="color: #666666; font-size: 13px;">
-		(최대 10MB이하의 파일이 등록 가능합니다.)
-	</td>
-</tr>
-<tr height="10px;"></tr>
-
-<c:if test="${mode=='update'}">
-<tr height="40">
-	<td width="100">첨부된 파일</td>
-	<td>
-		${dto.originalFile}
-		<c:if test="${not empty dto.saveFile}">
-			&nbsp;<a href="javascript:deleteFile();">
-			<img src="<%=cp%>/resource/images/close_icon.png">
-			</a>
-		</c:if>
-	</td>
-</tr>
-</c:if>
-</table>
-<div style="width:700px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
-<div style="width: 700px; margin: 20px auto 0;" align="center">
-<button type="submit" class="btn-default02">등록</button>
-<button type="button" class="btn-default02" onclick="javascript:location.href='<%=cp%>/event/list?page=${page}';">등록취소</button>
-<c:if test="${mode=='update'}">
-	<input type="hidden" name="page" value="${page}">
-	<input type="hidden" name="eventCode" value="${dto.eventCode}">
-	<input type="hidden" name="query" value="${query}">
-	<input type="hidden" name="saveFile" value="${dto.saveFile}">
-	<input type="hidden" name="originalFile" value="${dto.originalFile}">
-</c:if>
+	</form>
 </div>
 
 <script type="text/javascript">
@@ -285,8 +273,6 @@ function setDefaultFont() {
 	oEditors.getById["content"].setDefaultFont(sDefaultFont, nFontSize);
 }
 </script>
-</form>
-</body>
-</html>
+
 
 

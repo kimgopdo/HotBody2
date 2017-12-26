@@ -20,7 +20,5 @@ public interface EventService {
 	public int replyDataCount(Map<String, Object> map);
 	public int deleteReply(Map<String, Object> map);
 	
-	public List<Reply> listReplyAnswer(	int answer);
-	public int replyCountAnswer(int answer);
 	
 }

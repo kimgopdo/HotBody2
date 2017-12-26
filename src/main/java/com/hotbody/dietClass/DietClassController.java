@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,7 +44,7 @@ public class DietClassController {
 	private FileManager fileManager;
 	
 	@Autowired
-	private MyUtil util;
+	private MyUtil myUtil;
 	
 	@RequestMapping(value="/dietClass/list")
 	public String classList(HttpServletRequest req,
@@ -251,10 +252,7 @@ public class DietClassController {
 								@RequestParam int num,
 								@RequestParam int type) {
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
-		if(info!=null)
-			System.out.println("로그인상태");
 		if(info==null) {
-			System.out.println("로그인상태XXXXXXXXXXX");
 			return "redirect:/member/login";
 		}
 		Milelage mdto = serviceM.selectMilelage(info.getUserId());
@@ -344,7 +342,7 @@ public class DietClassController {
 		int totalPage;
 		
 		dataCount = service.programCount();
-		totalPage = util.pageCount(10, dataCount);
+		totalPage = myUtil.pageCount(10, dataCount);
 		
 		if(totalPage<currentPage)
 			currentPage=totalPage;
@@ -356,7 +354,7 @@ public class DietClassController {
 		map.put("end", end);
 		List<CProgram> list = service.listcProgram(map);
 
-		String paging = util.paging(currentPage, totalPage);
+		String paging = myUtil.paging(currentPage, totalPage);
 		
 		model.addAttribute("list",list);
 		model.addAttribute("paging", paging);
@@ -425,7 +423,9 @@ public class DietClassController {
 
 	@RequestMapping(value="/mission/article", method=RequestMethod.GET)
 	public String article(Model model,
-								@RequestParam int num) {
+			@RequestParam(value="page", defaultValue="1") int current_page,
+			HttpServletRequest req,
+			@RequestParam int num) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("classNum", num);
 		map.put("classType", 0);
@@ -434,8 +434,23 @@ public class DietClassController {
 		int day[] = new int[dto.getOnperiod()];
 		String max="";
 		
+		int dataCount = dto.getOnperiod();
+		int rows = 10;
+		int total_page = 0;
+		
+		if(dataCount !=0)
+			total_page = myUtil.pageCount(rows, dataCount);
+		
+		if(total_page<current_page)
+			current_page=total_page;
+		
+		int start = (current_page-1)*rows+1;
+		int end = current_page*rows;
+		if(end>dto.getOnperiod())
+			end = dto.getOnperiod();
+		
 		List<List<Mission>> list = new ArrayList<>();
-		for(int a=1;a<=dto.getOnperiod();a++) {
+		for(int a=start;a<=end;a++) {
 			day[a-1] = a;
 			map.put("missDay", a);
 			List<Mission> list2 = service.readMission(map);
@@ -447,11 +462,14 @@ public class DietClassController {
 				mdto.setMissDay(a);
 				list2.add(mdto);
 			}
-			
-			System.out.println(a+":"+max);
 			list.add(list2);
 		}
-		
+
+		String cp = req.getContextPath();
+		String listUrl = cp+"/mission/article?num="+num;
+		String paging = myUtil.paging(current_page, total_page, listUrl);
+
+		model.addAttribute("paging", paging);
 		model.addAttribute("max", max);
 		model.addAttribute("list", list);
 		model.addAttribute("day", day);
@@ -510,8 +528,8 @@ public class DietClassController {
 		map.put("classNum", num);
 		map.put("missDay", day);
 		map.put("missIndex", index);
-		
 		service.deleteMission(map);
+		
 		return "redirect:/mission/article?num="+num;
 	}
 	

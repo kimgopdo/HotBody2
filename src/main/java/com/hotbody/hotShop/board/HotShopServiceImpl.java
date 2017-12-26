@@ -29,6 +29,7 @@ public class HotShopServiceImpl implements HotShopService{
 				dto.setImgSaveFilename(saveFilename);
 				dto.setImgOriginalFilename(dto.getUpload().getOriginalFilename());
 			}
+			dto.setMilelage(500);
 			result=dao.insertData("product.insertProductList", dto);
 			dto.setPdnum(dao.selectOne("product.readProductNum", dto.getPdName()));
 			result=dao.insertData("product.insertPmainImg", dto);
@@ -141,6 +142,7 @@ public class HotShopServiceImpl implements HotShopService{
 	public int insertProductIn(ProductIn dto) {
 		int result=0;
 		try {
+			dao.updateData("product.productInStCount", dto);
 			result=dao.insertData("product.insertSupply", dto);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -156,6 +158,16 @@ public class HotShopServiceImpl implements HotShopService{
 			e.printStackTrace();
 		}
 		return list;
+	}
+	@Override
+	public int productDataCount(Map<String, Object> map) {
+		int result=0;
+		try {
+			result=dao.selectOne("product.pdListDataCount",map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 	@Override
 	public int dataCount() {
@@ -209,8 +221,8 @@ public class HotShopServiceImpl implements HotShopService{
 		int result=0;
 		try {
 			dao.insertData("product.insertPayment", dto);
-			dto.setDelOrder(dao.selectOne("product.readDelOrder", dto.getUserId()));
-			dto.setClassNum(64);
+			dto.setDelOrder(readDelOrder(dto.getUserId()));
+			dto.setClassNum(0);
 			int []amount=dto.getAmount();
 			int []pdnum=dto.getPdnum();
 			for(int n=0;n<amount.length;n++) {
@@ -218,10 +230,73 @@ public class HotShopServiceImpl implements HotShopService{
 				dto.setPdnum_one(pdnum[n]);
 				dao.insertData("product.insertCartList", dto);
 			}
+			dao.insertData("product.isnertTotalOrdList", dto);
+			dao.insertData("product.insertMilelage", dto);
 			result=dao.insertData("product.insertPayInfo", dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return result;
 	}
+	@Override
+	public int readDelOrder(String userId) {
+		int delOrder=0;
+		try {
+			delOrder=dao.selectOne("product.readDelOrder", userId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return delOrder;
+	}
+	@Override
+	public List<Payment> readDelOrderProduct(int oderNum) {
+		List<Payment> list=null;
+		try {
+			list=dao.selectList("product.readDelOrderProduct", oderNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	@Override
+	public int insertBcl(Map<String, Object> map) {
+		int result=0;
+		try {
+			result=dao.insertData("product.insertBcl", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	@Override
+	public int insertSci(Map<String, Object> map) {
+		int result=0;
+		try {
+			result=dao.insertData("product.insertSci", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	@Override
+	public int deleteBcl(int code) {
+		int result=0;
+		try {
+			result=dao.deleteData("product.deleteBciMenu", code);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	@Override
+	public int deleteSci(int code) {
+		int result=0;
+		try {
+			result=dao.deleteData("product.deleteSclMenu", code);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
 }

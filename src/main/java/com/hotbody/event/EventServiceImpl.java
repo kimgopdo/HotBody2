@@ -26,9 +26,9 @@ public class EventServiceImpl implements EventService {
 			if (dto.getUpload() !=null && !dto.getUpload().isEmpty()) {
 				String saveFile = fileManager.doFileUpload(dto.getUpload(), pathname);
 				dto.setSaveFile(saveFile);
-				dto.setOriginalFile(dto.getUpload().getOriginalFilename());
-				dto.setFileSize(dto.getUpload().getSize());
+				dto.setOriginalFile(dto.getUpload().getOriginalFilename());		
 			}
+			
 			result=dao.insertData("event.insertEvent", dto);
 		} catch (Exception e) {
 			System.out.println(e.toString());
@@ -199,19 +199,13 @@ public class EventServiceImpl implements EventService {
 
 	@Override
 	public int deleteReply(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		try {
+			result=dao.deleteData("event.deleteReply", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
 	}
 
-	@Override
-	public List<Reply> listReplyAnswer(int answer) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int replyCountAnswer(int answer) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 }

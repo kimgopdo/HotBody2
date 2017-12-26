@@ -44,7 +44,16 @@
 			FROM dietClass d
 			JOIN offClass o ON d.classNum=o.classNum WHERE classType=1 ORDER BY classNum DESC
      	</if>
-		
+	</select>
+	
+	<select id="listByLevel" parameterType="Integer" resultType="com.hotbody.dietClass.DietClass">
+		SELECT d.classNum, className, classType, classGoal, classGoalD, cllevel, tuition, saveFileName 
+   		,mento, onPeriod ,location1, location2, startTime, endTime, offLimit, coach, 
+          TO_CHAR(startDate,'YYYYMMDD') startDate, TO_CHAR(endDate,'YYYYMMDD') endDate
+   		FROM dietClass d
+		LEFT OUTER JOIN onClass o ON d.classNum=o.classNum 
+		LEFT OUTER JOIN offClass o ON d.classNum=o.classNum
+     	WHERE cllevel=#{cllevel}
 	</select>
 	
 	<select id="readClass" parameterType="map" resultType="com.hotbody.dietClass.DietClass">

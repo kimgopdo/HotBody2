@@ -321,4 +321,15 @@ public class DietClassServiceImpl implements DietClassService {
 		}
 		return count;
 	}
+
+	@Override
+	public List<DietClass> listByLevel(int cllevel) {
+		List<DietClass> list = null;
+		try {
+			list = dao.selectList("dietClass.listByLevel", cllevel);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
 }
