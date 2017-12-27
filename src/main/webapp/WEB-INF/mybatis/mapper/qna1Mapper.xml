@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="qna1">
+
+<!-- 새 글 및 답변 글 저장하기 -->
+<insert id="insertQna1" parameterType="com.hotbody.qna1.Qna1">
+	INSERT INTO qna1
+		(qna1Code, userId, subject, content, hitCount, created) 
+		 VALUES(qna1_seq.NEXTVAL, #{userId}, #{subject}, #{content}, 0, SYSDATE)
+</insert>
+
+<!-- sql태그: 반복작업에 유용 -->
+<sql id="where-list">
+   <if test="searchKey=='userId' ">
+        userId=#{searchValue}
+   </if>
+   <if test="searchKey=='subject' ">
+       INSTR(subject, #{searchValue}) &gt; 0
+   </if>
+   <if test="searchKey=='content' ">
+        DBMS_LOB.INSTR(content, #{searchValue}) &gt; 0
+   </if>
+   <if test="searchKey=='created' ">
+        TO_CHAR(created, 'YYYY-MM-DD')=#{searchValue}
+			OR TO_CHAR(created, 'YYYYMMDD')=#{searchValue}
+   </if>
+</sql>
+
+<!--글개수-->
+<select id="dataCount" resultType="Integer" parameterType="map">
+	SELECT NVL(COUNT(*), 0) FROM qna1
+	<where>
+			<if test="searchValue != null and searchValue !=''">
+				<include refid="where-list"/>
+			</if>
+		</where>
+</select>
+
+<!-- 글리스트 -->
+	<select id="listQna1" resultType="com.hotbody.qna1.Qna1"
+		parameterType="map">
+
+		SELECT * FROM (
+			SELECT ROWNUM rnum, tb.* FROM (
+				SELECT qna1Code, q.userId, subject, hitCount,
+				TO_CHAR(created, 'YYYY-MM-DD') created
+				FROM qna1 q
+				JOIN member1 m1 ON q.userId = m1.userId
+		<where>
+			<if test="searchValue !=null and searchValue!=''">
+				<include refid="where-list" />
+			</if>
+		</where>
+			ORDER BY qna1Code DESC
+<![CDATA[		
+			) tb WHERE ROWNUM <= #{end}
+		) WHERE rnum >=#{start}
+]]>
+	</select>
+
+<!-- 글보기 -->
+<select id="readQna1" resultType="com.hotbody.qna1.Qna1"
+		parameterType="Integer">
+	SELECT qna1Code, userId, subject, hitCount, created, content,
+		 hitCount FROM qna1
+		 WHERE qna1Code =#{qna1Code}
+</select>
+
+<!-- 조회수 증가 -->
+<update id="updateHitCount" parameterType="Integer">
+	UPDATE qna1 SET hitCount=hitCount+1 WHERE qna1Code =#{qna1Code}
+</update>
+
+<!-- 이전글-->
+<select id="preReadQna1" resultType="com.hotbody.qna1.Qna1"
+		parameterType="map">
+	SELECT tb.*FROM (
+		SELECT qna1Code, subject FROM qna1
+		<where>
+			<if test="searchValue != null and searchValue !=''">
+				<include refid="where-list"/>
+			</if>
+		AND (qna1Code &gt; #{qna1Code})
+		</where>	
+			ORDER BY qna1Code ASC
+		) tb WHERE ROWNUM=1		
+</select>
+
+<!-- 다음글 -->
+<select id="nextReadQna1" resultType="com.hotbody.qna1.Qna1"
+		parameterType="map">
+	SELECT tb.*FROM (
+		SELECT qna1Code, subject FROM qna1
+	<where>
+		<if test="searchValue != null and searchValue !=''">
+			<include refid="where-list"/>
+		</if>
+		AND (qna1Code &lt; #{qna1Code})
+	</where>
+	ORDER BY qna1Code DESC
+	) tb WHERE ROWNUM=1
+</select>
+
+<!-- 글수정 -->
+<update id="updateQna1" parameterType="com.hotbody.qna1.Qna1">
+	UPDATE qna1 SET subject=#{subject},
+	content=#{content}
+	WHERE qna1Code =#{qna1Code}
+</update>
+
+<!-- 글삭제 -->
+<delete id="deleteQna1" parameterType="Integer">
+	DELETE FROM qna1 WHERE qna1Code =#{qna1Code}	
+</delete>
+
+</mapper>

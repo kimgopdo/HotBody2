@@ -1,4 +1,4 @@
-package com.hotbody.qna2;
+package com.hotbody.qna1;
 
 import java.util.List;
 import java.util.Map;
@@ -8,28 +8,42 @@ import org.springframework.stereotype.Service;
 
 import com.hotbody.common.dao.CommonDAO;
 
-@Service("qna2.qna2Service")
-public class Qna2ServiceImpl implements Qna2Service{
-	
+
+@Service("qna1.qna1Service")
+public class Qna1ServiceImpl implements Qna1Service {
+
 	@Autowired
 	private CommonDAO dao;
 	
 	@Override
-	public int insertQna2(Qna2 dto) {
+	public int insertQna1(Qna1 dto) {
 		int result=0;
 		
 		try {
-			result=dao.insertData("qna2.insertQna2", dto);			
+			result=dao.insertData("qna1.insertQna1", dto);
+			
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
 		return result;
 	}
+
 	@Override
-	public List<Qna2> listQna2(Map<String, Object> map) {
-		List<Qna2> list = null;
+	public int dataCount(Map<String, Object> map) {
+		int result =0;
 		try {
-			list=dao.selectList("qna2.listQna2", map);
+			result=dao.selectOne("qna1.dataCount", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+	}
+
+	@Override
+	public List<Qna1> listQna1(Map<String, Object> map) {
+		List<Qna1> list = null;
+		try {
+			list=dao.selectList("qna1.listQna1", map);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -37,10 +51,43 @@ public class Qna2ServiceImpl implements Qna2Service{
 	}
 
 	@Override
-	public int dataCount(Map<String, Object> map) {
+	public Qna1 readQna1(int qna1Code) {
+		Qna1 dto=null;
+		try {
+			dto=dao.selectOne("qna1.readQna1", qna1Code);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return dto;
+	}
+
+	@Override
+	public Qna1 preReadQna1(Map<String, Object> map) {
+		Qna1 dto=null;
+		try {
+			dto=dao.selectOne("qna1.preReadQna1", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return dto;
+	}
+
+	@Override
+	public Qna1 nextReadQna1(Map<String, Object> map) {
+		Qna1 dto= null;
+		try {
+			dto=dao.selectOne("qna1.nextReadQna1", map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return dto;
+	}
+
+	@Override
+	public int updateHitCount(int qna1Code) {
 		int result=0;
 		try {
-			result=dao.selectOne("qna2.dataCount", map);
+			result=dao.updateData("qna1.updateHitCount", qna1Code);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -48,43 +95,10 @@ public class Qna2ServiceImpl implements Qna2Service{
 	}
 
 	@Override
-	public Qna2 readQna2(int qna2Code) {
-		Qna2 dto=null;
-		try {
-			dto=dao.selectOne("qna2.readQna2", qna2Code);
-		} catch (Exception e) {
-			System.out.println(e.toString());
-		}
-		return dto;
-	}
-
-	@Override
-	public Qna2 preReadQna2(Map<String, Object> map) {
-		Qna2 dto=null;
-		try {
-			dto=dao.selectOne("qna2.preReadQna2", map);
-		} catch (Exception e) {
-			System.out.println(e.toString());
-		}
-		return dto;
-	}
-
-	@Override
-	public Qna2 nextReadQna2(Map<String, Object> map) {
-		Qna2 dto = null;
-		try {
-			dto=dao.selectOne("qna2.nextReadQna2", map);
-		} catch (Exception e) {
-			System.out.println(e.toString());
-		}
-		return dto;
-	}
-
-	@Override
-	public int updateHitCount(int qna2Code) {
+	public int updateQna1(Qna1 dto) {
 		int result=0;
 		try {
-			result=dao.updateData("qna2.updateHitCount",qna2Code);
+			result=dao.updateData("qna1.updateQna1", dto);
 			
 		} catch (Exception e) {
 			System.out.println(e.toString());
@@ -93,23 +107,10 @@ public class Qna2ServiceImpl implements Qna2Service{
 	}
 
 	@Override
-	public int updateQna2(Qna2 dto) {
+	public int deleteQna1(int qna1Code) {
 		int result=0;
 		try {
-			result=dao.updateData("qna2.updateQna2", dto);
-			
-		} catch (Exception e) {
-			System.out.println(e.toString());
-		}
-		return result;
-	}
-
-	@Override
-	public int deleteQna2(int qna2Code) {
-		int result=0;
-		
-		try {
-			result=dao.deleteData("qna2.deleteQna2", qna2Code);
+			result=dao.deleteData("qna1.deleteQna1", qna1Code);	
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}

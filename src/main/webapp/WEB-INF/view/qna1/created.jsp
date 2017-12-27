@@ -26,24 +26,15 @@ function check() {
 	
 	return true;
 }
-function fileChange() {
-	var upload=document.getElementById("upload").value;
-	document.getElementById("fileName").value=upload.substring(0,upload.lastIndexOf("."));
-}
-function deleteFile() {
-	if(confirm("첨부파일을 삭제하시겠습니까?")){
-		location.href="<%=cp%>/qna2/deleteFile?page=${page}&qna2Code=${dto.qna2Code}"
-	}
-}
 
 </script>
 </head>
 <body style="height: 1000px">
 <div style="height: 50px;"></div>
-<div style="font-size: 40px; width: 700px; margin: 20px auto 0; font-weight: bold; color: #666666;">| 문의사항</div>
+<div style="font-size: 40px; width: 700px; margin: 20px auto 0; font-weight: bold; color: #666666;">| 자주묻는질문</div>
 <div style="width:700px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
 
-<form action="<%=cp%>/qna2/${mode}" method="post" name="boardForm" enctype="multipart/form-data" onsubmit="return submitContents(this);">
+<form action="<%=cp%>/qna1/${mode}" method="post" name="boardForm" enctype="multipart/form-data" onsubmit="return submitContents(this);">
 <table style="width: 700px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0">
 <tr height="40">
 	<td width="100">제목</td>
@@ -55,23 +46,20 @@ function deleteFile() {
 <tr height="40">
 	<td width="100" valign="top">내용</td>
 	<td>
-		<textarea style="width: 98%;" rows=10; name="content" id="content">${dto.content}</textarea>
+		<textarea style="width: 98%;" name="content" id="content">${dto.content}</textarea>
 	</td>
 </tr>
 <tr height="10px;"></tr>
 
-
-	
 </table>
 <div style="width:700px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
 <div style="width: 700px; margin: 20px auto 0;" align="center">
 <button type="submit" class="btn-default02">등록</button>
-<button type="button" class="btn-default02" onclick="javascript:location.href='<%=cp%>/qna2/list?page=${page}';">등록취소</button>
+<button type="button" class="btn-default02" onclick="javascript:location.href='<%=cp%>/qna1/list?page=${page}';">등록취소</button>
 <c:if test="${mode=='update'}">
 	<input type="hidden" name="page" value="${page}">
-	<input type="hidden" name="qna2Code" value="${dto.qna2Code}">
+	<input type="hidden" name="qna1Code" value="${dto.qna1Code}">
 	<input type="hidden" name="query" value="${query}">
-	<input type="hidden" name="rows" value="${rows}">
 </c:if>
 </div>
 

@@ -1,8 +1,9 @@
-package com.hotbody.qna2;
+package com.hotbody.qna1;
 
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -18,24 +19,26 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.hotbody.common.MyUtil;
 import com.hotbody.member.SessionInfo;
+import com.hotbody.qna1.Qna1;
 
-@Controller("qna2.Qna2Controller")
-public class Qna2Controller {
+@Controller("qna1.QnaController")
+public class Qna1Controller {
+	
 	@Autowired
-	private  Qna2Service service;
+	private Qna1Service service;
 	@Autowired
 	private MyUtil util;
 	
-	@RequestMapping(value = "/qna2/created",
+	@RequestMapping(value = "/qna1/created",
 			method = RequestMethod.GET)
 	public String createdForm(Model model) throws Exception {
 		model.addAttribute("mode", "created");
-		return ".qna2.created";
+		return ".qna1.created";
 	}
 	
-	@RequestMapping(value = "/qna2/created",
+	@RequestMapping(value = "/qna1/created",
 			method = RequestMethod.POST)
-	public String createdSubmit(Qna2 dto, HttpSession session) throws Exception {
+	public String createdSubmit(Qna1 dto, HttpSession session) throws Exception {
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
 		if(info==null) {
 			return "redirect:/member/login";
@@ -43,21 +46,19 @@ public class Qna2Controller {
 		
 		dto.setUserId(info.getUserId());
 		
-		service.insertQna2(dto);
+		service.insertQna1(dto);
 		
-		return "redirect:/qna2/list";
+		return "redirect:/qna1/list";
 	}
-	
-	
-	
-	@RequestMapping("/qna2/list")
+
+	@RequestMapping("/qna1/list")
 	public String list(
 			@RequestParam(value = "page", defaultValue = "1") int current_page,
 			@RequestParam(defaultValue = "subject") String searchKey,
 			@RequestParam(defaultValue = "") String searchValue,
-			@RequestParam(defaultValue = "10") int rows,
 			HttpServletRequest req, Model model) throws Exception {
 			
+		int rows =10;
 		int dataCount;
 		int total_page;
 		
@@ -81,18 +82,26 @@ public class Qna2Controller {
 				int end = current_page * rows;
 				map.put("start", start);
 				map.put("end", end);		
-				List<Qna2> list = service.listQna2(map);
+				List<Qna1> list = service.listQna1(map);
 		
-
-				String query = "rows=" + rows;
+				int listNum, n = 0;
+				Iterator<Qna1> it = list.iterator();
+				while (it.hasNext()) {
+					Qna1 dto = it.next();
+					listNum = dataCount - (start + n - 1);
+					dto.setListNum(listNum);
+					n++;
+				}
+				
+				String query = "";
 				String listUrl, articleUrl;
 				if (searchValue.length() != 0) {
 					query += "&searchKey=" + searchKey + "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
 				}
 				
 				String cp = req.getContextPath();
-				listUrl = cp + "/qna2/list?" +query;
-				articleUrl = cp +"/qna2/article?" + query+"&page="+current_page;
+				listUrl = cp + "/qna1/list?" +query;
+				articleUrl = cp +"/qna1/article?" + query+"&page="+current_page;
 
 				// 페이징 처리 결과
 				String paging = util.paging(current_page, total_page, listUrl);
@@ -108,21 +117,20 @@ public class Qna2Controller {
 				model.addAttribute("searchKey", searchKey);
 				model.addAttribute("searchValue", searchValue);
 				
-				return ".qna2.list";
+				return ".qna1.list";
 	}
 	
-	@RequestMapping(value="/qna2/article")
+	@RequestMapping(value="/qna1/article")
 	public String article(
-			@RequestParam int qna2Code,
+			@RequestParam int qna1Code,
 			@RequestParam String page,
 			@RequestParam (defaultValue="subject") String searchKey,
 			@RequestParam (defaultValue="") String searchValue,
-			@RequestParam int rows,
 			Model model
 			) throws Exception{
 		
 		//이전,다음등 사용할 파라미터
-		String query="page="+page+"&rows="+rows;
+		String query="page="+page;
 		if(searchValue.length()!=0) {
 			query+="&searchKey="+searchKey;
 			query+="&searchValue="+searchValue;
@@ -132,12 +140,12 @@ public class Qna2Controller {
 		searchValue=URLDecoder.decode(searchValue, "UTF-8");
 		
 		//조회수
-		service.updateHitCount(qna2Code);
+		service.updateHitCount(qna1Code);
 		
 		//게시물 가져오기
-		Qna2 dto=service.readQna2(qna2Code);
+		Qna1 dto=service.readQna1(qna1Code);
 		if(dto==null) {
-			return "redirect:/qna2/list?"+query;	
+			return "redirect:/qna1/list?"+query;	
 		}
 		
 		//엔터를 <br>로 변경
@@ -146,71 +154,71 @@ public class Qna2Controller {
 		
 		//이전글, 다음글
 		Map<String, Object> map=new HashMap<>();
-		map.put("qna2Code", qna2Code);
+		map.put("qna1Code", qna1Code);
 		map.put("searchKey", searchKey);
 		map.put("searchValue", searchValue);
 		
-		Qna2 preReadDto=service.preReadQna2(map);
-		Qna2 nextReadDto=service.nextReadQna2(map);
+		Qna1 preReadDto=service.preReadQna1(map);
+		Qna1 nextReadDto=service.nextReadQna1(map);
 		
 		//포워딩할 jsp에 넘길 데이터
 		model.addAttribute("dto", dto);
 		model.addAttribute("page", page);
 		model.addAttribute("query", query);
-		model.addAttribute("rows", rows);
 		
 		model.addAttribute("preReadDto", preReadDto);
 		model.addAttribute("nextReadDto", nextReadDto);
 		
-		return ".qna2.article";
+		return ".qna1.article";
 		
 	}
 	
-	@RequestMapping(value="/qna2/update",
+	@RequestMapping(value="/qna1/update",
 			method=RequestMethod.GET)
 	public String updateForm(
-			@RequestParam int qna2Code,
+			@RequestParam int qna1Code,
 			@RequestParam String page,
-			@RequestParam int rows,
 			Model model) {
-		Qna2 dto=service.readQna2(qna2Code);
+		Qna1 dto=service.readQna1(qna1Code);
 		if(dto==null) {
-				return "redirect:/qna2/list?page="+page+"&rows="+rows;
+				return "redirect:/qna1/list?page="+page;
 			}
 			
 			model.addAttribute("dto",dto);
 			model.addAttribute("mode","update");
 			model.addAttribute("page", page);
-			model.addAttribute("rows", rows);
+			
 			
 					
 		
-			return ".qna2.created";
+			return ".qna1.created";
 	}
-	@RequestMapping(value="/qna2/update",
+	
+	@RequestMapping(value="/qna1/update",
 			method=RequestMethod.POST)
 		public String updateSubmit(
-			Qna2 dto,
+			Qna1 dto,
 			@RequestParam String page,
-			@RequestParam int rows,
 			HttpServletRequest req
 			){
-			service.updateQna2(dto);
+			service.updateQna1(dto);
 	
-			return "redirect:/qna2/list?page="+page+"&rows="+rows;
+			return "redirect:/qna1/list?page="+page;
 }
-	@RequestMapping(value="/qna2/delete")	
+	
+	@RequestMapping(value="/qna1/delete")	
 	public String delete(
-			@RequestParam int qna2Code,
+			@RequestParam int qna1Code,
 			@RequestParam String page,
 			Model model)throws Exception{
 		
-		service.deleteQna2(qna2Code);
+		service.deleteQna1(qna1Code);
 		
-		return "redirect:/qna2/list?page="+page;
+		return "redirect:/qna1/list?page="+page;
 	}	
-		
-		
-		
+	
+	
+	
+	
 	
 }

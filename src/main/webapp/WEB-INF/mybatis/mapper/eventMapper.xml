@@ -180,12 +180,4 @@
 			replyNum=#{replyNum}
 		</if>
 </delete>
-
-
-
-
-
-
-
-
 </mapper>

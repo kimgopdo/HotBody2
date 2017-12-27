@@ -74,7 +74,7 @@ body {
 	<div style="height: 50px;"></div>
 	<div
 		style="font-size: 40px; width: 700px; margin: 20px auto 0; font-weight: bold; color: #666666;">|
-		문의사항</div>
+		자주묻는질문</div>
 	<table
 		style="width: 700px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0">
 
@@ -97,7 +97,7 @@ body {
 				style="border-bottom: 1px sild #cccccc;">
 				<td width="60" style="font-weight: bold; color: red;"><span>공지</span></td>
 				<td align="center" style="padding-left: 5px"><a
-					href="${articleUrl}&qna2Code=${dto.qna2Code}"
+					href="${articleUrl}&qna1Code=${dto.qna1Code}"
 					style="text-decoration: none; color: black;">${dto.subject}</a></td>
 				<td width="40">${dto.userId}</td>
 				<td width="40">${dto.created}</td>
@@ -114,7 +114,7 @@ body {
 			<tr height="40" align="center" class="board">
 				<td width="60">${dto.listNum}</td>
 				<td align="center"><a
-					href="${articleUrl}&qna2Code=${dto.qna2Code}"
+					href="${articleUrl}&qna1Code=${dto.qna1Code}"
 					style="text-decoration: none; color: black;">${dto.subject}</a></td>
 				<td width="65">${dto.userId}</td>
 				<td width="100">${dto.created}</td>
@@ -135,7 +135,7 @@ body {
 
 		<tr>
 			<td colspan="6">
-				<form name="searchList" method="post" action="<%=cp%>/qna2/list">
+				<form name="searchList" method="post" action="<%=cp%>/qna1/list">
 					<select name="searchKey" style="height: 25px;">
 						<option value="subject">제목</option>
 						<option value="subject">내용</option>
@@ -146,10 +146,10 @@ body {
 					<button type="button" onclick="send(this.form);" class="btn-search"
 						style="width: 60px;">검색</button>
 					<button type="button" class="btn-list"
-						onclick="javascript:location.href='<%=cp%>/qna2/created'"
+						onclick="javascript:location.href='<%=cp%>/qna1/created'"
 						style="float: right; width: 80px;">글올리기</button>
 					<button type="button" class="btn-list"
-						onclick="javascript:location.href='<%=cp%>/qna2/list';"
+						onclick="javascript:location.href='<%=cp%>/qna1/list';"
 						style="float: right; width: 80px; margin-right: 10px;">새로고침</button>
 				</form>
 			</td>

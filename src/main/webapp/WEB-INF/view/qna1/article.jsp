@@ -47,9 +47,9 @@ body{
 
 <script type="text/javascript">//스크립트에서 로케이션 리턴
 
-function deleteQna2(qna2Code) {
+function deleteQna1(qna1Code) {
 	if(confirm("게시물을 삭제하시겠습니까?")) {
-		var url="<%=cp%>/qna2/delete?qna2Code="+qna2Code+"&page=${page}";
+		var url="<%=cp%>/qna1/delete?qna1Code="+qna1Code+"&page=${page}";
 		location.href=url;
 	}
 }
@@ -60,7 +60,7 @@ function viewNext() {
 		swal("다음글이 존재하지 않습니다.");
 		return;
 	}
-	location.href="<%=cp%>/qna2/article?qna2Code=${nextReadDto.qna2Code}&page=${page}";
+	location.href="<%=cp%>/qna1/article?qna1Code=${nextReadDto.qna1Code}&page=${page}";
 }
 
 function viewPre() {
@@ -69,95 +69,15 @@ function viewPre() {
 		swal("이전글이 존재하지 않습니다.");
 		return;
 	}
-	location.href="<%=cp%>/qna2/article?qna2Code=${preReadDto.qna2Code}&page=${page}";
-}
-//댓글
-function login() {
-	location.href="<%=cp%>/member/login";
-}
-
-//댓글리스트
-$(function () {
-	listPage(1);
-});
-
-function listPage(page) {
-	var url="<%=cp%>/qna2/listReply";
-	var qna2Code="${dto.qna2Code}";
-	$.post(url, {qna2Code:qna2Code, pageNo:page}, function(data){
-		$("#listReply").html(data);
-	});
-}
-
-//댓글 등록
-function sendReply() {
-	var uid="${sessionScope.member.userId}";
-	if(! uid) {
-		location.href="<%=cp%>/member/login";
-		return;
-	}
 	
-	var qna2Code="${dto.qna2Code}";
-	var content=$("#replyContent").val().trim();
-	if(! content) {
-		$("#replyContent").focus();
-		return;	
-	}
-	
-	var query="qna2Code="+qna2Code;
-	query+="&content="+encodeURIComponent(content);
-	query+="&answer=0";
+	location.href="<%=cp%>/qna1/article?qna1Code=${preReadDto.qna1Code}&page=${page}";
 
-	
-	$.ajax({
-		type:"post"
-		,url:"<%=cp%>/qna2/createdReply"
-		,data:query
-		,dataType:"json"
-		,success:function(data) {
-			$("#replyContent").val("");
-			
-			var state=data.state;
-			if(state=="true") {
-				listPage(1);				
-			} else if(state=="false") {
-				alert("댓글을 등록하지 못했습니다.!!!");
-			} else if(state=="loginFail") {
-				login();
-			}			
-		}
-		,error:function(e) {
-			console.log(e.responseText);
-		}	
-	});
-}
-
-//댓글 삭제
-function  deleteReply(replyNum, page) {
-	var uid="${sessionScope.member.userId}";
-	if(! uid){
-		login();
-		return;
-	}
-	
-	if(confirm("게시물을 삭제하시겠습니까?")) {
-		var url="<%=cp%>/qna2/deleteReply";
-		$.post(url, {replyNum:replyNum, mode:"reply"}, function (data) {
-			var state=data.state;
-			
-			if(state=="loginFail") {
-				login();
-			} else{
-				listPage(page);
-			}
-		}, "json");		
-	}	
 }
 		
 </script>
 <div style="width: 700px; margin: 20px auto 0; min-height: 800px;">
 	<div style="height: 50px;"></div>
-	<div style="font-size: 40px; width: 700px; font-weight: bold; color: #666666;">| 문의사항</div>
+	<div style="font-size: 40px; width: 700px; font-weight: bold; color: #666666;">| 자주묻는질문</div>
 	
 	<table style="width: 700px; margin: 20px auto 0; border-top: 2px solid #333333; border-bottom: 2px solid #333333; border-collapse: collapse; border-spacing: 0">
 	<tr height="50" style="border-bottom: 1px solid #cccccc">
@@ -181,9 +101,9 @@ function  deleteReply(replyNum, page) {
 	
 	
 	<div style="width:700px; margin: 20px auto 0;">
-	<input type="button" class="btn-article" value="목록" onclick="javascript:location.href='<%=cp%>/qna2/list?${query}';">
-	<input type="button" class="btn-article" value="수정" onclick="javascript:location.href='<%=cp%>/qna2/update?qna2Code=${dto.qna2Code}&${query}';">
-	<input type="button" class="btn-article" value="삭제" onclick="deleteQna2(${dto.qna2Code});">
+	<input type="button" class="btn-article" value="목록" onclick="javascript:location.href='<%=cp%>/qna1/list?${query}';">
+	<input type="button" class="btn-article" value="수정" onclick="javascript:location.href='<%=cp%>/qna1/update?qna1Code=${dto.qna1Code}&${query}';">
+	<input type="button" class="btn-article" value="삭제" onclick="deleteQna1(${dto.qna1Code});">
 	</div>
 	
 	<br><br>

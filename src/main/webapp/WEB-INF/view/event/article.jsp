@@ -147,6 +147,9 @@ function  deleteReply(replyNum, page) {
 	}	
 }
 		
+//댓글 		
+
+
 </script>
 <div style="width: 700px; margin: 20px auto 0; min-height: 800px;">
 	<div style="height: 50px;"></div>
