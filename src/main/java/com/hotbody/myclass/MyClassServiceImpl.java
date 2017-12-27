@@ -497,8 +497,21 @@ public class MyClassServiceImpl implements MyClassService {
 
 	@Override
 	public int deleteDiet(int num) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		
+		try {		
+			
+			dao.deleteData("myClass.deleteDiaryExe", num); //운동
+			dao.deleteData("myClass.deleteMisCheck", num); //미션성공여부
+			dao.deleteData("myClass.deleteDietDetails", num); //식단상세
+			dao.deleteData("myClass.deleteDiet", num); //식단
+			dao.deleteData("myClass.deleteDietDiary", num); //다이어트일기		
+			result = 1;
+			
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
 	}
 
 	@Override

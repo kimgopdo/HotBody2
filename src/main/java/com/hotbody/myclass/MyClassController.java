@@ -406,14 +406,15 @@ public class MyClassController {
         model.addAttribute("total_page", total_page);
         model.addAttribute("paging", paging);
         
-		return ".myclass.addinfo.list";
+		return ".admin.main.addinfo.list";
+
 	}
 	
 	@RequestMapping(value = "/myclass/addinfo/created", method = RequestMethod.GET)
 	public String infoInput(Model model) throws Exception {	
 		model.addAttribute("mode", "created");
 
-		return ".myclass.addinfo.created";
+		return ".admin.main.addinfo.created";
 	}
 	
 	@RequestMapping(value = "/myclass/addinfo/created", method = RequestMethod.POST)
@@ -461,7 +462,7 @@ public class MyClassController {
 		model.addAttribute("page", page);
 		model.addAttribute("query", query);
 
-        return ".myclass.addinfo.article";
+        return ".admin.main.addinfo.article";
 	}
 	
 	@RequestMapping(value="/myclass/addinfo/update", 
@@ -481,7 +482,7 @@ public class MyClassController {
 		model.addAttribute("mode", "update");
 		model.addAttribute("page", page);
 		
-		return ".myclass.addinfo.created";
+		return ".admin.main.addinfo.created";
 	}
 	
 	@RequestMapping(value="/myclass/addinfo/update", 
@@ -587,7 +588,7 @@ public class MyClassController {
         model.addAttribute("total_page", total_page);
         model.addAttribute("paging", paging);
 		
-		return ".myclass.addexercise.list";
+		return ".admin.main.addexercise.list";
 	}
 	
 	@RequestMapping(value = "/myclass/addexercise/created", method = RequestMethod.GET)
@@ -596,7 +597,7 @@ public class MyClassController {
 		
 		model.addAttribute("mode", "created");
 		model.addAttribute("list", list);
-		return ".myclass.addexercise.created";
+		return ".admin.main.addexercise.created";
 	}
 	
 	@RequestMapping(value = "/myclass/addexercise/created", method = RequestMethod.POST)
@@ -653,7 +654,7 @@ public class MyClassController {
 		model.addAttribute("page", page);
 		model.addAttribute("query", query);
 
-        return ".myclass.addexercise.article";
+        return ".admin.main.addexercise.article";
 	}
 	
 	@RequestMapping(value="/myclass/addexercise/update", 
@@ -675,7 +676,7 @@ public class MyClassController {
 		model.addAttribute("mode", "update");
 		model.addAttribute("page", page);
 		
-		return ".myclass.addexercise.created";
+		return ".admin.main.addexercise.created";
 	}
 	
 	@RequestMapping(value="/myclass/addexercise/update", 
@@ -839,13 +840,13 @@ public class MyClassController {
 		
 		
 		
-		return ".myclass.addingrerdients.list";
+		return ".admin.main.addingrerdients.list";
 	}
 	
 	@RequestMapping(value = "/myclass/addingrerdients/created", method = RequestMethod.GET)
 	public String createdForm(Model model) throws Exception {
 		model.addAttribute("mode", "created");
-		return ".myclass.addingrerdients.created";
+		return ".admin.main.addingrerdients.created";
 	}
 	
 	@RequestMapping(value = "/myclass/addingrerdients/created", method = RequestMethod.POST)
@@ -903,7 +904,7 @@ public class MyClassController {
 		model.addAttribute("page", page);
 		model.addAttribute("query", query);
 
-        return ".myclass.addingrerdients.article";
+        return ".admin.main.addingrerdients.article";
 	}
 	
 	@RequestMapping(value="/myclass/addingrerdients/update", 
@@ -922,7 +923,7 @@ public class MyClassController {
 		model.addAttribute("mode", "update");
 		model.addAttribute("page", page);
 		
-		return ".myclass.addingrerdients.created";
+		return ".admin.main.addingrerdients.created";
 	}
 	
 	@RequestMapping(value="/myclass/addingrerdients/update", 

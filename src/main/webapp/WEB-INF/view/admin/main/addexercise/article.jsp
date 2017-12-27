@@ -96,7 +96,7 @@ $(function(){
 		var divY = divEl.offset().top;
 
 		// 레이어가 나타날 위치를 셋팅한다.
-		var divLeft =  divX-50;
+		var divLeft =  divX+120;
 		var divTop =  divY+25;
 		
 		// 레이어가 화면 크기를 벗어나면 위치를 바꾸어 배치한다.
@@ -123,13 +123,10 @@ $(function(){
 
 </script>
 
-<div class="body-container" style="width: 800px; margin: 100px auto;">
+<div class="body-container" style="width: 1000px; padding-left: 20px; padding-top: 40px;">
+    <div style="font-size: 40px; width: 1000px;font-weight: bold; color: #666666;">운동 상세</div>
 
-<div class="body-title">
-        <h3><span style="font-family: Webdings">2</span>운동상세</h3>
-</div>
-
-<table style="width: 800px; margin: 20px auto 0; border-top: 2px solid #333333; border-bottom: 2px solid #333333; border-collapse: collapse; border-spacing: 0">
+<table style="width: 1000px; margin: 20px auto 0; border-top: 2px solid #333333; border-bottom: 2px solid #333333; border-collapse: collapse; border-spacing: 0">
 
 <tr height="50" style="border-bottom: 1px solid #cccccc">
 	<td style="width:100px; padding-left: 10px; font-weight: bold; color: #666666;">운동명</td>
@@ -157,7 +154,7 @@ $(function(){
 </tr>
 </table>
 
-<div style="width:800px; margin: 20px auto 0;">
+<div style="width:1000px; margin: 20px auto 0;">
 <input type="button" class="btn-article" value="목록" onclick="javascript:location.href='<%=cp%>/myclass/addexercise/list?${query}';">
 <input type="button" class="btn-article" value="수정" onclick="javascript:location.href='<%=cp%>/myclass/addexercise/update?num=${dto.exerciseNum}&${query}';">
 <input type="button" class="btn-article" value="삭제" onclick="deleteExercise(${dto.exerciseNum});">

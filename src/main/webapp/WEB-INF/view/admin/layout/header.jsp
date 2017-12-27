@@ -49,16 +49,16 @@
               </ul>
             </li>
             <li>
-              <a class="nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti2">정보 관리</a>
-              <ul class="sidenav-third-level collapse" id="collapseMulti2">
+              <a class="nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti3">정보 관리</a>
+              <ul class="sidenav-third-level collapse" id="collapseMulti3">
                 <li>
-                  <a href="<%=cp%>/admin/mission/list">재료 등록</a>
+                  <a href="<%=cp%>/myclass/addingrerdients/list">재료 등록</a>
                 </li>
                 <li>
-                  <a href="#">운동 등록</a>
+                  <a href="<%=cp%>/myclass/addexercise/list">운동 등록</a>
                 </li>
                 <li>
-                  <a href="#">유용한정보 등록</a>
+                  <a href="<%=cp%>/myclass/addinfo/list">유용한정보 등록</a>
                 </li>
               </ul>
             </li>

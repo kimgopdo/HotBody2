@@ -64,31 +64,34 @@ th {
     color: black;
 }
 </style>
-
-<div class="body-container" style="width: 800px; margin: 100px auto;">
-
-<div class="body-title">
-        <h3><span style="font-family: Webdings">2</span>유용한정보</h3>
-</div>
-
-
-<table style="width: 800px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0">
-
-	<tr height="40">
-		<td align="left" colspan="7">
-			${dataCount}개(${page}/${total_page}페이지)
-		</td>
-	</tr>
+<div class="body-container" style="width: 1000px; padding-left: 20px; padding-top: 40px;">
+    <div style="font-size: 40px; width: 1000px;font-weight: bold; color: #666666;">재료리스트</div>
+	<table style="width: 1000px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0">
+		
+		<tr height="40">
+			<td align="left" style="font-weight: bold; font-size: 16px; color: tomato;">
+				총 ${dataCount}개
+			</td>
+		</tr>
 
 	<tr height="40" style="background: #666666; color: #ffffff;" align="center">
-		<th width="70" style="text-align:center;">번호</th>
-		<th align="left">제목</th>
+		<th width="40">번호</th>
+		<th width="80">이미지</th>
+		<th width="80">재료명</th>
+		<th width="65">영양소정보</th>
+		<th width="65" >최소단위</th><!-- 재료최소단위랑,단위합침-->
+		<th width="65" >열량</th>
+
 	</tr>
 	
 	<c:forEach var="dto" items="${list}">
-	<tr height="40" align="center" class="board">
-		<td width="70">${dto.listNum}</td>
-		<td align="left"><a href="${articleUrl}&num=${dto.infoNum}">${dto.subject}</a></td>
+	<tr height="100" align="center" class="board">
+		<td width="40">${dto.listNum}</td>
+		<td width="80"><a href="${articleUrl}&num=${dto.ingrerdientsNum}"><img src="<%=cp%>/uploads/myClass/${dto.image}" style="height: 80px; width: 80px;" ></a></td>
+		<td width="80">${dto.ingredientsName}</td>
+		<td width="65">${dto.nutrient}</td>
+		<td width="65">${dto.ingredientsUnit}&nbsp;&nbsp;${dto.unit}</td>
+		<td width="65">${dto.calory} Kcal</td>
 	</tr>
 	</c:forEach>
 	<tr height="60" align="center">
@@ -97,17 +100,17 @@ th {
 	
 	<tr>
 		<td colspan="7">
-		<form name="searchList" method="post" action="<%=cp%>/myclass/addinfo/list">
-			<select name="searchKey" style="width: 80px; height: 30px;">
-				<option value=subject>제목명</option>
+		<form name="searchList" method="post" action="<%=cp%>/myclass/addingrerdients/list">
+			<select name="searchKey" style="width: 65px; height: 30px;">
+				<option value="ingredientsName">재료명</option>
+				<option value="nutrient">영양소</option>
 			</select>	
 			<input type="text" name="searchValue" style="width: 15%; height: 30px;">
 			<input type="text" style="display:none;">
 			
 			<button type="button" onclick="send(this.form);" class="btn-search" style="width: 60px;">검색</button>
-			<button type="button" class="btn-list" onclick="javascript:location.href='<%=cp%>/member/myclass'" style="float: right; width: 80px;">메뉴선택창</button>
-			<button type="button" class="btn-list" onclick="javascript:location.href='<%=cp%>/myclass/addinfo/created'" style="float: right; width: 80px; margin-right: 5px;">글올리기</button>
-			<button type="button" class="btn-list" onclick="javascript:location.href='<%=cp%>/myclass/addinfo/list';" style="float: right; width: 80px; margin-right: 5px;">새로고침</button>
+			<button type="button" class="btn-list" onclick="javascript:location.href='<%=cp%>/myclass/addingrerdients/created'" style="float: right; width: 80px; margin-right: 5px;">글올리기</button>
+			<button type="button" class="btn-list" onclick="javascript:location.href='<%=cp%>/myclass/addingrerdients/list';" style="float: right; width: 80px; margin-right: 5px;">새로고침</button>
 		</form>
 		</td>
 	</tr>
