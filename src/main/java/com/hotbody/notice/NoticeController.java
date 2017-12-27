@@ -17,10 +17,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hotbody.common.FileManager;
 import com.hotbody.common.MyUtil;
+import com.hotbody.member.SessionInfo;
+
 
 @Controller("notice.noticeController")
 public class NoticeController {
@@ -179,6 +182,7 @@ public class NoticeController {
 		model.addAttribute("dto", dto);
 		model.addAttribute("preReadDto", preReadDto);
 		model.addAttribute("nextReadDto", nextReadDto);		
+		
 		model.addAttribute("page", page);
 		model.addAttribute("query", query);
 		
@@ -299,8 +303,67 @@ public class NoticeController {
 		
 	}
 	
-	//댓글 및 댓글별 답글 삭제
-	
-	
-	
+	// 댓글 만들기
+		@RequestMapping(value="/notice/createdReply",
+				method=RequestMethod.POST)
+		@ResponseBody
+		public Map<String, Object> createdReply(
+				Reply dto,
+				HttpSession session) throws Exception {
+		
+			SessionInfo info=(SessionInfo)session.getAttribute("member");
+			
+			String state="true";
+			if(info==null) { // 로그인이 되지 않는 경우
+				state="loginFail";
+			} else {
+				dto.setUserId(info.getUserId());
+				int result=service.insertReply(dto);
+				if(result==0)
+					state="false";
+			}
+			
+	   	    // 작업 결과를 json으로 전송
+			Map<String, Object> model = new HashMap<>(); 
+			model.put("state", state);
+			return model;
+		}
+		
+		//댓글별 답글 리스트
+		@RequestMapping(value="/notice/listReplyAnswer")
+		   public String listReplyAnswer (
+		         @RequestParam int answer,
+		         Model model) throws Exception {
+		   
+		      List<Reply> listReplyAnswer = service.listReplyAnswer(answer);
+		      
+		      //엔터를 <br>
+		      Iterator<Reply> it = listReplyAnswer.iterator();
+		      while(it.hasNext()) {
+		         Reply dto=it.next();
+		         dto.setContent(dto.getContent().replaceAll("\n", "<br>"));         
+		      }
+		   
+		      // jsp로 넘길 데이터
+		      model.addAttribute("listReplyAnswer", listReplyAnswer);
+		   
+		      return "notice/listReplyAnswer";      
+		   }
+		      //댓글별 답글 개수
+		   @RequestMapping(value="/notice/replyCountAnswer",
+		         method=RequestMethod.POST)   
+		   @ResponseBody
+		   public Map<String, Object> replyCountAnswer(
+		         @RequestParam int answer) throws Exception {
+		      
+		      int count=0;
+		      
+		      count=service.replyCountAnswer(answer);
+		      
+		      // 작업 결과를 json으로 전송
+		      Map<String, Object> model = new HashMap<>();
+		      model.put("count", count);
+		      return model;
+		      
+		   }
 }

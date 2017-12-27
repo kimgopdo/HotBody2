@@ -146,11 +146,7 @@ function viewPre() {
 </tr>
 <tr height="30" style="font-size: 13px; color: gray; padding: 5px 15px;">
 	<td colspan="3"></td>
-	<td align="right">
-	<p id="filedown" style="text-decoration: none; color: #666666; cursor: pointer;"> 
-	첨부파일 <span style="color: tomato; font: bold;">(개수)</span>
-	</p>
-	</td>
+	<td align="right"></td>
 </tr>
 <tr height="400" style="border-bottom: 1px solid #cccccc;">
 	<td colspan="4" valign="top" style="padding-left: 10px; word-break:break-all;">${dto.content}<br><br></td>
@@ -164,8 +160,19 @@ function viewPre() {
 <input type="button" class="btn-article" value="삭제" onclick="deleteNotice(${dto.noticeCode});">
 </div>
 
+
 <br><br>
 <table style="width: 700px; margin: 20px auto 0; border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc; border-collapse: collapse; border-spacing: 0">
+
+<tr height="40" style="border-bottom: 1px solid #e3e3e3; font-size: 13px;">
+	<td width="150" align="center">
+			       첨&nbsp;&nbsp;부 :
+		 <c:if test="${not empty dto.saveFile}">
+		       <a href="<%=cp%>/notice/download?noticeCode=${dto.noticeCode}">${dto.originalFile}</a>
+		 </c:if>
+    </td>
+</tr>
+			
 <tr height="40" style="border-bottom: 1px solid #e3e3e3; font-size: 13px;">
 	<td width="150" align="center" >이전글 ∧</td>
 	<td colspan="3" align="left" onclick="viewPre();" style="cursor: pointer;">${preReadDto.subject}</td>
@@ -173,9 +180,10 @@ function viewPre() {
 
 
 <tr height="40" style="font-size: 13px;">
-
 	<td width="150" align="center">다음글 ∨</td>
-	<td colspan="3" align="left" onclick="viewNext();" style="cursor: pointer;">${nextReadDto.subject}</td>
+	 <c:if test="${not empty nextReadDto}">
+			              <a href="<%=cp%>/notice/article?${query}&noticeCode=${nextReadDto.noticeCode}">${nextReadDto.subject}</a>
+	 </c:if>
 </tr>
 </table>
 

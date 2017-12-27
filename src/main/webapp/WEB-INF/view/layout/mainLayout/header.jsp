@@ -36,11 +36,8 @@
 						<li class="scroll_btn last"><a href="<%=cp%>/hotShop">쇼핑몰</a></li>
 						<li class="scroll_btn last"><a
 							href="<%=cp%>/mocojee/list_mocojee">모꼬지</a>
-						<li class="sub-menu"><a href="<%=cp%>">공지사항</a>
-							<ul>
-								<li><a href="<%=cp%>/notice/list">공지사항</a></li>
-								<li><a href="<%=cp%>/event/list">이벤트</a></li>
-							</ul></li>
+						<li class="sub-menu"><a href="<%=cp%>/notice/list">공지사항</a>
+						</li>
 						<li class="sub-menu"><a href="<%=cp%>/qna2/list">문의사항</a>
 							<ul>
 								<li><a href="<%=cp%>/qna2/list">문의사항</a></li>
