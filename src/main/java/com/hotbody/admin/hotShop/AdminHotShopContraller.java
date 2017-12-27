@@ -41,8 +41,8 @@ public class AdminHotShopContraller {
 	private MilelageService mileService;
 	
 	//상품 INSERT UPDATE 폼 이동
-		@RequestMapping(value="/hotShop/created",  method=RequestMethod.GET)
-		public String createdForm(
+		@RequestMapping(value="/admin/hotShop/created",  method=RequestMethod.GET)
+		public String createdForm(  
 				@RequestParam(value="pdnum", defaultValue="0") int pdnum
 				,@RequestParam(value="mode" ,defaultValue="created") String mode
 				,Model model
@@ -58,12 +58,12 @@ public class AdminHotShopContraller {
 			}else {
 				model.addAttribute("mode", mode);
 			}
-			return ".hotShop.created";
+			return ".admin.main.hotShop.created";
 		}
 		
 		
 		//상품 created submit
-		@RequestMapping(value="/hotShop/created",  method=RequestMethod.POST)
+		@RequestMapping(value="/admin/hotShop/created",  method=RequestMethod.POST)
 		public String createdSubmit(
 				HotShop dto
 				,@RequestParam(defaultValue="created") String mode
@@ -87,7 +87,7 @@ public class AdminHotShopContraller {
 			return "redirect:/hotShop";
 		}
 		//입고 AJAX
-		@RequestMapping(value="/hotShop/productInInfo")
+		@RequestMapping(value="/admin/hotShop/productInInfo")
 		public String productInInfoList(
 				@RequestParam(defaultValue="") String startDate,
 				@RequestParam(defaultValue="") String endDate,
@@ -160,7 +160,7 @@ public class AdminHotShopContraller {
 			return "hotShop/productInList";
 		}
 		//입고 폼띄우기
-		@RequestMapping(value="/hotShop/productInlist")
+		@RequestMapping(value="/admin/hotShop/productInlist")
 		public String productInListForm(
 				Model model,
 				HttpSession session,
@@ -189,10 +189,10 @@ public class AdminHotShopContraller {
 			model.addAttribute("supplyList",supplyList);
 			model.addAttribute("productInList", productInList);
 			model.addAttribute("total_page", total_page);
-			return ".hotShop.productIn";
+			return ".admin.main.hotShop.productIn";
 		}
 		//입고 INSERT
-		@RequestMapping(value="/hotShop/productInlist", method=RequestMethod.POST)
+		@RequestMapping(value="/admin/hotShop/productInlist", method=RequestMethod.POST)
 		@ResponseBody
 		public Map<String, Object> productInSubmit(
 				ProductIn dto
@@ -204,7 +204,7 @@ public class AdminHotShopContraller {
 		}
 		
 		//보임 Update
-		@RequestMapping(value="/hotShop/show")
+		@RequestMapping(value="/admin/hotShop/show")
 		public String show(
 				@RequestParam int pdnum,
 				HttpSession session
@@ -219,7 +219,7 @@ public class AdminHotShopContraller {
 			return "redirect:/hotShop";
 		}
 		//숨김 Update
-		@RequestMapping(value="/hotShop/hide")
+		@RequestMapping(value="/admin/hotShop/hide")
 		public String hide(
 				@RequestParam int pdnum,
 				HttpSession session
@@ -234,7 +234,7 @@ public class AdminHotShopContraller {
 			return "redirect:/hotShop";
 		}
 		//상품유형별 메뉴 삭제(지울 시 되 묻는것과 속해있는 상품목록 관리여부)
-		@RequestMapping(value="/hotShop/menuDeleteBci")
+		@RequestMapping(value="/admin/hotShop/menuDeleteBci")
 		public String menuDeleteBci(
 				@RequestParam int code
 				) {
@@ -242,7 +242,7 @@ public class AdminHotShopContraller {
 			return "redirect:/hotShop";
 		}
 		//상품 영양소별 메뉴 삭제(지울 시 되 묻는것과 속해있는 상품목록 관리여부)
-		@RequestMapping(value="/hotShop/menuDeleteScl")
+		@RequestMapping(value="/admin/hotShop/menuDeleteScl")
 		public String menuDeleteScl(
 				@RequestParam int code
 				) {
