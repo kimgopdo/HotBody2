@@ -66,7 +66,10 @@ function hideBasket(){
 	},"fast")
 }
 function BasketList(){
-	var cookie=getCookie("hotbodyBasket").split(",");
+	var cookie=getCookie("hotbodyBasket");
+	if(cookie==null){
+		return;
+	}
 	var uid="${sessionScope.member.userId}";
 	var q;
 	console.log(cookie);

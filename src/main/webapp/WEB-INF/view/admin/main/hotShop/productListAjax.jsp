@@ -9,7 +9,7 @@
 .aspect { width: 350px; height: 400px; }
 </style>
 <c:forEach var="dto" items="${list}">
-		    <li class="list">
+		    <li style="float:left; width: 380px; margin-right: 20px;">
 		         <div class="aspect">
 		         	<img src="<%=cp%>/uploads/shopList/${dto.imgSaveFilename}">
 		         </div>
@@ -18,7 +18,7 @@
 		            <span style=" text-align: left;">가격 : <fmt:formatNumber pattern="#,###">${dto.pdPrice}</fmt:formatNumber>원</span>
 		            <!-- if로 막아야함 -->
 		            <c:if test="${sessionScope.member.userId=='admin'}">
-		            <a href="javascript:location.href='<%=cp%>/hotShop/created?pdnum=${dto.pdnum}&mode=update';" style="color:black; font-weight:bold; float: right;">수정</a>
+		            <a href="javascript:location.href='<%=cp%>/hotShop/created?pdnum=${dto.pdnum}&mode=update';" style="color:black; font-weight:bold; float: right; margin-right: 50px;">수정</a>                               
 		            </c:if>
 		            <c:if test="${sessionScope.member.userId=='admin' && dto.showandhide==1}">
 		            <a href="javascript:location.href='<%=cp%>/hotShop/hide?pdnum=${dto.pdnum}'">상태: 보임(클릭 시 숨김)</a>

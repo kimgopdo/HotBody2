@@ -51,12 +51,13 @@ $(function(){
 
 </script>
 
-<div class="body-container" style="width: 700px; margin: 30px auto;">
-<div  class="body-title" style="font-size: 40px; width: 700px; margin: 15px auto 0; font-weight: bold; color: #666666;">${mode=='update'?'유용한정보 수정':'유용한정보 등록'}</div>
-<div style="width:700px; height:1px;  margin: 30px auto 0;border-bottom: 2px solid #666666;"></div>
+<div class="body-container" style="width: 1000px; padding-left: 20px; padding-top: 40px;">
+<div style="height: 50px;"></div>
+<div style="font-size: 40px; width: 1000px; margin: 20px auto 0; font-weight: bold; color: #666666;">${mode=='update'?'유용한정보 수정':'유용한정보 등록'}</div>
+<div style="width:1000px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
 
 <form action="<%=cp%>/myclass/addinfo/${mode}" method="post" name="boardForm" enctype="multipart/form-data" onsubmit="return submitContents(this);">
-<table style="width: 700px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0">
+<table style="width: 1000px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0">
 <tr height="40">
 	<td width="100" align="center" style="font-weight: bold; color: #666666;">
 		제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목
@@ -78,8 +79,8 @@ $(function(){
 <tr height="10px;"></tr>
 
 </table>
-<div style="width:700px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
-<div style="width: 700px; margin: 20px auto 0;" align="center">
+<div style="width:1000px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
+<div style="width:1000px; margin: 20px auto 0;" align="center">
 <button type="submit" class="btn-default02">${mode=='update'?'수정':'등록'}</button>
 <button type="button" class="btn-default02" onclick="javascript:location.href='<%=cp%>/myclass/addinfo/list?page=${page}';">${mode=='update'?'수정취소':'등록취소'}</button>
 <c:if test="${mode=='update'}">

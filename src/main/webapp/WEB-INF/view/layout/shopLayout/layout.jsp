@@ -31,10 +31,10 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="<%=cp%>/resource/mainboot/js/jquery.nicescroll.min.js" type="text/javascript"></script>
 <script src="<%=cp%>/resource/mainboot/js/superfish.min.js" type="text/javascript"></script>
-<script src="<%=cp%>/resource/mainboot/js/jquery.flexslider-min.js" type="text/javascript"></script>
+<script src="<%=cp%>/resource/mainboot/js/jquery.flexslider.min.js" type="text/javascript"></script>
+<script src="<%=cp%>/resource/mainboot/js/myscript.js" type="text/javascript"></script>
 <script src="<%=cp%>/resource/mainboot/js/owl.carousel.js"></script>
 <script src="<%=cp%>/resource/mainboot/js/animate.js" type="text/javascript"></script>
-<script src="<%=cp%>/resource/mainboot/js/myscript.js" type="text/javascript"></script>
 <script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.form.js"></script>
 <script type="text/javascript" src="<%=cp%>/resource/js/shopJS/json2.js"></script>
@@ -178,10 +178,9 @@ function addCookie(id) {
 	  var items = getCookie('hotbodyBasket'); // 이미 저장된 값을 쿠키에서 가져오기
 	  var maxItemNum = 10; // 최대 저장 가능한 아이템개수
 	  var expire = 7; // 쿠키값을 저장할 기간
-	  var idArray=id.split("-");
 	  if (items) {
 	    var itemArray = items.split(',');
-		    if (items.indexOf(idArray[0]) != -1) {
+		    if (items.indexOf(id) != -1) {
 		      // 이미 존재하는 경우 종료
 		      console.log('중복된단다잉');
 		    }else{

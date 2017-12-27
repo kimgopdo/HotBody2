@@ -7,7 +7,7 @@
 %>
 <c:forEach var="dto" items="${productInList}">
 	<tr class="productIn" height="70px" style="border-bottom: 2px solid #e7e7e7">
-		<td><img width='50' height='80' onError='<%=cp%>/uploads/shopProduct/error.png' src="<%=cp%>/uploads/shopList/${dto.imgSaveFilename}"></td>
+		<td align="center"><img width='50' height='80' onError='<%=cp%>/uploads/shopProduct/error.png' src="<%=cp%>/uploads/shopList/${dto.imgSaveFilename}"></td>
 		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; ">${dto.pdName}</td>
 		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; "><fmt:formatNumber value="${dto.pdrawprice}" pattern="#,###" />원</td>
 		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; ">${dto.pdinnum}</td>

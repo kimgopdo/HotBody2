@@ -5,31 +5,31 @@
 <%
 	String cp=request.getContextPath();
 %>
-<style> 
+<style>
 	.aspect { width: 50px; height: 100px; }   
 	.check{
 		border: 1px solid #777777;
 	}           
 </style>
 <script type="text/javascript">
-$.datepicker.setDefaults({
+<%-- $.datepicker.setDefaults({
 	 inline: true, 
-	 dateFormat: "yy-mm-dd",    // 날짜 포맷 
+	 dateFormat: "yy-mm-dd",    /* 날짜 포맷 */ 
 	 prevText: 'prev', 
 	 nextText: 'next', 
-	 showButtonPanel: true,    // 버튼 패널 사용 
-	 changeMonth: true,        // 월 선택박스 사용 
-	 changeYear: true,        // 년 선택박스 사용 
-	 showOtherMonths: true,    //이전/다음 달 일수 보이기 
-	 selectOtherMonths: true,    //이전/다음 달 일 선택하기
+	 showButtonPanel: true,    /* 버튼 패널 사용 */ 
+	 changeMonth: true,        /* 월 선택박스 사용 */ 
+	 changeYear: true,        /* 년 선택박스 사용 */ 
+	 showOtherMonths: true,    /* 이전/다음 달 일수 보이기 */ 
+	 selectOtherMonths: true,    /* 이전/다음 달 일 선택하기 */ 
 	 showOn: "button", 
 	 buttonImage: "<%=cp%>/uploads/shopList/Calendar.png",
 	 buttonImageOnly: true, 
 	 minDate: '-30y', 
 	 closeText: '닫기', 
 	 currentText: '오늘', 
-	 showMonthAfterYear: true,        // 년과 달의 위치 바꾸기
-	 // 한글화 
+	 showMonthAfterYear: true,        /* 년과 달의 위치 바꾸기 */ 
+	 /* 한글화 */ 
 	 monthNames : ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'], 
 	 monthNamesShort : ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'], 
 	 dayNames : ['일', '월', '화', '수', '목', '금', '토'],
@@ -37,17 +37,19 @@ $.datepicker.setDefaults({
 	 dayNamesMin : ['일', '월', '화', '수', '목', '금', '토'],
 	 showAnim: 'slideDown'
   });
+
+
 $(function() {
     $("#datepicker1, #datepicker2").datepicker();
     $("#datepicker3, #datepicker4").datepicker();
     $("#datepickerDate").datepicker();
-  });
+  }); --%>
 </script>
 <script>
 var page=1;
 var totalPage=${total_page};
 $(function(){
-	productInList(1);
+	productDisList(1);
 	/* if ($("body").height() < $(window).height()) {
 		++page;
 		productInList(page);
@@ -58,33 +60,37 @@ $(function(){
 	    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
 	    	if(page<totalPage) {
 	    		++page;
-	    		productInList(page);
+	    		productDisList(page);
 	    	}
 	    }
 	};
 })
 $(function(){
 	$("input[name=colum]").click(function(){
-		productInList(page);
+		productDisList(page);
 	});
 	$("input[name=order]").click(function(){
-		productInList(page);
+		productDisList(page);
 	});
 })
 function showImg(){
 	
 	var imgName=$("#productName option:selected").attr('data-imgSaveFilename');
+	var pdrawprice=$("#productName option:selected").attr('data-pdrawprice');
 	//alert($("#productName").val());
-
+	alert(pdrawprice);
 	if(imgName==null){
 		$("#showImgArea").text("상품이미지가 없습니다.");
+		$("#pdRawPrice").val(pdrawprice);
+		
 	}else{
 		$("#showImgArea").html("<img width='50' height='80' onError='<%=cp%>/uploads/shopProduct/error.png' src=<%=cp%>/uploads/shopList/"+imgName+">");
+		$("#pdRawPrice").val(pdrawprice);
 	}
 }
 function call(){
 	var price=$("#pdRawPrice").val();
-	var	num=$("#pdInNum").val();
+	var	num=$("#pdDisNum").val();
 	
 		var tot=parseInt(price)*parseInt(num);
 		if(! tot){
@@ -94,10 +100,10 @@ function call(){
 			$("#totalPrice").text(tot+"원");
 		}
 }
-function productInList(page){
+function productDisList(page){
 	$("#created").removeClass("check");
 	$("#exDate").removeClass("check");
-	var url="<%=cp%>/hotShop/productInInfo";
+	var url = "<%=cp%>/admin/hotShop/productDisInfo";
 	var data=
 		"colum="+$(':radio[name="colum"]:checked').val()
 		+"&order="+$(':radio[name="order"]:checked').val()
@@ -125,8 +131,8 @@ function productInList(page){
 		,url: url
 		,data:data
 		,success:function(a){
-			$("#productInList").html(a);
-			if($(':radio[name="colum"]:checked').val()=="pdincode"){
+			$("#productDisList").html(a);
+			if($(':radio[name="colum"]:checked').val()=="pdDiscode"){
 				$("#created").addClass("check");
 			}else if($(':radio[name="colum"]:checked').val()=="pdexdate"){
 				$("#exDate").addClass("check");
@@ -135,57 +141,57 @@ function productInList(page){
 	});
 }
 
-function productInSend(f){
+function productDisSend(f){
 	var str=f.pdnum.value;
 	console.log(str);
 	str=f.pdrawprice.value;
 	console.log(str);
-	str=f.pdinnum.value;
+	str=f.pdDisnum.value;
 	console.log(str);
 	str=f.pdexdate.value;
 	console.log(str);
 	str=f.supplycode.value;
 	console.log(str);
-	var data=$("form[name=productInForm]").serialize();
-	var url="<%=cp%>/hotShop/productInlist";
+	var data=$("form[name=productDisForm]").serialize();
+	var url="<%=cp%>/admin/hotShop/productDisList";
 	$.ajax({
 		type:"post"
 		,url:url
 		,data:data
 		,dataType:"json"
 		,success:function(data){
-			productInList(1);
+			productDisList(1);
 		}
 	});
 }
 </script>
-<form name="productInForm" method="post">
-<table style="width:100%; margin-top: 100px; border-collapse: collapse;">
+<form name="productDisForm" method="post">
+<table style="width:80%; height: 100%; margin-top: 10px; margin-left: 10px; border-collapse: collapse;">
 	<tr height="30px"style="border-bottom: 2px solid #373737">
 		<td width="15%">상품이미지</td>                                            
 		<td width="25%">상품이름</td>
 		<td width="10%">원가</td>
-		<td width="10%">입고수량</td>
+		<td width="10%">폐기수량</td>
 		<td width="7%">총액</td>
 		<td width="13%">유통기한</td>
-		<td width="10%">입고날</td>
+		<td width="10%">폐기날</td>
 		<td width="10%">업체명</td>
 	</tr>
 	<tr class="productIn" height="70px" style="border-bottom: 2px solid #e7e7e7">
-		<td id="showImgArea"></td>
+		<td id="showImgArea" align="center"></td>
 		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; ">
 		<select id="productName" name="pdnum" onchange="showImg();">
 			<option>::상품</option>
 			<c:forEach var="dto" items="${productList}">
-				<option value="${dto.pdnum}" data-imgSaveFilename="${dto.imgSaveFilename}">${dto.pdName}</option>
+				<option value="${dto.pdnum}" data-imgSaveFilename="${dto.imgSaveFilename}" data-pdrawprice="${dto.pdRawPrice}">${dto.pdName}</option>
 			</c:forEach>
 		</select>
 		</td>
-		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; "><input style="width: 70px;" type="text" name="pdrawprice" id="pdRawPrice" onkeyup='call()'></td>
-		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; "><input style="width: 70px;" type="text" name="pdinnum" id="pdInNum" onkeyup='call()'></td>
+		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; "><input style="width: 100%;" type="text" name="pdrawprice" id="pdRawPrice" onkeyup='call()'></td>
+		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; "><input style="width: 100%;" type="text" name="pdDisNum" id="pdDisNum" onkeyup='call()'></td>
 		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; " id="totalPrice" ></td>
-		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; "><input style="width: 90px;" name="pdexdate" type="text" id="datepickerDate"></td>
-		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; ">입고날(자동생성)</td>                 
+		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; "><input style="width: 100%;" name="pdexdate" type="text" id="datepickerDate"></td>
+		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; ">폐기날(자동생성)</td>                 
 		<td>
 		<select id="supplyName" name="supplycode" onchange="showImg();">
 			<option>::업체명</option>
@@ -195,33 +201,33 @@ function productInSend(f){
 		</select>
 		</td>
 	</tr>
-	<tr><td colspan="8"><button type="button" class="btn" style="float: right;" onclick="productInSend(this.form);">입고</button></td></tr>
+	<tr><td colspan="8"><button type="button" class="btn" style="float: right;" onclick="productDisSend(this.form);">폐기</button></td></tr>
 </table>
 </form>
 
 <form name="searchDateForm" method="post">
-<table style="width:100%; margin-top: 50px; margin-bottom:100px; border-collapse: collapse;">
+<table style="width:80%; height:100%; margin-top: 50px; margin-left: 10px; border-collapse: collapse;">
 	<tr>
 		<td colspan="8" style="vertical-align: bottom;">
 		조회기간: 
 	  		<input type="text" name="startDate" id="datepicker1" disabled="disabled" style="padding: 4px;"> ~ <input type="text" name="endDate" id="datepicker2" disabled="disabled" style="padding: 4px;">
-	  		<button type="button" class="btn" onclick="productInList(1);">조회</button>
+	  		<button type="button" class="btn" onclick="productDisList(1);">조회</button>
 		</td>
 	</tr>
 	<tr>
-		<td colspan="4" style="text-align: left;"><input name="order" type="radio" checked="checked" value="asc">오름차순 <input name="order" type="radio" checked="checked" value="desc">내림차순 </td> <td colspan="4" style="text-align: right;"><input name="colum" type="radio" checked="checked" value="pdincode">입고순 <input name="colum" type="radio" value="pdexdate">유통기한순</td>
+		<td colspan="4" style="text-align: left;"><input name="order" type="radio" checked="checked" value="asc">오름차순 <input name="order" type="radio" checked="checked" value="desc">내림차순 </td> <td colspan="4" style="text-align: right;"><input name="colum" type="radio" checked="checked" value="pdDisCode">폐기순 <input name="colum" type="radio" value="pdexdate">유통기한순</td>
 	</tr>
 	<tr height="30px" style="border-bottom: 2px solid #373737">
 		<td width="10%">상품이미지</td>
-		<td width="25%">상품이름</td>                  
+		<td width="25%">상품이름</td>   	               
 		<td width="10%">원가</td>
-		<td width="10%">입고수량</td>
+		<td width="10%">폐기수량</td>
 		<td width="10%">총액</td>
 		<td id="exDate" width="10%">유통기한</td>
-		<td id="created" width="10%">입고날</td>                                          
+		<td id="created" width="10%">폐기날</td>                                          
 		<td width="10%">업체명</td>
 	</tr>
-	<tbody id="productInList">
+	<tbody id="productDisList">
 	</tbody>
 </table>
 </form>

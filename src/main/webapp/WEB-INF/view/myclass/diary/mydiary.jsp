@@ -306,14 +306,13 @@ function insertForm(start, end) {
 		  },
 		  height: 720,
 		  width: 800,
-		  title: "일정 추가",
+		  title: "다이어트일기",
 		  close: function(event, ui) {
 		  }
 	});
 	
 	var dietDate="";
 	dietDate=start.format("YYYY-MM-DD");
-	alert(dietDate);
 	$('#scheduleModal').load("<%=cp%>/myclass/diary/inputForm?start="+dietDate, function() {
 
 		
