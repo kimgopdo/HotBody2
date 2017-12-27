@@ -10,32 +10,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="<%=cp%>/resource/css/tabs.css" type="text/css">
-	<link href="<%=cp%>/resource/mainboot/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-	<link href="<%=cp%>/resource/mainboot/css/flexslider.css" rel="stylesheet" type="text/css" />
-	<link href="<%=cp%>/resource/mainboot/css/animate.css" rel="stylesheet" type="text/css" media="all" />
-    <link href="<%=cp%>/resource/mainboot/css/owl.carousel.css" rel="stylesheet">
-	<link href="<%=cp%>/resource/mainboot/css/style.css" rel="stylesheet" type="text/css" />
-	<link href="<%=cp%>/resource/mainboot/css/fileuploader.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    
-	<!-- FONTS -->
-	<link href='http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500italic,700,500,700italic,900,900italic' rel='stylesheet' type='text/css'>
-	<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">	
-
-	<script src="<%=cp%>/resource/mainboot/js/jquery.nicescroll.min.js" type="text/javascript"></script>
-	<script src="<%=cp%>/resource/mainboot/js/superfish.min.js" type="text/javascript"></script>
-	<script src="<%=cp%>/resource/mainboot/js/jquery.flexslider-min.js" type="text/javascript"></script>
-	<script src="<%=cp%>/resource/mainboot/js/owl.carousel.js"></script>
-	<script src="<%=cp%>/resource/mainboot/js/animate.js" type="text/javascript"></script>
-	<script src="<%=cp%>/resource/mainboot/js/myscript.js" type="text/javascript"></script>
-	<script src="<%=cp%>/resource/jquery/js/jquery-ui.min.js" type="text/javascript"></script>
-	<script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.form.js"></script>
-	
-<script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 
 <style type="text/css">
 /* 바탕 배경 이미지 */
@@ -173,7 +147,7 @@ $(function(){
 </script>
 </head>
 <body>
-<div class="body-container" style="width: 1000px; margin: 100px auto;">
+<div class="body-container" style="width: 1000px; padding-left: 20px;">
 	<div style="height: 50px;"></div>
 	<div style="font-size: 40px; width: 1000px; margin: 20px auto 0; font-weight: bold; color: #666666;">클래스 등록</div>
 	<div style="width:1000px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
@@ -182,7 +156,7 @@ $(function(){
 	<form id="dietClassForm" action="" method="post" name="dietClassForm" enctype="multipart/form-data">
 	<table style="width: 1000px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0">
 	<tr height="40">
-		<td width="100">클래스명</td>
+		<td width="120">클래스명</td>
 		<td>
 			<input type="text" name="className" style="width: 98%; height: 35px;" value="${dto.className}">
 		</td>
@@ -190,7 +164,7 @@ $(function(){
 	<tr height="10px;"></tr>
 	
 	<tr>
-		<td width="100">클래스 난이도</td>
+		<td width="120">클래스 난이도</td>
 		<td>
 			<input type="radio" name="cllevel" value="1" ${dto.cllevel=="1"?"checked='checked'":""}>
 			<label for="notice"> 상 </label>
@@ -205,7 +179,7 @@ $(function(){
 	<tr height="10px;"></tr>
 	
 	<tr height="40">
-		<td width="100">수강료</td>
+		<td width="120">수강료</td>
 		<td>
 			<input type="text" name="tuition" style="width: 20%; height: 35px;" value="${dto.tuition}"> 원
 		</td>
@@ -213,7 +187,7 @@ $(function(){
 	<tr height="10px;"></tr>
 	
 	<tr height="40">
-		<td width="100" valign="top">목적</td>
+		<td width="120" valign="top">목적</td>
 		<td>
 			<textarea style="width: 98%;" rows=6; name="classGoal">${dto.classGoal}</textarea>
 		</td>
@@ -221,14 +195,14 @@ $(function(){
 	<tr height="10px;"></tr>
 	
 	<tr height="40">
-		<td width="100" valign="top">목적상세</td>
+		<td width="120" valign="top">목적상세</td>
 		<td>
 			<textarea style="width: 98%;" rows=10; name="classGoalD">${dto.classGoalD}</textarea>
 		</td>
 	</tr>
 	
 	<tr height="40">
-		<td width="100" valign="top">프로그램 등록</td>
+		<td width="120" valign="top">프로그램 등록</td>
 		<td>
 			<button type="button" class="btn-sm" style="background: #ffffff;" data-toggle="modal" data-target="#myModal">등록</button>
 		
@@ -314,7 +288,7 @@ $(function(){
 	 -->
 	 
 	<tr height="40">
-		<td width="100">파일등록</td>
+		<td width="120">파일등록</td>
 		<td>
 			<div class="form-group form_file">
 			  <input id="fileName" class="form-control form_point_color01" type="text" title="첨부된 파일명" readonly style="width:430px">
@@ -336,7 +310,7 @@ $(function(){
 	
 	<c:if test="${mode=='update'}">
 		<tr height="40">
-			<td width="100">첨부된파일</td>
+			<td width="120">첨부된파일</td>
 			<td>
 				${dto.originalFileName}
 				<c:if test="${not empty dto.saveFileName}">
@@ -350,7 +324,7 @@ $(function(){
 	</c:if>
 	
 	<tr>
-		<td width="100">클래스 유형</td>
+		<td width="120">클래스 유형</td>
 		<td>
 		<c:if test="${mode=='update'}">
 			<input type="radio" name="classType" value="0" ${dto.classType=="0"?"checked='checked'":"disabled='disabled'"}>
@@ -374,14 +348,14 @@ $(function(){
 	<div id="onInfo" style="width:1000px; display: none;">
 		<table style="width: 1000px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0;">
 			<tr>
-				<td width="100">멘토</td>
+				<td width="120">멘토</td>
 				<td>
 					<input type="text" name="mento" style="width: 20%; height: 35px;" value="${dto.mento}">
 				</td>
 			</tr>
 			<tr height="10px;"></tr>
 			<tr>
-				<td width="100">수강기간</td>
+				<td width="120">수강기간</td>
 				<td>
 					<c:if test="${mode!='update'}">
 					<input type="text" name="onperiod" style="width: 20%; height: 35px;" value="0"> 일
@@ -397,14 +371,14 @@ $(function(){
 	<div id="offInfo" style="width:1000px; display: none;">
 		<table style="width: 1000px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0">
 			<tr>
-				<td width="100">코치</td>
+				<td width="120">코치</td>
 				<td>
 					<input type="text" name="coach" style="width: 20%; height: 35px;" value="${dto.coach}">
 				</td>
 			</tr>
 			<tr height="10px;"></tr>
 			<tr>
-				<td width="100">수강정원</td>
+				<td width="120">수강정원</td>
 				<td>
 					<c:if test="${mode!='update'}">
 					<input type="text" name="offLimit" style="width: 20%; height: 35px;" value="0"> 명
@@ -417,7 +391,7 @@ $(function(){
 			
 			<tr height="10px;"></tr>
 			<tr>
-		  		<td width="100" valign="top">클래스 장소</td>
+		  		<td width="120" valign="top">클래스 장소</td>
 		  		<td>
 		  			<p>
 					<input style="width: 200px; height: 35px;" type="text" readonly="readonly" name="zip" id="sample6_postcode" placeholder="우편번호">
@@ -432,7 +406,7 @@ $(function(){
 			
 			<tr height="10px;"></tr>
 			<tr>
-		  		<td width="100" valign="top">클래스 날짜</td>
+		  		<td width="120" valign="top">클래스 날짜</td>
 		  		<td>
 				   <input type="text" readonly="readonly" class="classDate" name="startDate" style="width: 200px;" value="${dto.startDate}"> ~ <input type="text" readonly="readonly" style="width: 200px;" class="classDate" name="endDate" value="${dto.endDate}">
 		  		</td>
@@ -440,7 +414,7 @@ $(function(){
 			
 			<tr height="10px;"></tr>
 			<tr>
-		  		<td width="100" valign="top">클래스 시간</td>
+		  		<td width="120" valign="top">클래스 시간</td>
 		  		<td>
 				   <input type="text" name="startTime" style="width: 200px;" value="${dto.startTime}"> ~ <input type="text" name="endTime"  style="width: 200px;" value="${dto.endTime}">
 		  		</td>
