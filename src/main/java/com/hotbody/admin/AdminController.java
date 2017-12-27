@@ -20,14 +20,8 @@ public class AdminController {
 		if(info==null || !info.getUserId().equals("admin"))
 			return "redirect:/member/login";
 			
-		
 		long total = CountManager.getToDayCount();
 		model.addAttribute("total", total);
-		return ".admin.main.created";
-	}
-	
-	@RequestMapping(value="/admin/main2")
-	public String admin2() {
 		return ".admin.main.main";
 	}
 }
