@@ -164,6 +164,20 @@ function sendReply(){
 	});
 }
 
+//댓글리스트
+$(function () {
+   listPage(1);
+});
+
+function listPage(page) {
+   var url="<%=cp%>/moco_board/listReply";
+   var moFBNum="${dto.moFBNum}";
+   $.post(url, {moFBNum:moFBNum, pageNo:page}, function(data){
+      $("#listReply").html(data);
+   });
+}
+
+
 	
 </script>
 
@@ -214,12 +228,8 @@ function sendReply(){
 			<input type="button" class="btn-article" value="삭제"
 				onclick="deleteFB();">
 		</c:if>
-		<%-- 
-<c:if test="${dto.userId=='admin' || dto.userId==sessionScope.member.userId}">
-<input type="button" class="btn-article" value="수정" onclick="javascript:location.href='<%=cp%>/notice/update?num=${dto.num}&${query}';">
-<input type="button" class="btn-article" value="삭제" onclick="deleteNotice(${dto.num});">
-</c:if>
- --%>
+
+
 		<input type="button" class="btn-article" value="답글" onclick="">
 		<input type="button" class="btn-article" value="다음▶ "
 			onclick="viewNext();" style="float: right; margin-left: 5px;">

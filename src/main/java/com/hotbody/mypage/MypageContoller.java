@@ -60,10 +60,17 @@ public class MypageContoller {
 	
 	@RequestMapping(value="/mypage/orderList",method=RequestMethod.POST)
 	public String orderDateList(
+			HttpSession session,
 			@RequestParam(value = "page", defaultValue = "1") int current_page,
 			@RequestParam(value="datepicker1") String lastday,
 			@RequestParam(value="datepicker2") String today,HttpServletRequest req,
 			Model model) throws Exception{
+		
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		if(info==null) {
+			return "redirect:/member/login";
+
+		}
 	
 		
 		String cp = req.getContextPath();
@@ -78,7 +85,7 @@ public class MypageContoller {
 		map.put("lastday", lastday);
 		map.put("today", today);
 		dataCount = service.dataCount(map);
-		
+		map.put("userId",info.getUserId());
 
 		map.put("dataCount",dataCount);
 		if (dataCount != 0)
@@ -122,7 +129,7 @@ public class MypageContoller {
 		model.addAttribute("dataCount", dataCount);
 		model.addAttribute("total_page", total_page);
 		model.addAttribute("paging", paging);
-
+		
 		return ".mypage.orderList";
 		
 	}
@@ -144,7 +151,13 @@ public class MypageContoller {
 		//아이디 로그인 될때부터 사용
 		//SessionInfo info = (SessionInfo) session.getAttribute("member");
 		
-		String userId="kabdoman";
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		if(info==null) {
+			return "redirect:/member/login";
+
+		}
+		
+		String userId=info.getUserId();
 
 		Milelage dto = mservice.selectMilelage(userId);
 		
@@ -164,11 +177,13 @@ public class MypageContoller {
 			HttpSession session,
 			Model model) throws Exception{
 
-			//String cp = req.getContextPath();
-			//아이디 로그인 될때부터 사용
-			//SessionInfo info = (SessionInfo) session.getAttribute("member");
-			
-			String userId="kabdoman";
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		if(info==null) {
+			return "redirect:/member/login";
+
+		}
+		
+		String userId=info.getUserId();
 
 			Milelage dto = mservice.selectMilelage(userId);
 			
@@ -240,11 +255,13 @@ public class MypageContoller {
 		
 		Model model) throws Exception{
 
-		//String cp = req.getContextPath();
-		//아이디 로그인 될때부터 사용
-		//SessionInfo info = (SessionInfo) session.getAttribute("member");
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		if(info==null) {
+			return "redirect:/member/login";
+
+		}
 		
-		String userId="kabdoman";
+		String userId=info.getUserId();
 
 		Milelage dto = mservice.selectMilelage(userId);
 		
@@ -262,11 +279,13 @@ public class MypageContoller {
 			HttpSession session,
 			Model model) throws Exception{
 		
-		//String cp = req.getContextPath();
-		//아이디 로그인 될때부터 사용
-		//SessionInfo info = (SessionInfo) session.getAttribute("member");
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		if(info==null) {
+			return "redirect:/member/login";
+
+		}
 		
-		String userId="kabdoman";
+		String userId=info.getUserId();
 
 		Milelage dto = mservice.selectMilelage(userId);
 		
@@ -286,11 +305,13 @@ public class MypageContoller {
 			HttpSession session,
 			Model model) throws Exception{
 
-			//String cp = req.getContextPath();
-			//아이디 로그인 될때부터 사용
-			//SessionInfo info = (SessionInfo) session.getAttribute("member");
-			
-			String userId="kabdoman";
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		if(info==null) {
+			return "redirect:/member/login";
+
+		}
+		
+		String userId=info.getUserId();
 
 			Milelage dto = mservice.selectMilelage(userId);
 			
@@ -407,6 +428,8 @@ public class MypageContoller {
 
         // 글 리스트
         List<Message> list = mservice.listMessage(map);
+        List<Message> list2 = mservice.listMessage2(map);
+        List<Message> list3 = mservice.listMessage3(map);
         
         String query = "";
         String listUrl = cp+"/notice/list";
@@ -443,14 +466,51 @@ public class MypageContoller {
 	         	if(data.getUserId().equals(data.getUserId2())) {
 					data.setBox("내게보낸쪽지");
 	         	}else if(data.getUserId().equals(info.getUserId())) {
-					 data.setBox("받은쪽지");
+					 data.setBox("보낸쪽지");
 				}else if(data.getUserId2().equals(info.getUserId())) {
-						data.setBox("보낸쪽지");
+						data.setBox("받은쪽지");
 				} 
 		}
+		
+		Iterator<Message>it2=list2.iterator();
+		
+		while(it2.hasNext()) {
+			
+	         	Message data2 = it2.next();
+
+	         	if(data2.getUserId().equals(data2.getUserId2())) {
+					data2.setBox("내게보낸쪽지");
+	         	}else if(data2.getUserId().equals(info.getUserId())) {
+					 data2.setBox("보낸쪽지");
+				}else if(data2.getUserId2().equals(info.getUserId())) {
+						data2.setBox("받은쪽지");
+				} 
+		}
+		
+Iterator<Message>it3=list3.iterator();
+		
+		while(it3.hasNext()) {
+			
+	         	Message data3 = it3.next();
+
+	         	if(data3.getUserId().equals(data3.getUserId2())) {
+					data3.setBox("내게보낸쪽지");
+	         	}else if(data3.getUserId().equals(info.getUserId())) {
+					 data3.setBox("보낸쪽지");
+				}else if(data3.getUserId2().equals(info.getUserId())) {
+						data3.setBox("받은쪽지");
+				} 
+		}
+		
+
         
         
 		model.addAttribute("list", list);
+		model.addAttribute("listSize", list.size());
+		model.addAttribute("list2", list2);
+		model.addAttribute("listSize2", list2.size());
+		model.addAttribute("list3", list3);
+		model.addAttribute("listSize3", list3.size());
 		model.addAttribute("articleUrl", articleUrl);
 		model.addAttribute("page", current_page);
 		model.addAttribute("dataCount", dataCount);
@@ -534,16 +594,29 @@ public class MypageContoller {
 	
 	@RequestMapping(value="/mypage/deleteMessage")
 	public String deleteMessage(
-			@RequestParam(value="mCode") Integer[] mCode,
+			@RequestParam(value="mCode") Integer[] mCod,
 			Model model,
-			HttpSession session
+			HttpSession session,
+			HttpServletRequest req
 			) throws Exception{	
-
-		List<Integer> list=Arrays.asList(mCode);
-			
+		
+		
+		String cp = req.getContextPath();
+		//아이디 로그인 될때부터 사용
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		info.getUserId();
+		
+		List<Integer> mCode=Arrays.asList(mCod);
+		
+		for(int s:mCode)
+		System.out.println(s);
+		
+		List<Message> listFileCode=mservice.listFileCode(mCode);	
+		
+		
 		//파일
-        mservice.deleteFile(list);
-		mservice.deleteMessage(list);
+        mservice.deleteFile(listFileCode);
+		mservice.deleteMessage(listFileCode);
 	
 		
 		return "redirect:/mypage/messageMain";

@@ -71,7 +71,15 @@ function sendOk(){
 	<!-- ****** Breadcumb Area End ****** -->
 
 	<!-- ****** Archive Area Start ****** -->
-	<section class="archive-area section_padding_80">
+	
+	<div class="btmspace-50 center">
+      <h3 class="btmspace-10">MOCOZY PICK</h3>
+      <p class="nospace"> 원하는 운동모임을 통해 보다 건강하고, 행복한 삶을 만들어 보세요! </p>
+       <button type="button" class="btn btn-outline-primary" onclick="sendOk();">모꼬지 개설하러 가기</button>
+    </div>
+    
+
+	<section class="archive-area section_padding_80" style="margin-top: 30px;">
 		<div class="container">
 			<div class="row">
 			
@@ -104,20 +112,12 @@ function sendOk(){
                     </div>
                 </div>
                </c:forEach>
-				
+               
+
 				<div class="col-12">
 					<div class="pagination-area d-sm-flex mt-15">
 						<nav aria-label="#">
-							<ul class="pagination">
-								<li class="page-item active"><a class="page-link" href="#">1
-										<span class="sr-only">(current)</span>
-								</a></li>
-								<li class="page-item"><a class="page-link" href="#">2</a></li>
-								<li class="page-item"><a class="page-link" href="#">3</a></li>
-								<li class="page-item"><a class="page-link" href="#">Next
-										<i class="fa fa-angle-double-right" aria-hidden="true"></i>
-								</a></li>
-							</ul>
+
 						</nav>
 						<div class="page-status">
 							<p>${dataCount}개(${page}/${total_page}페이지)</p>
@@ -126,7 +126,10 @@ function sendOk(){
 				</div>
 			</div>
 		</div>
-	
+		
+		
+		
+		
 	</section>
 
     

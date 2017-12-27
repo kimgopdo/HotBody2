@@ -219,50 +219,51 @@ public class FBController {
 			
 	}
 	
-	@RequestMapping(value="/moco_board/listReply")
-	public String listReply(
-			@PathVariable int mocoNum, 
-			@RequestParam(value="frCode") int frCode,
-			@RequestParam(value="pageNo", defaultValue="1") int current_page,
-			Model model) throws Exception {
-			
-		int rows=5;
-		int total_page=0;
-		int dataCount=0;
-		
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("frCode", frCode);
-		
-		dataCount=service.replyDataCount(map);
-		total_page=myUtil.pageCount(rows, dataCount);
-		if(current_page>total_page)
-			current_page=total_page;
-		
-		//리스트에 출력
-		int start=(current_page-1)*rows+1;
-		int end=current_page*rows;
-		map.put("start", start);
-		map.put("end", end);
-		
-		List<Reply> listReply=service.listReply(map);
-		
-		for(Reply dto: listReply) {
-			dto.setMoFBReply(dto.getMoFBReply().replaceAll("\n", "<br>"));
-		}
-		
-		// 페이징 처리
-		String paging=myUtil.paging(current_page, total_page);
-		
-		//jsp로 넘길 데이터
-			model.addAttribute("listReply", listReply);
-			model.addAttribute("pageNo", current_page);
-			model.addAttribute("replyDataCount", dataCount);
-			model.addAttribute("total_page", total_page);
-			model.addAttribute("paging", paging);
-		
-		return ".moco_board.listReply";
-		
-	}
+	   @RequestMapping(value="/moco_board/listReply")
+	   public String listReply(
+	         @RequestParam(value="moFBNum") int moFBNum,
+	         @RequestParam(value="pageNo", defaultValue="1") int current_page,
+	         Model model) throws Exception {
+	      
+	      int rows=5;
+	      int total_page=0;
+	      int dataCount=0;
+	      
+	      Map<String, Object> map=new HashMap<String, Object>();
+	      map.put("moFBNum", moFBNum);
+	      
+	      dataCount=service.replyDataCount(map);
+	      total_page=myUtil.pageCount(rows, dataCount);
+	      if(current_page>total_page)
+	         current_page=total_page;
+	      
+	      // 리스트에 출력할 데이터
+	      int start=(current_page-1)*rows+1;
+	      int end=current_page*rows;
+	      map.put("start", start);
+	      map.put("end", end);
+	      List<Reply> listReply=service.listReply(map);
+	      
+	      //엔터를 <br>
+	      Iterator<Reply>  it =listReply.iterator();
+	      while(it.hasNext()) {
+	         Reply dto=it.next();
+	         dto.setMoFBReply(myUtil.htmlSymbols(dto.getMoFBReply()));
+	      }
+	      
+	      //페이징처리(인수2개짜리 js로 처리)
+	      String paging=myUtil.paging(current_page, total_page);
+	      
+	      //jsp로 넘길 데이터
+	      model.addAttribute("listReply", listReply);
+	      model.addAttribute("pageNo", current_page);
+	      model.addAttribute("total_page", total_page);
+	      model.addAttribute("paging", paging); 
+	         
+	      return ".moco_board.list_free";
+	      
+	   }
+	
 	
 }
 

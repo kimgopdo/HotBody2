@@ -249,6 +249,39 @@ public class EventController {
 		return "redirect:/event/list?page="+page;
 		//return "redirect:/Event/update?eventCode="+eventCode+"&page="+page;
 	}
+	//파일삭제
+	@RequestMapping(value="/event/deleteFile", 
+			method=RequestMethod.GET)
+	public String deleteFile(
+			@RequestParam int eventCode,
+			@RequestParam String page,
+			HttpSession session) throws Exception {
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		if(info==null) {
+			return "redirect:/member/login";
+		}
+		
+		Event dto = service.readEvent(eventCode);
+		if(dto==null) {
+			return "redirect:/event/list?page="+page;
+		}
+			
+		if(! info.getUserId().equals(dto.getUserId())) {
+			return "redirect:/event/list?page="+page;
+		}
+		
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root + File.separator + "uploads" + File.separator + "event";		
+		if(dto.getSaveFile() != null && dto.getSaveFile().length()!=0) {
+			  fileManager.doFileDelete(dto.getSaveFile(), pathname);
+			  
+			  dto.setSaveFile("");
+			  dto.setOriginalFile("");
+			  service.updateEvent(dto, pathname);
+       }
+		
+		return "redirect:/event/update?num="+eventCode+"&page="+page;
+	}
 	
 	//댓글 리스트
 	@RequestMapping(value="/event/listReply")
@@ -355,4 +388,23 @@ public class EventController {
 		return model;
 		
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

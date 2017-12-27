@@ -43,9 +43,6 @@ function articleGo(num) {
 	<div style="width: 1000px; margin: 100px auto;">
 		<img style="width: 100%; cursor: pointer;" src="<%=cp%>/uploads/dietClass/main.png" onclick="javascript:location.href='<%=cp%>/survey/surveyForm';">
 	</div>
-	<c:if test="${sessionScope.member.userId=='admin'}">
-		<button type="button" class="btn02" onclick="javascript:location.href='<%=cp%>/dietClass/created'" style="float: right; width: 120px;">클래스등록</button>
-	</c:if>
 	<c:forEach var="dto" items="${diet}">
     <table id="ct${dto.classNum}" onmouseover="on(${dto.classNum});" style="width: 1000px; height:420px; border-spacing: 0; border-collapse: collapse; border-bottom: 1px solid #cccccc; border-top: 1px solid #cccccc; margin: 20px 0;">
     <tr>

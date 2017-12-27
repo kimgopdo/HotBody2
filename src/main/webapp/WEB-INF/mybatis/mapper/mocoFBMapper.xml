@@ -117,19 +117,21 @@
 			VALUES (frCode_seq.NEXTVAL, #{moFBNum}, #{userId}, #{moFBReply}, SYSDATE )
 	</insert>
 	
-	<!-- 댓글 리스트 -->
-	<select id="listReply" resultType="com.hotbody.mocofb.Reply" parameterType="map">
-		SELECT * FROM (
-		    SELECT ROWNUM rnum, tb.* FROM (
-		        SELECT frCode , moFBNum, userId, moFBReply, FRCreated
-		       	 FROM TEMPORARY6 
-		       	 	WHERE moFBNum=#{moFBNum}
-		       	 		ORDER BY frCode DESC
-		       	 <![CDATA[
-		       	 	) tb WHERE ROWNUM <= #{end}
-		       	 		) WHERE rnum >= #{start} 
-		       	 ]]>
-	</select>
 	
+	<!-- 리플 리스트 -->
+   <select id="listReply" parameterType="map" resultType="com.hotbody.mocofb.Reply"  >
+         SELECT * FROM (
+         SELECT ROWNUM rnum, tb.* FROM (
+            SELECT frCode, moFBNum, r.userId, moFBReply, FRCreated
+         FROM TEMPORARY6 r
+         JOIN member1 m ON r.userId = m.userId
+         
+         WHERE frCode=#{frCode}  
+         ORDER BY moFBNum DESC
+   <![CDATA[
+         ) tb WHERE ROWNUM <= #{end}
+      ) WHERE rnum >= #{start}   
+   ]]>  
+      </select>
 	
 </mapper>

@@ -12,7 +12,16 @@ public class Bung {
 	private int moCost;
 	private String moCreated;
 	private int geNum;
+	private String userId;
 	
+	
+	
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 	private int listNum;
 		
 	

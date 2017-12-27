@@ -2,7 +2,7 @@ package com.hotbody.qna2;
 
 	public class Qna2 {
 		private int listNum, qna2Code;
-		private int groupNum, depth, orderNo, parent, hitCount;
+		private int groupNum, depth, orderNo, parent, HitCount;
 		private String userId, subject, content, created;
 //		private String saveFile, originalFile;
 //		private long fileSize;
@@ -11,10 +11,10 @@ package com.hotbody.qna2;
 			return listNum;
 		}
 		public int getHitCount() {
-			return hitCount;
+			return HitCount;
 		}
 		public void setHitCount(int hitCount) {
-			this.hitCount = hitCount;
+			this.HitCount = hitCount;
 		}
 		public void setListNum(int listNum) {
 			this.listNum = listNum;

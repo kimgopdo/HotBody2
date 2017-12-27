@@ -29,7 +29,6 @@ public class HotShopServiceImpl implements HotShopService{
 				dto.setImgSaveFilename(saveFilename);
 				dto.setImgOriginalFilename(dto.getUpload().getOriginalFilename());
 			}
-			dto.setMilelage(500);
 			result=dao.insertData("product.insertProductList", dto);
 			dto.setPdnum(dao.selectOne("product.readProductNum", dto.getPdName()));
 			result=dao.insertData("product.insertPmainImg", dto);
@@ -43,7 +42,15 @@ public class HotShopServiceImpl implements HotShopService{
 	public List<HotShop> productList(Map<String, Object> map) {
 		List<HotShop> list=null;
 		try {
-				list=dao.selectList("product.productList",map);				
+				list=dao.selectList("product.productList",map);
+					for(HotShop dto:list) {
+						int pdnum=dto.getPdnum();
+						Integer starScore=dao.selectOne("product.readPdStarScore",pdnum);
+						if(starScore==null) {
+							starScore=0;
+						}
+						dto.setStarScore(starScore);
+					}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -56,6 +63,12 @@ public class HotShopServiceImpl implements HotShopService{
 		HotShop dto=null;
 		try {
 			dto=dao.selectOne("product.productList", map);
+			int pdnum=dto.getPdnum();
+			Integer starScore=dao.selectOne("product.readPdStarScore",pdnum);
+			if(starScore==null) {
+				starScore=0;
+			}
+			dto.setStarScore(starScore);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -293,6 +306,26 @@ public class HotShopServiceImpl implements HotShopService{
 		int result=0;
 		try {
 			result=dao.deleteData("product.deleteSclMenu", code);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	@Override
+	public int hide(int code) {
+		int result=0;
+		try {
+			result=dao.updateData("product.hideUpdate", code);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	@Override
+	public int show(int code) {
+		int result=0;
+		try {
+			result=dao.updateData("product.showUpdate", code);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -81,10 +81,11 @@ public class Qna2ServiceImpl implements Qna2Service{
 	}
 
 	@Override
-	public int updatehitCount(int qna2Code) {
+	public int updateHitCount(int qna2Code) {
 		int result=0;
 		try {
-			result=dao.updateData("qna2.updatehitCount",qna2Code);
+			result=dao.updateData("qna2.updateHitCount",qna2Code);
+			
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
@@ -105,8 +106,13 @@ public class Qna2ServiceImpl implements Qna2Service{
 
 	@Override
 	public int deleteQna2(int qna2Code) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		
+		try {
+			result=dao.deleteData("qna2.deleteQna2", qna2Code);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
 	}
-
 }

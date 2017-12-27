@@ -288,11 +288,11 @@ public class QnaController {
  
 	String paging = util.paging(current_page, total_page);
 	 
-	model.addAttribute("paging", paging);
+	model.addAttribute("paging", paging);	
 	model.addAttribute("list", list);
 	model.addAttribute("listUrl", listUrl);
 	model.addAttribute("articleUrl", articleUrl);
-	
+	model.addAttribute("pdnum",pdnum);
 	return "hotShop/listQna";
 	}
 }

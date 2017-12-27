@@ -19,15 +19,20 @@ function move(code,menuname,cl){
 	return;
 }
 function bciAppend(){
+	var userId="${sessionScope.member.userId}";
+	if(userId=='admin'){
 	$("#productLike").html("<li><input type='text' id='bci'><button type='button' class='btn' onclick='bciSend()'>생성</button></li>");
+	}
 }
 function sclAppend(){
-	$("#productNutrient").html("<li><input type='text' id='scl'><button type='button' class='btn' onclick='sclSend()'>생성</button></li>");
+	var userId="${sessionScope.member.userId}";
+	if(userId=='admin'){
+		$("#productNutrient").html("<li><input type='text' id='scl'><button type='button' class='btn' onclick='sclSend()'>생성</button></li>");
+	}
 }
 function bciSend(){
 	var bci=$("#bci").val();
 	bci = encodeURI(bci);
-	alert(bci);
 	var q="bci="+bci;
 	var url="<%=cp%>/hotShop/menuAppend"
 	$.ajax({
@@ -46,7 +51,6 @@ function bciSend(){
 function sclSend(){
 	var scl=$("#scl").val();
 	scl = encodeURI(scl);
-	alert(scl);
 	var q="scl="+scl;
 	var url="<%=cp%>/hotShop/menuAppend"
 	$.ajax({
@@ -72,22 +76,27 @@ function sclDelete(code){
 }
 </script>
    <!-- 내비 -->
-   <div align="center" class="pull-right" style="min-width:1140px;z-index: 9; margin-bottom: 100px;" id="div4">
+   <div align="center" class="pull-right" style="width:100%; z-index: 9; margin-bottom: 100px;" id="div4"> 
+     <a href="<%=cp%>/" style="color: black;height: 60px; padding: 1px; float:left;">
+	     <img src="<%=cp%>/resource/images/shop_images/HOTBODY_Logo.png"/>
+	 </a> 
       <nav class="navmenu center" style="background: white; height: 60px; margin: 0px auto; border: none;">
           <ul>
-            <li>
+            <li>                      
             	<a href="<%=cp%>/hotShop/productList?created=newProduct">신상품</a>                       
             </li>
             <li class="sub-menu" data-role="listview">
-            	<a href="#">상품유형별</a><button type="button" class="btn" onclick="bciAppend();">추가</button>
+            	<a href="#">상품유형별</a><c:if test="${sessionScope.member.userId=='admin'}"><button type="button" class="btn" onclick="bciAppend();">추가</button></c:if>
 	            	<ul id="productLike" class="productLike">
 	            		<li id="bciAppend"></li>
+	            		
 	            	</ul>                                           
             </li>
             <li class="sub-menu" data-role="listview">
-            	<a href="#">영양소별</a><button type="button"  class="btn" onclick="sclAppend();">추가</button>
+            	<a href="#">영양소별</a><c:if test="${sessionScope.member.userId=='admin'}"><button type="button"  class="btn" onclick="sclAppend();">추가</button></c:if>
             	<ul id="productNutrient" class="productNutrient">
-            		<li id="sclAppend"></li>
+            		<li id="sclAppend">
+            		</li>
             	</ul>
             </li>
             <li>

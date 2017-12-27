@@ -109,6 +109,17 @@ public class MilelageServiceImpl implements MilelageService{
 		return listFile;
 	}
 
+	@Override
+	public List<Message> listFileCode(List<Integer> mCode) {
+		List<Message> listFileCode =null;
+		try {
+			listFileCode=dao.selectList("milelage.fileListCode", mCode);
+
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return listFileCode;
+	}
 
 	@Override
 	public int fileCount(int mCode) {
@@ -137,29 +148,26 @@ public class MilelageServiceImpl implements MilelageService{
 
 
 	@Override
-	public int deleteFile(List<Integer> list) {
-		int result=0;
+	public void deleteFile(List<Message> listFileCode) {
+	
 		
 		try {
-			result=dao.deleteData("milelage.deleteFile", list);
+			dao.deleteData("milelage.deleteFile", listFileCode);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
 		
-		return result;
 	}
 
 	@Override
-	public int deleteMessage(List<Integer> list) {
-		int result=0;
-		
+	public void deleteMessage(List<Message> listFileCode) {
+
 		try {
-			result=dao.deleteData("milelage.deleteMessage", list);
+			dao.deleteData("milelage.deleteMessage", listFileCode);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
-		
-		return result;
+
 	}
 
 	@Override
@@ -206,8 +214,42 @@ public class MilelageServiceImpl implements MilelageService{
 	@Override
 	public List<Message> listMessage(Map<String, Object> map) {
 		List<Message> list=null;
+
 		try {
 			list= dao.selectList("milelage.listMessage",map);
+
+			
+		} catch (Exception e) {
+			System.out.println(e.toString());
+				
+		}
+		
+		return list;
+	}
+	
+	@Override
+	public List<Message> listMessage2(Map<String, Object> map) {
+		List<Message> list=null;
+
+		try {
+			list= dao.selectList("milelage.listMessage2",map);
+
+			
+		} catch (Exception e) {
+			System.out.println(e.toString());
+				
+		}
+		
+		return list;
+	}
+	
+	@Override
+	public List<Message> listMessage3(Map<String, Object> map) {
+		List<Message> list=null;
+
+		try {
+			list= dao.selectList("milelage.listMessage3",map);
+
 			
 		} catch (Exception e) {
 			System.out.println(e.toString());

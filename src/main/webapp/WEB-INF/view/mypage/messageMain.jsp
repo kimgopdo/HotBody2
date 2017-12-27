@@ -103,7 +103,7 @@ $(function () {
 			modal: true 
 		});
 
-	$("#sendingMsg").click(function () {
+	$(".sendingMsg").click(function () {
 		$("#dialog").dialog("open");
 		
 	});
@@ -291,17 +291,17 @@ $(function(){
 <div style=" width:905px; margin: 50px auto; ">
 <div id="container">
     <ul class="tabs" style="border-bottom: none; margin: 0px auto;">
-        <li class="active" rel="tab1">전체쪽지함</li>
-        <li rel="tab2">받은쪽지함</li>
-        <li rel="tab3">보낸쪽지함</li>
+        <li class="active" rel="tab1" >전체쪽지함</li>
+        <li rel="tab2" >받은쪽지함</li>
+        <li rel="tab3" >보낸쪽지함</li>
     </ul>
     <div class="tab_container">
         <div id="tab1" class="tab_content">
         <form name="searchList" method="post" onsubmit="<%=cp%>/mypage/messageMain">
 		<table style="border: 1px solid #eee; width: 98%; margin: 5px auto 5px;">
 			<tr style="width: 100%; border-style: none; margin-bottom: 20px;">
-				<td style="width: 50%">새 쪽지 0통 / 전체 0통</td>
-				<td style="width: 50%"><input type="button" id="sendingMsg" value="쪽지쓰기"  style="float: right;"></td>
+				<td style="width: 50%"> [전체 ${listSize}통]</td>
+				<td style="width: 50%"><input type="button" class="sendingMsg" value="쪽지쓰기"  style="float: right;"></td>
 			</tr>
 			
 			<tr style="width: 100%; border-style: none;">
@@ -351,8 +351,8 @@ $(function(){
 
 				<td style="width: 3%; border: 1px solid; "><input name="mCode" type="checkbox" value="${dto.mCode}"></td>
 
-				<td style="width: 12%; border: 1px solid;">${dto.userId2}</td>
 				<td style="width: 12%; border: 1px solid;">${dto.userId}</td>
+				<td style="width: 12%; border: 1px solid;">${dto.userId2}</td>
 				<td style="width: 14%; border: 1px solid;">${dto.box}</td>
 				<td style="width: 33%; border: 1px solid;"><a class="readingMessage" style="cursor: pointer; " onclick="Article('${dto.mCode}')" >${dto.subject}</a></td>
 				<td style="width: 10%; border: 1px solid;">${dto.totalFileSize}</td>
@@ -373,26 +373,31 @@ $(function(){
 		
         <div id="tab2" class="tab_content">
         
-        <table style="border: 1px solid #eee; width: 98%; margin: 5px auto 5px;">
+        <form name="searchList" method="post" onsubmit="<%=cp%>/mypage/messageMain">
+		<table style="border: 1px solid #eee; width: 98%; margin: 5px auto 5px;">
 			<tr style="width: 100%; border-style: none; margin-bottom: 20px;">
-				<td style="width: 50%">새 쪽지 0통 / 전체 0통</td>
-				<td style="width: 50%"><input  type="button" value="쪽지쓰기" style="float: right;"></td>
+				<td style="width: 50%"> [전체 ${listSize2}통]</td>
+				<td style="width: 50%"><input type="button" class="sendingMsg" value="쪽지쓰기"  style="float: right;"></td>
 			</tr>
+			
 			<tr style="width: 100%; border-style: none;">
 				<td  colspan="2" style="width: 100%; border: 1px solid;padding-top: 10px;">
-				<input style="background:white; width: 21%;height: 31px;" type="text" value="보낸사람">
-				<input style="background:white;width: 21%;height: 31px;" type="text" value="받는사람">
-				<input style="background:white;width: 21%;height: 31px;" type="text" value="제목">
-				<input style="background:white;width: 21%;height: 31px;" type="text" value="내용">
-
-				<input  type="button" value="찾기" style="margin-left: 15px;"></td>
+				<input  name="ssender" style="background:white; width: 21%;height: 31px; cursor: pointer;" type="text" placeholder="보낸사람">
+				<input name="staker" style="background:white;width: 21%;height: 31px; cursor: pointer;" type="text" placeholder="받는사람">
+				<input  name="ssubject" style="background:white;width: 21%;height: 31px; cursor: pointer;" type="text" placeholder="제목">
+				<input  name="scontent" style="background:white;width: 21%;height: 31px; cursor: pointer; " type="text" placeholder="내용">
+				<button type="submit" style="margin-left: 15px;">찾기</button></td>
 			</tr>
+			
         </table>
+        </form>
+        <form name="deleteMess" method="post"> 
         <table style="width: 98%; margin: 10px auto 5px;">
 			<tr style="width: 100%; border-style: none; margin-bottom: 20px;">
-				<td colspan="5" style="width: 50%"><input type="button" value="삭제"></td>
-				<td colspan="3" style="width: 50%">
-				<select name="kind">
+				<td colspan="5" style="width: 90%"><input id="deleteMessage" type="submit" value="삭제" ></td>
+				<td colspan="2" style="width: 10%">
+
+				<select style="height:26px; float: right" >
 				<option selected="selected">전체보기</option>
 				<option>중요표시 쪽지만</option>
 				<option>첨부파일 쪽지만</option>
@@ -400,52 +405,73 @@ $(function(){
 				<option>안읽은 쪽지만</option>
 				<option>읽은 쪽지만</option>
 				</select>
-				<input type="button" value="새로고침">
+				</td>
 			</tr>
 			
-			<tr style="width: 100%; border-style: none;">
-				<td style="width: 5%; border: 1px solid; "><input type="checkbox"></td>
-				<td style="width: 14%; border: 1px solid;">상태</td>
-				<td style="width: 17%; border: 1px solid;">보낸사람</td>
-				<td style="width: 36%; border: 1px solid;">제목</td>
-				<td style="width: 15%; border: 1px solid;">크기(KB)</td>
-				<td style="width: 15%; border: 1px solid;">송/수신시간</td>
+			<tr style="width: 100%; border-style: none; border-style: double; background:#eee ">
+
+				<td style="width: 3%; border: 1px solid; "><input id="allCheck" type="checkbox" ></td>
+
+				<td style="width: 12%; border: 1px solid;">보낸사람</td>
+
+				<td style="width: 14%; border: 1px solid;">쪽지함</td>
+				<td style="width: 33%; border: 1px solid;">제목</td>
+				<td style="width: 10%; border: 1px solid;">크기(KB)</td>
+				<td style="width: 16%; border: 1px solid;">송/수신시간</td>
+
 			</tr>
-			<c:forEach var="dto" items="${list}">
+			<tr></tr>
+			
+			<c:forEach var="dto" items="${list2}">
 			<tr style="width: 100%; border-style: none;">
-				<td style="width: 5%; border: 1px solid; "><input type="checkbox"></td>
-				<td style="width: 14%; border: 1px solid;">상태</td>
-				<td style="width: 15%; border: 1px solid;">보낸사람</td>
-				<td style="width: 36%; border: 1px solid;">제목</td>
-				<td style="width: 15%; border: 1px solid;">크기(KB)</td>
-				<td style="width: 15%; border: 1px solid;">송/수신시간</td>
+
+				<td style="width: 3%; border: 1px solid; "><input name="mCode" type="checkbox" value="${dto.mCode}"></td>
+
+				<td style="width: 12%; border: 1px solid;">${dto.userId}</td>
+
+				<td style="width: 14%; border: 1px solid;">${dto.box}</td>
+				<td style="width: 33%; border: 1px solid;"><a class="readingMessage" style="cursor: pointer; " onclick="Article('${dto.mCode}')" >${dto.subject}</a></td>
+				<td style="width: 10%; border: 1px solid;">${dto.totalFileSize}</td>
+				<td style="width: 16%; border: 1px solid;">${dto.sCreated}</td>
+
 			</tr>
+			
 			</c:forEach>
+			
         </table>
+        </form>
+			<div style="height: 100px;" align="center" >
+				<a style="margin-top:20px; position: relative; top: 10px;">${paging}</a>
+			</div>
         
         </div>
         
         <div id="tab3" class="tab_content">
-        <table style="border: 1px solid #eee; width: 98%; margin: 5px auto 5px;">
+        <form name="searchList" method="post" onsubmit="<%=cp%>/mypage/messageMain">
+		<table style="border: 1px solid #eee; width: 98%; margin: 5px auto 5px;">
 			<tr style="width: 100%; border-style: none; margin-bottom: 20px;">
-				<td style="width: 50%">새 쪽지 0통 / 전체 0통</td>
-				<td style="width: 50%"><input  type="button" value="쪽지쓰기" style="float: right;"></td>
+				<td style="width: 50%"> [전체 ${listSize3}통]</td>
+				<td style="width: 50%"><input type="button" class="sendingMsg" value="쪽지쓰기"  style="float: right;"></td>
 			</tr>
+			
 			<tr style="width: 100%; border-style: none;">
 				<td  colspan="2" style="width: 100%; border: 1px solid;padding-top: 10px;">
-				<input style="background:white; width: 21%;height: 31px;" type="text" value="보낸사람">
-				<input style="background:white;width: 21%;height: 31px;" type="text" value="받는사람">
-				<input style="background:white;width: 21%;height: 31px;" type="text" value="제목">
-				<input style="background:white;width: 21%;height: 31px;" type="text" value="내용">
-
-				<input  type="button" value="찾기" style="margin-left: 15px;"></td>
+				<input  name="ssender" style="background:white; width: 21%;height: 31px; cursor: pointer;" type="text" placeholder="보낸사람">
+				<input name="staker" style="background:white;width: 21%;height: 31px; cursor: pointer;" type="text" placeholder="받는사람">
+				<input  name="ssubject" style="background:white;width: 21%;height: 31px; cursor: pointer;" type="text" placeholder="제목">
+				<input  name="scontent" style="background:white;width: 21%;height: 31px; cursor: pointer; " type="text" placeholder="내용">
+				<button type="submit" style="margin-left: 15px;">찾기</button></td>
 			</tr>
+			
         </table>
+        </form>
+        <form name="deleteMess" method="post"> 
         <table style="width: 98%; margin: 10px auto 5px;">
 			<tr style="width: 100%; border-style: none; margin-bottom: 20px;">
-				<td colspan="5" style="width: 50%"><input type="button" value="삭제"></td>
-				<td colspan="3" style="width: 50%">
-				<select name="kind">
+				<td colspan="5" style="width: 90%"><input id="deleteMessage" type="submit" value="삭제" ></td>
+				<td colspan="2" style="width: 10%">
+
+				<select style="height:26px; float: right" >
 				<option selected="selected">전체보기</option>
 				<option>중요표시 쪽지만</option>
 				<option>첨부파일 쪽지만</option>
@@ -453,32 +479,44 @@ $(function(){
 				<option>안읽은 쪽지만</option>
 				<option>읽은 쪽지만</option>
 				</select>
-				<input type="button" value="새로고침">
+				</td>
 			</tr>
 			
+			<tr style="width: 100%; border-style: none; border-style: double; background:#eee ">
+
+				<td style="width: 3%; border: 1px solid; "><input id="allCheck" type="checkbox" ></td>
+
+
+				<td style="width: 12%; border: 1px solid;">받는사람</td>
+				<td style="width: 14%; border: 1px solid;">쪽지함</td>
+				<td style="width: 33%; border: 1px solid;">제목</td>
+				<td style="width: 10%; border: 1px solid;">크기(KB)</td>
+				<td style="width: 16%; border: 1px solid;">송/수신시간</td>
+
+			</tr>
+			<tr></tr>
+			
+			<c:forEach var="dto" items="${list3}">
 			<tr style="width: 100%; border-style: none;">
-				<td style="width: 5%; border: 1px solid; "><input type="checkbox"></td>
-				<td style="width: 14%; border: 1px solid;">상태</td>
-				<td style="width: 15%; border: 1px solid;">받는사람</td>
-				<td style="width: 36%; border: 1px solid;">제목</td>
-				<td style="width: 15%; border: 1px solid;">크기(KB)</td>
-				<td style="width: 15%; border: 1px solid;">송/수신시간</td>
+
+				<td style="width: 3%; border: 1px solid; "><input name="mCode" type="checkbox" value="${dto.mCode}"></td>
+
+
+				<td style="width: 12%; border: 1px solid;">${dto.userId2}</td>
+				<td style="width: 14%; border: 1px solid;">${dto.box}</td>
+				<td style="width: 33%; border: 1px solid;"><a class="readingMessage" style="cursor: pointer; " onclick="Article('${dto.mCode}')" >${dto.subject}</a></td>
+				<td style="width: 10%; border: 1px solid;">${dto.totalFileSize}</td>
+				<td style="width: 16%; border: 1px solid;">${dto.sCreated}</td>
+
 			</tr>
-			<c:forEach var="dto" items="${list}">
-			<tr style="width: 100%; ">
-				<td style="width: 5%; border: 1px solid silver; "><input type="checkbox"></td>
-				<td style="width: 14%; border: 1px solid silver;">상태</td>
-				<td style="width: 15%; border: 1px solid silver;">받는사람</td>
-				<td style="width: 36%; border: 1px solid silver;">제목</td>
-				<td style="width: 15%; border: 1px solid silver;">크기(KB)</td>
-				<td style="width: 15%; border: 1px solid silver;">송/수신시간</td>
-			</tr>
+			
 			</c:forEach>
+			
         </table>
-
-
-
-        
+        </form>
+			<div style="height: 100px;" align="center" >
+				<a style="margin-top:20px; position: relative; top: 10px;">${paging}</a>
+			</div>
         
         </div>
     </div>

@@ -51,7 +51,7 @@
 				<table style="margin-bottom: 100px;">
 					<tr>
 						<td style="width: 1050px; float: right; padding-right: 10px;" align="right">
-							<button class="btn" style="color:black; background: white; border: 1px solid #BDBDBD; border-radius: 3px; height: 30px;" type="button" onclick="check();">Q&A 등록</button>
+							<button class="btn" style="color:black; background: white; border: 1px solid #BDBDBD; border-radius: 3px; height: 30px;" type="button" onclick="check(${pdnum});">Q&A 등록</button>
 						</td>
 					</tr>
 				</table>

@@ -41,11 +41,13 @@
 <script type="text/javascript" src="<%=cp%>/resource/js/shopJS/monthly.js"></script>
 <script type="text/javascript" src="<%=cp%>/resource/js/shopJS/imgCut.js"></script>
 <script type="text/javascript" src="<%=cp%>/resource/js/shopJS/extMenu.js"></script>
-<script type="text/javascript" src="<%=cp%>/resource/js/shopJS/btnCenterCal.js"></script>
 <script type="text/javascript" src="<%=cp%>/resource/js/shopJS/quickMenuBtn.js"></script>
-
+<script type="text/javascript" src="<%=cp%>/resource/js/shopJS/btnCenterCal.js"></script>
 <script type="text/javascript" src="<%=cp%>/resource/js/shopJS/tabMove.js"></script>
 <script type="text/javascript">
+jQuery.curCSS = function(element,prop,val){
+	return jQuery(element).css(prop,val)
+}
 $(document).ready(function(){ 
     $('selector').css('width', $(window).width()); 
     $('selector').css('height', $(window).height()); 
@@ -56,6 +58,7 @@ $(document).ready(function(){
 });
 jQuery.browser = {};
 (function () {
+	$("body").niceScroll();
     jQuery.browser.msie = false;
     jQuery.browser.version = 0;
     if (navigator.userAgent.match(/MSIE ([0-9]+)\./)) {
@@ -100,18 +103,27 @@ $(function(){
 	menuCall();
 })
 function menuCall(){
-	var url="<%=cp%>/hotShop/menuCall"
+	var url="<%=cp%>/hotShop/menuCall";
+	var userId="${sessionScope.member.userId}";
 		$.ajax({
 			type:"post"
 			,url:url
 			,dataType:"json"
 			,success:function(menuData){
 				$.each(menuData.bclList,function(index, item){
-						$(".productLike").append("<li><a onclick='move("+item.bclcode+",\""+item.bclname+"\",\"bcl\");'>"+item.bclname+"</a><button type='button' class='btn' style='width:100%;' onclick='bciDelete("+item.bclcode+");'>"+item.bclname+"(삭제)</button></li>");
+					if(userId=='admin'){
+						$(".productLike").append("<li><a onclick='move("+item.bclcode+",\""+item.bclname+"\",\"bcl\");'>"+item.bclname+"</a><button type='button' class='btn' style='width:100%;' onclick='bciDelete("+item.bclcode+");'>"+item.bclname+"(삭제)</button></li>");						
+					}else{
+						$(".productLike").append("<li><a onclick='move("+item.bclcode+",\""+item.bclname+"\",\"bcl\");'>"+item.bclname+"</a></li>");												
+					}
 						$(".QproductNutrient").append("<li><a onclick='move("+item.bclcode+",\""+item.bclname+"\",\"bcl\");'>"+item.bclname+"</a></li>");
 				});
 				$.each(menuData.sciList,function(index, item){
-						$(".productNutrient").append("<li><a onclick='move("+item.scicode+",\""+item.sciname+"\",\"sci\");'>"+item.sciname+"</a><button type='button' class='btn' style='width:100%;' onclick='sclDelete("+item.scicode+");'>"+item.sciname+"(삭제)</button></li>");
+					if(userId=='admin'){
+						$(".productNutrient").append("<li><a onclick='move("+item.scicode+",\""+item.sciname+"\",\"sci\");'>"+item.sciname+"</a><button type='button' class='btn' style='width:100%;' onclick='sclDelete("+item.scicode+");'>"+item.sciname+"(삭제)</button></li>");						
+					}else{
+						$(".productNutrient").append("<li><a onclick='move("+item.scicode+",\""+item.sciname+"\",\"sci\");'>"+item.sciname+"</a></li>");
+					}
 						$(".QproductLike").append("<li><a onclick='move("+item.scicode+",\""+item.sciname+"\",\"sci\");'>"+item.sciname+"</a></li>");
 				});
 				$("#productNutrient").trigger("create");
@@ -121,6 +133,7 @@ function menuCall(){
 			}
 		});
 }
+
 </script>
 <!-- 쿠키사용 함수 -->
 <script type="text/javascript">
@@ -206,7 +219,7 @@ function runEffect() {
 	<tiles:insertAttribute name="quickMenu"/>
 </div>
 
-<div class="leftSide" style=" float: left; padding: 10px; width: 10%; position: fixed; z-index: 10;">
+<div class="leftSide" style=" float: left; width: 52px; position: fixed; z-index: 10;">
     <tiles:insertAttribute name="leftSide"/>
 </div>
 	
@@ -215,7 +228,7 @@ function runEffect() {
     <tiles:insertAttribute name="body"/>
 </div>
 
-<div class="rightSide" style="right:0; padding: 10px; width: 10%; position: fixed; z-index: 10;">
+<div class="rightSide" style="right:0; width: 52px; position: fixed; z-index: 10;">
     <tiles:insertAttribute name="rightSide"/>
 </div>
 </body>
