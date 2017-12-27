@@ -105,14 +105,14 @@ function listPage2(page){
 
 function insertCookie(pdnum){
 	var no=$("#no1").val();
-	var cVal=pdnum+"-"+no;
+	var cVal=pdnum;
 	addCookie(cVal);
 }
 </script>
 <script>
 function payment(pdnum){
 	var no=$("#no1").val();
-	var cVal=pdnum+"-"+no;
+	var cVal=pdnum;
 	addCookie(cVal);
 	alert(getCookie("hotbodyBasket"));
 	var array=getCookie("hotbodyBasket").split(",");

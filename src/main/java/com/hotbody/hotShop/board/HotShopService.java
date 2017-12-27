@@ -23,13 +23,16 @@ public interface HotShopService {
 	public int dataCount_review(Map<String, Object> map);
 	public int productHitCount(int pdnum);
 	public int insertPayment(Payment dto);
-	int readDelOrder(String userId);
-	List<Payment> readDelOrderProduct(int oderNum);
-	int insertBcl(Map<String, Object> map);
-	int insertSci(Map<String, Object> map);
-	int deleteBcl(int code);
-	int deleteSci(int code);
-	int productDataCount(Map<String, Object> map);
-	int hide(int code);
-	int show(int code);
+	public int readDelOrder(String userId);
+	public List<Payment> readDelOrderProduct(int oderNum);
+	public int insertBcl(Map<String, Object> map);
+	public int insertSci(Map<String, Object> map);
+	public int deleteBcl(int code);
+	public int deleteSci(int code);
+	public int productDataCount(Map<String, Object> map);
+	public int hide(int code);
+	public int show(int code);
+	public int insertProductDis(ProductDis dto);
+	public int productDisDataCount();
+	public List<ProductDis> readProductDis(Map<String, Object> map);
 }

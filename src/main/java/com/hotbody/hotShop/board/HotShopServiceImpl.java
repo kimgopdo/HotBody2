@@ -331,5 +331,37 @@ public class HotShopServiceImpl implements HotShopService{
 		}
 		return result;
 	}
+	@Override
+	public int insertProductDis(ProductDis dto) {
+		int result=0;
+		try {
+			dao.updateData("product.productDisStCount", dto);
+			result=dao.insertData("product.insertProductDis", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	@Override
+	public int productDisDataCount() {
+		int result=0;
+		try {
+			result=dao.selectOne("product.pdDisDataCount");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	@Override
+	public List<ProductDis> readProductDis(Map<String, Object> map) {
+		List<ProductDis> list=null;
+		try {
+			list=dao.selectList("product.readProductDis",map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
 	
 }

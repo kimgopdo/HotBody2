@@ -18,7 +18,7 @@ $(function(){
 })
 
 function productList(page){
-	var url="<%=cp%>/hotShop/productListAjax";
+	var url="<%=cp%>/admin/hotShop/productListAjax";
 	var data=$("#hiddenForm").serialize()+"&page="+page+"&formal="+$(':radio[name="formal"]:checked').val();
 	$.ajax({
 		type:"post"
@@ -34,8 +34,8 @@ function productList(page){
 <input type="hidden" name="cl" value="${cl}">
 <input type="hidden" name="code" value="${code}">
 </form>
-<table style="margin-top: 100px; width:100%; border-collapse: collapse;">
-<tr style="border-bottom: 2px solid #e7e7e7;">                                
+<table style="margin-top: 10px; width:100%; padding-left:20px; border-collapse: collapse;">
+<tr style="border-bottom: 2px solid #e7e7e7;">
 	<td><h5 style="font-size: 20px; font-weight:bold; margin-left: 30px; margin-bottom:30px; text-align: left;">${state}</h5></td>
 </tr>
 <tr>
