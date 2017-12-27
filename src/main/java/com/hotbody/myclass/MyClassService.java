@@ -51,6 +51,8 @@ public interface MyClassService {
 	public Diary readDiet(int num);
 	public int updateDiet(Diary dto);
 	public int deleteDiet(int num);
+	public List<Diary> listMiss(Map<String, Object> map); // 미션정보가져오기
+
 	
 	
 		

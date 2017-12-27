@@ -181,7 +181,21 @@ public class MyClassController {
 	}
 	
 	@RequestMapping(value="/myclass/diary/inputForm")
-	public String inputForm() throws Exception{
+	public String inputForm(@RequestParam String start,HttpSession session, Model model) throws Exception{
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		
+		if (info == null) {
+			return "redirect:/member/login";
+		}
+			
+		Map<String, Object> map=new HashMap<>();
+		map.put("userId", info.getUserId());
+		map.put("start", start);
+		
+		List<Diary> list=service.listMiss(map);
+		
+		
+		model.addAttribute("list", list);
 		return "myclass/diary/inputForm";
 	}
 	
@@ -263,9 +277,13 @@ public class MyClassController {
         // 리스트에 출력할 데이터를 가져오기
         int start = (current_page - 1) * rows + 1;
         int end = current_page * rows;
+        String userId = info.getUserId();
+        
+        map.put("userId",userId);
         map.put("start", start);
         map.put("end", end);
-
+      
+        
         List<TodayExer> list = service.listToday(map);
 
         // 리스트의 번호

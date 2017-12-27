@@ -368,15 +368,16 @@
 		SELECT * FROM (
 		    SELECT ROWNUM rnum, tb.* FROM (
 			     SELECT t.exerciseNum, t.infoNum, edate, userId, subject, exerciseName
-			        FROM todayexer t 
-			        JOIN informationd i on t.infoNum = i.infoNum
-			        JOIN exerciseInfo e on t.exerciseNum = e.exerciseNum
+			     FROM todayexer t 
+			     JOIN informationd i on t.infoNum = i.infoNum
+			     JOIN exerciseInfo e on t.exerciseNum = e.exerciseNum
+			     where userid = #{userId}
                     <where>
                          <if test="searchValue != null and searchValue != ''">
 			                  <include refid="where-list4"/>
 		                 </if>
 	                </where>
-	                ORDER BY edate DESC
+	             ORDER BY edate DESC
 	<![CDATA[
 	        ) tb WHERE ROWNUM <= #{end}
 	    ) WHERE rnum >= #{start}
@@ -419,5 +420,12 @@
 					  values(#{exerciseNum},#{exerciseTime},#{diaryNum})
 	</insert>
 	
+	<!-- 미션정보 가져오기 -->
+	<select id="missionInfo" parameterType="map" resultType="com.hotbody.myclass.Diary">
+	select r.classnum,missionnum,missioncontent,missday,userid,startdate
+	from register r join miscontent m on r.classnum = m.classnum
+	where userid=#{userId}
+	and (to_date(#{start}) - to_date(to_char(startDate,'yyyy-mm-dd'))+1) = missday
+	</select>
 	
 </mapper>

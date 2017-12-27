@@ -8,7 +8,7 @@
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.ui.datepicker-ko.js"></script>
 <script type="text/javascript">
 $(function() {
-    $("input[name=startDay]").datepicker();
+    $("input[name=dietDate]").datepicker();
     $("input[name=endDay]").datepicker();
 });
 
@@ -27,7 +27,7 @@ $(function() {
 	  <tr height="40"> 
 		      <td width="100" style="font-weight:600; padding-right:15px; text-align: right;">제&nbsp;&nbsp;목</td>
 		      <td> 
-                     <input name='title' type='text' class='boxTF' style="width:85%;" placeholder='제목'>
+                     <input name='subject' type='text' class='boxTF' style="width:85%;" placeholder='제목'>
               </td>
 	  </tr>
 
@@ -48,7 +48,7 @@ $(function() {
 	  <tr height="40"> 
 		      <td width="100" style="font-weight:600; padding-right:15px; text-align: right;">시작일자</td>
 		      <td> 
-		        	<input name="startDay" type="text" readonly="readonly" class="boxTF" style="background: #fff; width: 120px;" placeholder="시작날짜">
+		        	<input name="dietDate" type="text" readonly="readonly" class="boxTF" style="background: #fff; width: 120px;" placeholder="시작날짜">
 		      </td>
 	  </tr>
 		 		
@@ -82,9 +82,9 @@ $(function() {
 		      <td width="100" style="font-weight:600; padding-right:15px; padding-top:5px; text-align: right;" valign="top">식&nbsp;&nbsp;단</td>
 		      <td valign="top" style="padding:5px 0px 10px 0px;" id ="add1"> 
 		      	<div>
-		           <input name='weight' type='text' class='boxTF' style="width:53%;" placeholder='재료선택(클릭)' onclick='lookIng()'>
-		           <input name='weight' type='text' class='boxTF' style="width:26%;" placeholder='량'>          
-		           <input type="hidden" name="num" value="0">
+		           <input type='text' class='boxTF clsLookIng' style="width:53%;" readonly="readonly" placeholder='재료선택(클릭)'>
+		           <input name='TotalUnit' type='text' class='boxTF' style="width:26%;" placeholder='먹은 양'>          
+		           <input type="hidden" name="ingrerdientsNum" value="">
 		        </div>    
 		      </td>
 	  </tr>
@@ -107,9 +107,9 @@ $(function() {
 	  <tr> 
 		      <td valign="top" style="padding:5px 0px 5px 12px;" id ="add2"> 
 		      	<div>
-		           <input name='weight' type='text' class='boxTF' style="width:55%;" placeholder='재료선택(클릭)' onclick="lookIng()" >
-		           <input name='weight' type='text' class='boxTF' style="width:25%;" placeholder='량'>
-		           <input type="hidden" name="num" value="0">
+		           <input name='weight' type='text' class='boxTF clsLookIng' style="width:55%;" readonly="readonly" placeholder='재료선택(클릭)'>
+		           <input name='TotalUnit' type='text' class='boxTF' style="width:25%;" placeholder='먹은 양'>
+		           <input type="hidden" name="ingrerdientsNum" value="">
 		        </div>
 		      </td>
 	  </tr>
@@ -131,9 +131,9 @@ $(function() {
 	  <tr> 
 		      <td valign="top" style="padding:5px 0px 5px 12px;" id ="add3"> <!-- 시계방향으로 위,오른쪽,아래,왼쪽 -->
 		      	<div>
-		           <input name='weight' type='text' class='boxTF' style="width:55%;" placeholder='재료선택(클릭)' onclick="lookIng()">
-		           <input name='weight' type='text' class='boxTF' style="width:25%;" placeholder='량'>  
-		           <input type="hidden" name="num" value="0">
+		           <input name='weight' type='text' class='boxTF clsLookIng' style="width:55%;" readonly="readonly" placeholder='재료선택(클릭)'>
+		           <input name='TotalUnit' type='text' class='boxTF' style="width:25%;" placeholder='먹은 양'>  
+		           <input type="hidden" name="ingrerdientsNum" value="">
 		      	</div>
 		      </td>
 		      
@@ -154,30 +154,38 @@ $(function() {
 	  </tr>
 	  
 	  <tr height="40" >
-	  		  <td width="100" style="font-weight:600; padding-right:15px; text-align: right;">미&nbsp;&nbsp;션</td>
-		      <td> 
-                     <input name='title' type='text' class='boxTF' style="width:98%;">
-              </td>
-	  		  <td>&nbsp;&nbsp;<input type="checkbox" class="checkbox" id="msChk"  name="msChk" value="true"></td>
+	  		 <td width="100" style="font-weight:600; padding-right:15px; text-align: right;">
+	  		 	미&nbsp;&nbsp;션
+	  		 </td>
+	  	     <td>
+	  	     <c:forEach var="vo" items="${list}">
+		         <input type='text' class='boxTF' style="width:93%;" value="${vo.missionContent}" readonly="readonly">
+				 <input type="checkbox" class="checkbox" id="chSuccess" name="chSuccess" value="1" style="float: right;">
+				 <input type="hidden" name="missionNum" value="${vo.missionNum}">
+			 </c:forEach>
+	         </td> 		
 	  </tr>
-	  
+	  	 
+	  <%-- <input type="checkbox" name="notice" id="notice" value="1" ${dto.notice=="1"?"checked='checked'":""}>
+		   <c:forEach var="vo" items="${list}">
+	   --%>
+
 	  <tr height="40"> 
 		      <td width="100" style="font-weight:600; padding-right:15px; text-align: right;">운동</td>
 		      <td> 
-		        	<input id="" name="" type="text" class="boxTF" style="width: 150px;" placeholder="운동선택(클릭)" onclick="lookExercise()">
+		        	<input id="exer" name="exer" type="text" class="boxTF clsLookExer" style="width: 150px;" readonly="readonly" placeholder="운동선택(클릭)">
+		        	<input type="hidden" name="exerciseNum" value="">
 		      </td>
 	  </tr>
 
 	  <tr height="40"> 
 		      <td width="100" style="font-weight:600; padding-right:15px; text-align: right;">운동시간</td>
 		      <td> 
-		        	<input id="" name="" type="text" class="boxTF" style="width: 120px;" placeholder="????로 입력"> ????
+		        	<input id="exerciseTime" name="exerciseTime" type="text" class="boxTF" style="width: 120px;" placeholder="단위입력(자동)">
+		        	<span class="exerciseTime"></span>
 		      </td>
 	  </tr>
 </table>
 </div>
-
-<div id="ing" style="display: none;"></div>
-<div id="exercise" style="display: none;"></div>
   
 </form>

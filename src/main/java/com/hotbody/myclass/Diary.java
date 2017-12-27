@@ -11,9 +11,9 @@ public class Diary {
 	private int exerciseNum; // 운동코드
 	private String exerciseTime; // 운동시간
 
-	// 미션성공여부
-	private int missionNum; // 미션코드
-	private String chSuccess; // 성공여부체크
+	// 미션성공여부, 미션정보
+	private int missionNum,classNum; // 미션코드,클래스코드
+	private String chSuccess,missionContent,missDay,startdate; // 성공여부체크,미션내용,미션N일차,시작날짜
 
 	// 식단일기
 	private String bldCode; // 아,점,저 코드
@@ -143,5 +143,38 @@ public class Diary {
 	public void setChSuccess(String chSuccess) {
 		this.chSuccess = chSuccess;
 	}
+
+	public int getClassNum() {
+		return classNum;
+	}
+
+	public void setClassNum(int classNum) {
+		this.classNum = classNum;
+	}
+
+	public String getMissionContent() {
+		return missionContent;
+	}
+
+	public void setMissionContent(String missionContent) {
+		this.missionContent = missionContent;
+	}
+
+	public String getMissDay() {
+		return missDay;
+	}
+
+	public void setMissDay(String missDay) {
+		this.missDay = missDay;
+	}
+
+	public String getStartdate() {
+		return startdate;
+	}
+
+	public void setStartdate(String startdate) {
+		this.startdate = startdate;
+	}
+	
 
 }
