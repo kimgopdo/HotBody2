@@ -130,52 +130,6 @@ function viewPre() {
 	}
 	location.href="<%=cp%>/notice/article?noticeCode=${preReadDto.noticeCode}&page=${page}";
 }
-
-//댓글 등록
-function sendReply() {
-	var uid="${sessionScope.member.userId}";
-	if(! uid) {
-		location.href="<%=cp%>/member/login";
-		return;
-	}
-	
-	var noticeCode="${dto.noticeCode}";
-	var content=$("#replyContent").val().trim();
-	if(! content) {
-		$("#replyContent").focus();
-		return;	
-	}
-	
-	var query="noticeCode="+noticeCode;
-	query+="&content="+encodeURIComponent(content);
-	query+="&answer=0";
-	
-	$.ajax({
-		type:"post"
-		,url:"<%=cp%>/notice/createdReply"
-		,data:query
-		,dataType:"json"
-		,success:function(data) {
-			$("#replyContent").val("");
-			
-			var state=data.state;
-			if(state=="true") {
-				listPage(1);				
-			} else if(state=="false") {
-				alert("댓글을 등록하지 못했습니다.!!!");
-			} else if(state=="loginFail") {
-				login();
-			}			
-		}
-		,error:function(e) {
-			console.log(e.responseText);
-		}	
-	});
-}
-		
-
-
-
 	
 </script>
 </head>
@@ -235,26 +189,6 @@ function sendReply() {
 	</div>
 </div>
 
-<div style=" width:700px; margin: 20px auto 0;">
-	<table style='width: 100%"; margin: 15px auto 0px; border-spacing: 0px;'>
-		<tr height='30'>
-			<td align='left'>
-				<span style='font-weight: bold;'>댓글쓰기</span><span>- 타인을 비방하거나 개인정보를 유출하는 글의 게시를 삼가 주세요.</span>
-			</td>
-		</tr>	
-		<tr>
-			<td style= 'padding:5px 5px 0px;'>
-				<textarea id='replyContent' class='boxTA' style='width: 700px; height: 70px;'></textarea>
-			</td>	
-		</tr>
-		<tr>
-			<td style= 'padding:5px 5px 0px;' align=right'>
-				<button type='button' class='btn' style='padding:10px 20px;' onclick='sendReply();'>댓글 등록</button>
-			</td>	
-		</tr>
-	</table>
-	<div id="listReply"></div>
-</div>
 
 </body>
 </html>

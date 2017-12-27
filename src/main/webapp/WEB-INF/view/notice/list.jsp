@@ -83,12 +83,12 @@ body{
 	</tr>
 	
 	<tr height="40" style="background: #666666; color: #ffffff;" align="center">
-		<th width="40" >번호</th>
-		<th width="300" >제목</th>
-		<th width="70" >글쓴이</th>
-		<th width="40" >작성일</th>
-		<th width="40">조회수</th>
-		<th width="40">첨부파일</th>
+		<td width="40" align="center">번호</td>
+		<td width="300" align="center">제목</td>
+		<td width="70" align="center">글쓴이</td>
+		<td width="40" align="center">작성일</td>
+		<td width="40" align="center">조회수</td>
+		<td width="40" align="center">첨부파일</td>
 	</tr>
 	
 	<c:forEach var="dto" items="${listTop}">
