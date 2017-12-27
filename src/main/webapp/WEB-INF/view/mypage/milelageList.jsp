@@ -195,8 +195,8 @@ $(function() {
 			<button value="smonth" id="smonth" style="margin: 0; position: relative; left: -24px; padding: 2px" type="button">6개월</button>
 		</td>
 		<td align="left" style="width: 40%;">
-			<input style="width: 100px ; text-align: center; border-style: 1px solid; height: 5px; position: relative; top:6px" type="text" id="datepicker1" name="datepicker1"><span style="position: relative;top: 6px;" > ~ </span>
-			<input style="width: 100px; text-align: center; border-style: 1px solid; height: 5px; position: relative; top:6px " type="text" id="datepicker2" name="datepicker2">		
+			<input style="width: 100px ; text-align: center; border-style: 1px solid; height: 25px; position: relative; top:6px" type="text" id="datepicker1" name="datepicker1"><span style="position: relative;top: 6px;" > ~ </span>
+			<input style="width: 100px; text-align: center; border-style: 1px solid; height: 25px; position: relative; top:6px " type="text" id="datepicker2" name="datepicker2">		
 			<input type="image" style="position: relative; top:6px; " src="<%=cp%>/resource/images/btn_search.gif" >
 		</td>
 				<td style="width: 30%">
@@ -244,7 +244,7 @@ $(function() {
 		${list.milelage}
 		</td>
 		<td  style="width: 55%;  border-bottom: 1px solid silver;">
-		${list.pdBoardName}
+		<a href="<%=cp%>/hotShop/shopArticle?pdnum=${list.pdNum}">${list.pdBoardName}</a>
 		</td>
 	</tr>
 </c:forEach>

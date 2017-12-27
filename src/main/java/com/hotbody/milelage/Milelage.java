@@ -3,10 +3,16 @@ package com.hotbody.milelage;
 public class Milelage {
 	
 	private int totalMilelage,usedMilelage,useableMilelage,orderCount;
-	private int totalPay,milelage,delOrder,milelagePay;
+	private int totalPay,milelage,delOrder,milelagePay,pdNum;
 	private String payDate,pdBoardName,userId;
 	
 	
+	public int getPdNum() {
+		return pdNum;
+	}
+	public void setPdNum(int pdNum) {
+		this.pdNum = pdNum;
+	}
 	public String getUserId() {
 		return userId;
 	}

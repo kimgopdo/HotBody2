@@ -43,7 +43,7 @@
 		FROM orders o left outer join totalordlist tl
         on o.delorder = tl.delorder 
         where
-		<!--   userId =#{userId} and-->
+		userId =#{userId} and
 		<if test="lastday != null and lastday != ''">
 				 tl.PAYDATE >=#{lastday}
 		</if>
@@ -54,7 +54,7 @@
 	SELECT * FROM (
 		SELECT ROWNUM rnum, tb.* FROM (
       select o.delorder,o.TOTALPAY,ds.DELSTATE,to_char(tl.PAYDATE,'yyyy-dd-mm') PAYDATE
-      ,ctl.AMOUNT,pl.PDBOARDNAME,pm.imgsavefilename
+      ,ctl.AMOUNT,pl.PDBOARDNAME,pm.imgsavefilename,pl.pdNum
         from orders o left outer join delstate ds
         on o.delorder = ds.delorder
         left outer join totalordlist tl
@@ -65,8 +65,7 @@
         on ctl.pdnum = pl.pdnum
         left outer join pmainimg pm  
         on pm.pdnum = pl.pdnum
-        where
-        <!-- o.userid=#{userid} and-->
+        where o.userid=#{userId} and
 
 			<if test="lastday != null and lastday != ''">
 			<![CDATA[

@@ -21,7 +21,7 @@
 	
 	 SELECT * FROM (
 		SELECT ROWNUM rnum, tb.* FROM (
-      select ml.milelage,o.TOTALPAY, TO_CHAR(tl.PAYDATE, 'YYYY-MM-DD') PAYDATE,pl.PDBOARDNAME,o.milelagePay
+      select ml.milelage,o.TOTALPAY, TO_CHAR(tl.PAYDATE, 'YYYY-MM-DD') PAYDATE,pl.pdBoardName,o.milelagePay,pl.pdNum
         from orders o
         left outer join totalordlist tl on o.delorder = tl.delorder
         left outer join cartlist ctl   on o.delorder = ctl.delorder
@@ -66,6 +66,58 @@
       	select userId,userId2,subject,content,totalFileSize,screated,mCode
         from msg 
         where  userId =#{userId} OR userId2 =#{userId} 
+		<if test="sender != null and sender != ''">
+				and userId2 = #{sender}  
+		</if>
+		<if test="content != null and content != ''">
+			and	INSTR(content, #{content}) &gt; 0
+		</if>
+		<if test="subject != null and subject != ''">
+			and	INSTR(subject, #{subject}) &gt; 0 
+		</if>
+        <![CDATA[
+		ORDER BY SCREATED DESC
+
+	        ) tb WHERE ROWNUM <= #{end}
+	    ) WHERE rnum >= #{start}
+	]]>
+	
+	
+	</select>
+	
+	<select id="listMessage2" parameterType="map" resultType="com.hotbody.milelage.Message">
+	
+	 SELECT * FROM (
+		SELECT ROWNUM rnum, tb.* FROM (
+      	select userId,userId2,subject,content,totalFileSize,screated,mCode
+        from msg 
+        where  userId2 =#{userId} 
+		<if test="sender != null and sender != ''">
+				and userId2 = #{sender}  
+		</if>
+		<if test="content != null and content != ''">
+			and	INSTR(content, #{content}) &gt; 0
+		</if>
+		<if test="subject != null and subject != ''">
+			and	INSTR(subject, #{subject}) &gt; 0 
+		</if>
+        <![CDATA[
+		ORDER BY SCREATED DESC
+
+	        ) tb WHERE ROWNUM <= #{end}
+	    ) WHERE rnum >= #{start}
+	]]>
+	
+	
+	</select>
+	
+	<select id="listMessage3" parameterType="map" resultType="com.hotbody.milelage.Message">
+	
+	 SELECT * FROM (
+		SELECT ROWNUM rnum, tb.* FROM (
+      	select userId,userId2,subject,content,totalFileSize,screated,mCode
+        from msg 
+        where  userId =#{userId} 
 		<if test="sender != null and sender != ''">
 				and userId2 = #{sender}  
 		</if>
@@ -165,18 +217,38 @@
 	    WHERE fileCode=#{fileCode}       
 	</select>
 	
-	<delete id="deleteFile" parameterType="java.util.List">
+	
+	<select id="fileListCode" resultType="com.hotbody.milelage.Message" parameterType="java.util.List">
+		select fileCode,mCode
+		from msgfile
+		where mCode IN
+		<foreach item="mCode" index="index" collection="list" open="(" separator="," close=")">
+			#{mCode}
+		</foreach>
+	</select>
+	
+	<delete id="deleteFile" parameterType="com.hotbody.milelage.Message">
 	DELETE FROM msgfile 
-	WHERE fileCode = #{fileCode} 
-	and mCode=#{mCode}
-	and userId =#{userId}
+	WHERE fileCode IN
+	
+ 	<foreach item="dto" index="index" collection="list" open="(" separator="," close=")">
+			#{dto.fileCode}
+		</foreach>
+	
+	and mCode IN
+		<foreach item="dto" index="index" collection="list" open="(" separator="," close=")">
+			#{dto.mCode}
+		</foreach>
+	
 	</delete>
+
 	
-	<delete id="deleteMessage" parameterType="java.util.List">
+	<delete id="deleteMessage" parameterType="com.hotbody.milelage.Message">
 	DELETE FROM msg 
-	WHERE mCode=#{mCode} 
-	and userId =#{userId}
-	
+	WHERE mCode IN
+		<foreach item="dto" index="index" collection="list" open="(" separator="," close=")">
+			#{dto.mCode}
+		</foreach>
 	</delete>
 	
 </mapper>

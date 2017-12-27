@@ -10,6 +10,87 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+
+<script type="text/javascript">
+
+
+$(function(){
+	showBasketList();
+})
+function showBasketList() {
+	 
+	      // Most effect types need no options passed by default
+	      var options = {};
+	 		
+	      // Run the effect
+	      $( "#quickBasketList" ).effect("clip", options, 500);
+};
+function showBasket(){
+	$("#basket_check").animate({
+		"opacity" : "0",
+		"display" : "none"
+	},"slow")
+	$("#basket_check").animate({
+		"display" : "block",
+		"opacity" : "1"
+	},"fast")
+}
+function hideBasket(){
+	$("#basket_check").animate({
+		"opacity" : "0",
+		"display" : "none"
+	},"fast")
+}
+
+function BasketList(){
+	alert("dddd")
+	var cookie=getCookie("hotbodyBasket").split(",");
+	var uid="${sessionScope.member.userId}";
+	var q;
+	console.log(cookie);
+	
+	alert("ssss")
+	<%-- if(! uid){
+		location.href="<%=cp%>/member/login";
+		return;
+	}else  --%>if(cookie){
+		var url="<%=cp%>/hotShop/basketList?cookie="+cookie;
+		$.ajax({
+			type:"get"
+			,url:url
+			,success:function(e){
+				console.log(e);
+				$("#BList").html(e);
+			}
+			,errer:function(e){
+				console.log(e);
+			}
+		})
+	} 
+}
+
+
+$( function() {
+    $( "#basketList" ).dialog({
+      autoOpen: false,
+      width : "800px",
+      show: {
+        effect: "blind",
+        duration: 1000
+      },
+      hide: {
+        effect: "explode",
+        duration: 1000
+      }
+    });
+ 
+    $( "#basket" ).on( "click", function() {
+      $( "#basketList" ).dialog( "open" );
+    });
+  } );
+
+</script>
 </head>
 <body>
 
@@ -20,6 +101,13 @@
 <div align="center">
 <h3>MY PAGE</h3>
 </div>
+
+
+  	<div id="basketList" title="장바구니" style="display: none;">
+	  	<table id="BList" style="width:800px;">
+	  		
+		</table>
+	</div>
 
 
 <table  style="border: 2px solid silver; margin: 40px auto; width: 1000px;">
@@ -47,8 +135,9 @@
 <table  style=" width: 600px; margin: 10px auto" >
 
 	<tr align="center">
-		<td ><img src="<%=cp%>/resource/images/myshop_icon03.gif" onclick="location.href='<%=cp%>/#';"><br><b>장바구니<b></td>
+		<td ><img id="basket" src="<%=cp%>/resource/images/myshop_icon03.gif" onclick="javascript:BasketList();"><br><b>장바구니<b></td>
 		<td><img src="<%=cp%>/resource/images/main_menu_icon03.png" onclick="location.href='<%=cp%>/mypage/orderList';"><br><b>주문내역<b></td>
+		
 		<td><img src="<%=cp%>/resource/images/myshop_icon07.gif" onclick="location.href='<%=cp%>/mypage/milelageList';"><br><b>마일리지<b></td>
 	</tr>
 		<tr align="center">
