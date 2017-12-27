@@ -56,6 +56,15 @@
      	WHERE cllevel=#{cllevel}
 	</select>
 	
+	<select id="listByAdmin" resultType="com.hotbody.dietClass.DietClass">
+		SELECT d.classNum, className, classType, classGoal, classGoalD, cllevel, tuition, saveFileName 
+   		,mento, onPeriod ,location1, location2, startTime, endTime, offLimit, coach, 
+          TO_CHAR(startDate,'YYYYMMDD') startDate, TO_CHAR(endDate,'YYYYMMDD') endDate
+   		FROM dietClass d
+		LEFT OUTER JOIN onClass o ON d.classNum=o.classNum 
+		LEFT OUTER JOIN offClass o ON d.classNum=o.classNum
+	</select>
+	
 	<select id="readClass" parameterType="map" resultType="com.hotbody.dietClass.DietClass">
 		SELECT d.classNum, className, classType, classGoal, classGoalD, cllevel, tuition, saveFileName, originalFileName
      	<if test="classType == 0">

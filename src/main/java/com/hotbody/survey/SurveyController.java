@@ -341,7 +341,6 @@ public class SurveyController {
 			}
 		}
 		
-		
 		Map<String, Object> model = new HashMap<>();
 		
 		model.put("state", "true");
@@ -349,12 +348,4 @@ public class SurveyController {
 	}
 
 }
-
-
-
-
-
-
-
-
 

@@ -1,59 +1,21 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
-   String cp = request.getContextPath();
+	String cp=request.getContextPath();
 %>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script type="text/javascript">
-function on(num) {
-	$("#ct"+num).mouseover(function (e){
-        $("#ctd"+num).show();
-    });
-    
-    $("#ct"+num).mouseout(function (e){
-        $("#ctd"+num).hide();
-    });
-}
-/* 
-function classNotice() {
-	swal("Write something here:", {
-		  content: "input",
-		})
-		.then((value) => {
-		  swal(${value});
-		});
-}
- */
-function payGo(num,type) {
-	var uid="${sessionScope.member.userId}";
-   	if(! uid) {
-      modalFormLogin();
-      return;
-   	}
-   	location.href="<%=cp%>/dietClass/payment?num="+num+"&type="+type;
-}
-function articleGo(num) {
-	location.href="<%=cp%>/dietClass/articleOn?num="+num;
-}
-
-</script>
-<div class="body-container" style="width: 1000px; margin: 100px auto;">
-	<div style="width: 1000px; margin: 100px auto;">
-		<img style="width: 100%; cursor: pointer;" src="<%=cp%>/uploads/dietClass/main.png" onclick="javascript:location.href='<%=cp%>/survey/surveyForm';">
-	</div>
-	<c:forEach var="dto" items="${diet}">
-    <table id="ct${dto.classNum}" onmouseover="on(${dto.classNum});" style="width: 1000px; height:420px; border-spacing: 0; border-collapse: collapse; border-bottom: 1px solid #cccccc; border-top: 1px solid #cccccc; margin: 20px 0;">
-    <tr>
-    
+<div class="body-container" style="width: 1000px; padding-left: 20px;">
+		<button type="button" class="btn02" onclick="javascript:location.href='<%=cp%>/dietClass/created'" style="float: right; width: 120px;">클래스등록</button>
+		<c:forEach var="dto" items="${list}">
+    	<table id="ct${dto.classNum}" onmouseover="on(${dto.classNum});" style="width: 1000px; height:420px; border-spacing: 0; border-collapse: collapse; border-bottom: 1px solid #cccccc; border-top: 1px solid #cccccc; margin: 20px 0;">
+    	<tr>
     	<td style="height: 425px; width: 280px; overflow: hidden;">
     	<img align="right" style="height: 100%; width: 335px;" src="<%=cp%>/uploads/dietClass/${dto.saveFileName}">
     	</td>
     	<td valign="top" style="padding: 35px 20px;" width="300px;">
     	<p><b style="font-size: 30px;">${dto.className}</b></p>
     	<b style="color: #ff6699; font-size: 20px;">${dto.classGoal}</b><br><br>
-    	<span><b style="color: #333333;">${dto.classGoalD}</b></span>
     	<br>
     	<div id="ctd${dto.classNum}" style="display: none; margin: 20px;">
     		<span style="color: #1abc9c; cursor: pointer; font-size: 16px; font-weight: bold;" onclick="javascript:location.href='<%=cp%>/dietClass/article?num=${dto.classNum}&type=${dto.classType}';">자세히 보러가기>></span>
@@ -136,5 +98,4 @@ function articleGo(num) {
     </tr>
     </table>
     </c:forEach>
-    </div>
-	
+	</div>

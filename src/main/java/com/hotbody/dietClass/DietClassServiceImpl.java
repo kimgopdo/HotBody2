@@ -332,4 +332,15 @@ public class DietClassServiceImpl implements DietClassService {
 		}
 		return list;
 	}
+
+	@Override
+	public List<DietClass> listByAdmin() {
+		List<DietClass> list = null;
+		try {
+			list = dao.selectList("dietClass.listByAdmin");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
 }

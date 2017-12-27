@@ -106,7 +106,6 @@ public class DietClassController {
 		
 		Map<String, Object> model = new HashMap<>();
 		model.put("state", "true");
-		model.put("type", dto.getClassType());
 		
 		return model;
 	}
