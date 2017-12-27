@@ -5,97 +5,70 @@
 <%
 	String cp=request.getContextPath();
 %>
-<div class="body-container" style="width: 1000px; padding-left: 20px;">
-		<button type="button" class="btn02" onclick="javascript:location.href='<%=cp%>/dietClass/created'" style="float: right; width: 120px;">클래스등록</button>
+<script type="text/javascript">
+function deleteOk(num,type) {
+	
+	if(! confirm("삭제하시겠습니까?")){
+		return;
+	}
+	var f = {num : num, type:type};
+	
+	var url="<%=cp%>/admin/dietClass/deleteClass";
+		
+	$.ajax({
+		type:"post"
+		,url:url
+		,data: f
+		,dataType:"json"
+		,success:function(data) {
+			if(data.state=="true"){
+				alert("삭제완료");
+				location.href="<%=cp%>/admin/dietClass/list";
+			}
+		}
+	    ,error:function(e) {
+	    	alert("Error입니다");
+	    	console.log(e.responseText);
+	    }
+	});
+}
+</script>
+<div class="body-container" style="width: 1000px; padding-left: 20px; padding-top: 50px;">
+	<div style="font-size: 40px; width: 1000px;font-weight: bold; color: #666666;">클래스 리스트</div>
+	<table style="width: 1000px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0">
+		
+		<tr height="40">
+			<td align="left" style="font-weight: bold; font-size: 16px; color: tomato;">
+				총 ${count}개
+			</td>
+			<td colspan="3" align="right">
+			
+			<button type="button" class="btn02" onclick="javascript:location.href='<%=cp%>/admin/dietClass/created';" style="width: 120px;">클래스 등록</button>
+			</td>
+		</tr>
+		
+		<tr height="35" style="background: #666666; color: #ffffff;" align="center">
+			<th width="200">클래스명</th>
+			<th width="100">클래스유형</th>
+			<th>클래스 내용</th>
+			<th width="150"></th>
+		</tr>
+		
 		<c:forEach var="dto" items="${list}">
-    	<table id="ct${dto.classNum}" onmouseover="on(${dto.classNum});" style="width: 1000px; height:420px; border-spacing: 0; border-collapse: collapse; border-bottom: 1px solid #cccccc; border-top: 1px solid #cccccc; margin: 20px 0;">
-    	<tr>
-    	<td style="height: 425px; width: 280px; overflow: hidden;">
-    	<img align="right" style="height: 100%; width: 335px;" src="<%=cp%>/uploads/dietClass/${dto.saveFileName}">
-    	</td>
-    	<td valign="top" style="padding: 35px 20px;" width="300px;">
-    	<p><b style="font-size: 30px;">${dto.className}</b></p>
-    	<b style="color: #ff6699; font-size: 20px;">${dto.classGoal}</b><br><br>
-    	<br>
-    	<div id="ctd${dto.classNum}" style="display: none; margin: 20px;">
-    		<span style="color: #1abc9c; cursor: pointer; font-size: 16px; font-weight: bold;" onclick="javascript:location.href='<%=cp%>/dietClass/article?num=${dto.classNum}&type=${dto.classType}';">자세히 보러가기>></span>
-    	</div>
-    	</td>
-    	<td style="background: #e3e3e3; width: 250px; color: black;" align="center">
-	    	<div align="center" style="height: 340px;">
-	    		<table style="width: 90%; margin: 35px 15px; line-height: 2em; resize: none;">
-		    		<tr>
-		    			<td>
-		    			<%-- 
-		    				<c:if test="#">
-		    				<span style="background: #333333; color: #ffffff; font-size: 20px;">마감</span>
-		    				</c:if>
-		    			 --%>
-		    				<span style="background: #ff6600; color: #ffffff; font-size: 20px;">진행중</span>
-		    			</td>
-		    		</tr>
-		    		<tr height="20px;"></tr>
-		    		<c:if test="${dto.classType==0}">
-		    		<tr>
-		    			<th width="35%">멘토</th>
-		    			<td align="left" style="padding-left: 5px;">${dto.mento} 님</td>
-		    		</tr>
-		    		</c:if>
-		    		<c:if test="${dto.classType==1}">
-		    		<tr>
-		    			<th width="35%">코치</th>
-		    			<td align="left" style="padding-left: 5px;">${dto.coach} 님</td>
-		    		</tr>
-		    		</c:if>
-		    		<tr>
-		    			<th width="35%">운동강도</th>
-		    			<c:if test="${dto.cllevel==1}">
-		    			<td align="left" style="padding-left: 5px;">상</td>
-		    			</c:if>
-		    			<c:if test="${dto.cllevel==2}">
-		    			<td align="left" style="padding-left: 5px;">중</td>
-		    			</c:if>
-		    			<c:if test="${dto.cllevel==3}">
-		    			<td align="left" style="padding-left: 5px;">하</td>
-		    			</c:if>
-		    		</tr> 
-		    		<c:if test="${dto.classType==0}">
-		    		<tr>
-		    			<th width="35%">수강기간</th>
-		    			<td align="left" style="padding-left: 5px;">${dto.onperiod}일</td>
-		    		</tr>
-		    		</c:if>
-		    		<c:if test="${dto.classType==1}">
-		    		<tr>
-		    			<th width="35%">수강기간</th>
-		    			<td align="left" style="padding-left: 5px;">${dto.startDate}<br>~ ${dto.endDate}</td>
-		    		</tr>
-		    		</c:if>
-		    		
-		    		<c:if test="${dto.classType==1}">
-		    		<tr>
-		    			<th width="35%">수강시간</th>
-		    			<td align="left" style="padding-left: 5px;">${dto.startTime} ~ ${dto.endTime}</td>
-		    		</tr>
-		    		<tr>
-		    			<th width="35%">정원</th>
-		    			<td align="left" style="padding-left: 5px;">${dto.offLimit} 명</td>
-		    		</tr>
-		    		</c:if>
-		    		<tr>
-		    			<th width="35%">수강료</th>
-		    			<td align="left" style="padding-left: 5px;">${dto.showTuition}</td>
-		    		</tr>
-	    		</table>
-	    	</div>
-	   		<div style="vertical-align: bottom;">
-	   		<!-- 
-	   		<button type="button" style="width: 100%; height: 50px; background: #1abc9c; border: 0px; color: #ffffff; font-weight: bold;" onclick="classNotice();">클래스 알림받기</button>
-	    	 -->
-	    	<button type="button" style="width: 100%; height: 50px; background: #1abc9c; border: 0px; color: #ffffff; font-weight: bold;" onclick="payGo(${dto.classNum},${dto.classType});">수강 신청하기</button>
-	   		</div>
-    	</td>
-    </tr>
-    </table>
-    </c:forEach>
-	</div>
+			<tr height="120" align="center" style="margin: 5px 0; border-bottom: 1px solid #e6e6e6;">
+				<td width="200"><a href="<%=cp%>/admin/dietClass/article?num=${dto.classNum}&type=${dto.classType}" style="color: #333333;">${dto.className}</a></td>
+				<c:if test="${dto.classType==0}">
+					<td width="100">온라인</td>
+				</c:if>
+				<c:if test="${dto.classType==1}">
+					<td width="100">오프라인</td>
+				</c:if>
+				<td align="left">${dto.classGoal}</td>
+				<td width="150" align="right">
+					<button type="button" class="btn02" onclick="javascript:location.href='<%=cp%>/admin/dietClass/update?num=${dto.classNum}&type=${dto.classType}';">수정</button>
+					<button type="button" class="btn02" onclick="deleteOk(${dto.classNum},${dto.classType})">삭제</button>
+				</td>
+			</tr>
+		</c:forEach>
+	</table>
+</div>

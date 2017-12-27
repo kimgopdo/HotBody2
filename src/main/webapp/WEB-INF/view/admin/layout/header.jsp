@@ -25,23 +25,40 @@
             <span class="nav-link-text">클래스</span>
           </a>
           <ul class="sidenav-second-level collapse" id="collapseClass">
-          	<li>
-              <a href="<%=cp%>/admin/dietClass/created">클래스 등록</a>
-            </li>
             <li>
               <a href="<%=cp%>/admin/dietClass/list">클래스 관리</a>
             </li>
             <li>
-              <a href="#">등록 회원</a>
+              <a href="<%=cp%>/admin/cprogram/list">프로그램 관리</a>
+            </li>
+            <li>
+              <a href="<%=cp%>/admin/member/list">등록 회원</a>
+            </li>
+            <li>
+              <a href="<%=cp%>/survey/created">설문 등록</a>
             </li>
             <li>
               <a class="nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti2">멘토 메뉴</a>
               <ul class="sidenav-third-level collapse" id="collapseMulti2">
                 <li>
-                  <a href="#">미션 등록</a>
+                  <a href="<%=cp%>/admin/mission/list">미션 등록</a>
                 </li>
                 <li>
                   <a href="#">피드백 남기기</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a class="nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti2">정보 관리</a>
+              <ul class="sidenav-third-level collapse" id="collapseMulti2">
+                <li>
+                  <a href="<%=cp%>/admin/mission/list">재료 등록</a>
+                </li>
+                <li>
+                  <a href="#">운동 등록</a>
+                </li>
+                <li>
+                  <a href="#">유용한정보 등록</a>
                 </li>
               </ul>
             </li>

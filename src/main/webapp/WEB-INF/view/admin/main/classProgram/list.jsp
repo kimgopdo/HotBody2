@@ -12,9 +12,11 @@ th {
 </style>
 <script type="text/javascript">
 function deleteOk(num) {
-	
+	if(! confirm("삭제하시겠습니까?")){
+		return;
+	}
 	var f = {num:num};
-	var url="<%=cp%>/cprogram/delete?num="+num;
+	var url="<%=cp%>/admin/cprogram/delete?num="+num;
 		
 	$.ajax({
 		type:"post"
@@ -24,7 +26,7 @@ function deleteOk(num) {
 		,success:function(data) {
 			if(data.state=="true"){
 				alert("수정완료");
-				location.href="<%=cp%>/cprogram/list";
+				location.href="<%=cp%>/admin/cprogram/list";
 			}
 		}
 	    ,error:function(e) {
@@ -41,22 +43,21 @@ function fileChange() {
 
 function deleteFile() {
 	if(confirm("첨부파일을 삭제하시겠습니까?")){
-		location.href="<%=cp%>/dietClass/deleteFile?num=${dto.programNum}"
+		location.href="<%=cp%>/admin/dietClass/deleteFile?num=${dto.programNum}"
 	}
 }
 
 </script>
-<div class="body-container" style="width: 1000px; margin: 100px auto;">
-    <div style="height: 50px;"></div>
-	<div style="font-size: 40px; width: 1000px; margin: 20px auto 0; font-weight: bold; color: #666666;">프로그램 리스트</div>
+<div class="body-container" style="width: 1000px; padding-left: 20px; padding-top: 40px;">
+    <div style="font-size: 40px; width: 1000px;font-weight: bold; color: #666666;">프로그램 리스트</div>
 	<table style="width: 1000px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0">
 		
 		<tr height="40">
 			<td align="left" style="font-weight: bold; font-size: 16px; color: tomato;">
-				총 ${dataCount}개${updateDto.programName}
+				총 ${dataCount}개
 			</td>
 			<td colspan="3" align="right">
-			<button type="button" class="btn02" onclick="javascript:location.href='<%=cp%>/cprogram/created';" style="width: 120px;">프로그램 등록</button>
+			<button type="button" class="btn02" onclick="javascript:location.href='<%=cp%>/admin/cprogram/created';" style="width: 120px;">프로그램 등록</button>
 			</td>
 		</tr>
 		
@@ -75,8 +76,8 @@ function deleteFile() {
 				<td width="200">${dto.programName}</td>
 				<td align="left">${dto.programContent}</td>
 				<td width="100">
-					<button type="button" class="btn02" style="width: 50px;" onclick="javascript:location.href='<%=cp%>/cprogram/update?num=${dto.programNum}';">수정</button>
-					<button type="button" class="btn02" onclick="deleteOk(${dto.programNum})" style="width: 50px;">삭제</button>
+					<button type="button" class="btn02" onclick="javascript:location.href='<%=cp%>/admin/cprogram/update?num=${dto.programNum}';">수정</button>
+					<button type="button" class="btn02" onclick="deleteOk(${dto.programNum})">삭제</button>
 				</td>
 			</tr>
 		</c:forEach>

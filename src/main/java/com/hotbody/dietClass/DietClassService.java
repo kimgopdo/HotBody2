@@ -11,6 +11,7 @@ public interface DietClassService {
 	public int deleteClass(Map<String, Object> map, String pathname);
 	public List<DietClass> listByLevel(int cllevel);
 	public List<DietClass> listByAdmin();
+	public int countClass();
 	
 	/*
 	 * 클래스 프로그램 관련

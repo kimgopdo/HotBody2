@@ -6,6 +6,11 @@
 		SELECT classes_seq.NEXTVAL FROM dual
 	</select>
 	
+	<select id="countClass" resultType="Integer">
+		SELECT COUNT(*) FROM dietClass
+		WHERE classType IN (0,1)
+	</select>
+	
 	<insert id="insertDietClass" parameterType="com.hotbody.dietClass.DietClass">
 		INSERT INTO dietClass(classNum, className, classType, classGoal, classGoalD, cllevel, tuition, saveFileName, originalFileName)
 		VALUES(
@@ -64,6 +69,7 @@
 		LEFT OUTER JOIN onClass o ON d.classNum=o.classNum 
 		LEFT OUTER JOIN offClass o ON d.classNum=o.classNum
 		WHERE classType IN (1,0)
+		ORDER BY classNum DESC
 	</select>
 	
 	<select id="readClass" parameterType="map" resultType="com.hotbody.dietClass.DietClass">
@@ -71,13 +77,13 @@
      	<if test="classType == 0">
      		, mento, onperiod
 			FROM dietClass d 
-			JOIN onClass o ON d.classNum = o.classNum WHERE d.classNum=#{classNum}
+			LEFT OUTER JOIN onClass o ON d.classNum = o.classNum WHERE d.classNum=#{classNum}
      	</if>
 		<if test="classType == 1">
      		,location1, location2, startTime, endTime, offLimit, coach, 
             TO_CHAR(startDate,'YYYYMMDD') startDate, TO_CHAR(endDate,'YYYYMMDD') endDate
 			FROM dietClass d 
-			JOIN offClass o ON d.classNum=o.classNum WHERE d.classNum=#{classNum}
+			LEFT OUTER JOIN offClass o ON d.classNum=o.classNum WHERE d.classNum=#{classNum}
      	</if>
 	</select>
 	

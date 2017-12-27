@@ -8,6 +8,25 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style type="text/css">
+.ui-datepicker {
+    width: 21em;
+    padding: .2em .2em 0;
+    display: none;
+}
+.modal-header {
+    display: -ms-flexbox;
+    display: none;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    padding: 15px;
+    border-bottom: 1px solid #e9ecef;
+    border-top-left-radius: .3rem;
+    border-top-right-radius: .3rem;
+}
+</style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
@@ -41,9 +60,9 @@ function sendOk() {
 	var formData=new FormData(f);
 	
 	if(mode=='created')
-		var url="<%=cp%>/dietClass/insert";
+		var url="<%=cp%>/admin/dietClass/insert";
 	else if(mode=='update')
-		var url="<%=cp%>/dietClass/updateSubmit";
+		var url="<%=cp%>/admin/dietClass/updateSubmit";
 		
 	$.ajax({
 		type:"post"
@@ -53,10 +72,9 @@ function sendOk() {
 		,data: formData
 		,dataType:"json"
 		,success:function(data) {
-			var type=data.type;
 			if(data.state=="true"){
 				alert("등록완료");
-				location.href="<%=cp%>/admin/main";
+				location.href="<%=cp%>/admin/dietClass/list";
 			}
 		}
 	    ,error:function(e) {
@@ -72,7 +90,7 @@ function fileChange() {
 
 function deleteFile() {
 	if(confirm("첨부파일을 삭제하시겠습니까?")){
-		location.href="<%=cp%>/notice/deleteFile?page=${page}&num=${dto.classNum}"
+		location.href="<%=cp%>/admin/dietClass/deleteFile?page=${page}&num=${dto.classNum}"
 	}
 }
 
@@ -425,7 +443,7 @@ $(function(){
 	<div style="width:1000px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
 	<div style="width: 1000px; margin: 20px auto 0;" align="center">
 		<button type="button" class="btn-default02" onclick="sendOk();">${mode=='update'?'수정완료':'등록하기'}</button>
-		<button type="button" class="btn-default02" onclick="javascript:location.href='<%=cp%>/dietClass/list?type=0';">${mode=='update'?'수정취소':'등록취소'}</button>
+		<button type="button" class="btn-default02" onclick="javascript:location.href='<%=cp%>/admin/dietClass/list';">${mode=='update'?'수정취소':'등록취소'}</button>
 		<c:if test="${mode=='update'}">
 			<input type="hidden" name="classNum" value="${dto.classNum}">
 			<input type="hidden" name="classType" value="${dto.classType}">

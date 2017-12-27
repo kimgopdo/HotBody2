@@ -78,12 +78,6 @@ function payGo(num,type) {
 	<div style="vertical-align: bottom; float: left; width: 350px;">
 		<p style="font-weight: bold; font-size: 30px; padding-bottom: 20px;" align="left">${dto.showTuition}</p>
 		
-		<!-- 
-		
-		밑에 if문 두개 바꾸ㅓ야한다 나중에
-		
-		 -->
-		 
 		<c:if test="${sessionScope.member.userId=='admin'}">
     	<button id="paymentBtn" type="button" style="width: 45%; height: 50px; background: #1abc9c; border: 0px; color: #ffffff; font-weight: bold;" onclick="javascript:location.href='<%=cp%>/dietClass/update?num=${dto.classNum}&type=${dto.classType}';"> 클래스 수정 </button>
     	<button id="paymentBtn" type="button" style="width: 45%; height: 50px; background: #1abc9c; border: 0px; color: #ffffff; font-weight: bold;" onclick="deleteOk(${dto.classNum},${dto.classType});"> 클래스 삭제 </button>
@@ -105,7 +99,6 @@ function payGo(num,type) {
           			<td width="60" align="center">
           			<img style="width: 50px; height: 50px;" src="<%=cp%>/uploads/cProgram/${pro.saveFileName}">
           			</td>
-          			
           			<td>
           				<p style="font-weight: bold;">${pro.programName}</p>
           				<p>${pro.programContent}</p>
@@ -113,6 +106,8 @@ function payGo(num,type) {
           		</tr>
           	</c:forEach>
 	    </table>
+	    <img src="<%=cp%>/resource/images/dietClassMain.jpg" style="width: 800px; margin:50px 100px">
 	</div>
+	
 	
 </div>

@@ -82,7 +82,7 @@ public class SurveyController {
 		return model;
 	}
 	
-	@RequestMapping(value="survey/result")
+	@RequestMapping(value="/survey/result")
 	public String surveyResult(HttpSession session,
 								Model model) {
 		int age=0, score=0;
@@ -211,7 +211,7 @@ public class SurveyController {
 		model.addAttribute("surveyList", list);
 		model.addAttribute("count", count+1);
 		model.addAttribute("exList", exList);
-		return ".survey.created";
+		return ".admin.main.survey.created";
 	}
 	
 	@RequestMapping(value="/survey/createdSubmit")

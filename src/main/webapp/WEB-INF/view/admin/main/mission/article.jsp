@@ -18,7 +18,7 @@ function sendOk() {
 	
 	var f = $("form[name=missionForm]").serialize();
 	alert(f);
-	var url="<%=cp%>/mission/update";
+	var url="<%=cp%>/admin/mission/update";
 		
 	$.ajax({
 		type:"post"
@@ -28,7 +28,7 @@ function sendOk() {
 		,success:function(data) {
 			if(data.state=="true"){
 				alert("완료");
-				//location.href="<%=cp%>/mission/list";
+				//location.href="<%=cp%>/admin/mission/list";
 			}
 		}
 	    ,error:function(e) {
@@ -64,17 +64,19 @@ function addBox(date) {
 }
 
 function removeBox(p,day,index) {
-	location.href="<%=cp%>/mission/delete?num=${dto.classNum}&index="+index+"&day="+day;
-	alert("index="+index+"&day="+day);
+	if(! confirm("삭제하시겠습니까?")){
+		return;
+	}
+	
+	location.href="<%=cp%>/admin/mission/delete?num=${dto.classNum}&index="+index+"&day="+day;
 	$(p).closest("tr").remove();
-	//missday, missindex, classNum
 }
 
 </script>
  
-<div class="body-container" style="width: 1000px; margin: 100px auto;">
+<div class="body-container" style="width: 1000px; padding-left: 20px; padding-top: 50px;">
 <div style="height: 50px;"></div>
-<div style="font-size: 40px; width: 1000px; margin: 20px auto 0; font-weight: bold; color: #666666;">${dto.className}(${dto.onperiod}일 과정)</div>
+<div style="font-size: 40px; width: 1000px; font-weight: bold; color: #666666;">${dto.className}(${dto.onperiod}일 과정)</div>
 <div style="font-size: 18px; width: 1000px; margin: 30px auto 20px; font-weight: 700; color: #666666;">${dto.mento}님</div>
 <div style="width:1000px; height:1px; border-bottom: 2px solid #666666;"></div>
 
@@ -120,7 +122,7 @@ function removeBox(p,day,index) {
 	<div style="width: 1000px; margin: 20px auto 0;" align="center">
 	<button type="button" class="btn-default02" onclick="sendOk();">미션등록</button>
 	
-	<button type="button" class="btn-default02" onclick="#">등록취소</button>
+	<button type="button" class="btn-default02" onclick="javascript:location.href='<%=cp%>/admin/mission/list';">목록</button>
 	<input type="hidden" name="classNum" value="${dto.classNum}">
 	<c:if test="${mode=='update'}">
 	</c:if>

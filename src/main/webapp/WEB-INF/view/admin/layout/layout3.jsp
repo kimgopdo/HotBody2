@@ -21,11 +21,10 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <!-- CSS -->
 	<link rel="stylesheet" href="<%=cp%>/resource/css/tabs.css" type="text/css">
-	<link href="<%=cp%>/resource/mainboot/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 	<link href="<%=cp%>/resource/mainboot/css/flexslider.css" rel="stylesheet" type="text/css" />
 	<link href="<%=cp%>/resource/mainboot/css/animate.css" rel="stylesheet" type="text/css" media="all" />
     <link href="<%=cp%>/resource/mainboot/css/owl.carousel.css" rel="stylesheet">
-	<link href="<%=cp%>/resource/mainboot/css/style.css" rel="stylesheet" type="text/css" />
+	<link href="<%=cp%>/resource/css/style.css" rel="stylesheet" type="text/css" />
 	<link href="<%=cp%>/resource/mainboot/css/fileuploader.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<!-- CSS -->
@@ -61,7 +60,7 @@
     <tiles:insertAttribute name="header"/>
 </div>
 
-<div class="body" style="margin-left: 250px; background: #ffffff; padding-bottom: 30px;">
+<div class="body" style="margin-left: 250px; background: #ffffff; padding-bottom: 30px; min-height: 900px;">
     <tiles:insertAttribute name="body"/>
 </div>
 
