@@ -92,7 +92,7 @@ body{
 				style="border-bottom: 1px sild #cccccc;">
 		<td width="60" style="font-weight: bold; color: red;"><span>공지</span></td>
 		<td align="center" style="padding-left: 5px">
-			<a href="${articleUrl}&eventCode=${dto.eventCode}" style="text-decoration: none; color: black;">${dto.subject}</a>
+			<a href="${articleUrl}&eventCode=${dto.eventCode}" style="text-decoration: none; color: black;">${dto.subject} (${dto.replyCount})</a>
 		</td>
 		<td width="40">${dto.userId}</td>
 		<td width="40">${dto.created}</td>

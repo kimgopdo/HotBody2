@@ -47,8 +47,8 @@ function sendOk() {
 	
 	if(mode=='created')
 		var url="<%=cp%>/mocobung/${mocoNum}/b_created";
-	else if(mode=='update')
-		var url="<%=cp%>/mocobung/updateSubmit";
+	else if(mode=='u_bung')
+		var url="<%=cp%>/mocobung/${mocoNum}/u_bung";
 		
 	$.ajax({
 		type:"post"
@@ -139,7 +139,7 @@ $(function(){
 		<td width="100">벙개명</td>
 		<td>
 			<input type="text" name="mosubName" style="width: 98%; height: 35px;" value="${dto.mosubName}">
-			<input type="hidden" name="geNum" value="${geNum}" >
+			
 		</td>
 	</tr>
 	
@@ -157,7 +157,7 @@ $(function(){
 	<tr> 
 	<td width="100" valign="top"> 모임 지역</td>
 		<td>
-			<select name="moSpot" id="SelectArea" style="font-size: 9pt; font-family: 굴림체; width: 194px; height: 30px;"> 
+			<select name="moSpot" id="moSpot" style="font-size: 9pt; font-family: 굴림체; width: 194px; height: 30px;"> 
 		                <option  value="전체보기">전체보기</option> 
 		                <option  value="서울/경기">서울/경기</option> 
 		                <option  value="인천/부천">인천/부천</option> 
@@ -212,8 +212,6 @@ $(function(){
 			<input type="text" name="maxPeople" style="width: 20%; height: 35px;" value="${dto.maxPeople}"> 명
 		</td>
 	</tr>	
-	
-	
 
 	</table>
 	
@@ -221,15 +219,18 @@ $(function(){
 	
 	<div style="width:1000px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
 	<div style="width: 1000px; margin: 20px auto 0;" align="center">
-		<button type="button" class="btn-default02" onclick="sendOk();">${mode=='update'?'수정완료':'등록하기'}</button>
-		<button type="button" class="btn-default02" onclick="javascript:location.href='<%=cp%>/mocojee/${mocoNum}/main';">${mode=='update'?'수정취소':'등록취소'}</button>
-		<c:if test="${mode=='update'}">
+		<button type="button" class="btn-default02" onclick="sendOk();">${mode=='u_bung'?'수정완료':'등록하기'}</button>
+		<button type="button" class="btn-default02" onclick="javascript:location.href='<%=cp%>/mocojee/${mocoNum}/main';">${mode=='u_bung'?'수정취소':'등록취소'}</button>
+		<c:if test="${mode=='u_bung'}">
 			<input type="hidden" name="mosubName" value="${dto.mosubName}">
+			<input type="hidden" name="moDate" value="${dto.moDate}">
+			<input type="hidden" name="moSpot" value="${dto.moSpot}">
 			<input type="hidden" name="moPlace1" value="${dto.moPlace1}">
 			<input type="hidden" name="moPlace2" value="${dto.moPlace2}">
-			<input type="hidden" name="moCost" value="${dto.moCost}">
 			<input type="hidden" name="moStart" value="${dto.moStart}">
 			<input type="hidden" name="moEnd" value="${dto.moEnd}">
+			<input type="hidden" name="moCost" value="${dto.moCost}">
+			<input type="hidden" name="maxPeople" value="${dto.maxPeople}">			
 		</c:if>
 	</div>
 	</form>

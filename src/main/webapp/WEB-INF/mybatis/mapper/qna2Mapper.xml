@@ -76,8 +76,7 @@
 
 <!-- 조회수 증가 -->
 <update id="updateHitCount" parameterType="Integer">
-	UPDATE qna2Code SET hitCount=hitCount+1
-	WHERE qna2Code =#{qna2Code}
+	UPDATE qna2 SET hitCount=hitCount+1 WHERE qna2Code =#{qna2Code}
 </update>
 
 <!-- 이전글-->
@@ -122,10 +121,12 @@
 <update id="updateQna2" parameterType="com.hotbody.qna2.Qna2">
 	UPDATE qna2 SET subject=#{subject},
 	content=#{content}
-	WHERE qna2Code=#{qna2Code}
+	WHERE qna2Code =#{qna2Code}
 </update>
 
-
-
+<!-- 글삭제 -->
+<delete id="deleteQna2" parameterType="Integer">
+	DELETE FROM qna2 WHERE qna2Code =#{qna2Code}	
+</delete>
 
 </mapper>

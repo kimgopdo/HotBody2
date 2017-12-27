@@ -72,7 +72,7 @@ body{
 </style>
 </head>
 <body>
-================${mocoNum}
+
 
 	<div class="breadcumb-nav">
 		<div class="container">

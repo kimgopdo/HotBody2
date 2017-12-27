@@ -6,9 +6,11 @@ $(window).on("load",function(){
 	var left_top_length=(win_height/2)-(basket_btnSize/2);
 	var left_left_length=left_div_width/2-basket_btnSize/2;
 	$(".basketBtn").css("margin-top",left_top_length);
-	$(".basketBtn").css("margin-left",left_left_length);
+	//$(".basketBtn").css("margin-left",left_left_length);
+	$("#quickSearchBtn").css("margin-left",left_left_length-175);
+	$("#quickSearchBtn").css("margin-top",left_top_length+53);
 	$(".basketBtn2").css("margin-top",left_top_length);
-	$(".basketBtn2").css("margin-left",left_left_length+50);
+	//$(".basketBtn2").css("margin-left",left_left_length+50);
 	$(".quickMenuBtn").css("margin-top",left_top_length);
 	//$(".quickMenuBtn").css("margin-right",left_left_length);
 	$("#quickMenu_P").css("margin-top",left_top_length);
@@ -22,9 +24,11 @@ $(window).resize(function(){
 	var left_top_length=(win_height/2)-(basket_btnSize/2);
 	var left_left_length=left_div_width/2-basket_btnSize/2;
 	$(".basketBtn").css("margin-top",left_top_length);
-	$(".basketBtn").css("margin-left",left_left_length);
+	//$(".basketBtn").css("margin-left",left_left_length);
+	$("#quickSearchBtn").css("margin-left",left_left_length-175);
+	$("#quickSearchBtn").css("margin-top",left_top_length+53);
 	$(".basketBtn2").css("margin-top",left_top_length);
-	$(".basketBtn2").css("margin-left",left_left_length+50);
+	//$(".basketBtn2").css("margin-left",left_left_length+50);
 	$(".quickMenuBtn").css("margin-top",left_top_length);
 	//$(".quickMenuBtn").css("margin-right",left_left_length);
 	$("#quickMenu_P").css("margin-top",left_top_length);

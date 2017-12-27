@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.hotbody.common.MyUtil;
 import com.hotbody.member.SessionInfo;
 
-@Controller("qna2.qna2Controller")
+@Controller("qna2.Qna2Controller")
 public class Qna2Controller {
 	@Autowired
 	private  Qna2Service service;
@@ -30,7 +30,7 @@ public class Qna2Controller {
 			method = RequestMethod.GET)
 	public String createdForm(Model model) throws Exception {
 		model.addAttribute("mode", "created");
-		return "qna2/created";
+		return ".qna2.created";
 	}
 	
 	@RequestMapping(value = "/qna2/created",
@@ -108,7 +108,7 @@ public class Qna2Controller {
 				model.addAttribute("searchKey", searchKey);
 				model.addAttribute("searchValue", searchValue);
 				
-				return "qna2/list";
+				return ".qna2.list";
 	}
 	
 	@RequestMapping(value="/qna2/article")
@@ -132,7 +132,7 @@ public class Qna2Controller {
 		searchValue=URLDecoder.decode(searchValue, "UTF-8");
 		
 		//조회수
-		service.updatehitCount(qna2Code);
+		service.updateHitCount(qna2Code);
 		
 		//게시물 가져오기
 		Qna2 dto=service.readQna2(qna2Code);
@@ -162,7 +162,7 @@ public class Qna2Controller {
 		model.addAttribute("preReadDto", preReadDto);
 		model.addAttribute("nextReadDto", nextReadDto);
 		
-		return "qna2/article";
+		return ".qna2.article";
 		
 	}
 	
@@ -185,7 +185,7 @@ public class Qna2Controller {
 			
 					
 		
-			return "qna2/created";
+			return ".qna2.created";
 	}
 	@RequestMapping(value="/qna2/update",
 			method=RequestMethod.POST)
@@ -199,11 +199,16 @@ public class Qna2Controller {
 	
 			return "redirect:/qna2/list?page="+page+"&rows="+rows;
 }
+	@RequestMapping(value="/qna2/delete")	
+	public String delete(
+			@RequestParam int qna2Code,
+			@RequestParam String page,
+			Model model)throws Exception{
 		
+		service.deleteQna2(qna2Code);
 		
-		
-		
-		
+		return "redirect:/qna2/list?page="+page;
+	}	
 		
 		
 		

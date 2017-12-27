@@ -45,7 +45,14 @@ body{
 
 </style>
 
-<script type="text/javascript"> //스크립트에서 로케이션 리턴
+<script type="text/javascript">//스크립트에서 로케이션 리턴
+
+function deleteQna2(qna2Code) {
+	if(confirm("게시물을 삭제하시겠습니까?")) {
+		var url="<%=cp%>/qna2/delete?qna2Code="+qna2Code+"&page=${page}";
+		location.href=url;
+	}
+}
 
 function viewNext() {
 	var next ="${nextReadDto}";
@@ -150,7 +157,7 @@ function  deleteReply(replyNum, page) {
 </script>
 <div style="width: 700px; margin: 20px auto 0; min-height: 800px;">
 	<div style="height: 50px;"></div>
-	<div style="font-size: 40px; width: 700px; font-weight: bold; color: #666666;">| 이벤트</div>
+	<div style="font-size: 40px; width: 700px; font-weight: bold; color: #666666;">| 문의사항</div>
 	
 	<table style="width: 700px; margin: 20px auto 0; border-top: 2px solid #333333; border-bottom: 2px solid #333333; border-collapse: collapse; border-spacing: 0">
 	<tr height="50" style="border-bottom: 1px solid #cccccc">

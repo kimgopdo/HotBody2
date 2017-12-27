@@ -32,9 +32,15 @@ public class HotShop {
 	private String pCnt;
 	private int listNum;
 	private int milelage;
+	private int starScore;
 	
 	
-	
+	public int getStarScore() {
+		return starScore;
+	}
+	public void setStarScore(int starScore) {
+		this.starScore = starScore;
+	}
 	public int getMilelage() {
 		return milelage;
 	}
@@ -209,6 +215,7 @@ public class HotShop {
 	public void setUpload(MultipartFile upload) {
 		this.upload = upload;
 	}
+
 	
 	
 	

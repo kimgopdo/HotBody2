@@ -7,19 +7,21 @@
 %>
 <style>
 #slideshow { 
-    margin: 0 auto; 
-    position: relative; 
+    margin: 150px auto;
+    position: relative;
     width: 100%;
+    height: 100%;
     padding: 1% 1% 45% 1%; /*56.25 is for 16x9 resolution*/
 		/* border-radius:20px; */
 		/* background: rgba(0,0,0,0.2); */
    /*  box-shadow: 0 0 20px rgba(0,0,0,0.6);
   box-sizing:border-box; */
+  z-index: 8;
 }
 
 #slideshow > div { 
     position: absolute; 
-    height: 500px;
+    height: 100%;
     top: 10px; 
     left: 10px; 
     right: 10px; 
@@ -259,16 +261,6 @@ $(document).ready(function(){
 	});
 
 </script>
-<table style="margin-top: 100px; margin-left:auto; margin-right:auto; width:100%; border-collapse: collapse;">
-	<tr>
-		<td>
-		<!--
-JQUERY SLIDER BY JohnRostislavovich - https://codepen.io/JohnRostislavovich
-ALL YOU HAVE TO DO:
--copy the whole code html, css & js
--include jquery lib
--change the images
--->
 <div id="slideshow">
    <div class="img1 slideitem current">	
      <%-- <img src="<%=cp%>/uploads/shopList/salad-2942257_1920.jpg"> --%>
@@ -292,23 +284,3 @@ ALL YOU HAVE TO DO:
      <!-- <img src="http://img15.nnm.me/3/4/2/b/2/3f06025f75b6fd3544b947da06f.jpg"> -->
    </div>
 </div>
-		</td>
-	</tr>
-	<tr>
-		<td style="width:100%; height:100%; padding-left: 7%; padding-right: 3%;">
-			<ul id="#" class="list">
-			<c:forEach begin="0" end="10">
-			      <li class="list">
-			         <div class="aspect">
-			            <img src="<%=cp%>/resource/images/road.jpg">
-			         </div>
-			         <div align="left">
-			         <span style=" text-align: left;">상품명</span> <img src=""><br>
-			         <span style=" text-align: left;">상품명</span>
-			         </div>
-			      </li>
-			</c:forEach>
-			</ul>
-		</td>
-	</tr>
-</table>

@@ -74,7 +74,7 @@ body {
 	<div style="height: 50px;"></div>
 	<div
 		style="font-size: 40px; width: 700px; margin: 20px auto 0; font-weight: bold; color: #666666;">|
-		자주묻는질문</div>
+		문의사항</div>
 	<table
 		style="width: 700px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0">
 

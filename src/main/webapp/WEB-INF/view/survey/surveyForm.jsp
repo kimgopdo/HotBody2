@@ -7,7 +7,6 @@
 %>
 <style type="text/css">
 .surveyLayer{
-  position:absolute;
   width:800px;
   height:500px;
   background:#ffffff;
@@ -29,15 +28,8 @@
 <script type="text/javascript">
 var cur=1;
 
-jQuery.fn.center = function() {
-	this.css("position","absolute");
-	this.css("top",Math.max(0,(($(window).height()- $(this).outerHeight())/2)-$(window).scrollTop())+"px");
-	this.css("left",Math.max(0,(($(window).width()- $(this).outerWidth())/2)-$(window).scrollLeft())+"px");
-	return this;
-}
 
 $(function() {
-	$("#surveyLayer").center();
 	$(".survey").hide();
 	$('#survey'+cur).show();
 	$(".prevBtn").hide();
@@ -131,11 +123,11 @@ function surveySubmit(type) {
 </head>
 <body>
 
+
 <form name="surveyForm" id="surveyForm" method="post">
-<div class="surveyLayer" id="surveyLayer">
-	<div style="float: left; width: 200px; background: #bbddd4; height: 100%;">
+<div class="surveyLayer" id="surveyLayer" style="width: 800px; height: 500px; margin: 150px auto;">
+	<div style="float: left; width: 200px; background: #bbddd4; height: 100%;" align="center">
 	</div>
-	
 	<c:forEach var="dto" items="${list}">
 		<div class="survey" id="survey${dto.questionOrder}" style="width: 600px; display: inline-block; float: left; margin-top: 50px; display : none;">
 			<div align="center" style="width: 500px; height:100px; margin-left: 45px;">

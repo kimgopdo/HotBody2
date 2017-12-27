@@ -67,6 +67,10 @@ public class HotShopBoardController {
 			map.put("listOrArticle", 0);
 			map.put("cl", cl);
 			map.put("code", code);
+			SessionInfo info=(SessionInfo) session.getAttribute("member");
+			if(info!=null) {
+				map.put("userId", info.getUserId());
+			}
 			list=service.productList(map);
 			
 			dataCount=service.dataCount();
@@ -93,6 +97,7 @@ public class HotShopBoardController {
 			@RequestParam(defaultValue="subject") String searchKey,
 			@RequestParam(defaultValue="") String searchValue,
 			HttpServletRequest req,
+			HttpSession session,
 			Model model
 			) throws Exception {
 		System.out.println(searchKey);
@@ -125,6 +130,10 @@ public class HotShopBoardController {
 		map.put("start", start);
 		map.put("end", end);
 		map.put("listOrArticle", 0);
+		SessionInfo info=(SessionInfo) session.getAttribute("member");
+		if(info!=null) {
+			map.put("userId", info.getUserId());
+		}
 		productList=service.productList(map);
 		String cp=req.getServletContext().getRealPath("/");
 		String pathname=cp+"uploads"+File.separator+"shopList";
@@ -453,6 +462,7 @@ public class HotShopBoardController {
 			@RequestParam String cl,
 			@RequestParam(value="page",defaultValue="1") int page,
 			@RequestParam String formal,
+			HttpSession session,
 			Model model
 			) {
 		int row=5;
@@ -475,6 +485,10 @@ public class HotShopBoardController {
 		end=current_page*row;
 		List<HotShop> list=new ArrayList<>();
 		Map<String, Object> map=new HashMap<>();
+		SessionInfo info=(SessionInfo) session.getAttribute("member");
+		if(info!=null) {
+			map.put("userId", info.getUserId());
+		}
 		map.put("start", start);
 		map.put("end", end);
 		map.put("page", page);
@@ -520,6 +534,35 @@ public class HotShopBoardController {
 			@RequestParam int code
 			) {
 		service.deleteSci(code);
+		return "redirect:/hotShop";
+	}
+	//showAndHide Update
+	@RequestMapping(value="/hotShop/show")
+	public String show(
+			@RequestParam int pdnum,
+			HttpSession session
+			) {
+		SessionInfo info=(SessionInfo) session.getAttribute("member");
+		if(info==null||! info.getUserId().equals("admin")) {
+			return "redirect:/hotShop";
+		}
+		System.out.println(pdnum+"---------------------------------------------------------------------------------------------------------------------------\n------------------------------------------------------------------------------------------------------------------\n--------------------------------------------------------------");
+		service.show(pdnum);
+		
+		return "redirect:/hotShop";
+	}
+	@RequestMapping(value="/hotShop/hide")
+	public String hide(
+			@RequestParam int pdnum,
+			HttpSession session
+			) {
+		SessionInfo info=(SessionInfo) session.getAttribute("member");
+		if(info==null||! info.getUserId().equals("admin")) {
+			return "redirect:/hotShop";
+		}
+		System.out.println(pdnum+"---------------------------------------------------------------------------------------------------------------------------\n------------------------------------------------------------------------------------------------------------------\n--------------------------------------------------------------");
+		service.hide(pdnum);
+		
 		return "redirect:/hotShop";
 	}
 }

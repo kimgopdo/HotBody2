@@ -227,7 +227,7 @@ function deleteFile() {
 			<tr height="10px;"></tr>
 
 			<tr height="40">
-				<td width="100">파일등록</td>
+				<td width="100">대표이미지</td>
 				<td>
 					<div class="form-group form_file">
 						<input id="fileName" class="form-control form_point_color01"

@@ -39,7 +39,7 @@
 	<select id="readSurvey" parameterType="Integer" resultType="com.hotbody.survey.Survey">
 		SELECT questionCode, questionContent, questionOrder, questionType, soro
 		FROM survey 
-	    WHERE questionOrder IN (#{questionOrder})	
+	    WHERE questionOrder = #{questionOrder}	
 	</select>
 	
 	<delete id="deleteSurvey" parameterType="Integer">

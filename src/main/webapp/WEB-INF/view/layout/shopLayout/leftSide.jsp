@@ -93,22 +93,44 @@ function BasketList(){
   $( function() {
     $( "#basketList" ).dialog({
       autoOpen: false,
-      width : "800px",
+      width : "850px",
+      resizable: false,
+      buttons:{
+          "구매":function(){
+              $(this).dialog("close");
+              payment();
+          }
+      },
       show: {
         effect: "blind",
-        duration: 1000
+        duration: 500
       },
       hide: {
-        effect: "explode",
-        duration: 1000
+        effect: "blind",
+        duration: 500
       }
     });
- 
+ 	
     $( "#basket" ).on( "click", function() {
-      $( "#basketList" ).dialog( "open" );
+    	if(getCookie("hotbodyBasket")!=null){
+	      $( "#basketList" ).dialog( "open" );    		
+    	}else{
+    		alert("상품이 없습니다.");
+    	}
     });
   } );
-  
+
+function payment(){
+	var array=getCookie("hotbodyBasket").split(",");
+	var member="${sessionScope.member.userId}";
+	if(member!=""){
+		location.href="<%=cp%>/hotShop/payment?cookie="+array+"&userId="+member;
+		return;
+	}else{
+		location.href="<%=cp%>/member/login?prePage=hotShop";
+		return;
+	}
+}
   
   
   
@@ -141,12 +163,7 @@ function BasketList(){
 		</table>
 	</div>
       <!-- 왼쪽 사이드 바 -->
-   <div id="leftSide" style="width: 10%; height: 1000px; top:0px; left: 0px;z-index: 10;">
-         <div style="margin-top: 40px; margin-left: 30px;">
-         <a href="<%=cp%>/" style="color: black;height: 60px; padding: 1px; position: absolute;">
-            <img src="<%=cp%>/resource/images/shop_images/HOTBODY_Logo.png"/>
-         </a>                
-         </div>               
+   <div id="leftSide" style="height: 1000px; top:0px; left: 0px;z-index: 10;">             
          <div id="basketBtn">
          	<ul>
          		<li style="position: absolute;">
@@ -155,7 +172,7 @@ function BasketList(){
 		         	</button>
 	         	</li>
          		<li id="basket_check" style="opacity: 0;">
-         			<div id="bubble" class="basketBtn2"style="width: 24px; height:24px; background-image: url(<%=cp%>/uploads/shopList/chat3.png); z-index: 11;position: absolute;">                        
+         			<div id="bubble" class="basketBtn2"style="width: 24px; height:24px; background-image: url(<%=cp%>/uploads/shopList/chat3.png); z-index: 11;position: absolute; margin-left:50px;">                        
 		         	<span id="totC" style="margin-left:10px; color:white; font-family:고딕;"></span>
          			</div>
          		</li>

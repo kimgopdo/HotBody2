@@ -58,7 +58,7 @@
 		INSERT INTO TotalOrdList (delorder,paydate) VALUES (#{delOrder},sysdate)
 	</insert>
 	<insert id="insertBcl" parameterType="map">
-		INSERT INTO bcl (bclcode,name) values (bcl_seq.NEXTVAL,#{bci})
+		INSERT INTO bcl (bclcode,name) values (bci_seq.NEXTVAL,#{bci})
 	</insert>
 	<insert id="insertSci" parameterType="map">
 		INSERT INTO sci (scicode,name) values(sci_seq.NEXTVAL,#{scl})
@@ -107,7 +107,7 @@
 	SELECT p.pdnum pdnum, imgOriginalFilename, imgSaveFilename, pdName,
 			 pdSumContent, pdPrice, pdcontent content,
 			pdNutrient, pdStMethod, pdType, pdRawName, pdArea,milelage,
-			 pdDelRule, pdCreated, pdstCount, (SELECT MIN(TO_CHAR(pdExDate,'YYYY-MM-DD')) FROM productin) pdExDate
+			 pdDelRule, pdCreated, pdstCount, (SELECT MIN(TO_CHAR(pdExDate,'YYYY-MM-DD')) FROM productin) pdExDate, showandhide
 				FROM productList p 
 				Left OUTER Join Temporary t ON p.pdnum=t.pdnum 
 				Left OUTER JOIN Temporary2 t2 ON p.pdnum=t2.pdnum 
@@ -127,10 +127,12 @@
 					</if>
 					<choose>
 						<when test="newProduct=='newProduct'">
-							 pdcreated>pdcreated-30
+							And pdcreated>pdcreated-30
 						</when>
 					</choose>
-					 AND showandhide!=0
+					<if test="userId != 'admin'">
+					 And showandhide!=0
+					</if>
 				</where>
 				
 				ORDER BY 
@@ -156,6 +158,9 @@
         		 DESC
         	</otherwise>
         </choose>
+	</select>
+	<select id="readPdStarScore" parameterType="Integer" resultType="Integer">
+		 SELECT ROUND(AVG(starscore), 0) starScore FROM shreviews WHERE pdnum=#{pdnum} GROUP BY pdnum
 	</select>
 	<select id="readProductIn" parameterType="map" resultType="com.hotbody.hotShop.board.ProductIn">
 		SELECT * FROM (SELECT ROWNUM rnum, pdin.* FROM (SELECT pdincode,pdrawprice,pdinnum,TO_CHAR(pdexdate, 'YYYY-MM-DD') pdexdate,TO_CHAR(pdindate, 'YYYY-MM-DD') pdindate,pi.pdnum pdnum,pl.pdname pdname,pi.supplycode,supplyname,imgSaveFilename,milelage
@@ -230,6 +235,12 @@
 	</update>
 	<update id="updateHitCount" parameterType="Integer">
 		UPDATE productList SET hitCount=hitCount+1 WHERE pdnum=#{pdnum}
+	</update>
+	<update id="showUpdate" parameterType="Integer">
+		UPDATE productList SET showAndHide=1 WHERE pdnum=#{code}
+	</update>
+	<update id="hideUpdate" parameterType="Integer">
+		UPDATE productList SET showAndHide=0 WHERE pdnum=#{code}
 	</update>
 	<insert id="insertMilelage" parameterType="com.hotbody.hotShop.board.Payment">
 	INSERT INTO milelage(milelage,userId,delOrder)VALUES(#{milelage},#{userId},#{delOrder})
