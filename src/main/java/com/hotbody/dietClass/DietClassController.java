@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -85,30 +84,6 @@ public class DietClassController {
 		return ".dietClass.list";
 	}
 	
-	@RequestMapping(value="dietClass/created")
-	public String classCreated(HttpServletRequest req) {
-		
-		List<CProgram> list = service.listcProgram();
-		req.setAttribute("cProgram", list);
-		req.setAttribute("mode", "created");
-		
-		return ".dietClass.created";
-	}
-	
-	@RequestMapping(value="/dietClass/insert")
-	@ResponseBody
-	public Map<String, Object> insertdietClass(DietClass dto,
-										HttpSession session){
-		String root=session.getServletContext().getRealPath("/");
-		String pathname=root+File.separator+"uploads"+File.separator+"dietClass";
-		
-		service.insertDietClass(dto,pathname);
-		
-		Map<String, Object> model = new HashMap<>();
-		model.put("state", "true");
-		
-		return model;
-	}
 	
 	@RequestMapping(value="/dietClass/article")
 	public String classArticle(@RequestParam int num,

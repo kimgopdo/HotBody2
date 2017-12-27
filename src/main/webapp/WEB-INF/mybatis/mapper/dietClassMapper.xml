@@ -63,6 +63,7 @@
    		FROM dietClass d
 		LEFT OUTER JOIN onClass o ON d.classNum=o.classNum 
 		LEFT OUTER JOIN offClass o ON d.classNum=o.classNum
+		WHERE classType IN (1,0)
 	</select>
 	
 	<select id="readClass" parameterType="map" resultType="com.hotbody.dietClass.DietClass">

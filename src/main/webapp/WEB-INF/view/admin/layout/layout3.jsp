@@ -18,6 +18,7 @@
 </style>
 <meta charset="UTF-8">
 <title>spring</title>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <!-- CSS -->
 	<link rel="stylesheet" href="<%=cp%>/resource/css/tabs.css" type="text/css">
 	<link href="<%=cp%>/resource/mainboot/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -38,15 +39,13 @@
 	<!-- FONTS -->
 	<link href='http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500italic,700,500,700italic,900,900italic' rel='stylesheet' type='text/css'>
 	<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">	
-	<script src="<%=cp%>/resource/mainboot/js/jquery.min.js" type="text/javascript"></script>
-	<script src="<%=cp%>/resource/mainboot/js/jquery.nicescroll.min.js" type="text/javascript"></script>
+	<%-- <script src="<%=cp%>/resource/mainboot/js/jquery.nicescroll.min.js" type="text/javascript"></script>
 	<script src="<%=cp%>/resource/mainboot/js/jquery.flexslider.min.js" type="text/javascript"></script>
-	<script src="<%=cp%>/resource/mainboot/js/myscript.js" type="text/javascript"></script>
+	<script src="<%=cp%>/resource/mainboot/js/myscript.js" type="text/javascript"></script> --%>
 	<script src="<%=cp%>/resource/mainboot/js/bootstrap.min.js" type="text/javascript"></script>
 	<script src="<%=cp%>/resource/mainboot/js/superfish.min.js" type="text/javascript"></script>
 	<script src="<%=cp%>/resource/mainboot/js/owl.carousel.js"></script>
 	<script src="<%=cp%>/resource/mainboot/js/animate.js" type="text/javascript"></script>
-	<script src="<%=cp%>/resource/jquery/js/jquery-ui.min.js" type="text/javascript"></script>
 	<script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.form.js"></script>
 	<!-- Bootstrap core JavaScript-->
 	<script src="<%=cp%>/resource/mainboot/js/jquery.js" type="text/javascript"></script>
@@ -62,7 +61,7 @@
     <tiles:insertAttribute name="header"/>
 </div>
 
-<div class="body" style="margin-left: 250px; background: #ffffff">
+<div class="body" style="margin-left: 250px; background: #ffffff; padding-bottom: 30px;">
     <tiles:insertAttribute name="body"/>
 </div>
 

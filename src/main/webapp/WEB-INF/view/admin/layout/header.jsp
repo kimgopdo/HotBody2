@@ -26,7 +26,10 @@
           </a>
           <ul class="sidenav-second-level collapse" id="collapseClass">
           	<li>
-              <a href="#">클래스 관리</a>
+              <a href="<%=cp%>/admin/dietClass/created">클래스 등록</a>
+            </li>
+            <li>
+              <a href="<%=cp%>/admin/dietClass/list">클래스 관리</a>
             </li>
             <li>
               <a href="#">등록 회원</a>

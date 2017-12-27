@@ -10,7 +10,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+<script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+<script src="<%=cp%>/resource/jquery/js/jquery-ui.min.js" type="text/javascript"></script>
 <style type="text/css">
 /* 바탕 배경 이미지 */
 .pop-address-search .pop-address-search-inner { background-image: url(http://www.0000.com/img/backImg.png);}
@@ -30,11 +34,7 @@
 
 <script type="text/javascript">
 function sendOk() {
-	var uid="${sessionScope.member.userId}";
-   	if(! uid) {
-      location.href="<%=cp%>/member/login";
-      return;
-   	}
+	
 	var mode = "${mode}";
 	
 	var f = document.dietClassForm;
@@ -56,7 +56,7 @@ function sendOk() {
 			var type=data.type;
 			if(data.state=="true"){
 				alert("등록완료");
-				location.href="<%=cp%>/dietClass/list?type="+type;
+				location.href="<%=cp%>/admin/main";
 			}
 		}
 	    ,error:function(e) {
