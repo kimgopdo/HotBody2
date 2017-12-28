@@ -71,7 +71,8 @@ public class Qna2ServiceImpl implements Qna2Service{
 
 	@Override
 	public Qna2 nextReadQna2(Map<String, Object> map) {
-		Qna2 dto = null;
+		Qna2 dto=null;
+		
 		try {
 			dto=dao.selectOne("qna2.nextReadQna2", map);
 		} catch (Exception e) {

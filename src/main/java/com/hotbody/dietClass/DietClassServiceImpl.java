@@ -172,13 +172,13 @@ public class DietClassServiceImpl implements DietClassService {
 			
 			Map<String, Object> mapperMap = new HashMap<>();
 			mapperMap.put("classNum", dto.getClassNum());
-			dao.deleteData("dietClass.deleteMission", mapperMap);
-			dao.deleteData("dietClass.deleteReadyMission", mapperMap);
 			
 			//////////////////////////////////////////////////////////////
-			if(dto.getClassType()==0) 
+			if(dto.getClassType()==0) {
+				dao.deleteData("dietClass.deleteMission", mapperMap);
+				dao.deleteData("dietClass.deleteReadyMission", mapperMap);
 				dao.deleteData("dietClass.deleteOn", dto.getClassNum());
-			
+			}
 			else if(dto.getClassType()==1)
 				dao.deleteData("dietClass.deleteOff", dto.getClassNum());
 			//////////////////////////////////////////////////////////////
@@ -332,4 +332,27 @@ public class DietClassServiceImpl implements DietClassService {
 		}
 		return list;
 	}
+
+	@Override
+	public List<DietClass> listByAdmin() {
+		List<DietClass> list = null;
+		try {
+			list = dao.selectList("dietClass.listByAdmin");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public int countClass() {
+		int count=0;
+		try {
+			count = dao.selectOne("dietClass.countClass");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return count;
+	}
+
 }

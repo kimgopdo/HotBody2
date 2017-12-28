@@ -17,16 +17,13 @@ public class AdminController {
 	public String admin(Model model,
 						HttpSession session) {
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
-		if(! info.getUserId().equals("admin"))
-			return "redirect:/member/login";
-		
-		long total = CountManager.getToDayCount();
+		/*if(info==null || !info.getUserId().equals("admin"))
+			return "redirect:/member/login";*/
+			
+		long total = CountManager.getTotalCount();
+		long today = CountManager.getToDayCount();
 		model.addAttribute("total", total);
+		model.addAttribute("today", today);
 		return ".admin.main.main";
-	}
-	
-	@RequestMapping(value="/admin/main2")
-	public String admin2() {
-		return ".admin.main.created";
 	}
 }

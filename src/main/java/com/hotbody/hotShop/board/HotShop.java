@@ -19,7 +19,7 @@ public class HotShop {
 	private String pdType;//상품유형
 	private String pdRawName;//상품원재료명
 	private String pdDelRule;//배송정책(이미지로대체)
-	private String pdRawPrice;//상품원가
+	private int pdRawPrice;//상품원가
 	private String pdExDate;//유통기한
 	private String imgSaveFilename;
 	private String imgOriginalFilename;
@@ -35,6 +35,13 @@ public class HotShop {
 	private int starScore;
 	
 	
+	
+	public int getPdRawPrice() {
+		return pdRawPrice;
+	}
+	public void setPdRawPrice(int pdRawPrice) {
+		this.pdRawPrice = pdRawPrice;
+	}
 	public int getStarScore() {
 		return starScore;
 	}
@@ -196,12 +203,6 @@ public class HotShop {
 	}
 	public void setPdDelRule(String pdDelRule) {
 		this.pdDelRule = pdDelRule;
-	}
-	public String getPdRawPrice() {
-		return pdRawPrice;
-	}
-	public void setPdRawPrice(String pdRawPrice) {
-		this.pdRawPrice = pdRawPrice;
 	}
 	public String getPdExDate() {
 		return pdExDate;

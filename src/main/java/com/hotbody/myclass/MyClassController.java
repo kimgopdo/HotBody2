@@ -181,7 +181,21 @@ public class MyClassController {
 	}
 	
 	@RequestMapping(value="/myclass/diary/inputForm")
-	public String inputForm() throws Exception{
+	public String inputForm(@RequestParam String start,HttpSession session, Model model) throws Exception{
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		
+		if (info == null) {
+			return "redirect:/member/login";
+		}
+			
+		Map<String, Object> map=new HashMap<>();
+		map.put("userId", info.getUserId());
+		map.put("start", start);
+		
+		List<Diary> list=service.listMiss(map);
+		
+		
+		model.addAttribute("list", list);
 		return "myclass/diary/inputForm";
 	}
 	
@@ -263,9 +277,13 @@ public class MyClassController {
         // 리스트에 출력할 데이터를 가져오기
         int start = (current_page - 1) * rows + 1;
         int end = current_page * rows;
+        String userId = info.getUserId();
+        
+        map.put("userId",userId);
         map.put("start", start);
         map.put("end", end);
-
+      
+        
         List<TodayExer> list = service.listToday(map);
 
         // 리스트의 번호
@@ -388,14 +406,15 @@ public class MyClassController {
         model.addAttribute("total_page", total_page);
         model.addAttribute("paging", paging);
         
-		return ".myclass.addinfo.list";
+		return ".admin.main.addinfo.list";
+
 	}
 	
 	@RequestMapping(value = "/myclass/addinfo/created", method = RequestMethod.GET)
 	public String infoInput(Model model) throws Exception {	
 		model.addAttribute("mode", "created");
 
-		return ".myclass.addinfo.created";
+		return ".admin.main.addinfo.created";
 	}
 	
 	@RequestMapping(value = "/myclass/addinfo/created", method = RequestMethod.POST)
@@ -443,7 +462,7 @@ public class MyClassController {
 		model.addAttribute("page", page);
 		model.addAttribute("query", query);
 
-        return ".myclass.addinfo.article";
+        return ".admin.main.addinfo.article";
 	}
 	
 	@RequestMapping(value="/myclass/addinfo/update", 
@@ -463,7 +482,7 @@ public class MyClassController {
 		model.addAttribute("mode", "update");
 		model.addAttribute("page", page);
 		
-		return ".myclass.addinfo.created";
+		return ".admin.main.addinfo.created";
 	}
 	
 	@RequestMapping(value="/myclass/addinfo/update", 
@@ -569,7 +588,7 @@ public class MyClassController {
         model.addAttribute("total_page", total_page);
         model.addAttribute("paging", paging);
 		
-		return ".myclass.addexercise.list";
+		return ".admin.main.addexercise.list";
 	}
 	
 	@RequestMapping(value = "/myclass/addexercise/created", method = RequestMethod.GET)
@@ -578,7 +597,7 @@ public class MyClassController {
 		
 		model.addAttribute("mode", "created");
 		model.addAttribute("list", list);
-		return ".myclass.addexercise.created";
+		return ".admin.main.addexercise.created";
 	}
 	
 	@RequestMapping(value = "/myclass/addexercise/created", method = RequestMethod.POST)
@@ -635,7 +654,7 @@ public class MyClassController {
 		model.addAttribute("page", page);
 		model.addAttribute("query", query);
 
-        return ".myclass.addexercise.article";
+        return ".admin.main.addexercise.article";
 	}
 	
 	@RequestMapping(value="/myclass/addexercise/update", 
@@ -657,7 +676,7 @@ public class MyClassController {
 		model.addAttribute("mode", "update");
 		model.addAttribute("page", page);
 		
-		return ".myclass.addexercise.created";
+		return ".admin.main.addexercise.created";
 	}
 	
 	@RequestMapping(value="/myclass/addexercise/update", 
@@ -821,13 +840,13 @@ public class MyClassController {
 		
 		
 		
-		return ".myclass.addingrerdients.list";
+		return ".admin.main.addingrerdients.list";
 	}
 	
 	@RequestMapping(value = "/myclass/addingrerdients/created", method = RequestMethod.GET)
 	public String createdForm(Model model) throws Exception {
 		model.addAttribute("mode", "created");
-		return ".myclass.addingrerdients.created";
+		return ".admin.main.addingrerdients.created";
 	}
 	
 	@RequestMapping(value = "/myclass/addingrerdients/created", method = RequestMethod.POST)
@@ -885,7 +904,7 @@ public class MyClassController {
 		model.addAttribute("page", page);
 		model.addAttribute("query", query);
 
-        return ".myclass.addingrerdients.article";
+        return ".admin.main.addingrerdients.article";
 	}
 	
 	@RequestMapping(value="/myclass/addingrerdients/update", 
@@ -904,7 +923,7 @@ public class MyClassController {
 		model.addAttribute("mode", "update");
 		model.addAttribute("page", page);
 		
-		return ".myclass.addingrerdients.created";
+		return ".admin.main.addingrerdients.created";
 	}
 	
 	@RequestMapping(value="/myclass/addingrerdients/update", 

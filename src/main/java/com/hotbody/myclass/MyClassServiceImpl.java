@@ -402,6 +402,7 @@ public class MyClassServiceImpl implements MyClassService {
 	public List<TodayExer> listToday(Map<String, Object> map) {
 		List<TodayExer> list = null;
 		try {
+				
 			list = dao.selectList("myClass.listToday",map);
 		} catch (Exception e) {
 			System.out.println(e.toString());
@@ -463,13 +464,11 @@ public class MyClassServiceImpl implements MyClassService {
 			int seq = dao.selectOne("myClass.diarySeq");
 			dto.setDiaryNum(seq);
 			
-			
-			
-			dao.insertData("", "");
-			dao.insertData("", "");
-			dao.insertData("", "");
-			dao.insertData("", "");
-			dao.insertData("", "");
+			dao.insertData("myClass.insertDietDiary", dto);
+			dao.insertData("myClass.insertDiet", dto);
+			dao.insertData("myClass.insertDietDetails", dto);
+			dao.insertData("myClass.insertMisCheck", dto);
+			dao.insertData("myClass.insertDiaryExe", dto);
 			
 			result = 1;
 		} catch (Exception e) {
@@ -498,7 +497,33 @@ public class MyClassServiceImpl implements MyClassService {
 
 	@Override
 	public int deleteDiet(int num) {
-		// TODO Auto-generated method stub
-		return 0;
-	}	
+		int result = 0;
+		
+		try {		
+			
+			dao.deleteData("myClass.deleteDiaryExe", num); //운동
+			dao.deleteData("myClass.deleteMisCheck", num); //미션성공여부
+			dao.deleteData("myClass.deleteDietDetails", num); //식단상세
+			dao.deleteData("myClass.deleteDiet", num); //식단
+			dao.deleteData("myClass.deleteDietDiary", num); //다이어트일기		
+			result = 1;
+			
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return result;
+	}
+
+	@Override
+	public List<Diary> listMiss(Map<String, Object> map) {
+		List<Diary> list = null;
+		
+		try {
+			list = dao.selectList("myClass.missionInfo",map);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return list;
+	}
+
 }

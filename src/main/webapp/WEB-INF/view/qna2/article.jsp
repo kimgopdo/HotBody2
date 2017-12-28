@@ -169,9 +169,7 @@ function  deleteReply(replyNum, page) {
 	<tr height="30" style="font-size: 13px; color: gray; padding: 5px 15px;">
 		<td colspan="3"></td>
 		<td align="right">
-		<p id="filedown" style="text-decoration: none; color: #666666; cursor: pointer;"> 
-		첨부파일 <span style="color: tomato; font: bold;">(개수)</span>
-		</p>
+
 		</td>
 	</tr>
 	<tr height="400" style="border-bottom: 1px solid #cccccc;">

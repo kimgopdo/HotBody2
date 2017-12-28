@@ -226,7 +226,7 @@ function surveySubmit() {
 }
 
 </script>
-<div class="body-container" style="width: 1100px; margin: 100px auto;">
+<div class="body-container" style="width: 1100px; padding-left: 20px; padding-top: 50px;">
 	<div style="font-size: 40px; width: 1100px; margin: 20px auto 0; font-weight: bold; color: #666666;">설문 등록</div>
 	<div style="float: right;">
          <button type="button" class="btn-default02" onclick="objectiveAdd();">+객관식 추가</button>

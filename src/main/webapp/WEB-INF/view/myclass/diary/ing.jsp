@@ -122,7 +122,7 @@ th {
 	
 	<c:forEach var="dto" items="${list}">
 	<tr height="100" align="center" class="board">
-		<td width="15"><input id="ingChk" type="checkbox"></td>
+		<td width="15"><input name="ingChk" type="checkbox" value="${dto.ingredientsName}" data-num="${dto.ingrerdientsNum}" data-unit="${dto.unit}"></td>
 		<td width="20">${dto.listNum}</td>
 		<td width="60"><img src="<%=cp%>/uploads/myClass/${dto.image}" style="height: 65px; width: 65px;"></td>
 		<td width="60">${dto.ingredientsName}</td>

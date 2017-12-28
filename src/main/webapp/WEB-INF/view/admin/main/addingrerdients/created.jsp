@@ -5,120 +5,6 @@
 <%
 	String cp=request.getContextPath();
 %>
-<style type="text/css">
-* {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box
-}
-
-:after,
-:before {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box
-}
-
-.form-group {
-    display: inline-block;
-    margin-bottom: 0;
-    vertical-align: middle;
-}
-
-.form-control {
-    display: inline-block;
-    width: 100%;
-    height: 30px;
-    font-size: 12px;
-    line-height: 1.42857;
-    color: rgb(85, 85, 85);
-    background-color: rgb(255, 255, 255);
-    background-image: none;
-    box-shadow: rgba(0, 0, 0, 0.0745098) 0 1px 1px inset;
-    padding: 6px 9px;
-    border-width: 1px;
-    border-style: solid;
-    border-color: rgb(204, 204, 204);
-    border-image: initial;
-    border-radius: 2px;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
-
-.form-control[readonly],
-fieldset[disabled] .form-control {
-    background-color: #ffffff;
-    opacity: 1;
-}
-
-.form_file .file_load {
-    display: inline-block;
-    position: relative;
-    width: 95px;
-    height: 31px;
-    cursor: pointer;
-}
-
-.form_file .file_load [type="file"] {
-    display: inline-block;
-    position: absolute;
-    width: inherit;
-    height: inherit;
-    z-index: 1;
-    opacity: 0;
-}
-
-.form_file .file_load label {
-    position: relative;
-    z-index: 5;
-    cursor: pointer;
-}
-
-.btn-default {
-    display: inline-block;
-    margin-bottom: 0;
-    font-weight: normal;
-    text-align: center;
-    width : 150px;
-    vertical-align: middle;
-    touch-action: manipulation;
-    cursor: pointer;
-    background-image: none;
-    white-space: nowrap;
-    font-size: 12px;
-    user-select: none;
-    border-width: 1px;
-    border-style: solid;
-    background-color: #666666;
-    border-color: #333333;
-    border-image: initial;
-    padding: 6px 9px;
-    border-radius: 2px;
-    color: #ffffff;
-}
-
-.btn-default02 {
-    display: inline-block;
-    margin-bottom: 0;
-    font-weight: normal;
-    text-align: center;
-    width : 100px;
-    vertical-align: middle;
-    touch-action: manipulation;
-    cursor: pointer;
-    background-image: none;
-    white-space: nowrap;
-    font-size: 12px;
-    user-select: none;
-    border-width: 1px;
-    border-style: solid;
-    background-color: #999999;
-    border-color: #cccccc;
-    border-image: initial;
-    padding: 6px 9px;
-    border-radius: 2px;
-    color: #ffffff;
-}
-</style>
 <script>
 
 // 직접입력
@@ -180,14 +66,13 @@ function deleteFile() {
 }
 </script>
 
-<div class="body-container" style="width: 1100px; margin: 100px auto;">
-
-<div class="body-title">
-        <h3><span style="font-family: Webdings; border-bottom: 2px solid #666666; font-weight: bold; color: #666666;">2</span>${mode=='update'?'재료수정':'재료등록'}</h3>
-</div>
+<div class="body-container" style="width: 1000px; padding-left: 20px; padding-top: 40px;">
+<div style="height: 50px;"></div>
+<div style="font-size: 40px; width: 1000px; margin: 20px auto 0; font-weight: bold; color: #666666;">${mode=='update'?'재료수정':'재료등록'}</div>
+<div style="width:1000px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
 
 <form action="<%=cp%>/myclass/addingrerdients/${mode}" method="post" name="boardForm" enctype="multipart/form-data">
-<table style="width: 1100px; border-collapse: collapse; border-spacing: 0">
+<table style="width: 1000px; border-collapse: collapse; border-spacing: 0">
 <tr height="40" style="margin: 30px auto;">
 	<td width="100">재 료 명</td>
 	<td>
@@ -289,8 +174,8 @@ function deleteFile() {
 </tr>
 </c:if>
 </table>
-<div style="width:1100px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
-<div style="width: 1100px; margin: 20px auto 0;" align="center">
+<div style="width:1000px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
+<div style="width: 1000px; margin: 20px auto 0;" align="center">
 <button type="button" class="btn-default02" onclick="sendOk();">${mode=='update'?'수정완료':'등록하기'}</button>
 <button type="button" class="btn-default02" onclick="javascript:location.href='<%=cp%>/myclass/addingrerdients/list?page=${page}';">${mode=='update'?'수정취소':'등록취소'}</button>
 <c:if test="${mode=='update'}">

@@ -98,9 +98,9 @@ th {
 	
 	<c:forEach var="dto" items="${list}">
 	<tr height="40" align="center" class="board">
-		<td width="15"><input name="exerChk" type="checkbox" value="${dto.exerciseNum}" data-name="${dto.exerciseName}"></td>
+		<td width="15"><input name="exerChk" type="checkbox" value="${dto.exerciseName}" data-num="${dto.exerciseNum}" data-unit="${dto.unit}"></td>
 		<td width="15">${dto.listNum}</td>
-		<td width="60">${dto.exerciseName} ${dto.exerciseNum}</td>
+		<td width="60">${dto.exerciseName}</td>
 		<td width="45">${dto.typeName} 운동</td>
 		<td width="50">${dto.unitTime}&nbsp;&nbsp;${dto.unit}</td>
 		<td width="50">${dto.lossCal} Kcal</td>

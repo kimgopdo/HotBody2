@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -144,7 +143,7 @@ public class DietClassController {
 		return ".dietClass.article";
 	}
 	
-	@RequestMapping(value="dietClass/update")
+	@RequestMapping(value="/dietClass/update")
 	public String classUpdate(HttpServletRequest req,
 							@RequestParam int num,
 							@RequestParam int type) {
@@ -416,121 +415,4 @@ public class DietClassController {
 		
 		return "redirect:/cprogram/update?num="+num;
 	}
-	
-	/*
-	 * 미션 관련
-	 */
-
-	@RequestMapping(value="/mission/article", method=RequestMethod.GET)
-	public String article(Model model,
-			@RequestParam(value="page", defaultValue="1") int current_page,
-			HttpServletRequest req,
-			@RequestParam int num) {
-		Map<String, Object> map = new HashMap<>();
-		map.put("classNum", num);
-		map.put("classType", 0);
-		DietClass dto = service.readClass(map);
-		
-		int day[] = new int[dto.getOnperiod()];
-		String max="";
-		
-		int dataCount = dto.getOnperiod();
-		int rows = 10;
-		int total_page = 0;
-		
-		if(dataCount !=0)
-			total_page = myUtil.pageCount(rows, dataCount);
-		
-		if(total_page<current_page)
-			current_page=total_page;
-		
-		int start = (current_page-1)*rows+1;
-		int end = current_page*rows;
-		if(end>dto.getOnperiod())
-			end = dto.getOnperiod();
-		
-		List<List<Mission>> list = new ArrayList<>();
-		for(int a=start;a<=end;a++) {
-			day[a-1] = a;
-			map.put("missDay", a);
-			List<Mission> list2 = service.readMission(map);
-			max += list2.size()+",";
-			
-			if(list2.size()==0) {
-				Mission mdto = new Mission();
-				mdto.setMissionContent(null);
-				mdto.setMissDay(a);
-				list2.add(mdto);
-			}
-			list.add(list2);
-		}
-
-		String cp = req.getContextPath();
-		String listUrl = cp+"/mission/article?num="+num;
-		String paging = myUtil.paging(current_page, total_page, listUrl);
-
-		model.addAttribute("paging", paging);
-		model.addAttribute("max", max);
-		model.addAttribute("list", list);
-		model.addAttribute("day", day);
-		model.addAttribute("dto", dto);
-		model.addAttribute("mode", "update");
-		
-		return ".dietClass.mission.article";
-	}
-
-	@RequestMapping(value="/mission/update", method=RequestMethod.POST)
-	@ResponseBody
-	public Map<String, Object> updateSubmit(@RequestParam Map<String, String> dataMap){
-		
-		Mission mdto = new Mission();
-		int classNum = Integer.parseInt(dataMap.get("classNum"));
-		
-		Map<String, Object> model = new HashMap<>();
-		model.put("classNum", classNum);
-		model.put("classType", 0);
-		DietClass dto = service.readClass(model);
-		mdto.setClassNum(classNum);
-		
-		for(int a=1;a<=dto.getOnperiod();a++) {
-			for(Map.Entry<String, String> entry : dataMap.entrySet()) {
-				if(entry.getKey().contains("mission."+a+".")) {
-					String lastIndex = entry.getKey().substring(entry.getKey().lastIndexOf(".")+1, entry.getKey().length());
-					mdto.setMissIndex(Integer.parseInt(lastIndex));
-					mdto.setMissDay(a);
-					mdto.setMissionContent(entry.getValue());
-					
-					int count = service.haveMission(mdto);
-					if(count==0 && mdto.getMissionContent()!="")
-						service.insertMission(mdto);
-					else if(count==0 && mdto.getMissionContent()=="") {
-						Map<String, Object> deleteMap = new HashMap<>();
-						deleteMap.put("missIndex", mdto.getMissIndex());
-						deleteMap.put("missDay", mdto.getMissDay());
-						deleteMap.put("classNum", classNum);
-						service.deleteMission(deleteMap);
-					}
-					else 
-						service.updateMission(mdto);
-				}
-			}
-		}
-		model.put("state", "true");
-		return model;
-	}
-	
-	@RequestMapping(value="/mission/delete")
-	public String deleteMission(@RequestParam int num,
-								@RequestParam int index,
-								@RequestParam int day) {
-		System.out.println(num+":"+index+":"+day);
-		Map<String, Object> map = new HashMap<>();
-		map.put("classNum", num);
-		map.put("missDay", day);
-		map.put("missIndex", index);
-		service.deleteMission(map);
-		
-		return "redirect:/mission/article?num="+num;
-	}
-	
 }

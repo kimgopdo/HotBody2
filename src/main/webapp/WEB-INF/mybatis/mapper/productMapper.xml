@@ -63,6 +63,9 @@
 	<insert id="insertSci" parameterType="map">
 		INSERT INTO sci (scicode,name) values(sci_seq.NEXTVAL,#{scl})
 	</insert>
+	<insert id="insertProductDis" parameterType="com.hotbody.hotShop.board.ProductDis">
+	INSERT INTO productDis (pdDisCode,pdDisNum,pdDisDate,pdDisReason,pdDisAmt,pdnum) VALUES(PRODUCTDIS_SEQ.Nextval,#{pdDisNum},sysdate,#{pdDisReason},#{pdDisAmt},#{pdnum})
+	</insert>
 	<select id="readDelOrder" parameterType="String" resultType="Integer">
 	SELECT MAX(delOrder) delOrder
 		FROM ORDERS WHERE userId=#{userId}
@@ -84,6 +87,9 @@
 	
 	<select id="pdInDataCount" resultType="Integer">
 		SELECT NVL(COUNT(*),0) FROM productin
+	</select>
+	<select id="pdDisDataCount" resultType="Integer">
+		SELECT NVL(COUNT(*),0) FROM productDis
 	</select>
 	<select id="pdListDataCount" parameterType="map" resultType="Integer">
 		SELECT NVL(COUNT(*),0) FROM productList
@@ -162,6 +168,11 @@
 	<select id="readPdStarScore" parameterType="Integer" resultType="Integer">
 		 SELECT ROUND(AVG(starscore), 0) starScore FROM shreviews WHERE pdnum=#{pdnum} GROUP BY pdnum
 	</select>
+	<select id="readPdRawPrice" parameterType="Integer" resultType="Integer">
+		SELECT pdrawprice FROM productin WHERE pdindate=(SELECT pdindate FROM (select max(pdindate) pdindate,pdnum
+		from productin
+		group by pdnum) pi WHERE pdnum=#{pdnum})
+	</select>
 	<select id="readProductIn" parameterType="map" resultType="com.hotbody.hotShop.board.ProductIn">
 		SELECT * FROM (SELECT ROWNUM rnum, pdin.* FROM (SELECT pdincode,pdrawprice,pdinnum,TO_CHAR(pdexdate, 'YYYY-MM-DD') pdexdate,TO_CHAR(pdindate, 'YYYY-MM-DD') pdindate,pi.pdnum pdnum,pl.pdname pdname,pi.supplycode,supplyname,imgSaveFilename,milelage
 		FROM productin pi 
@@ -197,7 +208,44 @@
         </choose>) pdin WHERE ROWNUM&lt;=#{end})
          WHERE rnum&gt;=#{start}
 	</select>
-	
+	<select id="readProductDis" parameterType="map" resultType="com.hotbody.hotShop.board.ProductDis">
+		SELECT * FROM (SELECT ROWNUM rnum, pddis.* FROM (SELECT pdDisCode,pdrawprice,pdDisNum,TO_CHAR(pdexdate, 'YYYY-MM-DD') pdexdate,TO_CHAR(pdDisDate, 'YYYY-MM-DD') pdDisDate,pdDisReason,pdDisAmt,pi.pdnum pdnum,pl.pdname pdname,pi.supplycode,supplyname,imgSaveFilename
+		FROM productDis pd 
+		JOIN productList pl ON pd.pdnum=pl.pdnum 
+        JOIN productIn pi ON pi.pdnum=pl.pdnum
+        JOIN supply s ON pi.supplycode=s.supplycode
+        LEFT OUTER JOIN pmainimg pimg ON pl.pdnum = pimg.pdnum 
+        <where>
+        	<choose>
+        		<when test="startDate!=''">
+        			TO_CHAR(pdDisdate, 'YYYY-MM-DD')&gt;=#{startDate} AND TO_CHAR(pdDisdate, 'YYYY-MM-DD')&lt;=#{endDate}
+        		</when>
+        		<when test="startDate!=''">
+	        		<if test="colum=='pdexdate'">
+		        	 TO_CHAR(pdexdate, 'YYYY-MM-DD')&gt;=#{startDate} AND TO_CHAR(pdexdate, 'YYYY-MM-DD')&lt;=#{endDate}    		
+	        		</if>
+        		</when>
+        	</choose>
+        </where>
+         ORDER BY 
+        <choose>
+        	<when test="colum=='pdexdate'">
+        		pdexdate
+        	</when>
+        	<otherwise>
+        		pdDisCode
+        	</otherwise>
+        </choose>
+        <choose>
+        	<when test="order=='asc'">
+        		 asc
+        	</when>
+        	<otherwise>
+        		 DESC
+        	</otherwise>
+        </choose>) pddis WHERE ROWNUM&lt;=#{end})
+         WHERE rnum&gt;=#{start}
+	</select>
 	<update id="productListUpdate" parameterType="com.hotbody.hotShop.board.HotShop">
 	UPDATE productList 
 	SET  
@@ -212,6 +260,12 @@
 	UPDATE productList 
 	SET  
 	pdStCount=pdStCount+#{pdinnum}
+	 WHERE pdnum=#{pdnum}
+	</update>
+	<update id="productDisStCount" parameterType="com.hotbody.hotShop.board.ProductDis">
+	UPDATE productList 
+	SET  
+	pdStCount=pdStCount-#{pdDisNum}
 	 WHERE pdnum=#{pdnum}
 	</update>
 	<update id="PmainImgUpdate" parameterType="com.hotbody.hotShop.board.HotShop">

@@ -153,11 +153,11 @@ $(function() {
 			eventLimit: true,
 			events: function(start, end, timezone, callback){
 				// 캘린더가 처음 실행되거나 월이 변경되면
-				var startDay=start.format("YYYY-MM-DD");
+				var dietDate=start.format("YYYY-MM-DD");
 				var endDay=end.format("YYYY-MM-DD");
 		        
 				var url="<%=cp%>/sch/month";
-                var query="start="+startDay+"&end="+endDay+"&group="+group+"&tmp="+new Date().getTime();
+                var query="start="+dietDate+"&end="+endDay+"&group="+group+"&tmp="+new Date().getTime();
 				$.ajax({
 				    url: url,
 				    data:query,
@@ -217,10 +217,10 @@ function articleForm(calEvent) {
 	else if(color=="red") classify="부서일정";
 	
 	var allDay=calEvent.allDay;
-	var startDay="", startTime="", sday="";
+	var dietDate="", startTime="", sday="";
 	var endDay="", endTime="", eday="";
 	var strDay;
-	startDay=calEvent.start.format("YYYY-MM-DD");
+	dietDate=calEvent.start.format("YYYY-MM-DD");
 	if(calEvent.start.hasTime()) {
 	    startTime=calEvent.start.format("HH:mm");
 	    if(calEvent.end!=null && calEvent.start.format()!=calEvent.end.format()) {
@@ -235,16 +235,16 @@ function articleForm(calEvent) {
 		    calEvent.end.add("1", "days");
 	}
 	if(allDay==false) {
-		sday=startDay+" "+ startTime;
+		sday=dietDate+" "+ startTime;
 		eday=endDay+" "+ endTime;
 		strDay="시간일정";
 	}else if(allDay==false) {
-		sday=startDay+" "+ startTime;
+		sday=dietDate+" "+ startTime;
 		eday=endDay;
 		endTime="";
 		strDay="시간일정";
 	}else {
-		sday=startDay;
+		sday=dietDate;
 		eday=endDay;
 		startTime="";
 		endTime="";
@@ -260,7 +260,7 @@ function articleForm(calEvent) {
 		  modal: true,
 		  buttons: {
 		       " 수정 " : function() {
-		    	   updateForm(num,title,allDay,startDay,endDay,startTime,endTime,color);
+		    	   updateForm(num,title,allDay,dietDate,endDay,startTime,endTime,color);
 		        },
 			   " 삭제 " : function() {
 				   deleteOk(num);
@@ -281,7 +281,7 @@ function articleForm(calEvent) {
 		$("#schUserName").html(userName);
 		$("#schClassify").html(classify);
 		$("#schAllDay").html(strDay);
-		$("#schStartDay").html(sday);
+		$("#schdietDate").html(sday);
 		$("#schEndDay").html(eday);
 		$("#schContent").html(content);
 		
@@ -306,53 +306,17 @@ function insertForm(start, end) {
 		  },
 		  height: 720,
 		  width: 800,
-		  title: "일정 추가",
+		  title: "다이어트일기",
 		  close: function(event, ui) {
 		  }
 	});
 	
-	$('#scheduleModal').load("<%=cp%>/myclass/diary/inputForm", function() {
-		var startDay="", startTime="";
-		var endDay="", endTime="";
+	var dietDate="";
+	dietDate=start.format("YYYY-MM-DD");
+	$('#scheduleModal').load("<%=cp%>/myclass/diary/inputForm?start="+dietDate, function() {
+
 		
-		startDay=start.format("YYYY-MM-DD");
-		startTime=start.format("HH:mm");
-
-		$("input[name='startDay']").val(startDay);
-
-		if(start.hasTime()) {
-			// 시간 일정인 경우
-			$("#allDayChk").prop("checked", false);
-			$("#allDayHidden").prop("disabled", false);
-			
-			$("#startTime").show();
-			$("#endTime").show();
-          
-			$("input[name='startTime']").val(startTime);
-			if(start.format()!=end.format()) {
-				endDay=end.format("YYYY-MM-DD");
-				endTime=end.format("HH:mm");
-			
-				$("input[name='endDay']").val(endDay);
-				$("input[name='endTime']").val(endTime);
-			}
-			
-		} else {
-			// 하루종일 일정인 경우
-			$("#allDayChk").prop("checked", true);
-			$("#allDayHidden").prop("disabled", true);
-			
-			$("input[name='startTime']").val("");
-			$("input[name='endTime']").val("");
-			$("#startTime").hide();
-			$("#endTime").hide();
-			
-			if(start.format()!=end.add("-1", "days").format()) {
-				endDay=end.format("YYYY-MM-DD");
-				$("input[name='endDay']").val(endDay);
-			}
-			end.add("1", "days")
-		}
+		$("input[name='dietDate']").val(dietDate);
 		
 		dlg.dialog("open");
 		calendar.fullCalendar('unselect');
@@ -403,7 +367,7 @@ function validCheck() {
 	var title=$.trim($("input[name='title']").val());
 	var color=$.trim($("select[name='color']").val());
 	var allDay=$("#allDayChk:checked").val();
-	var startDay=$.trim($("input[name='startDay']").val());
+	var dietDate=$.trim($("input[name='dietDate']").val());
 	var endDay=$.trim($("input[name='endDay']").val());
 	var startTime=$.trim($("input[name='startTime']").val());
 	var endTime=$.trim($("input[name='endTime']").val());
@@ -415,9 +379,9 @@ function validCheck() {
 		return false;
 	}
 	
-	 if(! /[12][0-9]{3}-[0-9]{2}-[0-9]{2}/.test(startDay)){
+	 if(! /[12][0-9]{3}-[0-9]{2}-[0-9]{2}/.test(dietDate)){
 			alert("날짜를 정확히 입력 하세요 [yyyy-mm-dd] !!! ");
-			$("input[name='startDay']").focus();
+			$("input[name='dietDate']").focus();
 			return false;
 	 }
 	 if(endDay!="" && ! /[12][0-9]{3}-[0-9]{2}-[0-9]{2}/.test(endDay)){
@@ -479,7 +443,7 @@ function validCheck() {
 
 // -------------------------------------------------
 // 수정 폼
-function updateForm(num, title, allDay, startDay, endDay, startTime, endTime, color) {
+function updateForm(num, title, allDay, dietDate, endDay, startTime, endTime, color) {
 	var dlg = $("#scheduleModal").dialog({
 		  autoOpen: false,
 		  modal: true,
@@ -501,7 +465,7 @@ function updateForm(num, title, allDay, startDay, endDay, startTime, endTime, co
 	$('#scheduleModal').load("<%=cp%>/sch/inputForm", function() {
 		$("input[name='title']").val(title);
 		$("select[name='color']").val(color);
-		$("input[name='startDay']").val(startDay);
+		$("input[name='dietDate']").val(dietDate);
 		$("input[name='endDay']").val(endDay);
 		$("input[name='startTime']").val(startTime);
 		$("input[name='endTime']").val(endTime);
@@ -569,10 +533,10 @@ function updateDrag(e) {
 	var title=e.title;
 	var color=e.color;
 	var allDay=e.allDay;
-	var startDay="", startTime="";
+	var dietDate="", startTime="";
 	var endDay="", endTime="";
 	
-	startDay=e.start.format("YYYY-MM-DD");
+	dietDate=e.start.format("YYYY-MM-DD");
 	if(e.start.hasTime()) {
 		// 시간 일정인 경우
 		startTime=e.start.format("HH:mm");
@@ -610,7 +574,7 @@ function updateDrag(e) {
            +"&title="+title
            +"&color="+color
            +"&allDay="+allDay
-           +"&startDay="+startDay
+           +"&dietDate="+dietDate
            +"&endDay="+endDay
            +"&startTime="+startTime
            +"&endTime="+endTime
@@ -703,74 +667,108 @@ $(function(){
 
 //------------------------------------------------------------
  
-function lookIng(){
-	var dlg = $("#ing").dialog({
-		  modal: true,
-		  buttons: {
-		       " 선택 " : function() {
-		    	   selectIng();
-		        },
-		       " 닫기 " : function() {
-		    	   $(this).dialog("close");
-		        }
-		  },
-          position:{
-              my:"left top",
-              at:"center center"
-          },
-		  height: 700,
-		  width: 700,
-		  title: "식단찾기",
-		  open: function(){
-			  $(this).load("<%=cp%>/myclass/diary/ing");  
-		  },
-		  close: function() {
-		  }
-	});	
+
+$(function(){
+	$( "body" ).on( "click", ".clsLookIng", function() {
+		var t=$(this);
+		
+		var dlg = $("#ing").dialog({
+			  modal: true,
+			  buttons: {
+			       " 선택 " : function() {
+			    	   selectIng(t);
+			        },
+			       " 닫기 " : function() {
+			    	   //$(this).dialog("close");
+			    	   $("#ing").dialog("close");
+			        }
+			  },
+	          position:{
+	              my:"left top",
+	              at:"center center"
+	          },
+			  height: 700,
+			  width: 700,
+			  title: "식단찾기",
+			  open: function(){
+				  $(this).load("<%=cp%>/myclass/diary/ing");  
+			  },
+			  close: function() {
+			  }
+		});	
+
+	});
+});
+
+
+$(function(){
+	$( "body" ).on( "click", ".clsLookExer", function() {
+		var t=$(this);
+		
+		var dlg = $("#exercise").dialog({
+			  modal: true,
+			  buttons: {
+			       " 선택 " : function() {
+			    	   selectExercise(t);
+			        },
+			       " 닫기 " : function() {
+			    	   $("#exercise").dialog("close");
+			        }
+			  },
+	          position:{
+	              my:"left top",
+	              at:"center center"
+	          },
+			  height: 700,
+			  width: 700,
+			  title: "운동찾기",
+			  open: function(){
+				  $(this).load("<%=cp%>/myclass/diary/exercise");  
+			  },
+			  close: function() {
+			  }
+		});	
+
+	});
+});
+
+function selectIng(t){
+	var ing = $(":checkbox[name='ingChk']:checked").val();
+	var ing2 = $(":checkbox[name='ingChk']:checked").attr("data-unit");
+	var ing3 = $(":checkbox[name='ingChk']:checked").attr("data-num");
+	
+	t.next().attr('placeholder', ing2);
+	t.next().next().val(ing3);
+	t.val(ing);
+	$("#ing").dialog("close");
+	
+	//t.next().attr('input[name="ingrerdientsNum"]', ing3);
+	//t.next().val('input[name="ingrerdientsNum"]', ing3);
+	//$('input[name="ingrerdientsNum"]').val(ing3);
 }
-function selectIng(){
-	alert("식단가져오기");
-	var chk =document.getElementsByName("exerChk");
-	var check = chk.checked;
-	alert(check);
-}
-function lookExercise(){
-	var dlg = $("#exercise").dialog({
-		  modal: true,
-		  buttons: {
-		       " 선택 " : function() {
-		    	   	selectExercise();
-		        },
-		       " 닫기 " : function() {
-		    	   $(this).dialog("close");
-		        }
-		  },
-          position:{
-              my:"left top",
-              at:"center center"
-          },
-		  height: 720,
-		  width: 700,
-		  title: "운동찾기",
-		  open: function(){
-			  $(this).load("<%=cp%>/myclass/diary/exercise");
-		  },
-		  close: function() {
-		  }
-	});		
-}
-function selectExercise(){
-	alert("운동가져오기");
+
+function selectExercise(t){
+	var exer = $(":checkbox[name='exerChk']:checked").val();
+	var exer2 = $(":checkbox[name='exerChk']:checked").attr("data-unit");
+	var exer3 = $(":checkbox[name='exerChk']:checked").attr("data-num");
+	
+	
+	$('#exerciseTime').attr('placeholder', exer2+" 입력");
+	$('input[name="exerciseNum"]').val(exer3);
+	$('.exerciseTime').html(exer2);
+	
+	t.val(exer);
+	$("#exercise").dialog("close");
 }
 
 function add1(){
  	var add = "<div>";
- 		add+= "<input name='weight' type='text' class='boxTF' style='width:53%;' placeholder='재료선택(클릭)' onclick='lookIng()'>";
-		add+= "<input name='weight' type='text' class='boxTF' style='width:26%;' placeholder='량'>";
+ 		add+= "<input name='weight' type='text' class='boxTF clsLookIng' style='width:53%;' readonly='readonly' placeholder='재료선택(클릭)'>";
+		add+= "<input name='TotalUnit' type='text' class='boxTF' style='width:26%;' placeholder='먹은 양'>";
     	add+= "<span>";
     	add+= "<img src='<%=cp%>/resource/images/minus.png' style='height: 15px; width: 15px; margin-top: 5px; cursor: pointer;' onclick='remove1(this)'>";
     	add+= "</span>";
-    	add+= "<input type='hidden' name='num' value='0'>";
+    	add+= "<input type='hidden' name='ingrerdientsNum' value=''>";
     	add+= "<div>";
     	
     	$("#add1").append(add);
@@ -781,12 +779,12 @@ function remove1(td){
 
 function add2(){
  	var add = "<div>";
- 		add+= "<input name='weight' type='text' class='boxTF' style='width:53%;' placeholder='재료선택(클릭)' onclick='lookIng()'>";
-		add+= "<input name='weight' type='text' class='boxTF' style='width:26%;' placeholder='량'>";
+ 		add+= "<input name='weight' type='text' class='boxTF clsLookIng' style='width:53%;' readonly='readonly' placeholder='재료선택(클릭)'>";
+		add+= "<input name='TotalUnit' type='text' class='boxTF' style='width:26%;' placeholder='먹은 양'>";
 		add+= "<span>";
 		add+= "<img src='<%=cp%>/resource/images/minus.png' style='height: 15px; width: 15px; margin-top: 5px; cursor: pointer;' onclick='remove2(this)'>";
 		add+= "</span>";
-		add+= "<input type='hidden' name='num' value='0'>";
+		add+= "<input type='hidden' name='ingrerdientsNum' value=''>";
 		add+= "</div>";
 	
 	$("#add2").append(add);	
@@ -798,12 +796,12 @@ function remove2(td){
 
 function add3(){
  	var add = "<div>";
- 		add+= "<input name='weight' type='text' class='boxTF' style='width:53%;' placeholder='재료선택(클릭)' onclick='lookIng()'>";
-		add+= "<input name='weight' type='text' class='boxTF' style='width:26%;' placeholder='량'>";
+ 		add+= "<input name='weight' type='text' class='boxTF clsLookIng' style='width:53%;' readonly='readonly' placeholder='재료선택(클릭)'>";
+		add+= "<input name='TotalUnit' type='text' class='boxTF' style='width:26%;' placeholder='먹은 양'>";
 		add+= "<span>";
 		add+= "<img src='<%=cp%>/resource/images/minus.png' style='height: 15px; width: 15px; margin-top: 5px; cursor: pointer;' onclick='remove3(this)'>";
 		add+= "</span>";
-		add+= "<input type='hidden' name='num' value='0'>";
+		add+= "<input type='hidden' name='ingrerdientsNum' value=''>";
 		add+= "</div>";
 	
 	$("#add3").append(add);	
@@ -909,3 +907,5 @@ function listIng(page) {
 </div>
 
 <div id="scheduleModal" style="display: none;"></div>
+<div id="ing" style="display: none;"></div>
+<div id="exercise" style="display: none;"></div>

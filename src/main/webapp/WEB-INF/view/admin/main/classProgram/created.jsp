@@ -18,9 +18,9 @@ function sendOk() {
 	var f = document.pForm;
 	var formData=new FormData(f);
 	if(mode=='created')
-		var url="<%=cp%>/cprogram/insert";
+		var url="<%=cp%>/admin/cprogram/insert";
 	else if(mode=='update')
-		var url="<%=cp%>/cprogram/updateOk";
+		var url="<%=cp%>/admin/cprogram/updateOk";
 		
 	$.ajax({
 		type:"post"
@@ -32,7 +32,7 @@ function sendOk() {
 		,success:function(data) {
 			if(data.state=="true"){
 				alert("등록완료");
-				location.href="<%=cp%>/cprogram/list";
+				location.href="<%=cp%>/admin/cprogram/list";
 			}
 		}
 	    ,error:function(e) {
@@ -47,13 +47,13 @@ function fileChange() {
 }
 function deleteFile() {
 	if(confirm("첨부파일을 삭제하시겠습니까?")){
-		location.href="<%=cp%>/cprogram/deleteFile?num=${dto.programNum}"
+		location.href="<%=cp%>/admin/cprogram/deleteFile?num=${dto.programNum}"
 	}
 }
 </script>
  
 
-<div class="body-container" style="width: 1000px; margin: 100px auto;">
+<div class="body-container" style="width: 1000px; padding-left: 20px; padding-top: 40px;">
 <div style="height: 50px;"></div>
 <div style="font-size: 40px; width: 1000px; margin: 20px auto 0; font-weight: bold; color: #666666;">프로그램 등록</div>
 <div style="width:1000px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
@@ -116,7 +116,7 @@ function deleteFile() {
 	<div style="width:1000px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
 	<div style="width: 1000px; margin: 20px auto 0;" align="center">
 	<button type="button" class="btn-default02" onclick="sendOk();">등록</button>
-	<button type="button" class="btn-default02" onclick="#">등록취소</button>
+	<button type="button" class="btn-default02" onclick="javascript:location.href='<%=cp%>/admin/cprogram/list';">등록취소</button>
 	<c:if test="${mode=='update'}">
 		<input type="hidden" name="programNum" value="${dto.programNum}">
 		<input type="hidden" name="saveFileName" value="${dto.saveFileName}">

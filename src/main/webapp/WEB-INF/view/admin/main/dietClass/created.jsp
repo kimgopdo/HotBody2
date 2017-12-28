@@ -8,14 +8,32 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style type="text/css">
+.ui-datepicker {
+    width: 21em;
+    padding: .2em .2em 0;
+    display: none;
+}
+.modal-header {
+    display: -ms-flexbox;
+    display: none;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    padding: 15px;
+    border-bottom: 1px solid #e9ecef;
+    border-top-left-radius: .3rem;
+    border-top-right-radius: .3rem;
+}
+</style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
-<script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.form.js"></script>
-
+<script src="<%=cp%>/resource/jquery/js/jquery-ui.min.js" type="text/javascript"></script>
 <style type="text/css">
 /* 바탕 배경 이미지 */
 .pop-address-search .pop-address-search-inner { background-image: url(http://www.0000.com/img/backImg.png);}
@@ -35,20 +53,16 @@
 
 <script type="text/javascript">
 function sendOk() {
-	var uid="${sessionScope.member.userId}";
-   	if(! uid) {
-      location.href="<%=cp%>/member/login";
-      return;
-   	}
+	
 	var mode = "${mode}";
 	
 	var f = document.dietClassForm;
 	var formData=new FormData(f);
 	
 	if(mode=='created')
-		var url="<%=cp%>/dietClass/insert";
+		var url="<%=cp%>/admin/dietClass/insert";
 	else if(mode=='update')
-		var url="<%=cp%>/dietClass/updateSubmit";
+		var url="<%=cp%>/admin/dietClass/updateSubmit";
 		
 	$.ajax({
 		type:"post"
@@ -58,10 +72,9 @@ function sendOk() {
 		,data: formData
 		,dataType:"json"
 		,success:function(data) {
-			var type=data.type;
 			if(data.state=="true"){
 				alert("등록완료");
-				location.href="<%=cp%>/dietClass/list?type="+type;
+				location.href="<%=cp%>/admin/dietClass/list";
 			}
 		}
 	    ,error:function(e) {
@@ -77,7 +90,7 @@ function fileChange() {
 
 function deleteFile() {
 	if(confirm("첨부파일을 삭제하시겠습니까?")){
-		location.href="<%=cp%>/notice/deleteFile?page=${page}&num=${dto.classNum}"
+		location.href="<%=cp%>/admin/dietClass/deleteFile?page=${page}&num=${dto.classNum}"
 	}
 }
 
@@ -152,7 +165,7 @@ $(function(){
 </script>
 </head>
 <body>
-<div class="body-container" style="width: 1000px; margin: 100px auto;">
+<div class="body-container" style="width: 1000px; padding-left: 20px;">
 	<div style="height: 50px;"></div>
 	<div style="font-size: 40px; width: 1000px; margin: 20px auto 0; font-weight: bold; color: #666666;">클래스 등록</div>
 	<div style="width:1000px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
@@ -161,7 +174,7 @@ $(function(){
 	<form id="dietClassForm" action="" method="post" name="dietClassForm" enctype="multipart/form-data">
 	<table style="width: 1000px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0">
 	<tr height="40">
-		<td width="100">클래스명</td>
+		<td width="120">클래스명</td>
 		<td>
 			<input type="text" name="className" style="width: 98%; height: 35px;" value="${dto.className}">
 		</td>
@@ -169,7 +182,7 @@ $(function(){
 	<tr height="10px;"></tr>
 	
 	<tr>
-		<td width="100">클래스 난이도</td>
+		<td width="120">클래스 난이도</td>
 		<td>
 			<input type="radio" name="cllevel" value="1" ${dto.cllevel=="1"?"checked='checked'":""}>
 			<label for="notice"> 상 </label>
@@ -184,7 +197,7 @@ $(function(){
 	<tr height="10px;"></tr>
 	
 	<tr height="40">
-		<td width="100">수강료</td>
+		<td width="120">수강료</td>
 		<td>
 			<input type="text" name="tuition" style="width: 20%; height: 35px;" value="${dto.tuition}"> 원
 		</td>
@@ -192,7 +205,7 @@ $(function(){
 	<tr height="10px;"></tr>
 	
 	<tr height="40">
-		<td width="100" valign="top">목적</td>
+		<td width="120" valign="top">목적</td>
 		<td>
 			<textarea style="width: 98%;" rows=6; name="classGoal">${dto.classGoal}</textarea>
 		</td>
@@ -200,14 +213,14 @@ $(function(){
 	<tr height="10px;"></tr>
 	
 	<tr height="40">
-		<td width="100" valign="top">목적상세</td>
+		<td width="120" valign="top">목적상세</td>
 		<td>
 			<textarea style="width: 98%;" rows=10; name="classGoalD">${dto.classGoalD}</textarea>
 		</td>
 	</tr>
 	
 	<tr height="40">
-		<td width="100" valign="top">프로그램 등록</td>
+		<td width="120" valign="top">프로그램 등록</td>
 		<td>
 			<button type="button" class="btn-sm" style="background: #ffffff;" data-toggle="modal" data-target="#myModal">등록</button>
 		
@@ -293,7 +306,7 @@ $(function(){
 	 -->
 	 
 	<tr height="40">
-		<td width="100">파일등록</td>
+		<td width="120">파일등록</td>
 		<td>
 			<div class="form-group form_file">
 			  <input id="fileName" class="form-control form_point_color01" type="text" title="첨부된 파일명" readonly style="width:430px">
@@ -315,7 +328,7 @@ $(function(){
 	
 	<c:if test="${mode=='update'}">
 		<tr height="40">
-			<td width="100">첨부된파일</td>
+			<td width="120">첨부된파일</td>
 			<td>
 				${dto.originalFileName}
 				<c:if test="${not empty dto.saveFileName}">
@@ -329,7 +342,7 @@ $(function(){
 	</c:if>
 	
 	<tr>
-		<td width="100">클래스 유형</td>
+		<td width="120">클래스 유형</td>
 		<td>
 		<c:if test="${mode=='update'}">
 			<input type="radio" name="classType" value="0" ${dto.classType=="0"?"checked='checked'":"disabled='disabled'"}>
@@ -353,14 +366,14 @@ $(function(){
 	<div id="onInfo" style="width:1000px; display: none;">
 		<table style="width: 1000px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0;">
 			<tr>
-				<td width="100">멘토</td>
+				<td width="120">멘토</td>
 				<td>
 					<input type="text" name="mento" style="width: 20%; height: 35px;" value="${dto.mento}">
 				</td>
 			</tr>
 			<tr height="10px;"></tr>
 			<tr>
-				<td width="100">수강기간</td>
+				<td width="120">수강기간</td>
 				<td>
 					<c:if test="${mode!='update'}">
 					<input type="text" name="onperiod" style="width: 20%; height: 35px;" value="0"> 일
@@ -376,14 +389,14 @@ $(function(){
 	<div id="offInfo" style="width:1000px; display: none;">
 		<table style="width: 1000px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0">
 			<tr>
-				<td width="100">코치</td>
+				<td width="120">코치</td>
 				<td>
 					<input type="text" name="coach" style="width: 20%; height: 35px;" value="${dto.coach}">
 				</td>
 			</tr>
 			<tr height="10px;"></tr>
 			<tr>
-				<td width="100">수강정원</td>
+				<td width="120">수강정원</td>
 				<td>
 					<c:if test="${mode!='update'}">
 					<input type="text" name="offLimit" style="width: 20%; height: 35px;" value="0"> 명
@@ -396,7 +409,7 @@ $(function(){
 			
 			<tr height="10px;"></tr>
 			<tr>
-		  		<td width="100" valign="top">클래스 장소</td>
+		  		<td width="120" valign="top">클래스 장소</td>
 		  		<td>
 		  			<p>
 					<input style="width: 200px; height: 35px;" type="text" readonly="readonly" name="zip" id="sample6_postcode" placeholder="우편번호">
@@ -411,7 +424,7 @@ $(function(){
 			
 			<tr height="10px;"></tr>
 			<tr>
-		  		<td width="100" valign="top">클래스 날짜</td>
+		  		<td width="120" valign="top">클래스 날짜</td>
 		  		<td>
 				   <input type="text" readonly="readonly" class="classDate" name="startDate" style="width: 200px;" value="${dto.startDate}"> ~ <input type="text" readonly="readonly" style="width: 200px;" class="classDate" name="endDate" value="${dto.endDate}">
 		  		</td>
@@ -419,7 +432,7 @@ $(function(){
 			
 			<tr height="10px;"></tr>
 			<tr>
-		  		<td width="100" valign="top">클래스 시간</td>
+		  		<td width="120" valign="top">클래스 시간</td>
 		  		<td>
 				   <input type="text" name="startTime" style="width: 200px;" value="${dto.startTime}"> ~ <input type="text" name="endTime"  style="width: 200px;" value="${dto.endTime}">
 		  		</td>
@@ -430,7 +443,7 @@ $(function(){
 	<div style="width:1000px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
 	<div style="width: 1000px; margin: 20px auto 0;" align="center">
 		<button type="button" class="btn-default02" onclick="sendOk();">${mode=='update'?'수정완료':'등록하기'}</button>
-		<button type="button" class="btn-default02" onclick="javascript:location.href='<%=cp%>/dietClass/list?type=0';">${mode=='update'?'수정취소':'등록취소'}</button>
+		<button type="button" class="btn-default02" onclick="javascript:location.href='<%=cp%>/admin/dietClass/list';">${mode=='update'?'수정취소':'등록취소'}</button>
 		<c:if test="${mode=='update'}">
 			<input type="hidden" name="classNum" value="${dto.classNum}">
 			<input type="hidden" name="classType" value="${dto.classType}">

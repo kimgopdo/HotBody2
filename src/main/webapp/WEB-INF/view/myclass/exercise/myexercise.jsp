@@ -86,7 +86,7 @@ function lookInfo(num){
 
 	<c:forEach var="dto" items="${list}">
 	<tr height="70" align="center" style="border-top: 2px solid #666666; margin-top: 30px;">
-		<td style="font-size: 35px; width: 100px; font-weight: bold; color: #666666;">${sessionScope.member.userName}님의 ${dto.edate} 운동  </td>
+		<td style="font-size: 35px; width: 100px; font-weight: bold; color: #666666;">${sessionScope.member.userId}님의 ${dto.edate} 운동  </td>
 	</tr>
 	<tr height="50">
 		<td style="font-size: 25px; width: 100px; color: #666666;">오늘의 운동 : ${dto.exerciseName}<img src="<%=cp%>/resource/images/click.png" style="height: 25px; cursor: pointer;" onclick="lookExe(${dto.exerciseNum});"></td>
