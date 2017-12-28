@@ -362,6 +362,16 @@ public class HotShopServiceImpl implements HotShopService{
 		}
 		return list;
 	}
+	@Override
+	public int readPdRawPrice(Map<String, Object> map) {
+		int result=0;
+		try {
+			result=dao.selectOne("product.readPdRawPrice", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 	
 	
 }

@@ -77,8 +77,8 @@ function showImg(){
 	
 	var imgName=$("#productName option:selected").attr('data-imgSaveFilename');
 	var pdrawprice=$("#productName option:selected").attr('data-pdrawprice');
+	var pdexdate=$("#productName option:selected").attr('data-pdexdate');
 	//alert($("#productName").val());
-	alert(pdrawprice);
 	if(imgName==null){
 		$("#showImgArea").text("상품이미지가 없습니다.");
 		$("#pdRawPrice").val(pdrawprice);
@@ -146,9 +146,7 @@ function productDisSend(f){
 	console.log(str);
 	str=f.pdrawprice.value;
 	console.log(str);
-	str=f.pdDisnum.value;
-	console.log(str);
-	str=f.pdexdate.value;
+	str=f.pdDisNum.value;
 	console.log(str);
 	str=f.supplycode.value;
 	console.log(str);
@@ -173,8 +171,7 @@ function productDisSend(f){
 		<td width="10%">원가</td>
 		<td width="10%">폐기수량</td>
 		<td width="7%">총액</td>
-		<td width="13%">유통기한</td>
-		<td width="10%">폐기날</td>
+		<td width="10%">폐기사유</td>
 		<td width="10%">업체명</td>
 	</tr>
 	<tr class="productIn" height="70px" style="border-bottom: 2px solid #e7e7e7">
@@ -187,11 +184,10 @@ function productDisSend(f){
 			</c:forEach>
 		</select>
 		</td>
-		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; "><input style="width: 100%;" type="text" name="pdrawprice" id="pdRawPrice" onkeyup='call()'></td>
+		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; "><input style="width: 100%;" type="text" name="pdrawprice" id="pdRawPrice" readonly="readonly" onkeyup='call()'></td>
 		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; "><input style="width: 100%;" type="text" name="pdDisNum" id="pdDisNum" onkeyup='call()'></td>
 		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; " id="totalPrice" ></td>
-		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; "><input style="width: 100%;" name="pdexdate" type="text" id="datepickerDate"></td>
-		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; ">폐기날(자동생성)</td>                 
+		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; "><input style="width: 100%;" type="text" name="pdDisReason" id="pdDisReason"></td>                 
 		<td>
 		<select id="supplyName" name="supplycode" onchange="showImg();">
 			<option>::업체명</option>
@@ -201,21 +197,28 @@ function productDisSend(f){
 		</select>
 		</td>
 	</tr>
-	<tr><td colspan="8"><button type="button" class="btn" style="float: right;" onclick="productDisSend(this.form);">폐기</button></td></tr>
+	<tr><td colspan="7"><button type="button" class="btn" style="float: right;" onclick="productDisSend(this.form);">폐기</button></td></tr>
 </table>
 </form>
 
 <form name="searchDateForm" method="post">
 <table style="width:80%; height:100%; margin-top: 50px; margin-left: 10px; border-collapse: collapse;">
 	<tr>
-		<td colspan="8" style="vertical-align: bottom;">
+		<td colspan="7" style="vertical-align: bottom;">
 		조회기간: 
 	  		<input type="text" name="startDate" id="datepicker1" disabled="disabled" style="padding: 4px;"> ~ <input type="text" name="endDate" id="datepicker2" disabled="disabled" style="padding: 4px;">
 	  		<button type="button" class="btn" onclick="productDisList(1);">조회</button>
 		</td>
 	</tr>
 	<tr>
-		<td colspan="4" style="text-align: left;"><input name="order" type="radio" checked="checked" value="asc">오름차순 <input name="order" type="radio" checked="checked" value="desc">내림차순 </td> <td colspan="4" style="text-align: right;"><input name="colum" type="radio" checked="checked" value="pdDisCode">폐기순 <input name="colum" type="radio" value="pdexdate">유통기한순</td>
+		<td colspan="4" style="text-align: left;">
+		<input name="order" type="radio" checked="checked" value="asc">오름차순 
+		<input name="order" type="radio" checked="checked" value="desc">내림차순 
+		</td> 
+		<td colspan="3" style="text-align: right;">
+		<input name="colum" type="radio" checked="checked" value="pdDisCode">폐기순 
+		<input name="colum" type="radio" value="pdexdate">유통기한순
+		</td>
 	</tr>
 	<tr height="30px" style="border-bottom: 2px solid #373737">
 		<td width="10%">상품이미지</td>
@@ -223,7 +226,6 @@ function productDisSend(f){
 		<td width="10%">원가</td>
 		<td width="10%">폐기수량</td>
 		<td width="10%">총액</td>
-		<td id="exDate" width="10%">유통기한</td>
 		<td id="created" width="10%">폐기날</td>                                          
 		<td width="10%">업체명</td>
 	</tr>

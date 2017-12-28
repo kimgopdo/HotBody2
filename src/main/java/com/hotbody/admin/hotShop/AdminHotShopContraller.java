@@ -380,7 +380,9 @@ public class AdminHotShopContraller {
 		Iterator<HotShop> it = productList.iterator();
 		while (it.hasNext()) {
 			HotShop dto = it.next();
-			dto.getPdnum();
+			map.put("pdnum", dto.getPdnum());
+			int num=service.readPdRawPrice(map);
+			dto.setPdRawPrice(num);
 			dto.setImgPath(pathname + File.separator + dto.getImgSaveFilename());
 			System.out.println(dto.getImgPath());
 		}

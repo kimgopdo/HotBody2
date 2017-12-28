@@ -35,4 +35,5 @@ public interface HotShopService {
 	public int insertProductDis(ProductDis dto);
 	public int productDisDataCount();
 	public List<ProductDis> readProductDis(Map<String, Object> map);
+	public int readPdRawPrice(Map<String, Object> map);
 }

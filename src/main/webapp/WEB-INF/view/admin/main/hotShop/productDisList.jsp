@@ -12,7 +12,6 @@
 		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; "><fmt:formatNumber value="${dto.pdrawprice}" pattern="#,###" />원</td>
 		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; ">${dto.pdDisNum}</td>
 		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; "><fmt:formatNumber value="${dto.pdDisNum*dto.pdrawprice}" pattern="#,###" />원</td>
-		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; ">${dto.pdexdate}</td>
 		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; ">${dto.pdDisDate}</td>
 		<td>${dto.supplyname}</td>
 	</tr>

@@ -64,7 +64,7 @@
 		INSERT INTO sci (scicode,name) values(sci_seq.NEXTVAL,#{scl})
 	</insert>
 	<insert id="insertProductDis" parameterType="com.hotbody.hotShop.board.ProductDis">
-	INSERT productDis (pdDisCode,pdDisNum,pdDisDate,pdDisReason,pdDisAmt,pdnum) VALUES(PRODUCTDIS_SEQ.Nextval,#{pdDisNum},sysdate,#{pdDisReason},#{pdDisAmt},#{pdnum})
+	INSERT INTO productDis (pdDisCode,pdDisNum,pdDisDate,pdDisReason,pdDisAmt,pdnum) VALUES(PRODUCTDIS_SEQ.Nextval,#{pdDisNum},sysdate,#{pdDisReason},#{pdDisAmt},#{pdnum})
 	</insert>
 	<select id="readDelOrder" parameterType="String" resultType="Integer">
 	SELECT MAX(delOrder) delOrder
@@ -168,8 +168,10 @@
 	<select id="readPdStarScore" parameterType="Integer" resultType="Integer">
 		 SELECT ROUND(AVG(starscore), 0) starScore FROM shreviews WHERE pdnum=#{pdnum} GROUP BY pdnum
 	</select>
-	<select id="readPdRawPrice" parameterType="Integer">
-		SELECT 
+	<select id="readPdRawPrice" parameterType="Integer" resultType="Integer">
+		SELECT pdrawprice FROM productin WHERE pdindate=(SELECT pdindate FROM (select max(pdindate) pdindate,pdnum
+		from productin
+		group by pdnum) pi WHERE pdnum=#{pdnum})
 	</select>
 	<select id="readProductIn" parameterType="map" resultType="com.hotbody.hotShop.board.ProductIn">
 		SELECT * FROM (SELECT ROWNUM rnum, pdin.* FROM (SELECT pdincode,pdrawprice,pdinnum,TO_CHAR(pdexdate, 'YYYY-MM-DD') pdexdate,TO_CHAR(pdindate, 'YYYY-MM-DD') pdindate,pi.pdnum pdnum,pl.pdname pdname,pi.supplycode,supplyname,imgSaveFilename,milelage
