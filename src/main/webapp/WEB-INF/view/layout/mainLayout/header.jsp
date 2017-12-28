@@ -52,7 +52,7 @@
 
 						<c:if test="${not empty sessionScope.member}">
 							<c:if test="${sessionScope.member.userId=='admin'}">
-								<li class="scroll_btn last"><a href="<%=cp%>">관리자페이지</a></li>
+								<li class="scroll_btn last"><a href="<%=cp%>/admin/main">관리자페이지</a></li>
 							</c:if>
 							<c:if test="${sessionScope.member.userId!='admin'}">
 								<li class="scroll_btn last"><a href="<%=cp%>/mypage/mypage">마이페이지</a></li>

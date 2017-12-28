@@ -71,16 +71,16 @@
           </a>
           <ul class="sidenav-second-level collapse" id="collapseShop">
           <li>
-              <a href="#">상품 관리</a>
+              <a href="<%=cp%>/admin/hotShop/productList">상품 관리</a>
             </li>
             <li>
-              <a href="#">입고</a>
+              <a href="<%=cp%>/admin/hotShop/productInList">입고</a>
             </li>
             <li>
-              <a href="#">폐기</a>
+              <a href="<%=cp%>/admin/hotShop/productDisList">폐기</a>
             </li>
             <li>
-              <a href="#">통계</a>
+              <a href="<%=cp%>/admin/hotShop/chart">통계</a>
             </li>
           </ul>
         </li>

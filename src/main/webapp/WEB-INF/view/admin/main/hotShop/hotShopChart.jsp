@@ -34,10 +34,10 @@ function Chart(year){
 function ChartProduct(year){
 	if(year=="2017"){
 		$("#eeeeesss2").html("<div id='graph2' style='width:80%; height:300px;'></div>")
-		$.jqplot ('graph2', [[480,520,200,220,600,550,570,400,450,600,620,300]]);
+		$.jqplot ('graph2', [[480,520,200,220,233,550,570,400,450,600,620,300]]);
 	}else if(year=="2018"){
 		$("#eeeeesss2").html("<div id='graph2' style='width:80%; height:300px;'></div>")
-		$.jqplot ('graph2', [[200,400,200,220,600,550,570,400,352,600,620,300]]);
+		$.jqplot ('graph2', [[200,400,200,220,600,550,570,400,352,255,620,300]]);
 	}else if(year=="2019"){
 		$("#eeeeesss2").html("<div id='graph2' style='width:80%; height:300px;'></div>")
 		$.jqplot ('graph2', [[200,150,200,400,600,300,400,400,222,551,300,350]]);
