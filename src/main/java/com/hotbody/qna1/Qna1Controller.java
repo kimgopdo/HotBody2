@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.hotbody.common.MyUtil;
 import com.hotbody.member.SessionInfo;
-import com.hotbody.qna1.Qna1;
 
 @Controller("qna1.QnaController")
 public class Qna1Controller {
@@ -216,6 +215,12 @@ public class Qna1Controller {
 		
 		return "redirect:/qna1/list?page="+page;
 	}	
+	
+	@RequestMapping(value="/qna1/faq")
+	public String faqList() {
+		
+		return ".qna1.faq";
+	}
 	
 	
 	
