@@ -17,13 +17,6 @@
 </style>
 <script type="text/javascript">
 $(function(){
-	$('input[name=showandhide]').click(function(){
-		if ($('input[name=showandhide]').is(":checked")) {
-		    $('input[name=showandhide]').val('0');
-		} else {
-		    $('input[name=showandhide]').val('1');
-		}
-	})
 	var url="<%=cp%>/hotShop/menuCall"
 	$.ajax({
 		type:"post"
@@ -43,7 +36,6 @@ $(function(){
     	var f = document.boardForm;
         var regNumber = /^[0-9]*$/
     	var str=f.upload.value;
-        console.log(str);
         if(str==""){
     		alert("메인이미지가 없습니다.");
     		f.upload.focus();
@@ -127,7 +119,7 @@ $(function(){
             return false;
         }
         if($('input:checkbox[name="showandhide"]').is(":checked")){
-        	f.showandhide.value=1;
+        	f.showandhide.value=0;
         }
    		f.action="<%=cp%>/admin/hotShop/created";
         f.submit();
