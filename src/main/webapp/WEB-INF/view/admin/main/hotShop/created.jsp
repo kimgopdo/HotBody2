@@ -17,11 +17,13 @@
 </style>
 <script type="text/javascript">
 $(function(){
-	if ($('input[name=showandhide]').is(":checked")) {
-	    $('input[name=showandhide]').val('0');
-	} else {
-	    $('input[name=showandhide]').val('1');
-	}
+	$('input[name=showandhide]').click(function(){
+		if ($('input[name=showandhide]').is(":checked")) {
+		    $('input[name=showandhide]').val('0');
+		} else {
+		    $('input[name=showandhide]').val('1');
+		}
+	})
 	var url="<%=cp%>/hotShop/menuCall"
 	$.ajax({
 		type:"post"
