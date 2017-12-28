@@ -28,7 +28,7 @@
 				<nav class="navmenu center">
 					<ul>
 						<li class="first active scroll_btn"><a href="#home">Home</a></li>
-						<li class="sub-menu"><a href="">클래스</a>
+						<li class="sub-menu"><a href="<%=cp%>/dietClass/list?type=0">클래스</a>
 							<ul>
 								<li><a href="<%=cp%>/dietClass/list?type=0">온라인</a></li>
 								<li><a href="<%=cp%>/dietClass/list?type=1">오프라인</a></li>

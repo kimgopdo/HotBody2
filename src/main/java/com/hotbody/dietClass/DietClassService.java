@@ -24,6 +24,7 @@ public interface DietClassService {
 	public int programCount();
 	public int deletecProgram(int programNum, String pathname);
 	public int updatecProgram(CProgram dto, String pathname);
+	public int deletepinClass(int classNum);
 	
 	/*
 	 * 미션 관련

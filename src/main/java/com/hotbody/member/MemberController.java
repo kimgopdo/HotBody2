@@ -36,7 +36,6 @@ public class MemberController {
 	public Map<String, Object> loginSubmit(
 			@RequestParam String userId,
 			@RequestParam String pwd,
-			@RequestParam(defaultValue="") String prePage,
 			Model model,
 			HttpSession session,
 			HttpServletRequest req
@@ -57,7 +56,6 @@ public class MemberController {
 		session.setAttribute("member", info);
 		
 		map.put("state", "true");
-		map.put("prePage", prePage);
 		return map;
 	}
 	

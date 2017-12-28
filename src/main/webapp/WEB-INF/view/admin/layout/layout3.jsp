@@ -60,7 +60,7 @@
     <tiles:insertAttribute name="header"/>
 </div>
 
-<div class="body" style="margin-left: 250px; background: #ffffff; padding-bottom: 30px; min-height: 900px;">
+<div class="body" style="margin-left: 250px; background: #ffffff; padding-bottom: 30px; min-height: 1200px;">
     <tiles:insertAttribute name="body"/>
 </div>
 
