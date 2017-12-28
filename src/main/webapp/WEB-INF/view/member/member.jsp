@@ -296,7 +296,9 @@ function memberOk() {
     } else if(mode=="update") {
     	f.action = "<%=cp%>/member/update";
     }
-
+	
+    alert("회원가입이 정상적으로 완료되었습니다.");
+    alert("메인화면으로 이동합니다.")
     f.submit();
 }
 
