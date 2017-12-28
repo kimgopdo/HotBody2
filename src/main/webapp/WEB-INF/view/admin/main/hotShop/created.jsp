@@ -8,6 +8,7 @@
 
 
 <script type="text/javascript" src="<%=cp%>/resource/se/js/HuskyEZCreator.js" charset="utf-8"></script>
+<script type="text/javascript" src="<%=cp%>/resource/js/shopJS/imgCut.js"></script>
 <style>
 .aspect { width: 660px; height: 495px; }
 #holder { border: 10px solid #ccc; width: 680px; height: 515px; margin: 20px auto;}

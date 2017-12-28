@@ -21,14 +21,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hotbody.common.FileManager;
 import com.hotbody.common.MyUtil;
+import com.hotbody.hotShop.board.Chart;
 import com.hotbody.hotShop.board.HotShop;
 import com.hotbody.hotShop.board.HotShopService;
 import com.hotbody.hotShop.board.ProductDis;
 import com.hotbody.hotShop.board.ProductIn;
 import com.hotbody.hotShop.board.Supply;
-import com.hotbody.member.MemberService;
 import com.hotbody.member.SessionInfo;
-import com.hotbody.milelage.MilelageService;
 
 @Controller("admin.hotShop")
 public class AdminHotShopContraller {
@@ -38,10 +37,6 @@ public class AdminHotShopContraller {
 	private FileManager file;
 	@Autowired
 	private MyUtil util;
-	@Autowired
-	private MemberService mService;
-	@Autowired
-	private MilelageService mileService;
 
 	// 상품분류에따른 list
 	// main list는 따로 드래그엔 드롭으로 순서 변경 가능하게 만들꺼임.
@@ -340,7 +335,6 @@ public class AdminHotShopContraller {
 		map.put("colum", colum);
 		map.put("order", order);
 		productDisList = service.readProductDis(map);
-		String cp = req.getServletContext().getRealPath("/");
 		map = new HashMap<>();
 		SessionInfo info=(SessionInfo) session.getAttribute("member");
 		if(info!=null) {
@@ -453,5 +447,29 @@ public class AdminHotShopContraller {
 	public String menuDeleteScl(@RequestParam int code) {
 		service.deleteSci(code);
 		return "redirect:/";
+	}
+	
+	
+	@RequestMapping(value="/admin/hotShop/chart")
+	public String hotShopChart(
+			String checkDate,
+			Model model
+			) {
+		List<Chart> list=new ArrayList<>();
+		list=service.readRealChart(checkDate);
+		int n=0;
+		if(list!=null) {
+			int []m=new int [12];
+			for(Chart dto:list) {
+				m[n]=dto.getRealChart();
+				model.addAttribute("m"+n, m[n]);
+				n++;
+			}
+		}else {
+			model.addAttribute("state", "noData");
+			return ".admin.main.hotShop.hotShopChart";
+		}
+		model.addAttribute("state", "success");
+		return ".admin.main.hotShop.hotShopChart";
 	}
 }
