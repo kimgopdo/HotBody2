@@ -32,8 +32,8 @@ $(function(){
 
 </head>
 <body>
-<div>
-	<div id="accordion1">
+<div align="center" style="margin-top: 200px;">
+	<div id="accordion1" style="width: 60%; text-align: left;">
 	
 	  <h3 data-num="1" style="background: #BDBDBD;">제목부분 1</h3>
 	  <div style="background: #EAEAEA;">
