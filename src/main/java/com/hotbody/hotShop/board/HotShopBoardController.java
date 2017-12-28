@@ -154,62 +154,65 @@ public class HotShopBoardController {
 	//구입 페이지
 	@RequestMapping(value="/hotShop/payment")
 	public String paymentForm(
-			@RequestParam String []cookie,
-			@RequestParam String userId,
+			@RequestParam String cookie,
 			HttpServletRequest req,
+			HttpSession session,
 			Model model
 			) {
 		int listNum=0;
 		List<HotShop> list=new ArrayList<>();
 		Map<String, Object> map=new HashMap<>();
-	    for(int n=0; n<cookie.length;n++) {
+		String []cookieArray=cookie.split(",");
+	    for(int n=0; n<cookieArray.length;n++) {
 	    	listNum++;
 	    	HotShop dto=new HotShop();
-	    	String cVal=cookie[n];
-	    	String []pInfo=cVal.split("-");
+	    	String cVal=cookieArray[n];
 	    	map.put("listOrArticle", 1);
-	    	map.put("pdnum", pInfo[0]);
+	    	map.put("pdnum", cVal);
 	    	dto=service.productArticle(map);
-	    	dto.setpCnt(pInfo[1]);
 	    	dto.setListNum(listNum);
 	    	list.add(dto);
 	    }
-	    Member memberDto=mService.readMember(userId);
-	    String tel=memberDto.getTel();
-	    String email=memberDto.getEmail();
-	    String []emailSplit=email.split("@");
-	    String []telSplit=tel.split("-");
-	    memberDto.setTel1(telSplit[0]);
-	    memberDto.setTel2(telSplit[1]);
-	    memberDto.setTel3(telSplit[2]);
-	    memberDto.setEmail1(emailSplit[0]);
-	    memberDto.setEmail2(emailSplit[1]);
-	    Milelage milelageDto=mileService.selectMilelage(userId);
-	    model.addAttribute("milelageDto", milelageDto);
-	    model.addAttribute("memberDto", memberDto);
+	    SessionInfo info=(SessionInfo) session.getAttribute("member");
+		if(info!=null) {
+			String userId=info.getUserId();
+			Member memberDto=mService.readMember(userId);
+			String tel=memberDto.getTel();
+			String email=memberDto.getEmail();
+			String []emailSplit=email.split("@");
+			String []telSplit=tel.split("-");
+			memberDto.setTel1(telSplit[0]);
+			memberDto.setTel2(telSplit[1]);
+			memberDto.setTel3(telSplit[2]);
+			memberDto.setEmail1(emailSplit[0]);
+			memberDto.setEmail2(emailSplit[1]);
+			Milelage milelageDto=mileService.selectMilelage(userId);
+			model.addAttribute("milelageDto", milelageDto);
+			model.addAttribute("memberDto", memberDto);
+		}else {
+			return "redirect:/hotShop";
+		}
 	    model.addAttribute("list", list);
 		return ".hotShop.payPage";
 	}
 	//장바구니 (쿠키사용)
 	@RequestMapping(value="/hotShop/basketList")
 	public String basketList(
-			String []cookie,
+			String cookie,
 			HttpSession session,
 			Model model
 			) {
 		int listNum=0;
-		System.out.println(cookie[0]);
 		List<HotShop> list=new ArrayList<>();
 		Map<String, Object> map=new HashMap<>();
-	    for(int n=0; n<cookie.length;n++) {
+		String []cookieArray=cookie.split(",");
+	    for(int n=0; n<cookieArray.length;n++) {
 	    	listNum++;
 	    	HotShop dto=new HotShop();
-	    	String cVal=cookie[n];
-	    	String []pInfo=cVal.split("-");
+	    	String cVal=cookieArray[n];
 	    	map.put("listOrArticle", 1);
-	    	map.put("pdnum", pInfo[0]);
+	    	map.put("pdnum", cVal);
 	    	dto=service.productArticle(map);
-	    	dto.setpCnt(pInfo[1]);
 	    	dto.setListNum(listNum);
 	    	list.add(dto);
 	    }

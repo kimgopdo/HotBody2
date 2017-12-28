@@ -156,7 +156,6 @@ body{
 			<input type="text" style="display:none;">
 			
 			<button type="button" onclick="send(this.form);" class="btn-search" style="width: 60px;">검색</button>
-			<button type="button" class="btn-list" onclick="javascript:location.href='<%=cp%>/notice/created'" style="float: right; width: 80px;">글올리기</button>
 			<button type="button" class="btn-list" onclick="javascript:location.href='<%=cp%>/notice/list';" style="float: right; width: 80px; margin-right: 10px;">새로고침</button>
 		</form>
 		</td>

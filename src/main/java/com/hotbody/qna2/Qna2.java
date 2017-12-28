@@ -1,11 +1,12 @@
 package com.hotbody.qna2;
 
 	public class Qna2 {
-		private int listNum, qna2Code;
-		private int groupNum, depth, orderNo, parent, HitCount;
+		private int listNum;
+		private int qna2Code;
 		private String userId, subject, content, created;
-//		private String saveFile, originalFile;
-//		private long fileSize;
+		private int groupNum, depth, orderNo, parent, HitCount;
+		
+
 		
 		public int getListNum() {
 			return listNum;
@@ -75,20 +76,4 @@ package com.hotbody.qna2;
 			this.created = created;
 		}
 		
-		
-		
-	//qnaCode NUMBER NOT NULL
-	//userId VARCHAR2(50) NOT NULL
-	//subject  VARCHAR2(255) NOT NULL
-	//content  CLOB NOT NULL
-	//groupNum NUMBER NOT NULL
-	//depth    NUMBER(9) NOT NULL
-	//orderNo  NUMBER(9) NOT NULL
-	//parent   NUMBER NOT NULL
-	//hitCount NUMBER DEFAULT 0
-	//created  DATE DEFAULT SYSDATE
-	//saveFile VARCHAR2(50) NOT NULL 
-	//originalFile VARCHAR2(50) NOT NULL
-
-	
 }

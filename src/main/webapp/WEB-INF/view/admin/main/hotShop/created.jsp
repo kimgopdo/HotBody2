@@ -121,7 +121,7 @@ $(function(){
         if($('input:checkbox[name="showandhide"]').is(":checked")){
         	f.showandhide.value=1;
         }
-   		f.action="<%=cp%>/hotShop/created";
+   		f.action="<%=cp%>/admin/hotShop/created";
         f.submit();
         
         return true;
@@ -129,47 +129,82 @@ $(function(){
 </script>
 <!--  onsubmit="return submitContents(this);" -->
 <form name="boardForm" method="post" enctype="multipart/form-data">
-	<div style="min-width:1140px; margin-top: 150px;">
-		<input type="checkbox" name="showandhide" value="0">숨김
-		<select id="bciSelect" name="bclcode" style="padding: 10px;">
-			<option selected="selected">::영양소별</option>
-		</select>
-		<select id="sciSelect" name="scicode" style="padding: 10px;">
-			<option selected="selected">::유형별</option>                       
-		</select><br>
-		<div id="holder" class="aspect" style="float: left;">
-			<c:if test="${mode=='update'}">
-				<img src="<%=cp%>/uploads/shopList/${dto.imgSaveFilename}">
-			</c:if>
-		</div>
-		<c:if test="${mode=='update'}">
-		<input name="pdnum" type="hidden" value="${dto.pdnum}">
-		<input name="imgSaveFilename" type="hidden" value="${dto.imgSaveFilename}">
-		<input name="mode" type="hidden" value="update">
-		</c:if>
-		<div style="width:40%; float: right;">
-		<table style="width: 100%;">
+	<div style="width:70%; margin-top: 1%;">
+		<table style="width: 800px;">
+		<tr>
+			<td colspan="2">
+				<input type="checkbox" name="showandhide" value="0">숨김
+				<select id="bciSelect" name="bclcode" style="padding: 10px;">
+					<option selected="selected">::영양소별</option>
+				</select>
+				<select id="sciSelect" name="scicode" style="padding: 10px;">
+					<option selected="selected">::유형별</option>                       
+				</select>
+			</td>
+		</tr>
 		<tr>
 			<td>
-				<span style="font-weight: bold;">상&nbsp;&nbsp;&nbsp;품&nbsp;&nbsp;&nbsp;명&nbsp;&nbsp;&nbsp;</span><br><input type="text" name="pdName" style="width: 100%; border: 1px solid #BDBDBD; outline: none;" value="${dto.pdName}"><br>
-				<span style="font-weight: bold;">상품내용&nbsp;&nbsp;</span><textarea name="pdSumContent" style="width: 100%; height:300px; border: 1px solid #BDBDBD; outline: none;">${mode=="update"?dto.pdSumContent:""}</textarea><br>
+				<div id="holder" class="aspect" style="float: left;">
+					<c:if test="${mode=='update'}">
+						<img src="<%=cp%>/uploads/shopList/${dto.imgSaveFilename}">
+					</c:if>
+				</div>
+			</td>
+			<td width="300px" style="float: left;">
+				<span style="font-weight: bold;">상&nbsp;&nbsp;&nbsp;품&nbsp;&nbsp;&nbsp;명&nbsp;&nbsp;&nbsp;</span><br><input type="text" name="pdName" style="width: 300px; border: 1px solid #BDBDBD; outline: none;" value="${dto.pdName}"><br>
+				<span style="font-weight: bold;">상품내용&nbsp;&nbsp;</span><textarea name="pdSumContent" style="width: 300px; height:300px; border: 1px solid #BDBDBD; outline: none;">${mode=="update"?dto.pdSumContent:""}</textarea><br>
 				<span style="font-weight: bold;">가&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;격&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><input type="text" name="pdPrice" style="width: 80%; border: 1px solid #BDBDBD; outline: none;" value="${dto.pdPrice}"><br>
 				<span style="font-weight: bold;">마&nbsp;&nbsp;일&nbsp;&nbsp;리&nbsp;지&nbsp;&nbsp;</span><input type="text" name="milelage" style="width: 80%; border: 1px solid #BDBDBD; outline: none;" value="${dto.milelage}"><br>			
 				<span style="float:left; font-weight: bold;">${mode=="update"?dto.imgOriginalFilename:"메인이미지등록"}</span>                                                                                                                                   
 				<input name="upload" type="file" style="width:80px; float: left;">
 			</td>
 		</tr>
-		</table>
-		</div>
-		<textarea name="content" id="content" style="width: 95%; height: 400px;">${dto.content}</textarea> <br>
-		<span style="font-weight: bold;">영양성분표시&nbsp;</span><input type="text" name="pdNutrient" style="width: 20%; border: 1px solid #BDBDBD; outline: none;" value="${dto.pdNutrient}"><br>
-		<span style="font-weight: bold;">생&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;산&nbsp;&nbsp;&nbsp;&nbsp;지&nbsp;&nbsp;</span><input type="text" name="pdArea" style="width: 20%; border: 1px solid #BDBDBD; outline: none;" value="${dto.pdArea}"><br>
-		<span style="font-weight: bold;">보&nbsp;&nbsp;관&nbsp;&nbsp;&nbsp;방&nbsp;&nbsp;법&nbsp;</span><input type="text" name="pdStMethod" style="width: 20%; border: 1px solid #BDBDBD; outline: none;" value="${dto.pdStMethod}"><br>
-		<span style="font-weight: bold;">식&nbsp;&nbsp;품&nbsp;&nbsp;&nbsp;유&nbsp;&nbsp;형&nbsp;</span><input type="text" name="pdType" style="width: 20%; border: 1px solid #BDBDBD; outline: none;" value="${dto.pdType}"><br>
-		<span style="font-weight: bold;">상품원재료명&nbsp;</span><input type="text" name="pdRawName" style="width: 20%; border: 1px solid #BDBDBD; outline: none;" value="${dto.pdRawName}"><br>
 		
-	    <button type="reset" style="border: 1px solid #BDBDBD; background: white; border-radius: 3px; height: 30px; outline: none;">${mode=="update"?"수정취소":"등록취소"}</button>
+		<c:if test="${mode=='update'}">
+		<input name="pdnum" type="hidden" value="${dto.pdnum}">
+		<input name="imgSaveFilename" type="hidden" value="${dto.imgSaveFilename}">
+		<input name="mode" type="hidden" value="update">
+		</c:if>
+		<tr>
+			<td colspan="2">
+				<textarea name="content" id="content" style="width: 100%; height: 400px;">${dto.content}</textarea> <br>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<span style="font-weight: bold;">영양성분표시&nbsp;</span><input type="text" name="pdNutrient" style="width: 20%; border: 1px solid #BDBDBD; outline: none;" value="${dto.pdNutrient}">
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<span style="font-weight: bold;">생&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;산&nbsp;&nbsp;&nbsp;&nbsp;지&nbsp;&nbsp;</span><input type="text" name="pdArea" style="width: 20%; border: 1px solid #BDBDBD; outline: none;" value="${dto.pdArea}">
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<span style="font-weight: bold;">보&nbsp;&nbsp;관&nbsp;&nbsp;&nbsp;방&nbsp;&nbsp;법&nbsp;</span><input type="text" name="pdStMethod" style="width: 20%; border: 1px solid #BDBDBD; outline: none;" value="${dto.pdStMethod}">
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<span style="font-weight: bold;">식&nbsp;&nbsp;품&nbsp;&nbsp;&nbsp;유&nbsp;&nbsp;형&nbsp;</span><input type="text" name="pdType" style="width: 20%; border: 1px solid #BDBDBD; outline: none;" value="${dto.pdType}">
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<span style="font-weight: bold;">상품원재료명&nbsp;</span><input type="text" name="pdRawName" style="width: 20%; border: 1px solid #BDBDBD; outline: none;" value="${dto.pdRawName}">
+			</td>
+		</tr>
+
+
+		<tr>
+			<td colspan="2">
+			 <button type="reset" style="border: 1px solid #BDBDBD; background: white; border-radius: 3px; height: 30px; outline: none;">${mode=="update"?"수정취소":"등록취소"}</button>
 	    <button type="button" style="border: 1px solid #BDBDBD; background: white; border-radius: 3px; height: 30px; outline: none;" onclick="submitContents(this);">${mode=="update"?"수정하기":"등록하기"}</button>
+			</td>
+		</tr>
+	   
+		</table>
     </div>
 </form>
 

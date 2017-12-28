@@ -3,6 +3,7 @@ package com.hotbody.qna2;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -83,7 +84,17 @@ public class Qna2Controller {
 				map.put("end", end);		
 				List<Qna2> list = service.listQna2(map);
 		
-
+				
+		//출력번호
+				int listNum, n=0;
+				Iterator<Qna2> it =list.iterator();
+				while(it.hasNext()) {
+					Qna2 data=it.next();
+					listNum = dataCount - (start + n-1);
+					data.setListNum(listNum);
+					n++;
+				}
+				
 				String query = "rows=" + rows;
 				String listUrl, articleUrl;
 				if (searchValue.length() != 0) {
@@ -114,20 +125,10 @@ public class Qna2Controller {
 	@RequestMapping(value="/qna2/article")
 	public String article(
 			@RequestParam int qna2Code,
-			@RequestParam String page,
-			@RequestParam (defaultValue="subject") String searchKey,
-			@RequestParam (defaultValue="") String searchValue,
-			@RequestParam int rows,
-			Model model
-			) throws Exception{
-		
-		//이전,다음등 사용할 파라미터
-		String query="page="+page+"&rows="+rows;
-		if(searchValue.length()!=0) {
-			query+="&searchKey="+searchKey;
-			query+="&searchValue="+searchValue;
-			
-		}
+			@RequestParam int page,
+			@RequestParam(value="searchKey", defaultValue="subject") String searchKey,
+			@RequestParam(value="searchValue", defaultValue="") String searchValue,
+			Model model) throws Exception {
 		
 		searchValue=URLDecoder.decode(searchValue, "UTF-8");
 		
@@ -137,11 +138,10 @@ public class Qna2Controller {
 		//게시물 가져오기
 		Qna2 dto=service.readQna2(qna2Code);
 		if(dto==null) {
-			return "redirect:/qna2/list?"+query;	
+			return "redirect:/qna2/list?";	
 		}
 		
-		//엔터를 <br>로 변경
-		//찾아보기: 엔터를 <br>로 바꾸지 않고 css로 가능
+		//스타일로 처리하는 경우
 		dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
 		
 		//이전글, 다음글
@@ -150,17 +150,24 @@ public class Qna2Controller {
 		map.put("searchKey", searchKey);
 		map.put("searchValue", searchValue);
 		
-		Qna2 preReadDto=service.preReadQna2(map);
-		Qna2 nextReadDto=service.nextReadQna2(map);
+		Qna2 preReadDto = service.preReadQna2(map);
+		Qna2 nextReadDto = service.nextReadQna2(map);
+		
+		String query = "page=" +page;
+		if(searchValue.length()!=0) {
+			query += "&searchKey=" + searchKey;
+			query += "&searchValue=" + searchValue;
+			
+		}
+		
+		searchValue =URLEncoder.encode(searchValue, "utf-8");
 		
 		//포워딩할 jsp에 넘길 데이터
 		model.addAttribute("dto", dto);
-		model.addAttribute("page", page);
-		model.addAttribute("query", query);
-		model.addAttribute("rows", rows);
-		
 		model.addAttribute("preReadDto", preReadDto);
 		model.addAttribute("nextReadDto", nextReadDto);
+		model.addAttribute("page", page);
+		model.addAttribute("query", query);
 		
 		return ".qna2.article";
 		
