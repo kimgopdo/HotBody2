@@ -69,7 +69,7 @@ body{
 </head>
 <body>
 <div style="height: 50px;"></div>
-<div style="font-size: 40px; width: 700px; margin: 20px auto 0; font-weight: bold; color: #666666;">| 이벤트</div>
+<div style="font-size: 40px; width: 700px; margin: 20px auto 0; font-weight: bold; color: #666666;">| 문의사항</div>
 <table style="width: 700px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0">
 	
 	<tr height="40">
@@ -84,7 +84,7 @@ body{
 		<td width="70" align="center">글쓴이</td>
 		<td width="40" align="center">작성일</td>
 		<td width="40" align="center">조회수</td>
-		<td width="60" align="center">첨부파일</td>
+		
 	</tr>
 	
 	<c:forEach var="dto" items="${listTop}">
@@ -98,15 +98,10 @@ body{
 		<td width="40">${dto.created}</td>
 		<c:choose>
 			<c:when test="${dto.hitCount>20}">	
-				<td width="65" style="font-weight: bold; color: red;">${dto.hitCount}</td>
+				<td width="40" style="font-weight: bold; color: red;">${dto.hitCount}</td>
 			</c:when>
 		<c:otherwise>
-			<td width="65">${dto.hitCount}</td>
-			<td>
-				<c:if test="${not empty dto.saveFile}">
-					<a href="<%=cp%>/event/download?eventCode=${dto.eventCode}"><img src="<%=cp%>/resource/images/disk.gif"></a>
-				</c:if>		
-		</td>	
+			<td width="40">${dto.hitCount}</td>	
 		</c:otherwise>
 		</c:choose>
 	</tr>
@@ -127,12 +122,7 @@ body{
 			<c:otherwise>
 				<td width="65">${dto.hitCount}</td>
 			</c:otherwise>
-		</c:choose>	
-			<td>
-				<c:if test="${not empty dto.saveFile}">
-					<a href="<%=cp%>/event/download?eventCode=${dto.eventCode}"><img src="<%=cp%>/resource/images/disk.gif"></a>
-				</c:if>		
-			</td>			
+		</c:choose>			
 		</tr>
 	</c:forEach>
 	
@@ -152,7 +142,9 @@ body{
 			<input type="text" style="display:none;">
 			
 			<button type="button" onclick="send(this.form);" class="btn-search" style="width: 60px;">검색</button>
-			<button type="button" class="btn-list" onclick="javascript:location.href='<%=cp%>/event/created'" style="float: right; width: 80px;">글올리기</button>
+<%-- 			<c:if test="${sessionScope.member.userId == 'admin'}">
+				<button type="button" class="btn-list" onclick="javascript:location.href='<%=cp%>/event/created'" style="float: right; width: 80px;">글올리기</button>
+			</c:if> --%>
 			<button type="button" class="btn-list" onclick="javascript:location.href='<%=cp%>/event/list';" style="float: right; width: 80px; margin-right: 10px;">새로고침</button>
 		</form>
 		</td>

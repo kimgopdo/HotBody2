@@ -68,13 +68,12 @@ body{
     border-image: initial;
     padding: 10px auto;
     color: black;
-}
 </style>
 </head>
 <body style="height: 1000px">
 <div style="height: 50px;"></div>
-<div style="font-size: 40px; width: 1000px; margin: 20px auto 0; font-weight: bold; color: #666666;">|공지사항</div>
-<table style="width: 1000px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0">
+<div style="font-size: 40px; width: 700px; margin: 20px auto 0; font-weight: bold; color: #666666;">|공지사항</div>
+<table style="width: 700px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0">
 	
 	<tr height="40">
 		<td align="left" colspan="6">
@@ -88,7 +87,7 @@ body{
 		<td width="70" align="center">글쓴이</td>
 		<td width="40" align="center">작성일</td>
 		<td width="40" align="center">조회수</td>
-		<td width="40" align="center">첨부파일</td>
+	
 	</tr>
 	
 	<c:forEach var="dto" items="${listTop}">
@@ -106,11 +105,6 @@ body{
 			</c:when>
 		<c:otherwise>
 			<td width="65">${dto.hitCount}</td>
-			<td>
-				<c:if test="${not empty dto.saveFile}">
-					<a href="<%=cp%>/notice/download?noticeCode=${dto.noticeCode}"><img src="<%=cp%>/resource/images/disk.gif"></a>
-				</c:if>		
-		</td>	
 		</c:otherwise>
 		</c:choose>
 	</tr>
@@ -130,11 +124,6 @@ body{
 			</c:when>
 		<c:otherwise>
 			<td width="65">${dto.hitCount}</td>
-			<td>
-				<c:if test="${not empty dto.saveFile}">
-				<a href="<%=cp%>/notice/download?noticeCode=${dto.noticeCode}"><img src="<%=cp%>/resource/images/disk.gif"></a>
-			</c:if>		
-		</td>	
 		</c:otherwise>
 		</c:choose>
 	</tr>
@@ -154,7 +143,9 @@ body{
 			</select>	
 			<input type="text" name="searchValue">
 			<input type="text" style="display:none;">
-			
+<%-- 			<c:if test="${sessionScope.member.userId == 'admin'}">
+				<button type="button" class="btn-list" onclick="javascript:location.href='<%=cp%>/notice/created'" style="float: right; width: 80px; margin-right: 5px;">글올리기</button>
+			</c:if> --%>
 			<button type="button" onclick="send(this.form);" class="btn-search" style="width: 60px;">검색</button>
 			<button type="button" class="btn-list" onclick="javascript:location.href='<%=cp%>/notice/list';" style="float: right; width: 80px; margin-right: 10px;">새로고침</button>
 		</form>

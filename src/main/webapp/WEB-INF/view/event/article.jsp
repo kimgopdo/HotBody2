@@ -151,7 +151,7 @@ function  deleteReply(replyNum, page) {
 </script>
 <div style="width: 700px; margin: 20px auto 0; min-height: 800px;">
 	<div style="height: 50px;"></div>
-	<div style="font-size: 40px; width: 700px; font-weight: bold; color: #666666;">| 이벤트</div>
+	<div style="font-size: 40px; width: 700px; font-weight: bold; color: #666666;">| 문의사항</div>
 	
 	<table style="width: 700px; margin: 20px auto 0; border-top: 2px solid #333333; border-bottom: 2px solid #333333; border-collapse: collapse; border-spacing: 0">
 	<tr height="50" style="border-bottom: 1px solid #cccccc">
@@ -160,14 +160,7 @@ function  deleteReply(replyNum, page) {
 		<td style="width:40px; margin-left: 10px; font-weight: bold; color: #666666;">날짜</td>
 		<td style="width: 160px;">${dto.created}</td>
 	</tr>
-	<tr height="30" style="font-size: 13px; color: gray; padding: 5px 15px;">
-		<td colspan="3"></td>
-		<td align="right">
-			<p id="filedown" style="text-decoration: none; color: #666666; cursor: pointer;"> 
-				첨부파일 <span style="color: tomato; font: bold;">(개수)</span>
-			</p>
-		</td>
-	</tr>
+
 		<tr height="400" style="border-bottom: 1px solid #cccccc;">
 			<td colspan="4" valign="top" style="padding-left: 10px; word-break:break-all;">${dto.content}<br><br></td>
 		</tr>
@@ -176,8 +169,10 @@ function  deleteReply(replyNum, page) {
 	
 	<div style="width:700px; margin: 20px auto 0;">
 	<input type="button" class="btn-article" value="목록" onclick="javascript:location.href='<%=cp%>/event/list?${query}';">
-	<input type="button" class="btn-article" value="수정" onclick="javascript:location.href='<%=cp%>/event/update?eventCode=${dto.eventCode}&${query}';">
-	<input type="button" class="btn-article" value="삭제" onclick="deleteEvent(${dto.eventCode});">
+<%-- 	<c:if test="${sessionScope.member.userId == 'admin'}">
+		<input type="button" class="btn-article" value="수정" onclick="javascript:location.href='<%=cp%>/event/update?eventCode=${dto.eventCode}&${query}';">
+		<input type="button" class="btn-article" value="삭제" onclick="deleteEvent(${dto.eventCode});">
+		</c:if> --%>
 	</div>
 	
 	<br><br>

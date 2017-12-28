@@ -27,6 +27,7 @@ import com.hotbody.member.SessionInfo;
 
 @Controller("notice.noticeController")
 public class NoticeController {
+	
 	@Autowired
 	private NoticeService service;
 	
@@ -37,13 +38,24 @@ public class NoticeController {
 	private FileManager fileManager;
 	
 	@RequestMapping(value="/notice/list")
+	
+	
+	
 	public String list(HttpServletRequest req,
 			@RequestParam(value="page", defaultValue="1") int current_page,
 			@RequestParam(value="searchKey", defaultValue="subject") String searchKey,
 			@RequestParam(value="searchValue", defaultValue="") String searchValue,
-			Model model
+			Model model, 
+			HttpSession  session
 			) throws Exception {
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		
+		if (info == null) {
+			return "redirect:/member/login";
+		}
+		
 			
+		
 			int rows = 10; //한 화면에 보여지는 게시물 수
 			int total_page = 0;
 			int dataCount = 0;

@@ -38,9 +38,9 @@
 							href="<%=cp%>/mocojee/list_mocojee">모꼬지</a>
 						<li class="sub-menu"><a href="<%=cp%>/notice/list">공지사항</a>
 						</li>
-						<li class="sub-menu"><a href="<%=cp%>/qna2/list">문의사항</a>
+						<li class="sub-menu"><a href="<%=cp%>/event/list">문의사항</a>
 							<ul>
-								<li><a href="<%=cp%>/qna2/list">문의사항</a></li>
+								<li><a href="<%=cp%>/event/list">문의사항</a></li>
 								<li><a href="<%=cp%>/qna1/faq">자주묻는질문</a></li>
 							</ul></li>
 

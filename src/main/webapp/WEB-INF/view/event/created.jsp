@@ -156,7 +156,7 @@ function deleteFile() {
 }
 </script>
 
-<div style="font-size: 40px; width: 700px; margin: 20px auto 0; font-weight: bold; color: #666666;">| 이벤트</div>
+<div style="font-size: 40px; width: 700px; margin: 20px auto 0; font-weight: bold; color: #666666;">| 문의사항</div>
 <div style="width:700px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
 
 <div style="width: 700px; min-height: 650px; margin: 20px auto 0;">
@@ -177,41 +177,7 @@ function deleteFile() {
 		</td>
 	</tr>
 	<tr height="10px;"></tr>
-	
-	<tr height="40">
-		<td width="100">파일등록</td>
-		<td>
-		<div class="form-group form_file">
-		  <input id="fileName" class="form-control form_point_color01" type="text" title="첨부된 파일명" readonly style="width:430px">
-		  <span class="file_load">
-		        <input type="file" id="upload" name="upload" onchange="fileChange();">
-		        <label class="btn-default" for="upload">파일첨부</label>
-		    </span>
-		</div>
-		</td>
-	</tr>
-	
-	<tr>
-		<td></td>
-		<td style="color: #666666; font-size: 13px;">
-			(최대 10MB이하의 파일이 등록 가능합니다.)
-		</td>
-	</tr>
-	<tr height="10px;"></tr>
-	
-	<c:if test="${mode=='update'}">
-	<tr height="40">
-		<td width="100">첨부된 파일</td>
-		<td>
-			${dto.originalFile}
-			<c:if test="${not empty dto.saveFile}">
-				&nbsp;<a href="javascript:deleteFile();">
-				<img src="<%=cp%>/resource/images/close_icon.png">
-				</a>
-			</c:if>
-		</td>
-	</tr>
-	</c:if>
+
 	</table>
 	<div style="width:700px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
 	<div style="width: 700px; margin: 20px auto 0;" align="center">
