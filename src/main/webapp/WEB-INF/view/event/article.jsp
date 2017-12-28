@@ -205,7 +205,7 @@ function  deleteReply(replyNum, page) {
 			<tr height='30'>
 				<td align='left'>
 					<span style='font-weight: bold;'>댓글쓰기</span><span>- 타인을 비방하거나 개인정보를 유출하는 글의 게시를 삼가 주세요.</span>
-				</td>
+				</td>                        
 			</tr>	
 			<tr>
 				<td style= 'padding:5px 5px 0px;'>
