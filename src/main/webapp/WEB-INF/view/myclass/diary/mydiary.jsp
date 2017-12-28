@@ -768,7 +768,7 @@ function add1(){
     	add+= "<span>";
     	add+= "<img src='<%=cp%>/resource/images/minus.png' style='height: 15px; width: 15px; margin-top: 5px; cursor: pointer;' onclick='remove1(this)'>";
     	add+= "</span>";
-    	add+= "<input type='text' name='ingrerdientsNum' value=''>";
+    	add+= "<input type='hidden' name='ingrerdientsNum' value=''>";
     	add+= "<div>";
     	
     	$("#add1").append(add);
@@ -784,7 +784,7 @@ function add2(){
 		add+= "<span>";
 		add+= "<img src='<%=cp%>/resource/images/minus.png' style='height: 15px; width: 15px; margin-top: 5px; cursor: pointer;' onclick='remove2(this)'>";
 		add+= "</span>";
-		add+= "<input type='text' name='ingrerdientsNum' value=''>";
+		add+= "<input type='hidden' name='ingrerdientsNum' value=''>";
 		add+= "</div>";
 	
 	$("#add2").append(add);	
@@ -801,7 +801,7 @@ function add3(){
 		add+= "<span>";
 		add+= "<img src='<%=cp%>/resource/images/minus.png' style='height: 15px; width: 15px; margin-top: 5px; cursor: pointer;' onclick='remove3(this)'>";
 		add+= "</span>";
-		add+= "<input type='text' name='ingrerdientsNum' value=''>";
+		add+= "<input type='hidden' name='ingrerdientsNum' value=''>";
 		add+= "</div>";
 	
 	$("#add3").append(add);	
