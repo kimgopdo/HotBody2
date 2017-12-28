@@ -14,7 +14,7 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
       	<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Member">
-          <a class="nav-link" href="tables.html">
+          <a class="nav-link" href="<%=cp%>/admin/member/list">
             <i class="fa fa-fw fa-table"></i>
             <span class="nav-link-text">회원관리</span>
           </a>
@@ -32,7 +32,7 @@
               <a href="<%=cp%>/admin/cprogram/list">프로그램 관리</a>
             </li>
             <li>
-              <a href="<%=cp%>/admin/member/list">등록 회원</a>
+              <a href="<%=cp%>/admin/member/regi">등록 회원</a>
             </li>
             <li>
               <a href="<%=cp%>/survey/created">설문 등록</a>

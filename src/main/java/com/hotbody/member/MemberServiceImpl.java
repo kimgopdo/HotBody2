@@ -1,5 +1,8 @@
 package com.hotbody.member;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,6 +49,50 @@ public class MemberServiceImpl implements MemberService {
 		}
 		
 		return result;
+	}
+
+	@Override
+	public List<Member> listMember(Map<String, Object> map) {
+		List<Member> list = null;
+		try {
+			list = dao.selectList("member.listMember", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public int countMember(Map<String, Object> map) {
+		int count=0;
+		try {
+			count = dao.selectOne("member.countMember", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return count;
+	}
+
+	@Override
+	public List<Member> registerList(Map<String, Object> map) {
+		List<Member> list = null;
+		try {
+			list = dao.selectList("member.registerList", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public int countRegister(Map<String, Object> map) {
+		int count = 0;
+		try {
+			count = dao.selectOne("member.countRegister", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return count;
 	}
 
 

@@ -27,11 +27,6 @@ function classNotice() {
 }
  */
 function payGo(num,type) {
-	var uid="${sessionScope.member.userId}";
-   	if(! uid) {
-      modalFormLogin();
-      return;
-   	}
    	location.href="<%=cp%>/dietClass/payment?num="+num+"&type="+type;
 }
 function articleGo(num) {
