@@ -146,6 +146,9 @@ $(function(){
 		<tr>
 			<td>
 				<div id="holder" class="aspect" style="float: left;">
+					<c:if test="${mode!='update'}">
+						<img src="<%=cp%>/uploads/shopList/white.PNG">
+					</c:if>
 					<c:if test="${mode=='update'}">
 						<img src="<%=cp%>/uploads/shopList/${dto.imgSaveFilename}">
 					</c:if>

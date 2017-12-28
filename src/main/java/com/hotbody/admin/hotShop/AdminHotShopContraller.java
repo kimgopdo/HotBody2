@@ -455,15 +455,13 @@ public class AdminHotShopContraller {
 			String checkDate,
 			Model model
 			) {
-		List<Chart> list=new ArrayList<>();
+		List<Integer> list=new ArrayList<>();
 		list=service.readRealChart(checkDate);
-		int n=0;
 		if(list!=null) {
 			int []m=new int [12];
-			for(Chart dto:list) {
-				m[n]=dto.getRealChart();
-				model.addAttribute("m"+n, m[n]);
-				n++;
+			for(int i=1;i<=list.size();i++) {
+				m[i]=list.indexOf(i);
+				model.addAttribute("m"+i, m[i]);
 			}
 		}else {
 			model.addAttribute("state", "noData");

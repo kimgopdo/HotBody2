@@ -1,5 +1,6 @@
 package com.hotbody.hotShop.board;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -373,9 +374,35 @@ public class HotShopServiceImpl implements HotShopService{
 		return result;
 	}
 	@Override
-	public List<Chart> readRealChart(String checkDate) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Integer> readRealChart(String checkDate) {
+		List<Integer> list=new ArrayList<>();
+		int result=0;
+		
+		try {
+			for(int n=1;n<=12;n++) {
+				int n1=0;
+				int n2=0;
+				int n3=0;
+				if(n>10) {
+					checkDate=checkDate+"-"+"0"+n;
+					n1=dao.selectOne("product.readRealChartTotalPay", checkDate);
+					n2=dao.selectOne("product.readRealChartPdDisAmt", checkDate);
+					n3=dao.selectOne("product.readRealChartPdInAmt", checkDate);
+					result=n1-n2-n3;
+					list.add(result);
+				}else {
+					n1=dao.selectOne("product.readRealChartTotalPay", checkDate);
+					n2=dao.selectOne("product.readRealChartPdDisAmt", checkDate);
+					n3=dao.selectOne("product.readRealChartPdInAmt", checkDate);
+					result=n1-n2-n3;
+					list.add(result);
+				}
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 	
 	

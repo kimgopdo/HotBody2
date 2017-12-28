@@ -66,8 +66,15 @@
 	<insert id="insertProductDis" parameterType="com.hotbody.hotShop.board.ProductDis">
 	INSERT INTO productDis (pdDisCode,pdDisNum,pdDisDate,pdDisReason,pdDisAmt,pdnum) VALUES(PRODUCTDIS_SEQ.Nextval,#{pdDisNum},sysdate,#{pdDisReason},#{pdDisAmt},#{pdnum})
 	</insert>
-	<select id="">
-	
+	<select id="readRealChartTotalPay" parameterType="com.hotbody.hotShop.board.Chart" resultType="Integer">
+			SELECT SUM(totalPay) FROM orders o JOIN totalORDList tol ON o.delorder=tol.delorder WHERE TO_CHAR(payDate,'YYYY')=${checkDate} GROUP BY TO_CHAR(payDate,'YYYY')
+	</select>
+	<select id="readRealChartPdDisAmt" parameterType="com.hotbody.hotShop.board.Chart" resultType="Integer">
+
+			SELECT SUM(pdDisAmt) FROM productDis WHERE TO_CHAR(pdDisdate,'YYYY-MM')=${checkDate}  GROUP BY TO_CHAR(pdDisdate,'YYYY-MM')
+	</select>
+	<select id="readRealChartPdInAmt" parameterType="com.hotbody.hotShop.board.Chart" resultType="Integer">
+			SELECT SUM(pdrawprice) FROM productIn WHERE TO_CHAR(pdindate,'YYYY-MM')=${checkDate}  GROUP BY TO_CHAR(pdindate,'YYYY-MM')
 	</select>
 	<select id="readDelOrder" parameterType="String" resultType="Integer">
 	SELECT MAX(delOrder) delOrder

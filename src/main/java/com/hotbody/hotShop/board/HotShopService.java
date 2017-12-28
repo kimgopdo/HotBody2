@@ -36,5 +36,5 @@ public interface HotShopService {
 	public int productDisDataCount();
 	public List<ProductDis> readProductDis(Map<String, Object> map);
 	public int readPdRawPrice(Map<String, Object> map);
-	public List<Chart> readRealChart(String checkDate);
+	public List<Integer> readRealChart(String checkDate);
 }
