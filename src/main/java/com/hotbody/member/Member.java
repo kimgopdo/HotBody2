@@ -21,6 +21,10 @@ public class Member {
 	private String addr2;
 	private String gender;
 	
+	private int listNum;
+	
+	private String startDate, className;
+	
 	public String getEmail1() {
 		return email1;
 	}
@@ -116,5 +120,23 @@ public class Member {
 	}
 	public void setGender(String gender) {
 		this.gender = gender;
+	}
+	public int getListNum() {
+		return listNum;
+	}
+	public void setListNum(int listNum) {
+		this.listNum = listNum;
+	}
+	public String getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+	public String getClassName() {
+		return className;
+	}
+	public void setClassName(String className) {
+		this.className = className;
 	}
 }

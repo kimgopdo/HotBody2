@@ -11,6 +11,89 @@
 		WHERE m1.userId = #{userId}
 	</select>
 	
+	<sql id="where-list">
+	  <if test="searchKey=='userName'">
+	  	INSTR(userName, #{searchValue}) &gt; 0
+	  </if>
+	  <if test="searchKey=='userId'">
+	    userId=#{userId}
+	  </if>
+	  <if test="searchKey=='gender'">
+	    gender=#{searchValue}
+	  </if>
+	</sql>
+	
+	<sql id="where-regiList">
+	  <if test="searchKey=='userName'">
+	  	INSTR(userName, #{searchValue}) &gt; 0
+	  </if>
+	  <if test="searchKey=='userId'">
+	    userId=#{searchValue}
+	  </if>
+	  <if test="searchKey=='className'">
+	    r.classNum=${searchValue}
+	  </if>
+	</sql>
+	
+	<select id="listMember" resultType="com.hotbody.member.Member">
+		SELECT * FROM(
+			SELECT ROWNUM rnum, tb.* FROM(
+				SELECT m1.userId, userName, gender, tel, email, postNum, addr1, addr2, TO_CHAR(birth, 'YYYY-MM-DD') birth
+				FROM member1 m1
+				JOIN member2 m2
+				ON m1.userId = m2.userId
+				<where>
+					<if test="searchValue!=null and searchValue!=''">
+						<include refid="where-list"/>
+					</if>
+				</where>
+			) tb WHERE ROWNUM &lt;= #{end}
+		) WHERE rnum &gt;= #{start}
+	</select>
+	
+	<select id="countMember" resultType="Integer" parameterType="map">
+		SELECT NVL(COUNT(*), 0)
+		FROM member2 m2
+		JOIN member1 m1 
+		ON m2.userId=m1.userId
+		<where>
+			<if test="searchValue!=null and searchValue!=''">
+				<include refid="where-list"/>
+			</if>
+		</where>
+	</select>
+	
+	<select id="registerList" parameterType="map" resultType="com.hotbody.member.Member">
+	SELECT * FROM(
+			SELECT ROWNUM rnum, tb.* FROM(
+			SELECT className, TO_CHAR(startDate,'YYYY-MM-DD') startDate, r.userId, userName, gender, tel, email, postNum, addr1, addr2, TO_CHAR(birth,'YYYY-MM-DD') birth
+			FROM register r
+			JOIN member1 m1 ON m1.userId = r.userId
+			JOIN member2 m2 ON r.userId = m2.userId
+			JOIN dietClass d ON r.classNum = d.classNum
+			<where>
+				<if test="searchValue!=null and searchValue!=''">
+					<include refid="where-regiList"/>
+				</if>
+			</where>
+			) tb WHERE ROWNUM &lt;= #{end}
+		) WHERE rnum &gt;= #{start}
+	</select>
+	
+	<select id="countRegister" resultType="Integer" parameterType="map">
+		SELECT NVL(count(*),0) FROM(
+		SELECT className, TO_CHAR(startDate,'YYYY-MM-DD') startDate, r.userId, userName, gender, tel, email, postNum, addr1, addr2, TO_CHAR(birth,'YYYY-MM-DD') birth
+		FROM register r
+		JOIN member1 m1 ON m1.userId = r.userId
+		JOIN member2 m2 ON r.userId = m2.userId
+		JOIN dietClass d ON r.classNum = d.classNum
+		<where>
+			<if test="searchValue!=null and searchValue!=''">
+				<include refid="where-regiList"/>
+			</if>
+		</where>)
+	</select>
+	
 	<insert id="insertMember1" parameterType="com.hotbody.member.Member">
 		INSERT INTO member1 (userId, pwd, grade, userName) VALUES (#{userId}, #{pwd}, #{grade}, #{userName})
 	</insert>
