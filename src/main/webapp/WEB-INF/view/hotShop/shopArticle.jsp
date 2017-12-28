@@ -104,14 +104,14 @@ function listPage2(page){
 
 
 function insertCookie(pdnum){
-	var no=$("#no1").val();
-	var cVal=pdnum;
-	addCookie(cVal);
+	if(pdnum==""){
+		return;
+	}
+	addCookie(pdnum);
 }
 </script>
 <script>
 function payment(pdnum){
-	var no=$("#no1").val();
 	var cVal=pdnum;
 	addCookie(cVal);
 	alert(getCookie("hotbodyBasket"));

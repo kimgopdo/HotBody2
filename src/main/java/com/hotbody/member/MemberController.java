@@ -96,9 +96,9 @@ public class MemberController {
 		int result = service.insertMember(dto);
 		
 		if(result != 0) {
-			return ".main.main";
+			return "redirect:/";
 		} else
-			return ".main.main";
+			return "redirect:/";
 	}
 	
 	@RequestMapping(value="/member/userIdCheck")

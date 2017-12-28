@@ -72,7 +72,7 @@ function BasketList(){
 	}
 	var uid="${sessionScope.member.userId}";
 	var q;
-	console.log(cookie);
+	//console.log(cookie);
 	<%-- if(! uid){
 		location.href="<%=cp%>/member/login";
 		return;
@@ -101,7 +101,7 @@ function BasketList(){
       buttons:{
           "구매":function(){
               $(this).dialog("close");
-              payment();
+              paymentB();
           }
       },
       show: {
@@ -123,7 +123,7 @@ function BasketList(){
     });
   } );
 
-function payment(){
+function paymentB(){
 	var array=getCookie("hotbodyBasket").split(",");
 	var member="${sessionScope.member.userId}";
 	if(member!=""){

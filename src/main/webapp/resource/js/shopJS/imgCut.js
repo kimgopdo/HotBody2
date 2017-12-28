@@ -1,4 +1,4 @@
-window.onload = function() {
+$(function() {
 	  var divs = document.querySelectorAll('.aspect');
 	  for (var i = 0; i < divs.length; ++i) {
 	    var div = divs[i];
@@ -18,6 +18,6 @@ window.onload = function() {
 	    } else {
 	      img.style.cssText = 'width: 100%; height: auto; margin-left: 0;';
 	    }
+	    console.log("ddd");
 	  }
-	  
-	};
+	});

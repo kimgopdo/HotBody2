@@ -21,7 +21,7 @@ import com.hotbody.common.MyUtil;
 import com.hotbody.hotShop.board.HotShopService;
 import com.hotbody.member.SessionInfo;
 
-@Controller("hotShop.qna")
+@Controller("hotShop.qna")  
 public class QnaController {
 	@Autowired
 	private QnaService service;
