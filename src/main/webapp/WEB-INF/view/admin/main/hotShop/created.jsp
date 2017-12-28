@@ -17,6 +17,11 @@
 </style>
 <script type="text/javascript">
 $(function(){
+	if ($('input[name=showandhide]').is(":checked")) {
+	    $('input[name=showandhide]').val('0');
+	} else {
+	    $('input[name=showandhide]').val('1');
+	}
 	var url="<%=cp%>/hotShop/menuCall"
 	$.ajax({
 		type:"post"
@@ -134,7 +139,7 @@ $(function(){
 		<table style="width: 800px;">
 		<tr>
 			<td colspan="2">
-				<input type="checkbox" name="showandhide" value="0">숨김
+				<input type="checkbox" name="showandhide">숨김
 				<select id="bciSelect" name="bclcode" style="padding: 10px;">
 					<option selected="selected">::영양소별</option>
 				</select>

@@ -67,11 +67,11 @@ function sclSend(){
 	
 }
 function bciDelete(code){
-	location.href="<%=cp%>/hotShop/menuDeleteBci?code="+code;
+	location.href="<%=cp%>/admin/hotShop/menuDeleteBci?code="+code;
 	return;
 }
 function sclDelete(code){
-	location.href="<%=cp%>/hotShop/menuDeleteScl?code="+code;
+	location.href="<%=cp%>/admin/hotShop/menuDeleteScl?code="+code;
 	return;
 }
 </script>

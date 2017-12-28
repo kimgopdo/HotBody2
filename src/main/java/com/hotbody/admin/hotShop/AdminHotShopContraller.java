@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -418,7 +419,7 @@ public class AdminHotShopContraller {
 				+ "---------------------------------------------------------------------------------------------------------------------------\n------------------------------------------------------------------------------------------------------------------\n--------------------------------------------------------------");
 		service.show(pdnum);
 
-		return "redirect:/";
+		return "redirect:/hotShop";
 	}
 
 	// 숨김 Update
@@ -432,27 +433,27 @@ public class AdminHotShopContraller {
 				+ "---------------------------------------------------------------------------------------------------------------------------\n------------------------------------------------------------------------------------------------------------------\n--------------------------------------------------------------");
 		service.hide(pdnum);
 
-		return "redirect:/";
+		return "redirect:/hotShop";
 	}
 
 	// 상품유형별 메뉴 삭제(지울 시 되 묻는것과 속해있는 상품목록 관리여부)
 	@RequestMapping(value = "/admin/hotShop/menuDeleteBci")
 	public String menuDeleteBci(@RequestParam int code) {
 		service.deleteBcl(code);
-		return "redirect:/";
+		return "redirect:/hotShop";
 	}
 
 	// 상품 영양소별 메뉴 삭제(지울 시 되 묻는것과 속해있는 상품목록 관리여부)
 	@RequestMapping(value = "/admin/hotShop/menuDeleteScl")
 	public String menuDeleteScl(@RequestParam int code) {
 		service.deleteSci(code);
-		return "redirect:/";
+		return "redirect:/hotShop";
 	}
 	
 	
 	@RequestMapping(value="/admin/hotShop/chart")
 	public String hotShopChart(
-			String checkDate,
+			@RequestParam(defaultValue="2017") String checkDate,
 			Model model
 			) {
 		List<Integer> list=new ArrayList<>();

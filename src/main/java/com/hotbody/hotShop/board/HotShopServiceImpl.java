@@ -391,6 +391,7 @@ public class HotShopServiceImpl implements HotShopService{
 					result=n1-n2-n3;
 					list.add(result);
 				}else {
+					checkDate=checkDate+"-"+n;
 					n1=dao.selectOne("product.readRealChartTotalPay", checkDate);
 					n2=dao.selectOne("product.readRealChartPdDisAmt", checkDate);
 					n3=dao.selectOne("product.readRealChartPdInAmt", checkDate);
