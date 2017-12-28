@@ -146,7 +146,7 @@ function  deleteReply(replyNum, page) {
 		}, "json");		
 	}	
 }
-		
+	
 //댓글 		
 </script>
 <div style="width: 700px; margin: 20px auto 0; min-height: 800px;">
