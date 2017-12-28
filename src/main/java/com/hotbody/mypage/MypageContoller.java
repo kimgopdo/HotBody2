@@ -90,11 +90,13 @@ public class MypageContoller {
 		map.put("dataCount",dataCount);
 		if (dataCount != 0)
 			total_page = myUtil.pageCount(rows, dataCount);
-
+		System.out.println("current_page1:"+current_page);
 		// 다른 사람이 자료를 삭제하여 전체 페이지수가 변화 된 경우
-		if (total_page < current_page)
+	/*	if (total_page < current_page)
 			current_page = total_page;
-
+*/
+		System.out.println("current_page2:"+current_page);
+		
 		// 리스트에 출력할 데이터를 가져오기
 		int start = (current_page - 1) * rows + 1;
 		int end = current_page * rows;
@@ -609,7 +611,7 @@ Iterator<Message>it3=list3.iterator();
 		List<Integer> mCode=Arrays.asList(mCod);
 		
 		for(int s:mCode)
-		System.out.println(s);
+		System.out.println("엠코드"+s);
 		
 		List<Message> listFileCode=mservice.listFileCode(mCode);	
 		

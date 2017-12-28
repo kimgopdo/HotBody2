@@ -149,7 +149,7 @@ public class MilelageServiceImpl implements MilelageService{
 
 	@Override
 	public void deleteFile(List<Message> listFileCode) {
-	
+		System.out.println("실행됨");
 		
 		try {
 			dao.deleteData("milelage.deleteFile", listFileCode);
@@ -161,7 +161,7 @@ public class MilelageServiceImpl implements MilelageService{
 
 	@Override
 	public void deleteMessage(List<Message> listFileCode) {
-
+		System.out.println("실행됨2");
 		try {
 			dao.deleteData("milelage.deleteMessage", listFileCode);
 		} catch (Exception e) {

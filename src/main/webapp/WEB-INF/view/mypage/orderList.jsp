@@ -219,11 +219,7 @@ $(function() {
 
 </table>
 <div style="height: 100px;" align="center" >
-	<!--<img style="margin-top: 20px" src="<%=cp%>/resource/images/btn_page_first.gif">
-	<img style="margin-top: 20px" src="<%=cp%>/resource/images/btn_page_prev.gif">-->
 	<a style="margin-top:20px; position: relative; top: 10px;">${paging}</a>
-	<!--  <img style="margin-top: 20px" src="<%=cp%>/resource/images/btn_page_next.gif">
-	<img style="margin-top: 20px" src="<%=cp%>/resource/images/btn_page_last.gif">-->
 </div>
 <div style="height: 100px">
 </div>
