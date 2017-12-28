@@ -454,21 +454,42 @@ public class AdminHotShopContraller {
 	@RequestMapping(value="/admin/hotShop/chart")
 	public String hotShopChart(
 			@RequestParam(defaultValue="2017") String checkDate,
+			HttpServletRequest req,
+			HttpSession session,
 			Model model
 			) {
-		List<Integer> list=new ArrayList<>();
-		list=service.readRealChart(checkDate);
-		if(list!=null) {
-			int []m=new int [12];
-			for(int i=1;i<=list.size();i++) {
-				m[i]=list.indexOf(i);
-				model.addAttribute("m"+i, m[i]);
-			}
-		}else {
-			model.addAttribute("state", "noData");
-			return ".admin.main.hotShop.hotShopChart";
+		String cp = req.getServletContext().getRealPath("/");
+		String pathname = cp + "uploads" + File.separator + "shopList";
+		Map<String, Object> map = new HashMap<>();
+		List<HotShop> productList = null;
+		map.put("listOrArticle", 0);
+		SessionInfo info=(SessionInfo) session.getAttribute("member");
+		if(info!=null) {
+			map.put("userId", info.getUserId());
 		}
-		model.addAttribute("state", "success");
+		productList = service.productList(map);
+		Iterator<HotShop> it = productList.iterator();
+		int n=0;
+		while (it.hasNext()) {
+			HotShop dto = it.next();
+			int year=2017;
+			year+=n;
+			dto.setYear(Integer.toString(year));
+			dto.setImgPath(pathname + File.separator + dto.getImgSaveFilename());
+			System.out.println(dto.getImgPath());
+			n++;
+		}
+		List<Supply> supplyList = null;
+		supplyList = service.readSupply();
+		int row = 5;
+		int dataCount = service.dataCount();
+		int total_page = dataCount / row;
+		List<ProductIn> productInList = null;
+		productInList = service.readProductIn(map);
+		model.addAttribute("productList", productList);
+		model.addAttribute("supplyList", supplyList);
+		model.addAttribute("productInList", productInList);
+		model.addAttribute("total_page", total_page);
 		return ".admin.main.hotShop.hotShopChart";
 	}
 }
