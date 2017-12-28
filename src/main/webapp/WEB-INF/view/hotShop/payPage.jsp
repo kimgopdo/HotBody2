@@ -147,9 +147,9 @@ function send(){
 		,dataType:"json"
 		,async: false
 		,success:function(e){
-			if(e.state=="paySeccess"){
+			if(e.state=="paySuccess"){
 				removePayCookie(e.paymentDto.pdnum,e.paymentDto.amount);
-				location.href="<%=cp%>/hotShop";
+				location.href="<%=cp%>/hotShop/paySeccess";
 				return;
 			}else{
 				alert("결제오류!!");

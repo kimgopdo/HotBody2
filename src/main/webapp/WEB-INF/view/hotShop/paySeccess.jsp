@@ -36,6 +36,13 @@
 	margin-right: 5px;
 }
 </style>
+<script>
+function main(){
+	
+	location.href="<%=cp%>/hotShop";
+	return;
+}
+</script>
 <table id="payBoard" class="paymentPage" style="width:100%; margin-top:150px; border-collapse: collapse;">
 	<tr>                                                                        
 		<td colspan="4"><img src="<%=cp%>/uploads/shopList/paySeccess.PNG"></td>
@@ -52,7 +59,7 @@
 	</tr>
 	</c:forEach>
 	<tr>
-		<td></td>
+		<td colspan="4" width="100%"><button type="button" class="btn" style="width: 300px;height: 80px; background: #e7e7e7;" onclick="main();">메인화면으로</button> </td>
 	</tr>
 </table>
 <script>
