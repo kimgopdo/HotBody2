@@ -139,7 +139,7 @@ function viewPre() {
 <body style="height: 2800px">
 
 	<div
-		style="height: 50px; font-size: 40px; width: 700px; margin: 20px auto 0; font-weight: bold; color: #666666;">공지사항</div>
+		style="height: 50px; font-size: 40px; width: 700px; margin: 20px auto 0; font-weight: bold; color: #666666;">| 공지사항</div>
 
 	<table
 		style="width: 700px; margin: 20px auto 0; border-top: 2px solid #333333; border-bottom: 2px solid #333333; border-collapse: collapse; border-spacing: 0">
