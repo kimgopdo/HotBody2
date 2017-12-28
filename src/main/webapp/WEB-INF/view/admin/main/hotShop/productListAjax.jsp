@@ -5,11 +5,8 @@
 <%
 	String cp=request.getContextPath();
 %>
-<style>
-.aspect { width: 350px; height: 400px; }
-</style>
 <c:forEach var="dto" items="${list}">
-		    <li style="float:left; width: 380px; margin-right: 20px;">
+		    <li class="list">
 		         <div class="aspect">
 		         	<img src="<%=cp%>/uploads/shopList/${dto.imgSaveFilename}">
 		         </div>
@@ -29,3 +26,28 @@
 		         </div>
 		    </li>
 </c:forEach>
+<script>
+$(function(){
+	var divs = document.querySelectorAll('.aspect');
+	  for (var i = 0; i < divs.length; ++i) {
+	    var div = divs[i];
+	    var divAspect = div.offsetHeight / div.offsetWidth;
+	    div.style.overflow = 'hidden';
+	    
+	    var img = div.querySelector('img');
+	    var imgAspect = img.height / img.width;
+	
+	    if (imgAspect <= divAspect) {
+	
+	      var imgWidthActual = div.offsetHeight / imgAspect;
+	      var imgWidthToBe = div.offsetHeight / divAspect;
+	      var marginLeft = -Math.round((imgWidthActual - imgWidthToBe) / 2)
+	      img.style.cssText = 'width: auto; height: 100%; margin-left: '
+	                      + marginLeft + 'px;'
+	    } else {
+	      img.style.cssText = 'width: 100%; height: auto; margin-left: 0;';
+	    }
+	    console.log("ddd");
+	  }
+})
+</script>

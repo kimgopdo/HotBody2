@@ -66,6 +66,9 @@
 	<insert id="insertProductDis" parameterType="com.hotbody.hotShop.board.ProductDis">
 	INSERT INTO productDis (pdDisCode,pdDisNum,pdDisDate,pdDisReason,pdDisAmt,pdnum) VALUES(PRODUCTDIS_SEQ.Nextval,#{pdDisNum},sysdate,#{pdDisReason},#{pdDisAmt},#{pdnum})
 	</insert>
+	<select id="">
+	
+	</select>
 	<select id="readDelOrder" parameterType="String" resultType="Integer">
 	SELECT MAX(delOrder) delOrder
 		FROM ORDERS WHERE userId=#{userId}

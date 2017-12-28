@@ -94,10 +94,9 @@ function call(){
 	
 		var tot=parseInt(price)*parseInt(num);
 		if(! tot){
-			$("#totalPrice").text("0원");
+			$("#totalPrice").val("0원");
 		}else{
-			tot=tot.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-			$("#totalPrice").text(tot+"원");
+			$("#totalPrice").val(tot);
 		}
 }
 function productDisList(page){
@@ -186,7 +185,7 @@ function productDisSend(f){
 		</td>
 		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; "><input style="width: 100%;" type="text" name="pdrawprice" id="pdRawPrice" readonly="readonly" onkeyup='call()'></td>
 		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; "><input style="width: 100%;" type="text" name="pdDisNum" id="pdDisNum" onkeyup='call()'></td>
-		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; " id="totalPrice" ></td>
+		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; "> <input type="text" id="totalPrice" name="pdDisAmt" value="0" readonly="readonly" style="border: 0px;"></td>
 		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; "><input style="width: 100%;" type="text" name="pdDisReason" id="pdDisReason"></td>                 
 		<td>
 		<select id="supplyName" name="supplycode" onchange="showImg();">

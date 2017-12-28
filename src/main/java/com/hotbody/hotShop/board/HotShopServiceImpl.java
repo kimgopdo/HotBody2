@@ -372,6 +372,11 @@ public class HotShopServiceImpl implements HotShopService{
 		}
 		return result;
 	}
+	@Override
+	public List<Chart> readRealChart(String checkDate) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 }

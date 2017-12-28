@@ -5,6 +5,7 @@
 <%
 	String cp=request.getContextPath();
 %>
+
 <script type="text/javascript">
 var page=1;
 var totalPage=${total_page};
@@ -16,7 +17,6 @@ $(function(){
 $(function(){
 	productList(1);
 })
-
 function productList(page){
 	var url="<%=cp%>/admin/hotShop/productListAjax";
 	var data=$("#hiddenForm").serialize()+"&page="+page+"&formal="+$(':radio[name="formal"]:checked').val();
@@ -30,6 +30,24 @@ function productList(page){
 	});
 }
 </script>
+<style>
+ul.list{
+   width: 100%;
+   margin-left: auto;
+   margin-right: auto;
+   list-style:none;
+}
+li.list{
+   height: 460px;
+   padding: 20px;
+   float: left;
+}
+
+li.aspect{
+	padding: 25px;
+}
+.aspect { width: 350px; height: 400px; }
+</style>
 <form id="hiddenForm">
 <input type="hidden" name="cl" value="${cl}">
 <input type="hidden" name="code" value="${code}">
@@ -51,3 +69,4 @@ function productList(page){
 	</td>
 </tr>
 </table>
+<script type="text/javascript" src="<%=cp%>/resource/js/shopJS/imgCut.js"></script>
