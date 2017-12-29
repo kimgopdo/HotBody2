@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.hotbody.common.FileManager;
 import com.hotbody.common.MyUtil;
@@ -54,10 +53,9 @@ public class EventController {
 			//전체페이지수
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("searchKey", searchKey);
-			map.put("searchValue", searchValue);			
-			dataCount = service.dataCount(map);
+			map.put("searchValue", searchValue);
 			
-		
+			dataCount = service.dataCount(map);
 			if(dataCount !=0)
 				total_page = myUtil.pageCount(rows, dataCount);
 			
@@ -72,16 +70,16 @@ public class EventController {
 			map.put("end", end);		
 			List<Event> list = service.listEvent(map);
 			
-			//1페이지인 경우 공지글 가져오기
-			List<Event> listTop = null;
-			if(current_page == 1)
-				listTop = service.listEventTop();
-			
+			int dataCount2=0;
 			//출력 번호
 			int listNum, n=0;
 			Iterator<Event> it=list.iterator();
 			while(it.hasNext()) {
-				Event data=it.next();
+				Event data=new Event();
+				data=it.next();	
+				map.put("eventCode", data.getEventCode());
+				dataCount2=service.replyDataCount(map);
+				data.setReplyCount(dataCount2);
 				listNum = dataCount - (start + n-1);
 				data.setListNum(listNum);
 				n++;
@@ -106,7 +104,6 @@ public class EventController {
 			
 			//list.jsp에 넘길 데이터
 			model.addAttribute("list", list);
-			model.addAttribute("listTop", listTop);
 			model.addAttribute("articleUrl", articleUrl);
 			model.addAttribute("page", current_page);
 			model.addAttribute("total_page", total_page);
@@ -117,22 +114,30 @@ public class EventController {
 			
 	}
 	
-	@RequestMapping(value="/event/created",
-					method=RequestMethod.GET)
-	public ModelAndView createdForm() throws Exception {
-		ModelAndView mav=new ModelAndView("event/created");
-		mav.addObject("mode", "created");
-		return mav;
+	@RequestMapping(value="/event/created",method=RequestMethod.GET)
+	public String createdForm(
+					HttpSession session,
+					Model model) throws Exception {
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		if(info==null) {
+			return "redirect:/member/login";
+		}
+		
+		model.addAttribute("mode", "created");
+		return ".event.created";
 	}
 	
 	@RequestMapping(value="/event/created",
 					method=RequestMethod.POST)
-	public String createdSubmit(HttpServletRequest session, Event dto) throws Exception {
-		//dto.setUserId("asd");
+	public String createdSubmit(HttpSession session, Event dto) throws Exception {
+		
+		
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
 		
 		String root = session.getServletContext().getRealPath("/");
-		
 		String pathname = root + File.separator + "uploads" + File.separator + "Event";
+		
+		dto.setUserId(info.getUserId());
 		
 		service.insertEvent(dto, pathname);
 		
@@ -141,7 +146,7 @@ public class EventController {
 	
 	@RequestMapping(value="/event/article")
 	public String article(
-			@RequestParam int eventCode,
+			@RequestParam(value="eventCode") int eventCode,
 			@RequestParam int page,
 			@RequestParam(value="searchKey", defaultValue="subject") String searchKey,
 			@RequestParam(value="searchValue", defaultValue="") String searchValue,
@@ -229,25 +234,16 @@ public class EventController {
 			@RequestParam String page,
 			HttpSession session
 			) {
-		String root=session.getServletContext().getRealPath("/");
-		//업로드 할 경로
-		String pathname=root+File.separator+"uploads"
-				+File.separator+"event";
-		Event dto=service.readEvent(eventCode);
-		service.deleteEvent(eventCode,pathname);
-		try {
-			//업로드 된 파일 삭제
-			if(dto.getSaveFile()!=null)
-				fileManager.doFileDelete(dto.getSaveFile(), pathname);
-		} catch (Exception e) {
-		}
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
 		
-		dto.setSaveFile("");
-		dto.setOriginalFile("");
-		service.updateEvent(dto, pathname);
+		String root=session.getServletContext().getRealPath("/");
+		String pathname=root+File.separator+"uploads"+File.separator+"event";
+		
+
+		service.deleteEvent(eventCode,pathname, info.getUserId());
+
 		
 		return "redirect:/event/list?page="+page;
-		//return "redirect:/Event/update?eventCode="+eventCode+"&page="+page;
 	}
 	//파일삭제
 	@RequestMapping(value="/event/deleteFile", 

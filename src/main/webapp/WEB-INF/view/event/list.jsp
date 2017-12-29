@@ -6,7 +6,7 @@
 	String cp=request.getContextPath();
 %>
 
-<script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-1.12.4.min.js"></script>
+
 <script>
 $(document).ready(function(){
     $(".board:even").css("background-color","#EDEDEF");
@@ -16,6 +16,16 @@ $(document).ready(function(){
 <script type="text/javascript">
 function send(f){
 	f.submit();
+}
+
+function checkArticle(){
+	alert("해당게시글은 관리자 혹은 자신만 확인가능합니다.");
+	return;
+}
+
+function checkArticle2(){
+	alert("로그인 후에 이용하실 수 있습니다.");
+	location.href="<%=cp%>/member/login";
 }
 </script>
 <style type="text/css">
@@ -69,8 +79,8 @@ body{
 </head>
 <body>
 <div style="height: 50px;"></div>
-<div style="font-size: 40px; width: 700px; margin: 20px auto 0; font-weight: bold; color: #666666;">| 문의사항</div>
-<table style="width: 700px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0">
+<div style="font-size: 40px; width: 1100px; margin: 20px auto 0; font-weight: bold; color: #666666;">| 문의사항</div>
+<table style="width: 1100px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0">
 	
 	<tr height="40">
 		<td align="left" colspan="6">
@@ -86,32 +96,31 @@ body{
 		<td width="40" align="center">조회수</td>
 		
 	</tr>
-	
-	<c:forEach var="dto" items="${listTop}">
-	<tr align="center" height="40"
-				style="border-bottom: 1px sild #cccccc;">
-		<td width="60" style="font-weight: bold; color: red;"><span>공지</span></td>
-		<td align="center" style="padding-left: 5px">
-			<a href="${articleUrl}&eventCode=${dto.eventCode}" style="text-decoration: none; color: black;">${dto.subject} (${dto.replyCount})</a>
-		</td>
-		<td width="40">${dto.userId}</td>
-		<td width="40">${dto.created}</td>
-		<c:choose>
-			<c:when test="${dto.hitCount>20}">	
-				<td width="40" style="font-weight: bold; color: red;">${dto.hitCount}</td>
-			</c:when>
-		<c:otherwise>
-			<td width="40">${dto.hitCount}</td>	
-		</c:otherwise>
-		</c:choose>
-	</tr>
-	</c:forEach>
-	
+
 	<c:forEach var="dto" items="${list}">
 	<tr height="40" align="center" class="board">
 		<td width="60">${dto.listNum}</td>
-		<td align="center">
-			<a href="${articleUrl}&eventCode=${dto.eventCode}" style="text-decoration: none; color: black;">${dto.subject}</a>
+		<td align="left">
+			<c:choose>
+		      	   <c:when test="${dto.userId == sessionScope.member.userId || sessionScope.member.userId=='admin'}">      	 
+		      	   	  <a href="${articleUrl}&eventCode=${dto.eventCode}" style="text-decoration: none; color: black;">${dto.subject}
+						<c:if test="${dto.replyCount>0}"> [${dto.replyCount}]</c:if>
+					 </a>
+				   </c:when>
+				   <c:when test="${sessionScope.member.userId == null}">
+				    <a href="javascript:checkArticle2()" style="text-decoration: none; color: black;">${dto.subject}
+						<c:if test="${dto.replyCount>0}"> [${dto.replyCount}]</c:if>
+					</a>
+				   </c:when>
+				   
+				  <c:otherwise>
+				   	<a href="javascript:checkArticle()" style="text-decoration: none; color: black;">${dto.subject}
+						<c:if test="${dto.replyCount>0}"> [${dto.replyCount}]</c:if>
+					</a> 	
+				   </c:otherwise>	   
+		      </c:choose>
+		
+
 		</td>
 		<td width="65">${dto.userId}</td>
 		<td width="100">${dto.created}</td>
@@ -135,16 +144,16 @@ body{
 		<form name="searchList" method="post" action="<%=cp%>/event/list">
 			<select name="searchKey" style="height: 25px;">
 				<option value="subject">제목</option>
-				<option value="subject">내용</option>
-				<option value="content">글쓴이</option>
+				<option value="content">내용</option>
+				<option value="userId">글쓴이</option>
 			</select>	
 			<input type="text" name="searchValue">
 			<input type="text" style="display:none;">
 			
 			<button type="button" onclick="send(this.form);" class="btn-search" style="width: 60px;">검색</button>
-<%-- 			<c:if test="${sessionScope.member.userId == 'admin'}">
+			<c:if test="${sessionScope.member.userId != 'admin'}">
 				<button type="button" class="btn-list" onclick="javascript:location.href='<%=cp%>/event/created'" style="float: right; width: 80px;">글올리기</button>
-			</c:if> --%>
+			</c:if>
 			<button type="button" class="btn-list" onclick="javascript:location.href='<%=cp%>/event/list';" style="float: right; width: 80px; margin-right: 10px;">새로고침</button>
 		</form>
 		</td>

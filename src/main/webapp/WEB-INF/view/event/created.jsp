@@ -156,10 +156,10 @@ function deleteFile() {
 }
 </script>
 
-<div style="font-size: 40px; width: 700px; margin: 20px auto 0; font-weight: bold; color: #666666;">| 문의사항</div>
-<div style="width:700px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
+<div style="font-size: 40px; width: 1100px; margin: 20px auto 0; font-weight: bold; color: #666666;">| 문의사항</div>
+<div style="width:1100px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
 
-<div style="width: 700px; min-height: 650px; margin: 20px auto 0;">
+<div style="width: 1100px; min-height: 650px; margin: 20px auto 0;">
 	<form action="<%=cp%>/event/${mode}" method="post" name="boardForm" enctype="multipart/form-data" onsubmit="return submitContents(this);">
 	<table style="width: 700px; border-collapse: collapse; border-spacing: 0">
 	
@@ -167,6 +167,13 @@ function deleteFile() {
 		<td width="100">제목</td>
 		<td>
 			<input type="text" name="subject" style="width: 100%; height: 35px;" value="${dto.subject}">
+		</td>
+	</tr>
+	
+	<tr height="40">
+		<td width="100">작성자</td>
+		<td>
+			 ${sessionScope.member.userId}
 		</td>
 	</tr>
 	
@@ -179,8 +186,8 @@ function deleteFile() {
 	<tr height="10px;"></tr>
 
 	</table>
-	<div style="width:700px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
-	<div style="width: 700px; margin: 20px auto 0;" align="center">
+	<div style="width:1100px; height:1px;  margin: 20px auto 0;border-bottom: 2px solid #666666;"></div>
+	<div style="width: 1100px; margin: 20px auto 0;" align="center">
 	<button type="submit" class="btn-default02">등록</button>
 	<button type="button" class="btn-default02" onclick="javascript:location.href='<%=cp%>/event/list?page=${page}';">등록취소</button>
 	<c:if test="${mode=='update'}">

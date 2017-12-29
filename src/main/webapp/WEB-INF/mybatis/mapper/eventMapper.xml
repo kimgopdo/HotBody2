@@ -113,7 +113,7 @@
 						<include refid="where-list"/>
 					</if>
 				<![CDATA[
-						AND (eventCode > #{eventCode})
+						AND (eventCode < #{eventCode})
 				]]>		
 			</where>
 			ORDER BY eventCode DESC

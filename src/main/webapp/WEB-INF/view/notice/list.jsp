@@ -10,7 +10,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-1.12.4.min.js"></script>
+
 <script>
 $(document).ready(function(){
     $(".board:even").css("background-color","#EDEDEF");
@@ -70,10 +70,10 @@ body{
     color: black;
 </style>
 </head>
-<body style="height: 1000px">
+<body style="height: 1100px">
 <div style="height: 50px;"></div>
-<div style="font-size: 40px; width: 700px; margin: 20px auto 0; font-weight: bold; color: #666666;">| 공지사항</div>
-<table style="width: 700px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0">
+<div style="font-size: 40px; width: 1100px; margin: 20px auto 0; font-weight: bold; color: #666666;">| 공지사항</div>
+<table style="width: 1100px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0">
 	
 	<tr height="40">
 		<td align="left" colspan="6">
@@ -138,14 +138,14 @@ body{
 		<form name="searchList" method="post" action="<%=cp%>/notice/list">
 			<select name="searchKey" style="height: 25px;">
 				<option value="subject">제목</option>
-				<option value="subject">내용</option>
-				<option value="content">글쓴이</option>
+				<option value="content">내용</option>
+				<option value="userId">글쓴이</option>
 			</select>	
 			<input type="text" name="searchValue">
 			<input type="text" style="display:none;">
-<%-- 			<c:if test="${sessionScope.member.userId == 'admin'}">
+			<c:if test="${sessionScope.member.userId == 'admin'}">
 				<button type="button" class="btn-list" onclick="javascript:location.href='<%=cp%>/notice/created'" style="float: right; width: 80px; margin-right: 5px;">글올리기</button>
-			</c:if> --%>
+			</c:if>
 			<button type="button" onclick="send(this.form);" class="btn-search" style="width: 60px;">검색</button>
 			<button type="button" class="btn-list" onclick="javascript:location.href='<%=cp%>/notice/list';" style="float: right; width: 80px; margin-right: 10px;">새로고침</button>
 		</form>

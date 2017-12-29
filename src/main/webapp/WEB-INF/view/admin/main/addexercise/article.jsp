@@ -145,7 +145,7 @@ $(function(){
 	<td colspan="3"></td>
 	<td align="right">
 	<p id="filedown" style="text-decoration: none; color: #666666; cursor: pointer;"> 
-	첨부파일 <span style="color: tomato; font: bold;">(개수)</span>
+	첨부파일 <span style="color: tomato; font: bold;">(${dto.video != null ? '1' : '0'})</span>
 	</p>
 	</td>
 </tr>

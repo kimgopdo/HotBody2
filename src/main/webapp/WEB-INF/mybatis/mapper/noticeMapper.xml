@@ -17,7 +17,7 @@
 	<!-- sql태그: 반복작업에 유용 -->
 	<sql id="where-list">
 		<if test="searchKey=='userName'">
-			userName = #{searchValue}
+			userName=#{searchValue}
 		</if>
 		<if test="searchKey=='subject'">
 			INSTR(subject, #{searchValue}) &gt; 0
@@ -27,7 +27,7 @@
 		</if>
 		<if test="searchKey=='created'">
 			TO_CHAR(created, 'YYYY-MM-DD') = #{searchValue}
-				OR TO_CHAR(created, 'YYYYMMDD') = #{searchValue}
+			OR TO_CHAR(created, 'YYYYMMDD') = #{searchValue}
 		</if>
 	</sql>
 	
@@ -46,7 +46,7 @@
 		parameterType="map">
 		SELECT * FROM (
 			SELECT ROWNUM rnum, tb.* FROM(
-				SELECT noticeCode, n.userId, subject, hitCount,
+				SELECT noticeCode, n.userId, subject, hitCount,userName,
 					TO_CHAR(created, 'yyyy-mm-dd') created,
 					saveFile
 					FROM notice n
@@ -65,7 +65,7 @@
 	
 	<!-- 글 리스트탑 -->
 	<select id="listNoticeTop" resultType="com.hotbody.notice.Notice">
-		SELECT noticeCode, n.userId, subject, hitCount,
+		SELECT noticeCode, n.userId, subject, hitCount,userName,
 					TO_CHAR(created, 'yyyy-mm-dd') created,
 					saveFile
 					FROM notice n

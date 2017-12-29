@@ -356,8 +356,9 @@
 	<select id="dataCount4" resultType="Integer" parameterType="map">
 		SELECT NVL(COUNT(*),0) FROM todayexer
 		<where>
+			userid= #{userId}
 			<if test="searchValue != null and searchValue !=''">  
-				<include refid="where-list4"/>
+				and <include refid="where-list4"/>
 			</if>
 		</where>
 	</select>
@@ -371,10 +372,10 @@
 			     FROM todayexer t 
 			     JOIN informationd i on t.infoNum = i.infoNum
 			     JOIN exerciseInfo e on t.exerciseNum = e.exerciseNum
-			     where userid = #{userId}
                     <where>
+                     userid = #{userId} 
                          <if test="searchValue != null and searchValue != ''">
-			                  <include refid="where-list4"/>
+			                 and <include refid="where-list4"/>
 		                 </if>
 	                </where>
 	             ORDER BY edate DESC

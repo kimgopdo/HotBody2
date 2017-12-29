@@ -266,7 +266,8 @@ public class MyClassController {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("searchKey", searchKey);
         map.put("searchValue", searchValue);
-
+        map.put("userId", info.getUserId());
+        
         dataCount = service.dataCount4(map);
         if(dataCount != 0)
             total_page = myUtil.pageCount(rows, dataCount) ;

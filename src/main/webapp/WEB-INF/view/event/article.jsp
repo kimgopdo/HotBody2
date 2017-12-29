@@ -47,6 +47,22 @@ body{
 
 <script type="text/javascript"> //스크립트에서 로케이션 리턴
 
+function deleteEvent() {
+	<c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId==dto.userId}">
+	  var eventCode = "${dto.eventCode}";
+	  var page = "${page}";
+	  var query = "eventCode="+eventCode+"&page="+page;
+	  var url = "<%=cp%>/event/delete?" + query;
+
+	  if(confirm("위 자료를 삭제 하시 겠습니까 ? "))
+	  	location.href=url;
+	</c:if>    
+	<c:if test="${sessionScope.member.userId!='admin' && sessionScope.member.userId!=dto.userId}">
+	  alert("게시물을 삭제할 수  없습니다.");
+	</c:if>
+	}
+
+
 function viewNext() {
 	var next ="${nextReadDto}";
 	if(next==""){
@@ -149,14 +165,14 @@ function  deleteReply(replyNum, page) {
 	
 //댓글 		
 </script>
-<div style="width: 700px; margin: 20px auto 0; min-height: 800px;">
+<div style="width: 1100px; margin: 20px auto 0; min-height: 800px;">
 	<div style="height: 50px;"></div>
-	<div style="font-size: 40px; width: 700px; font-weight: bold; color: #666666;">| 문의사항</div>
+	<div style="font-size: 40px; width: 1100px; font-weight: bold; color: #666666;">| 문의사항</div>
 	
-	<table style="width: 700px; margin: 20px auto 0; border-top: 2px solid #333333; border-bottom: 2px solid #333333; border-collapse: collapse; border-spacing: 0">
+	<table style="width: 1100px; margin: 20px auto 0; border-top: 2px solid #333333; border-bottom: 2px solid #333333; border-collapse: collapse; border-spacing: 0">
 	<tr height="50" style="border-bottom: 1px solid #cccccc">
 		<td style="width:40px; padding-left: 10px; font-weight: bold; color: #666666;">제목</td>
-		<td align="left">${dto.subject}</td>
+		<td align="left">&nbsp;&nbsp;&nbsp;&nbsp;${dto.subject}</td>
 		<td style="width:40px; margin-left: 10px; font-weight: bold; color: #666666;">날짜</td>
 		<td style="width: 160px;">${dto.created}</td>
 	</tr>
@@ -167,16 +183,18 @@ function  deleteReply(replyNum, page) {
 	</table>
 	
 	
-	<div style="width:700px; margin: 20px auto 0;">
+	<div style="width:1100px; margin: 20px auto 0;">
 	<input type="button" class="btn-article" value="목록" onclick="javascript:location.href='<%=cp%>/event/list?${query}';">
-<%-- 	<c:if test="${sessionScope.member.userId == 'admin'}">
+	<c:if test="${sessionScope.member.userId != 'admin' && sessionScope.member.userId==dto.userId}">
 		<input type="button" class="btn-article" value="수정" onclick="javascript:location.href='<%=cp%>/event/update?eventCode=${dto.eventCode}&${query}';">
-		<input type="button" class="btn-article" value="삭제" onclick="deleteEvent(${dto.eventCode});">
-		</c:if> --%>
+	</c:if>
+	<c:if test="${sessionScope.member.userId == dto.userId || sessionScope.member.userId == 'admin'}">
+		<input type="button" class="btn-article" value="삭제" onclick="deleteEvent();">
+	</c:if>	
 	</div>
 	
 	<br><br>
-	<table style="width: 700px; margin: 20px auto 0; border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc; border-collapse: collapse; border-spacing: 0">
+	<table style="width: 1100px; margin: 20px auto 0; border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc; border-collapse: collapse; border-spacing: 0">
 	<tr height="40" style="border-bottom: 1px solid #e3e3e3; font-size: 13px;">
 		<td width="150" align="center" >이전글 ∧</td>
 		<td colspan="3" align="left" onclick="viewPre();" style="cursor: pointer;">${preReadDto.subject}</td>
@@ -200,7 +218,8 @@ function  deleteReply(replyNum, page) {
 		</div>
 	</div>
 	
-	<div style="width:700px; margin: 20px auto 0; min-height: 300px;">
+	<div style="width:1100px; margin: 20px auto 0; min-height: 300px;">
+	<c:if test="${sessionScope.member.userId == 'admin'}">
 		<table style='width: 100%"; margin: 15px auto 0px; border-spacing: 0px;'>
 			<tr height='30'>
 				<td align='left'>
@@ -209,7 +228,7 @@ function  deleteReply(replyNum, page) {
 			</tr>	
 			<tr>
 				<td style= 'padding:5px 5px 0px;'>
-					<textarea id='replyContent' class='boxTA' style='width: 700px; height: 70px;'></textarea>
+					<textarea id='replyContent' class='boxTA' style='width: 1100px; height: 70px;'></textarea>
 				</td>	
 			</tr>
 			<tr>
@@ -218,6 +237,7 @@ function  deleteReply(replyNum, page) {
 				</td>	
 			</tr>
 		</table>
-		<div id="listReply"></div>
+	</c:if>
+		<div id="listReply" style="margin-bottom: 150px;"></div>
 	</div>
 </div>

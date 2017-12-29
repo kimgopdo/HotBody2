@@ -101,7 +101,7 @@ th {
 	<tr>
 		<td colspan="7">
 		<form name="searchList" method="post" action="<%=cp%>/myclass/addingrerdients/list">
-			<select name="searchKey" style="width: 65px; height: 30px;">
+			<select name="searchKey" style="width: 80px; height: 30px;">
 				<option value="ingredientsName">재료명</option>
 				<option value="nutrient">영양소</option>
 			</select>	

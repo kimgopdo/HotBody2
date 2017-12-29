@@ -130,12 +130,13 @@ public class EventServiceImpl implements EventService {
 	}
 
 	@Override
-	public int deleteEvent(int eventCode, String pathname) {
+	public int deleteEvent(int eventCode, String pathname,String userId) {
 		int result = 0;		
+		
 		try {
 			Event dto = readEvent(eventCode);
-			if(dto != null & dto.getSaveFile() != null)
-				fileManager.doFileDelete(dto.getSaveFile(), pathname);
+			if(! dto.getUserId().equals(userId) && ! userId.equals("admin"))
+				return result;
 			
 			result=dao.deleteData("event.deleteEvent", eventCode);
 		} catch (Exception e) {

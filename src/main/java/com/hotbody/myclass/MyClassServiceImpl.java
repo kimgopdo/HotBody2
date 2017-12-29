@@ -401,8 +401,7 @@ public class MyClassServiceImpl implements MyClassService {
 	@Override
 	public List<TodayExer> listToday(Map<String, Object> map) {
 		List<TodayExer> list = null;
-		try {
-				
+		try {		
 			list = dao.selectList("myClass.listToday",map);
 		} catch (Exception e) {
 			System.out.println(e.toString());
@@ -414,6 +413,7 @@ public class MyClassServiceImpl implements MyClassService {
 	public int dataCount4(Map<String, Object> map) {
 		int result = 0;
 		try {
+			
 			result = dao.selectOne("myClass.dataCount4",map);
 		} catch (Exception e) {
 			System.out.println(e.toString());

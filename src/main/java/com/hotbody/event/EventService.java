@@ -13,7 +13,7 @@ public interface EventService {
 	public Event preReadEvent(Map<String, Object> map);
 	public Event nextReadEvent(Map<String, Object> map);
 	public int updateEvent(Event dto, String pathname);
-	public int deleteEvent(int eventCode, String pathname);
+	public int deleteEvent(int eventCode, String pathname,String userId);
 	
 	public int insertReply(Reply dto);
 	public List<Reply> listReply(Map<String, Object> map);

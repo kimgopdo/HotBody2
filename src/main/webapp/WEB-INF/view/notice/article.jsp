@@ -136,13 +136,14 @@ function viewPre() {
 	
 </script>
 </head>
-<body style="height: 2800px">
+<body style="height: 1100px">
+<div style="height: 50px;"></div>
 
 	<div
-		style="height: 50px; font-size: 40px; width: 700px; margin: 20px auto 0; font-weight: bold; color: #666666;">| 공지사항</div>
+		style="height: 50px; font-size: 40px; width: 1100px; margin: 20px auto 0; font-weight: bold; color: #666666;">| 공지사항</div>
 
 	<table
-		style="width: 700px; margin: 20px auto 0; border-top: 2px solid #333333; border-bottom: 2px solid #333333; border-collapse: collapse; border-spacing: 0">
+		style="width: 1100px; margin: 20px auto 0; border-top: 2px solid #333333; border-bottom: 2px solid #333333; border-collapse: collapse; border-spacing: 0">
 		<tr height="50" style="border-bottom: 1px solid #cccccc">
 			<td
 				style="width: 40px; padding-left: 10px; font-weight: bold; color: #666666;">제목</td>
@@ -164,15 +165,15 @@ function viewPre() {
 	</table>
 
 
-	<div style="width: 700px; margin: 20px auto 0;">
+	<div style="width: 1100px; margin: 20px auto 0;">
 		<input type="button" class="btn-article" value="목록"
 			onclick="javascript:location.href='<%=cp%>/notice/list?${query}';">
-<%-- 	<c:if test="${sessionScope.member.userId == 'admin'}">
+	<c:if test="${sessionScope.member.userId == 'admin'}">
 		<input type="button" class="btn-article" value="수정"
 			onclick="javascript:location.href='<%=cp%>/notice/update?noticeCode=${dto.noticeCode}&${query}';">
 		<input type="button" class="btn-article" value="삭제"
 			onclick="deleteNotice(${dto.noticeCode});">
-	</c:if> --%>
+	</c:if>
 	</div>
 
 
@@ -180,7 +181,7 @@ function viewPre() {
 	<br>
 <div>
 	<table
-		style="width: 700px; margin: 20px auto 0; border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc; border-collapse: collapse; border-spacing: 0">
+		style="width: 1100px; margin: 20px auto 0; border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc; border-collapse: collapse; border-spacing: 0">
 
 		<tr height="40"
 			style="border-bottom: 1px solid #e3e3e3; font-size: 13px;">

@@ -125,7 +125,7 @@ $(function(){
 <tr height="40">
 	<td width="100" valign="top">운동방법</td>
 	<td>
-		<textarea style="width: 98%;" rows=10; name="pic" id="pic">${dto.pic}</textarea>
+		<textarea style="width: 85%;" rows=10; name="pic" id="pic">${dto.pic}</textarea>
 	</td>
 </tr>
 <tr height="10px;"></tr>
