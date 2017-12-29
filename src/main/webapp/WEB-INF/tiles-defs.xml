@@ -58,9 +58,5 @@
 	<definition name=".*" extends=".mainLayout">
     	  <put-attribute name="body" value="/WEB-INF/view/{1}.jsp" />
 	</definition>
-	
-	
-	
-	
 
 </tiles-definitions>

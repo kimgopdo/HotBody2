@@ -39,6 +39,7 @@ public class HotShopBoardController {
 	//상품분류에따른 list 
 	//main list는 따로 드래그엔 드롭으로 순서 변경 가능하게 만들꺼임.
 	@RequestMapping("/hotShop/productList")
+	
 	public String productList(
 			@RequestParam(defaultValue="") String code
 			,@RequestParam(defaultValue="") String menuname
