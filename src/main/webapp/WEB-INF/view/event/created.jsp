@@ -173,7 +173,7 @@ function deleteFile() {
 	<tr height="40">
 		<td width="100">작성자</td>
 		<td>
-			 ${sessionScope.member.userId}
+			 ${sessionScope.member.userName}
 		</td>
 	</tr>
 	

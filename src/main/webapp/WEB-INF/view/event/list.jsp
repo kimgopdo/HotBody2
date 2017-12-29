@@ -122,7 +122,7 @@ body{
 		
 
 		</td>
-		<td width="65">${dto.userId}</td>
+		<td width="65">${dto.userName}</td>
 		<td width="100">${dto.created}</td>
 		<c:choose>
 			<c:when test="${dto.hitCount>20}">	

@@ -141,7 +141,7 @@ body{
 		<td align="left" style="padding-left: 5px">
 			<a href="${articleUrl}&noticeCode=${dto.noticeCode}" style="text-decoration: none; color: black;">${dto.subject}</a>
 		</td>
-		<td width="40">${dto.userId}</td>
+		<td width="40">관리자</td>
 		<td width="40">${dto.created}</td>
 		<c:choose>
 			<c:when test="${dto.hitCount>20}">	
@@ -160,7 +160,7 @@ body{
 		<td align="left">
 			<a href="${articleUrl}&noticeCode=${dto.noticeCode}" style="text-decoration: none; color: black;">${dto.subject}</a>
 		</td>
-		<td width="65">${dto.userId}</td>
+		<td width="65">관리자</td>
 		<td width="100">${dto.created}</td>
 		<c:choose>
 			<c:when test="${dto.hitCount>20}">	

@@ -46,7 +46,7 @@
 		parameterType="map">
 		SELECT * FROM (
 			SELECT ROWNUM rnum, tb.* FROM(
-				SELECT eventCode, n.userId, subject, hitCount,
+				SELECT eventCode, n.userId, subject, hitCount, userName,
 					TO_CHAR(created, 'yyyy-mm-dd') created,
 					saveFile
 					FROM event n
