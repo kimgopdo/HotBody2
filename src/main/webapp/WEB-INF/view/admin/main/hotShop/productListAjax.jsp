@@ -15,7 +15,7 @@
 		            <span style=" text-align: left;">가격 : <fmt:formatNumber pattern="#,###">${dto.pdPrice}</fmt:formatNumber>원</span>
 		            <!-- if로 막아야함 -->
 		            <c:if test="${sessionScope.member.userId=='admin'}">
-		            <a href="javascript:location.href='<%=cp%>/hotShop/created?pdnum=${dto.pdnum}&mode=update';" style="color:black; font-weight:bold; float: right; margin-right: 50px;">수정</a>                               
+		            <a href="javascript:location.href='<%=cp%>/admin/hotShop/created?pdnum=${dto.pdnum}&mode=update';" style="color:black; font-weight:bold; float: right; margin-right: 50px;">수정</a>                               
 		            </c:if>
 		            <c:if test="${sessionScope.member.userId=='admin' && dto.showandhide==1}">
 		            <a href="javascript:location.href='<%=cp%>/admin/hotShop/hide?pdnum=${dto.pdnum}'">상태: 보임(클릭 시 숨김)</a>

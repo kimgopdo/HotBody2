@@ -63,14 +63,8 @@ li.aspect{
 <input type="hidden" name="code" value="${code}">
 </form>
 <table style="margin-top: 10px; width:100%; padding-left:20px; border-collapse: collapse;">
-<tr style="border-bottom: 2px solid #e7e7e7;">
-	<td><h5 style="font-size: 20px; font-weight:bold; margin-left: 30px; margin-bottom:30px; text-align: left;">${state}</h5></td>
-</tr>
-<tr>
-	<td style="text-align: left;">
-		<input type="radio" name="formal" value="hitCount">조회순 &nbsp;&nbsp;
-		<input type="radio" name="formal" value="created" checked="checked">등록순 &nbsp;&nbsp;
-	</td>
+<tr align="center">
+	<td> <button type="button" class="btn" style="width: 200px; background: #e7e7e7;" onclick="javascript:location.href='<%=cp%>/admin/hotShop/created'">상품등록</button> </td>
 </tr>
 <tr>
 	<td>
