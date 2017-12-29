@@ -434,7 +434,37 @@ $(function(){
 			<tr>
 		  		<td width="120" valign="top">클래스 시간</td>
 		  		<td>
-				   <input type="text" name="startTime" style="width: 200px;" value="${dto.startTime}"> ~ <input type="text" name="endTime"  style="width: 200px;" value="${dto.endTime}">
+		  		<input type='time' name="startTime" value='now' /> 
+				<script type="text/javascript">
+				$(function(){  
+					  $('input[type="time"][value="now"]').each(function(){    
+					    var d = new Date(),
+					        h = d.getHours(),
+					        m = d.getMinutes();
+					    if(h < 10) h = '0' + h; 
+					    if(m < 10) m = '0' + m; 
+					    $(this).attr({
+					      'value': h + ':' + m
+					    });
+					  });
+					});
+				</script>
+				    ~ 
+				<input type='time' name="endTime" value='now' /> 
+				<script type="text/javascript">
+				$(function(){  
+					  $('input[type="time"][value="now"]').each(function(){    
+					    var d = new Date(),
+					        h = d.getHours(),
+					        m = d.getMinutes();
+					    if(h < 10) h = '0' + h; 
+					    if(m < 10) m = '0' + m; 
+					    $(this).attr({
+					      'value': h + ':' + m
+					    });
+					  });
+					});
+				</script>
 		  		</td>
 			</tr>
 		</table>

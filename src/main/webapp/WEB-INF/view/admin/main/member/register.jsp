@@ -69,7 +69,7 @@ function changes(fr) {
 		   <tr height="40">
 		      <td align="center">
 		          <form name="searchRegiForm" method="post" action="<%=cp%>/admin/member/regi" >
-		              <select name="searchKey" class="selectField" onchange="changes(document.searchForm.searchKey.value)">
+		              <select name="searchKey" class="selectField" onchange="changes(document.searchRegiForm.searchKey.value)">
 		                  <option value="userId">아이디</option>
 		                  <option value="userName">이름</option>
 		                  <option value="className">클래스명</option>

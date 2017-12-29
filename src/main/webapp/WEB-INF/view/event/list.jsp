@@ -112,7 +112,6 @@ body{
 		<td width="70" align="center">글쓴이</td>
 		<td width="40" align="center">작성일</td>
 		<td width="40" align="center">조회수</td>
-		
 	</tr>
 
 	<c:forEach var="dto" items="${list}">

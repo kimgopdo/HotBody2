@@ -45,7 +45,7 @@
 	<script type="text/javascript">
 	$(function(){  
 		  $('input[type="time"][value="now"]').each(function(){    
-		    var d = new Date(),        
+		    var d = new Date(),
 		        h = d.getHours(),
 		        m = d.getMinutes();
 		    if(h < 10) h = '0' + h; 

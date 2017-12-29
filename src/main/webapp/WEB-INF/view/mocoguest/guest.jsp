@@ -182,7 +182,7 @@ function deleteGuest(num) {
 <img id="insta" src="<%=cp%>/resource/design/talk.png" style="display:block; margin:80px auto 35px;">
 
 
-<div class="body-container" style="width: 1000px; margin:80px auto 35px;" >
+<div class="body-container" style="width: 1000px; margin:80px auto 35px; margin-bottom: 200px;" >
 
     
      <div class="comments">    

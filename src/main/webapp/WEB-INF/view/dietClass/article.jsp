@@ -77,14 +77,13 @@ function payGo(num,type) {
    	
 	<div style="vertical-align: bottom; float: left; width: 350px;">
 		<p style="font-weight: bold; font-size: 30px; padding-bottom: 20px;" align="left">${dto.showTuition}</p>
-		
+		<%-- 
 		<c:if test="${sessionScope.member.userId=='admin'}">
     	<button id="paymentBtn" type="button" style="width: 45%; height: 50px; background: #1abc9c; border: 0px; color: #ffffff; font-weight: bold;" onclick="javascript:location.href='<%=cp%>/dietClass/update?num=${dto.classNum}&type=${dto.classType}';"> 클래스 수정 </button>
     	<button id="paymentBtn" type="button" style="width: 45%; height: 50px; background: #1abc9c; border: 0px; color: #ffffff; font-weight: bold;" onclick="deleteOk(${dto.classNum},${dto.classType});"> 클래스 삭제 </button>
     	</c:if>
-    	<c:if test="${sessionScope.member.userId!='admin'}">
+    	 --%>
     	<button id="paymentBtn" type="button" style="width: 100%; height: 50px; background: #1abc9c; border: 0px; color: #ffffff; font-weight: bold;" onclick="payGo(${dto.classNum},${dto.classType});">수강 신청하기</button>
-    	</c:if>
 	</div>
 
 	<div style="width: 1000px; float: left;">
