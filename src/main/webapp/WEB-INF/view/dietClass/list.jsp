@@ -5,7 +5,9 @@
 <%
    String cp = request.getContextPath();
 %>
+<head>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <script type="text/javascript">
 function on(num) {
 	$("#ct"+num).mouseover(function (e){
@@ -34,10 +36,34 @@ function articleGo(num) {
 }
 
 </script>
+
+<style type="text/css">
+.imim{
+	
+    background-color: #f7f7f7;
+}
+
+</style>
+
+</head>
+
+
+<div style="width:100%;  background-color:#f7f7f7;  padding-top:25px; margin-bottom:40px; height:520px;" class="imim">
+<!--배너-->
+
+<div style="overflow:hidden; width:1150px; margin:0 auto; background-color:#f7f7f7;">
+<p style="margin-top:20px; margin-bottom:40px;">		
+<img src="<%=cp%>/resource/design/classlogo.jpg" alt="배너" style="padding-right: 20px;"></p>
+
+	<img style="width: 100%; cursor: pointer;" src="<%=cp%>/uploads/dietClass/main.png" onclick="javascript:location.href='<%=cp%>/survey/surveyForm';">
+	
+</div>
+</div>
+
+
+
 <div class="body-container" style="width: 1000px; margin: 100px auto;">
-	<div style="width: 1000px; margin: 100px auto;">
-		<img style="width: 100%; cursor: pointer;" src="<%=cp%>/uploads/dietClass/main.png" onclick="javascript:location.href='<%=cp%>/survey/surveyForm';">
-	</div>
+
 	<c:forEach var="dto" items="${diet}">
     <table id="ct${dto.classNum}" onmouseover="on(${dto.classNum});" style="width: 1000px; height:420px; border-spacing: 0; border-collapse: collapse; border-bottom: 1px solid #cccccc; border-top: 1px solid #cccccc; margin: 20px 0;">
     <tr>

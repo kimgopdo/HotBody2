@@ -244,10 +244,10 @@ jQuery(function() {
                        
 								</p><p style="width:530px; float:left;">
 								<a href="//blog.naver.com/PostThumbnailView.nhn?blogId=imdaknew&amp;logNo=221054805983&amp;categoryNo=64&amp;parentCategoryNo=64&amp;from=postList" target="_blank">
-									<img src="<%=cp%>/resource/moco_01.jpg" alt="피크닉 레시피" onmouseover="this.src='//wiseux.speedgabia.com/imdak/contents/imdak_cast/recipe_05_hover_170801.jpg'" onmouseout="this.src='//wiseux.speedgabia.com/imdak/contents/imdak_cast/recipe_05_170801.jpg'">
+									<img src="<%=cp%>/resource/moco_01.jpg" alt="모꼬지" >
 								</a>
 								<a href="/shop/shopdetail.html?branduid=1949935" target="_self">
-									<img src="//wiseux.speedgabia.com/imdak/contents/imdak_cast/recipe_06_170801.jpg" alt="피크닉 레시피" onmouseover="this.src='//wiseux.speedgabia.com/imdak/contents/imdak_cast/recipe_06_170801.jpg'" onmouseout="this.src='//wiseux.speedgabia.com/imdak/contents/imdak_cast/recipe_06_170801.jpg'">
+									<img src="//wiseux.speedgabia.com/imdak/contents/imdak_cast/recipe_06_170801.jpg" alt="피크닉 레시피" >
 								</a>
 							</p>
 						<p style="float:right; width:530px;">
@@ -301,14 +301,7 @@ jQuery(function() {
 									<img src="//wiseux.speedgabia.com/imdak/contents/imdak_cast/recipe_14.jpg" alt="피크닉 레시피" onmouseover="this.src='//wiseux.speedgabia.com/imdak/contents/imdak_cast/recipe_14.jpg'" onmouseout="this.src='//wiseux.speedgabia.com/imdak/contents/imdak_cast/recipe_14.jpg'">
 								</a>
 							</p>
-						<p style="float:right; width:530px;">
-								<a href="//blog.naver.com/imdaknew/221034070602" target="_blank">
-									<img src="//wiseux.speedgabia.com/imdak/contents/imdak_cast/recipe_15.jpg" alt="저칼로리 레시피" onmouseover="this.src='//wiseux.speedgabia.com/imdak/contents/imdak_cast/recipe_15_hover.jpg'" onmouseout="this.src='//wiseux.speedgabia.com/imdak/contents/imdak_cast/recipe_15.jpg'">
-								</a>
-								<a href="/shop/shopdetail.html?branduid=1952867" target="_self">
-									<img src="//wiseux.speedgabia.com/imdak/contents/imdak_cast/recipe_16.jpg" alt="피크닉 레시피" onmouseover="this.src='//wiseux.speedgabia.com/imdak/contents/imdak_cast/recipe_16.jpg'" onmouseout="this.src='//wiseux.speedgabia.com/imdak/contents/imdak_cast/recipe_16.jpg'">
-								</a>
-							</p>
+						
 						 <p></p>
 			</li>
 			

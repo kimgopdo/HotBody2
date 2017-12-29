@@ -116,43 +116,43 @@ ALL YOU HAVE TO DO:
 */
 .img1{
     position: relative;
-    background-image: url("<%=cp%>/uploads/shopList/salad-2942257_1920.jpg");                                                               
+    background-image: url("<%=cp%>/uploads/shopList/hotshopcc.jpg");                                                               
     height: 100vh;
     background-size: cover;
 }
 .img2{
     position: relative;
-    background-image: url("<%=cp%>/uploads/shopList/salad-2942257_1920.jpg");                                                               
+    background-image: url("<%=cp%>/uploads/shopList/hotshopcc.jpg");                                                               
     height: 100vh;
     background-size: cover;
 }
 .img3{
     position: relative;
-    background-image: url("<%=cp%>/uploads/shopList/salad-2942257_1920.jpg");                                                               
+    background-image: url("<%=cp%>/uploads/shopList/hotshopcc.jpg");                                                               
     height: 100vh;
     background-size: cover;
 }
 .img4{
     position: relative;
-    background-image: url("<%=cp%>/uploads/shopList/salad-2942257_1920.jpg");                                                               
+    background-image: url("<%=cp%>/uploads/shopList/hotshopcc.jpg");                                                               
     height: 100vh;
     background-size: cover;
 }
 .img5{
     position: relative;
-    background-image: url("<%=cp%>/uploads/shopList/salad-2942257_1920.jpg");                                                               
+    background-image: url("<%=cp%>/uploads/shopList/hotshopcc.jpg");                                                               
     height: 100vh;
     background-size: cover;
 }
 .img6{
     position: relative;
-    background-image: url("<%=cp%>/uploads/shopList/salad-2942257_1920.jpg");                                                               
+    background-image: url("<%=cp%>/uploads/shopList/hotshopcc.jpg");                                                               
     height: 100vh;
     background-size: cover;
 }
 .img7{
     position: relative;
-    background-image: url("<%=cp%>/uploads/shopList/salad-2942257_1920.jpg");                                                               
+    background-image: url("<%=cp%>/uploads/shopList/hotshopcc.jpg");                                                               
     height: 100vh;
     background-size: cover;
 }
