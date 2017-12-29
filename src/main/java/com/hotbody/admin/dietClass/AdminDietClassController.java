@@ -121,10 +121,10 @@ public class AdminDietClassController {
 		String root = session.getServletContext().getRealPath("/");
 		String pathname = root+File.separator+"uploads"+File.separator+"dietClass";
 		
+		serviceD.deletepinClass(dto.getClassNum());
 		serviceD.updateClass(dto,pathname);
 		model.put("state", "true");
 		model.put("type", dto.getClassType());
-		
 		return model;
 	}
 	

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -418,7 +419,7 @@ public class AdminHotShopContraller {
 				+ "---------------------------------------------------------------------------------------------------------------------------\n------------------------------------------------------------------------------------------------------------------\n--------------------------------------------------------------");
 		service.show(pdnum);
 
-		return "redirect:/";
+		return "redirect:/hotShop";
 	}
 
 	// 숨김 Update
@@ -432,44 +433,63 @@ public class AdminHotShopContraller {
 				+ "---------------------------------------------------------------------------------------------------------------------------\n------------------------------------------------------------------------------------------------------------------\n--------------------------------------------------------------");
 		service.hide(pdnum);
 
-		return "redirect:/";
+		return "redirect:/hotShop";
 	}
 
 	// 상품유형별 메뉴 삭제(지울 시 되 묻는것과 속해있는 상품목록 관리여부)
 	@RequestMapping(value = "/admin/hotShop/menuDeleteBci")
 	public String menuDeleteBci(@RequestParam int code) {
 		service.deleteBcl(code);
-		return "redirect:/";
+		return "redirect:/hotShop";
 	}
 
 	// 상품 영양소별 메뉴 삭제(지울 시 되 묻는것과 속해있는 상품목록 관리여부)
 	@RequestMapping(value = "/admin/hotShop/menuDeleteScl")
 	public String menuDeleteScl(@RequestParam int code) {
 		service.deleteSci(code);
-		return "redirect:/";
+		return "redirect:/hotShop";
 	}
 	
 	
 	@RequestMapping(value="/admin/hotShop/chart")
 	public String hotShopChart(
-			String checkDate,
+			@RequestParam(defaultValue="2017") String checkDate,
+			HttpServletRequest req,
+			HttpSession session,
 			Model model
 			) {
-		List<Chart> list=new ArrayList<>();
-		list=service.readRealChart(checkDate);
-		int n=0;
-		if(list!=null) {
-			int []m=new int [12];
-			for(Chart dto:list) {
-				m[n]=dto.getRealChart();
-				model.addAttribute("m"+n, m[n]);
-				n++;
-			}
-		}else {
-			model.addAttribute("state", "noData");
-			return ".admin.main.hotShop.hotShopChart";
+		String cp = req.getServletContext().getRealPath("/");
+		String pathname = cp + "uploads" + File.separator + "shopList";
+		Map<String, Object> map = new HashMap<>();
+		List<HotShop> productList = null;
+		map.put("listOrArticle", 0);
+		SessionInfo info=(SessionInfo) session.getAttribute("member");
+		if(info!=null) {
+			map.put("userId", info.getUserId());
 		}
-		model.addAttribute("state", "success");
+		productList = service.productList(map);
+		Iterator<HotShop> it = productList.iterator();
+		int n=0;
+		while (it.hasNext()) {
+			HotShop dto = it.next();
+			int year=2017;
+			year+=n;
+			dto.setYear(Integer.toString(year));
+			dto.setImgPath(pathname + File.separator + dto.getImgSaveFilename());
+			System.out.println(dto.getImgPath());
+			n++;
+		}
+		List<Supply> supplyList = null;
+		supplyList = service.readSupply();
+		int row = 5;
+		int dataCount = service.dataCount();
+		int total_page = dataCount / row;
+		List<ProductIn> productInList = null;
+		productInList = service.readProductIn(map);
+		model.addAttribute("productList", productList);
+		model.addAttribute("supplyList", supplyList);
+		model.addAttribute("productInList", productInList);
+		model.addAttribute("total_page", total_page);
 		return ".admin.main.hotShop.hotShopChart";
 	}
 }

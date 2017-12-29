@@ -36,7 +36,6 @@ $(function(){
     	var f = document.boardForm;
         var regNumber = /^[0-9]*$/
     	var str=f.upload.value;
-        console.log(str);
         if(str==""){
     		alert("메인이미지가 없습니다.");
     		f.upload.focus();
@@ -120,7 +119,7 @@ $(function(){
             return false;
         }
         if($('input:checkbox[name="showandhide"]').is(":checked")){
-        	f.showandhide.value=1;
+        	f.showandhide.value=0;
         }
    		f.action="<%=cp%>/admin/hotShop/created";
         f.submit();
@@ -134,7 +133,7 @@ $(function(){
 		<table style="width: 800px;">
 		<tr>
 			<td colspan="2">
-				<input type="checkbox" name="showandhide" value="0">숨김
+				<input type="checkbox" name="showandhide">숨김
 				<select id="bciSelect" name="bclcode" style="padding: 10px;">
 					<option selected="selected">::영양소별</option>
 				</select>
@@ -146,6 +145,9 @@ $(function(){
 		<tr>
 			<td>
 				<div id="holder" class="aspect" style="float: left;">
+					<c:if test="${mode!='update'}">
+						<img src="<%=cp%>/uploads/shopList/white.PNG">
+					</c:if>
 					<c:if test="${mode=='update'}">
 						<img src="<%=cp%>/uploads/shopList/${dto.imgSaveFilename}">
 					</c:if>

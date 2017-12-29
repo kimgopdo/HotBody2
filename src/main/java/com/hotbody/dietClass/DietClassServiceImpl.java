@@ -355,4 +355,15 @@ public class DietClassServiceImpl implements DietClassService {
 		return count;
 	}
 
+	@Override
+	public int deletepinClass(int classNum) {
+		int result=0;
+		try {
+			result = dao.deleteData("dietClass.deletepInClass", classNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
 }

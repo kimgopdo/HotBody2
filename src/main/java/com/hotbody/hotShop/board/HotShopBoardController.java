@@ -236,7 +236,7 @@ public class HotShopBoardController {
 			map.put("state", state);
 			return map;
 		}
-		state="paySeccess";
+		state="paySuccess";
 		map.put("state", state);
 		map.put("paymentDto", dto);
 		return map;
@@ -371,5 +371,8 @@ public class HotShopBoardController {
 		return result;
 	}
 	
-	
+	@RequestMapping(value="/hotShop/paySuccess")
+	public String paySuccess() {
+		return ".hotShop.paySeccess";
+	}
 }

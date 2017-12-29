@@ -33,9 +33,15 @@ public class HotShop {
 	private int listNum;
 	private int milelage;
 	private int starScore;
+	private String year;
 	
 	
-	
+	public String getYear() {
+		return year;
+	}
+	public void setYear(String year) {
+		this.year = year;
+	}
 	public int getPdRawPrice() {
 		return pdRawPrice;
 	}

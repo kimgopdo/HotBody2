@@ -47,12 +47,9 @@ function loginOk() {
 			var state=data.state;
 			var prePage=data.prePage;
 			var message=data.message;
-			if(prePage!=""){
-				location.href="<%=cp%>/"+prePage;
-				return;
-			}else if(state=="true") {
+			if(state=="true") {
 				location.href="<%=cp%>/";
-			}else{
+			}else if(state=="fail"){
 				$("#messagelayout").html("<span style='color : red;'>로그인 정보가 올바르지 않습니다.</span>");
 			}
 		}
@@ -96,7 +93,6 @@ $('.tabs .tab').click(function(){
                        <div class="submit-wrap" style="margin-top: 60px;">
                           <input type="button" value="로그인" class="submit" onclick="loginOk();">
                       </div>
-					<input type="hidden" name="prePage" value="${prePage}">
               </form>
            </div>
      </div>

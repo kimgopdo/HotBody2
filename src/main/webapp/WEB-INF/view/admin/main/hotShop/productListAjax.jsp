@@ -18,10 +18,10 @@
 		            <a href="javascript:location.href='<%=cp%>/hotShop/created?pdnum=${dto.pdnum}&mode=update';" style="color:black; font-weight:bold; float: right; margin-right: 50px;">수정</a>                               
 		            </c:if>
 		            <c:if test="${sessionScope.member.userId=='admin' && dto.showandhide==1}">
-		            <a href="javascript:location.href='<%=cp%>/hotShop/hide?pdnum=${dto.pdnum}'">상태: 보임(클릭 시 숨김)</a>
+		            <a href="javascript:location.href='<%=cp%>/admin/hotShop/hide?pdnum=${dto.pdnum}'">상태: 보임(클릭 시 숨김)</a>
 		         	</c:if>
 		         	<c:if test="${sessionScope.member.userId=='admin' && dto.showandhide==0}">
-		            <a href="javascript:location.href='<%=cp%>/hotShop/show?pdnum=${dto.pdnum}'">상태: 숨김(클릭 시 보임)</a>
+		            <a href="javascript:location.href='<%=cp%>/admin/hotShop/show?pdnum=${dto.pdnum}'">상태: 숨김(클릭 시 보임)</a>
 		         	</c:if>
 		         </div>
 		    </li>
