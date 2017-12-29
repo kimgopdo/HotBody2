@@ -26,7 +26,7 @@
         <!-- Example Bar Chart Card-->
         <div class="card mb-3">
           <div class="card-header">
-            <i class="fa fa-bar-chart"></i> Bar Chart Example</div>
+            <i class="fa fa-bar-chart"></i> &nbsp;매출 그래프 </div>
           <div class="card-body">
           	
 
