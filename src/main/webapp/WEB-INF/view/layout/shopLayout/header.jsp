@@ -87,17 +87,18 @@ function sclDelete(code){
             </li>
             <li class="sub-menu" data-role="listview">
             	<a href="#">상품유형별</a><c:if test="${sessionScope.member.userId=='admin'}"><button type="button" class="btn" onclick="bciAppend();">추가</button></c:if>
-	            	<ul id="productLike" class="productLike">
+	            	<ul id="productNutrient" class="productNutrient">
+	            		<li id="bciAppend"></li>
 	            		
-	            		<li id="sclAppend">
-            		</li>
 	            		
 	            	</ul>                                           
             </li>
             <li class="sub-menu" data-role="listview">
             	<a href="#">영양소별</a><c:if test="${sessionScope.member.userId=='admin'}"><button type="button"  class="btn" onclick="sclAppend();">추가</button></c:if>
-            	<ul id="productNutrient" class="productNutrient">
-            		<li id="bciAppend"></li>
+            	
+            		<ul id="productLike" class="productLike">
+            		<li id="sclAppend">
+            		</li>
             	</ul>
             </li>
             <li>

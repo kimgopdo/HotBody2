@@ -106,7 +106,7 @@ public class AdminHotShopContraller {
 		}
 		if (current_page > total_page)
 			total_page = current_page;
-		start = current_page - 1 * row + 1;
+		start = (current_page - 1 )* row + 1;
 		end = current_page * row;
 		List<HotShop> list = new ArrayList<>();
 		Map<String, Object> map = new HashMap<>();
@@ -117,6 +117,7 @@ public class AdminHotShopContraller {
 		map.put("start", start);
 		map.put("end", end);
 		map.put("page", page);
+		map.put("paging", "paging");
 		map.put("listOrArticle", 0);
 		map.put("cl", cl);
 		map.put("code", code);
@@ -124,6 +125,7 @@ public class AdminHotShopContraller {
 		list = service.productList(map);
 
 		model.addAttribute("list", list);
+		model.addAttribute("total_page", total_page);
 		return "admin/main/hotShop/productListAjax";
 	}
 
@@ -386,9 +388,6 @@ public class AdminHotShopContraller {
 		int row=5;
 		int dataCount = service.productDisDataCount();
 		int total_page = dataCount / row;
-		if (total_page < 0) {
-			total_page = 1;
-		}
 		
 		model.addAttribute("productList", productList);
 		model.addAttribute("supplyList", supplyList);
