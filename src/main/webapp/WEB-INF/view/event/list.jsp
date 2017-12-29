@@ -80,7 +80,7 @@ body{
 <body>
 <div style="height: 50px;"></div>
 <div style="font-size: 40px; width: 1100px; margin: 20px auto 0; font-weight: bold; color: #666666;">| 문의사항</div>
-<table style="width: 1100px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0">
+<table style="width: 1100px; margin: 20px auto; margin-bottom:200px; border-collapse: collapse; border-spacing: 0">
 	
 	<tr height="40">
 		<td align="left" colspan="6">
@@ -124,14 +124,7 @@ body{
 		</td>
 		<td width="65">${dto.userName}</td>
 		<td width="100">${dto.created}</td>
-		<c:choose>
-			<c:when test="${dto.hitCount>20}">	
-				<td width="65" style="font-weight: bold; color: red;">${dto.hitCount}</td>
-			</c:when>
-			<c:otherwise>
-				<td width="65">${dto.hitCount}</td>
-			</c:otherwise>
-		</c:choose>			
+			<td width="65">${dto.hitCount}</td>
 		</tr>
 	</c:forEach>
 	
