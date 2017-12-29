@@ -42,11 +42,11 @@ public class AdminMemberController {
 							@RequestParam(value="searchValue", defaultValue="") String searchValue) throws UnsupportedEncodingException {
 		
 		String cp = req.getContextPath();
-   	    
+		System.out.println(searchValue+"@@@@@@@@@@@@@@@@@");
 		int rows = 10; // 한 화면에 보여주는 게시물 수
 		int total_page = 0;
 		int dataCount = 0;
-   	    
+		
 		if(req.getMethod().equalsIgnoreCase("GET")) { // GET 방식인 경우
 			searchValue = URLDecoder.decode(searchValue, "utf-8");
 		}
@@ -88,7 +88,6 @@ public class AdminMemberController {
         if(searchValue.length()!=0) {
         	query = "searchKey=" +searchKey + 
         	         "&searchValue=" + URLEncoder.encode(searchValue, "utf-8");	
-        	//System.out.println(searchValue+"@@@@@@@@@@@@@@@@@@@@@@");
         }
         
         if(query.length()!=0) {
@@ -102,8 +101,8 @@ public class AdminMemberController {
         model.addAttribute("dataCount", dataCount);
         model.addAttribute("total_page", total_page);
         model.addAttribute("paging", paging);
-        
-		return ".admin.main.member.list";
+
+        return ".admin.main.member.list";
 	}
 
 	@RequestMapping(value="/admin/member/regi")
@@ -114,7 +113,6 @@ public class AdminMemberController {
 							@RequestParam(value="searchValue", defaultValue="") String searchValue) throws UnsupportedEncodingException {
 		
 		String cp = req.getContextPath();
-   	    System.out.println(searchValue+"@@@@@@@@@@@@@@@@@");
 		int rows = 10; // 한 화면에 보여주는 게시물 수
 		int total_page = 0;
 		int dataCount = 0;
@@ -125,6 +123,8 @@ public class AdminMemberController {
 		if(searchValue.length()!=0) {
 			if(searchKey.equals("className")) {
 				searchValue = searchValue.split(",")[0];
+			} else {
+				searchValue = searchValue.split(",")[1];
 			}
 		}
         // 전체 페이지 수
@@ -160,11 +160,10 @@ public class AdminMemberController {
         }
         
         String query = "";
-        String listUrl = cp+"/admin/member/list";
+        String listUrl = cp+"/admin/member/regi";
         if(searchValue.length()!=0) {
         	query = "searchKey=" +searchKey + 
         	         "&searchValue=" + URLEncoder.encode(searchValue, "utf-8");	
-        	System.out.println(searchValue+"@@@@@@@@@@@@@@@@@@@@@@");
         }
         
         if(query.length()!=0) {

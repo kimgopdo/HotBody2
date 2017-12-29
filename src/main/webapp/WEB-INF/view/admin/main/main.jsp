@@ -7,28 +7,31 @@
 
   <!-- Navigation-->
 
-  
-  <div class="content-wrapper">
-    <div class="container-fluid">
-      <!-- Breadcrumbs-->
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-          <a href="index.html">Dashboard</a>
-        </li>
-        <li class="breadcrumb-item active">Blank Page</li>
-      </ol>
-      <div class="row">
-        <div class="col-12">
-          <h1>${total}</h1>
-          <p>This is an example of a blank page that you can use as a starting point for creating new ones.</p>
+  <div class="body-container" style="width:1100px; padding-left: 20px; padding-top: 50px;">
+  	<div class="card mb-3" style="width: 500px; float: left;">
+        <div class="card-header">
+          <i class="fa fa-area-chart"></i> Total </div>
+        <div class="card-body" style="font-size: 25px;">${total}</div>
+        <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+    </div>
+    <div class="card mb-3" style="width: 500px; float: left; margin-left: 20px;">
+        <div class="card-header">
+          <i class="fa fa-area-chart"></i> Today </div>
+        <div class="card-body" style="font-size: 25px;">${today}</div>
+        <div class="card-footer small text-muted">Updated ${date}</div>
+    </div>
+    
+    <div class="row" style="clear: both; width: 1000px;">
+      <div class="col-lg-8">
+        <!-- Example Bar Chart Card-->
+        <div class="card mb-3">
+          <div class="card-header">
+            <i class="fa fa-bar-chart"></i> Bar Chart Example</div>
+          <div class="card-body">
+          </div>
+          <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
         </div>
       </div>
     </div>
     
-    <!-- /.container-fluid-->
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-      <i class="fa fa-angle-up"></i>
-    </a>
-  </div>
-
+</div>

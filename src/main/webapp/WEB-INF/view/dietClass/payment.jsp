@@ -39,6 +39,15 @@ function inputOut() {
 	var use = parseInt($("#useMilelage").val());
 	var milelage = parseInt("${milelage}");
 	
+	var str = $("#useMilelage").val();
+	var regNumber = /^[0-9]*$/;
+	  
+	if(!regNumber.test(str)) {
+		swal('숫자만 입력해주세요.');
+	    return;
+	} 
+	  
+
 	if(use==tuition && use<milelage){
 		if($("input:checkbox[name=payType]").is(':checked')){
 			$("input:checkbox[name=payType]").prop("checked",false);
