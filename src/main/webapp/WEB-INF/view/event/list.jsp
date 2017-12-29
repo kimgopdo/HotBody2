@@ -82,9 +82,8 @@ body{
 }
 </style>
 </head>
-<<<<<<< HEAD
-<body style="height: 1300px;">
 
+<body style="height: 1300px;">
 <div style="width:100%;  background-color:#f7f7f7;  padding-top:25px; margin-bottom:40px; height:420px;" class="imim">
 <!--배너-->
 
@@ -99,14 +98,8 @@ body{
 
 
 
-<table style="width: 1100px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0">
-=======
-<body>
-<div style="height: 50px;"></div>
-<div style="font-size: 40px; width: 1100px; margin: 20px auto 0; font-weight: bold; color: #666666;">| 문의사항</div>
+
 <table style="width: 1100px; margin: 20px auto; margin-bottom:200px; border-collapse: collapse; border-spacing: 0">
->>>>>>> branch 'master' of https://github.com/kimgopdo/HotBody2.git
-	
 	<tr height="40">
 		<td align="left" colspan="6">
 			${dataCount}개(${page}/${total_page}페이지)
