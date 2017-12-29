@@ -17,6 +17,16 @@ $(function(){
 $(function(){
 	productList(1);
 })
+$(function(){
+	window.onscroll = function(ev) {
+	    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+	    	if(page<totalPage) {
+	    		++page;
+	    		productList(page);
+	    	}
+	    }
+	};
+})
 function productList(page){
 	var url="<%=cp%>/admin/hotShop/productListAjax";
 	var data=$("#hiddenForm").serialize()+"&page="+page+"&formal="+$(':radio[name="formal"]:checked').val();
@@ -25,7 +35,7 @@ function productList(page){
 		,url:url
 		,data:data
 		,success:function(data){
-			$("#productList").html(data);
+			$("#productList").append(data);
 		}
 	});
 }

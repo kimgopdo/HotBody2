@@ -17,7 +17,6 @@ function sendOk() {
    	}
 	
 	var f = $("form[name=missionForm]").serialize();
-	alert(f);
 	var url="<%=cp%>/admin/mission/update";
 		
 	$.ajax({

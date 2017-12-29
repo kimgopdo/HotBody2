@@ -16,6 +16,16 @@ $(function(){
 $(function(){
 	productList(1);
 })
+$(function(){
+	window.onscroll = function(ev) {
+	    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+	    	if(page<totalPage) {
+	    		++page;
+	    		productList(page);
+	    	}
+	    }
+	};
+})
 
 function productList(page){
 	var url="<%=cp%>/hotShop/productListAjax";
@@ -25,10 +35,21 @@ function productList(page){
 		,url:url
 		,data:data
 		,success:function(data){
-			$("#productList").html(data);
+			$("#productList").append(data);
 		}
 	});
 }
+
+
+
+
+
+
+
+
+
+
+
 </script>
 <form id="hiddenForm">
 <input type="hidden" name="cl" value="${cl}">

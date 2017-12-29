@@ -99,7 +99,6 @@ function prevView(cur) {
 
 function surveySubmit(type) {
 	var f = $("form[name=surveyForm]").serialize();
-	alert(f);
 
 	var url = "<%=cp%>/survey/submit";
 	

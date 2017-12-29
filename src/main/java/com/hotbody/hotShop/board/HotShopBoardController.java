@@ -4,6 +4,7 @@ package com.hotbody.hotShop.board;
 
 import java.io.File;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -19,8 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.hotbody.common.FileManager;
 import com.hotbody.common.MyUtil;
 import com.hotbody.member.Member;
 import com.hotbody.member.MemberService;
@@ -31,8 +30,6 @@ import com.hotbody.milelage.MilelageService;
 public class HotShopBoardController {
 	@Autowired
 	private HotShopService service;
-	@Autowired
-	private FileManager file;
 	@Autowired
 	private MyUtil util;
 	@Autowired
@@ -122,7 +119,7 @@ public class HotShopBoardController {
 		}
 		if(current_page>total_page)
 			total_page=current_page;
-		start=current_page-1*row+1;
+		start=(current_page-1)*row+1;
 		end=current_page*row;
 		
 		List<HotShop> productList=null;
@@ -130,6 +127,7 @@ public class HotShopBoardController {
 		map.put("start", start);
 		map.put("end", end);
 		map.put("listOrArticle", 0);
+		map.put("paging", "paging");
 		SessionInfo info=(SessionInfo) session.getAttribute("member");
 		if(info!=null) {
 			map.put("userId", info.getUserId());
@@ -143,9 +141,20 @@ public class HotShopBoardController {
 			HotShop dto=it.next();
 			dto.setImgPath(pathname+File.separator+dto.getImgSaveFilename());
 		}
-		paging=util.paging(current_page, total_page);
+		String query = "";
+		String listUrl, articleUrl;
+		if (searchValue.length() != 0) {
+			query += "&searchKey=" + searchKey + "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
+		}
+		
+		cp = req.getContextPath();
+		listUrl = cp + "/hotShop/shopReviews?" +query;
+		articleUrl = cp +"/qna1/article?" + query+"&page="+current_page;
+		
+		paging=util.paging(current_page, total_page,listUrl);
 		model.addAttribute("list", productList);
 		model.addAttribute("paging", paging);
+		model.addAttribute("articleUrl", articleUrl);
 		model.addAttribute("current_page", current_page);
 		model.addAttribute("total_page", total_page);
 		return ".hotShop.shopReviewList";

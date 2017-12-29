@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
-	String cp = request.getContextPath();
+	String cp = request.getContextPath();  
 %>
 <head>
 <link rel="icon" href="<%=cp%>/resource/mocozzy/img/core-img/favicon.ico">
@@ -21,6 +21,12 @@
 
 
 <script type="text/javascript">
+
+function enterOk() {
+    alert("모임에 참석 하시겠습니까?");
+}
+
+
 function deleteMoco(geNum){
 	if(confirm("모임을 삭제 하시겠습니까?")){
 		var url="<%=cp%>/mocojee/delete?geNum=${dto.geNum}";
@@ -34,10 +40,6 @@ $(document).ready(function(){
     });
 });
 
-
-function enterOk() {
-    alert("모임에 참석 하시겠습니까?");
-}
 
 
 </script>
@@ -190,7 +192,7 @@ function enterOk() {
                                     
                                     <c:if test="${sessionScope.member.userId==dto.userId}">
                                    	 <button type="button" class="btn btn-info" style="margin-top: 10px;" 
-                                   	 	onclick="javascript:location.href='<%=cp%>/mocobung/${mocoNum}/u_bung?num=${vo.mosubNum}';">수정</button>
+                                   	 	onclick="javascript:location.href='<%=cp%>/mocobung/${mocoNum}/delete?mosubNum=${vo.mosubNum}';">삭제</button>
                                     </c:if>
                                     
                                     <button type="button" class="btn btn-link btn-sm" style="margin-top: 10px;" 

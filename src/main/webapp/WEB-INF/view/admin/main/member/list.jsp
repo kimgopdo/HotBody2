@@ -7,9 +7,8 @@
 %>
 <script type="text/javascript">
 function searchList() {
-	var f=document.searchForm;
+	var f=document.searchListForm;
 	//var f = $("form[name=searchForm]").serialize();
-	alert(f);
 	f.submit();
 }
 
@@ -21,8 +20,8 @@ function changes(fr) {
 	$("#searchValue").prop("disabled",false);
 	
 	if(fr=='gender'){
-		num = new Array("남","여");
-		vnum = new Array("남","여");
+		num = new Array("남자","여자");
+		vnum = new Array("남자","여자");
 		$("#searchValue").hide();
 		$(".boxTF").hide();
 		$("#searchValue").prop("disabled",true);
@@ -72,7 +71,7 @@ function changes(fr) {
 <table style="width: 100%; margin: 30px auto; border-spacing: 0px;">
 		   <tr height="40">
 		      <td align="center">
-		          <form name="searchForm" method="post" action="<%=cp%>/admin/member/list" >
+		          <form name="searchListForm" method="post" action="<%=cp%>/admin/member/list" >
 		              <select name="searchKey" class="selectField" onchange="changes(document.searchForm.searchKey.value)">
 		                  <option value="userId">아이디</option>
 		                  <option value="userName">이름</option>

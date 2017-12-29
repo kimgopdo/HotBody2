@@ -119,6 +119,11 @@
 	SELECT pdnum FROM productList WHERE pdName=#{pdName}
 	</select>
 	<select id="productList" parameterType="map" resultType="com.hotbody.hotShop.board.HotShop">
+	<choose>
+		<when test="paging=='paging'">
+		SELECT * FROM (SELECT ROWNUM rnum,pdList.* FROM (
+		</when>
+	</choose>
 	SELECT p.pdnum pdnum, imgOriginalFilename, imgSaveFilename, pdName,
 			 pdSumContent, pdPrice, pdcontent content,
 			pdNutrient, pdStMethod, pdType, pdRawName, pdArea,milelage,
@@ -173,6 +178,12 @@
         		 DESC
         	</otherwise>
         </choose>
+        <choose>
+        	<when test="paging=='paging'">
+        		) pdList WHERE ROWNUM&lt;=#{end})
+         WHERE rnum&gt;=#{start}
+        	</when>
+        </choose> 
 	</select>
 	<select id="readPdStarScore" parameterType="Integer" resultType="Integer">
 		 SELECT ROUND(AVG(starscore), 0) starScore FROM shreviews WHERE pdnum=#{pdnum} GROUP BY pdnum

@@ -150,7 +150,6 @@ function deleteQuestion(num) {
 		var f = "questionOrder="+num;
 		var url = "<%=cp%>/survey/delete";
 		
-		alert(f);
 		$.ajax({
 			type:"post"
 			,url:url

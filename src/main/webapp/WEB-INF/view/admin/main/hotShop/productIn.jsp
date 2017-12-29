@@ -11,6 +11,7 @@
 		border: 1px solid #777777;
 	}           
 </style>
+<script src="<%=cp%>/resource/jquery/js/jquery-ui.min.js" type="text/javascript"></script>
 <script type="text/javascript">
 $.datepicker.setDefaults({
 	 inline: true, 
@@ -185,7 +186,7 @@ function productInSend(f){
 		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; "><input style="width: 100%;" type="text" name="pdrawprice" id="pdRawPrice" onkeyup='call()'></td>
 		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; "><input style="width: 100%;" type="text" name="pdinnum" id="pdInNum" onkeyup='call()'></td>
 		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; " id="totalPrice" ></td>
-		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; "><input style="width: 100%;" name="pdexdate" type="text" id="datepickerDate"></td>
+		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; "><input style="width: 80%;" name="pdexdate" type="text" id="datepickerDate"></td>
 		<td style="border-left: 2px solid #e7e7e7; border-right: 2px solid #e7e7e7; ">입고날(자동생성)</td>                 
 		<td>
 		<select id="supplyName" name="supplycode" onchange="showImg();">

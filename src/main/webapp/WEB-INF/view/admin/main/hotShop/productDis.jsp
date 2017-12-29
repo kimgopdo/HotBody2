@@ -11,8 +11,9 @@
 		border: 1px solid #777777;
 	}           
 </style>
+<script src="<%=cp%>/resource/jquery/js/jquery-ui.min.js" type="text/javascript"></script>
 <script type="text/javascript">
-<%-- $.datepicker.setDefaults({
+$.datepicker.setDefaults({
 	 inline: true, 
 	 dateFormat: "yy-mm-dd",    /* 날짜 포맷 */ 
 	 prevText: 'prev', 
@@ -43,7 +44,7 @@ $(function() {
     $("#datepicker1, #datepicker2").datepicker();
     $("#datepicker3, #datepicker4").datepicker();
     $("#datepickerDate").datepicker();
-  }); --%>
+  });
 </script>
 <script>
 var page=1;

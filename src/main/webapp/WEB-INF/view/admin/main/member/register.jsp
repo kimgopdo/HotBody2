@@ -6,8 +6,8 @@
 	String cp=request.getContextPath();
 %>
 <script type="text/javascript">
-function searchList() {
-	var f=document.searchForm;
+function searchList2() {
+	var f=document.searchRegiForm;
 	f.submit();
 }
 
@@ -68,7 +68,7 @@ function changes(fr) {
 <table style="width: 100%; margin: 30px auto; border-spacing: 0px;">
 		   <tr height="40">
 		      <td align="center">
-		          <form name="searchForm" method="post" action="<%=cp%>/admin/member/regi" >
+		          <form name="searchRegiForm" method="post" action="<%=cp%>/admin/member/regi" >
 		              <select name="searchKey" class="selectField" onchange="changes(document.searchForm.searchKey.value)">
 		                  <option value="userId">아이디</option>
 		                  <option value="userName">이름</option>
@@ -80,7 +80,7 @@ function changes(fr) {
 	                 </c:forEach>
         	 		</select>
 		            <input type="text" name="searchValue" class="boxTF">
-		            <button type="button" class="btn02" onclick="searchList()">검색</button>
+		            <button type="button" class="btn02" onclick="searchList2()">검색</button>
 		        </form>
 		      </td>
 		   </tr>

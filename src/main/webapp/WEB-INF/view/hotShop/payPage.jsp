@@ -203,7 +203,7 @@ function clear(){
 			</fmt:formatNumber>원
 		</td>
 		<td width="5%">
-			<input type="number" name="amount" value="${dto.pCnt}" id="no1${dto.listNum}" min="0" style="width: 35px;" onkeypress="onlyNumber();" onclick="add(${dto.listNum}); totalMoney();">
+			<input type="number" name="amount" value="1" id="no1${dto.listNum}" min="0" style="width: 35px;" onkeypress="onlyNumber();" onclick="add(${dto.listNum}); totalMoney();">
 		</td>
 		<td width="5%">
 			${dto.milelage}
@@ -309,6 +309,19 @@ function clear(){
 	<tr>
 		<td colspan="2">배송메세지</td>
 		<td colspan="6" style="text-align: left;"><textarea rows="3" style="width: 300px;" name="memo"></textarea> </td>
+	</tr>
+	<tr>
+		<td colspan="2">계좌번호<span style="color: red;">*</span></td>
+		<td colspan="6" style="text-align: left;">
+			<select>
+			<option selected="selected">::은행</option>
+			<option>하나</option>
+			<option>신한</option>
+			<option>농협</option>
+			<option>국민</option>
+			<option>기업</option>
+			</select>&nbsp;&nbsp;<input type="text" style="width: 70px;">-<input type="text">-<input type="text">-<input type="text" style="width: 70px;">
+		</td>
 	</tr>
 	<tr>
 		<td colspan="8" style="text-align: left; font-size:20px; font-weight: bold; vertical-align: bottom;"><img src="<%=cp%>/uploads/shopList/give-money.png">&nbsp;&nbsp; 결제예정금액</td>

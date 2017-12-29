@@ -16,7 +16,7 @@
 	  	INSTR(userName, #{searchValue}) &gt; 0
 	  </if>
 	  <if test="searchKey=='userId'">
-	    userId=#{userId}
+	    m1.userId=#{searchValue}
 	  </if>
 	  <if test="searchKey=='gender'">
 	    gender=#{searchValue}
@@ -28,7 +28,7 @@
 	  	INSTR(userName, #{searchValue}) &gt; 0
 	  </if>
 	  <if test="searchKey=='userId'">
-	    userId=#{searchValue}
+	    m1.userId=#{searchValue}
 	  </if>
 	  <if test="searchKey=='className'">
 	    r.classNum=${searchValue}

@@ -55,7 +55,7 @@ function main(){
 		<td><img width="70px" height="70px" src="<%=cp%>/uploads/shopList/${dto.imgSaveFilename}"></td>
 		<td>${dto.pdname}</td>
 		<td><fmt:formatNumber pattern="#,###">${dto.pdPrice*dto.amount_one}</fmt:formatNumber>원</td>
-		<td>${dto.amount_one}</td>
+		<td>${dto.amount_one}개</td>
 	</tr>
 	</c:forEach>
 	<tr>
