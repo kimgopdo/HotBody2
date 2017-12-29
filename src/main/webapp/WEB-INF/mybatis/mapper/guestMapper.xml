@@ -2,7 +2,34 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="guest">
-
-
-
+	<insert id="insertGuest" parameterType="com.hotbody.guest.Guest">
+		INSERT INTO mocoguest(num, userId, content) VALUES (guest_seq.NEXTVAL, #{userId}, #{content})
+	</insert>
+	
+	<select id="dataCount" resultType="Integer">
+		SELECT NVL(count(*), 0) FROM mocoguest
+	</select>
+	
+	<select id="listGuest" parameterType="map" resultType="com.hotbody.guest.Guest">
+		SELECT * FROM(
+			SELECT ROWNUM rnum, tb.* FROM(
+				SELECT num, g.userId, m1.userName, content, TO_CHAR(created, 'YYYY-MM-DD') created 
+				FROM mocoguest g 
+				JOIN member1 m1 
+				ON g.userId=m1.userId
+			ORDER BY num DESC) tb
+		<![CDATA[
+	 	WHERE ROWNUM <= #{end}
+		) WHERE rnum >= #{start}
+		]]>
+	</select>
+	
+	 <delete id="deleteGuest" parameterType="map">
+   DELETE FROM mocoguest
+      WHERE num=#{num}
+      <if test="userId!='admin'">
+         AND userId=#{userId}
+      </if>
+   </delete>
+	
 </mapper>

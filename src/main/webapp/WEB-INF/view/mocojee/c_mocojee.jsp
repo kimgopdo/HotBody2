@@ -266,7 +266,7 @@ function deleteFile() {
 			style="width: 700px; height: 1px; margin: 20px auto 0; border-bottom: 2px solid #666666;"></div>
 		<div style="width: 700px; margin: 20px auto 0;" align="center">
 		
-			<button type="submit" class="btn-default02">${mode=='u_mocojee'?'수정완료':'등록하기'}</button>
+			<button type="submit"  class="btn-default02">${mode=='u_mocojee'?'수정완료':'등록하기'}</button>
 
 			<button type="button" class="btn-default02"
 				onclick="javascript:location.href='<%=cp%>/mocojee/list_mocojee';">등록취소</button>
