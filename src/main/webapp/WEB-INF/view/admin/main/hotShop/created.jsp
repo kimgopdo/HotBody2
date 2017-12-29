@@ -17,6 +17,14 @@
 </style>
 <script type="text/javascript">
 $(function(){
+	$('input:checkbox[name="showandhide"]').click(function(){
+		if($('input:checkbox[name="showandhide"]').is(":checked")){
+	    	f.showandhide.value=0;
+	    }else{
+	    	f.showandhide.value=1;
+	    }
+	});
+	
 	var url="<%=cp%>/hotShop/menuCall"
 	$.ajax({
 		type:"post"
@@ -118,9 +126,7 @@ $(function(){
             f.pdRawName.focus();
             return false;
         }
-        if($('input:checkbox[name="showandhide"]').is(":checked")){
-        	f.showandhide.value=0;
-        }
+        
    		f.action="<%=cp%>/admin/hotShop/created";
         f.submit();
         

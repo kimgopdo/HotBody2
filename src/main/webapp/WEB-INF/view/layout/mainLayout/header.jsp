@@ -27,7 +27,7 @@
 			<div class="pull-right">
 				<nav class="navmenu center">
 					<ul>
-						<li class="first active scroll_btn"><a href="#home">Home</a></li>
+						<li class="first active scroll_btn"><a href="<%=cp%>/index.jsp">Home</a></li>
 						<li class="sub-menu"><a href="<%=cp%>/dietClass/list?type=0">클래스</a>
 							<ul>
 								<li><a href="<%=cp%>/dietClass/list?type=0">온라인</a></li>

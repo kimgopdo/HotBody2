@@ -162,6 +162,7 @@ public class AdminHotShopContraller {
 			file.doFileDelete(imgSaveFilename, pathname);
 			service.productUpdate(dto, pathname);
 		} else {
+			dto.setShowandhide(1);
 			service.insertProductList(dto, pathname);
 		}
 

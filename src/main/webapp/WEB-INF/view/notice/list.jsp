@@ -23,6 +23,16 @@ function send(f){
 }
 </script>
 <style type="text/css">
+.imim{
+	
+    background-color: #f7f7f7;
+}
+.notice_banner{
+    float: left;
+    width: 371px;
+}
+
+
 body{
 	font-family: "맑은 고딕";
 	font-size: 14px;
@@ -71,8 +81,42 @@ body{
 </style>
 </head>
 <body style="height: 1100px">
-<div style="height: 50px;"></div>
-<div style="font-size: 40px; width: 1100px; margin: 20px auto 0; font-weight: bold; color: #666666;">| 공지사항</div>
+
+
+<div style="width:100%;  background-color:#f7f7f7;  padding-top:25px; margin-bottom:40px; height:520px;" class="imim">
+<!--배너-->
+
+<div style="overflow:hidden; width:1150px; margin:0 auto; background-color:#f7f7f7;">
+<p style="margin-top:20px; margin-bottom:40px;">		
+<img src="<%=cp%>/resource/design/notice_Logo1.jpg" alt="배너" style="padding-right: 20px;"></p>
+
+
+	<p class="notice_banner">
+		<a href="#">
+			<img src="<%=cp%>/resource/design/notice_coopon.jpg" alt="배너" style="padding-right: 20px;">
+		
+		</a>
+	</p>
+
+
+	<p class="notice_banner">
+		<a href="#">
+			<img src="<%=cp%>/resource/design/notice_payco.jpg" alt="배너" style="padding-right: 20px;">
+	
+		</a>
+	</p>
+
+	<p class="notice_banner">
+		<a href="#">
+		<img src="<%=cp%>/resource/design/notice_olive.jpg" alt="배너" style="padding-right: 20px;">
+
+		</a>
+	</p>
+</div>
+</div>
+
+
+
 <table style="width: 1100px; margin: 20px auto 0; border-collapse: collapse; border-spacing: 0">
 	
 	<tr height="40">
